@@ -5,6 +5,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Image;
+
+import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -14,6 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
+import javax.swing.border.Border;
 
 import app.init_font.CustomFont;
 
@@ -75,6 +78,11 @@ public class TrangDangNhap extends JFrame {
         center.setBackground(new Color(255, 255, 255));
         center.setPreferredSize(new Dimension(550, 500));
         center.setLayout(new FlowLayout(FlowLayout.CENTER));
+
+        JPanel emptyL = new JPanel();
+        emptyL.setPreferredSize(new Dimension(550, 50));
+        emptyL.setOpaque(false);
+        center.add(emptyL);
 
         JLabel programLabel = new JLabel("Quản lý bán vé tại ga", SwingConstants.CENTER);
         programLabel.setForeground(new Color(0, 112, 255));
