@@ -74,15 +74,17 @@ public class TrangDangNhap extends JFrame {
 
     // Login Panel
     public JPanel createLoginPanel() {
+        Border lineBorder = BorderFactory.createMatteBorder(0, 0, 1, 0, new Color(0, 112, 255));
+
         JPanel center = new JPanel();
         center.setBackground(new Color(255, 255, 255));
         center.setPreferredSize(new Dimension(550, 500));
         center.setLayout(new FlowLayout(FlowLayout.CENTER));
 
-        JPanel emptyL = new JPanel();
-        emptyL.setPreferredSize(new Dimension(550, 50));
-        emptyL.setOpaque(false);
-        center.add(emptyL);
+        JPanel emptyL1 = new JPanel();
+        emptyL1.setPreferredSize(new Dimension(550, 50));
+        emptyL1.setOpaque(false);
+        center.add(emptyL1);
 
         JLabel programLabel = new JLabel("Quản lý bán vé tại ga", SwingConstants.CENTER);
         programLabel.setForeground(new Color(0, 112, 255));
@@ -92,30 +94,35 @@ public class TrangDangNhap extends JFrame {
 
         JLabel nameLabel = new JLabel("Tên: ");
         nameLabel.setForeground(new Color(0, 112, 255));
-        nameLabel.setPreferredSize(new Dimension(150, 60));
+        nameLabel.setPreferredSize(new Dimension(150, 30));
         nameLabel.setFont(customFont.getRobotoMonoRegFont(12));
         center.add(nameLabel);
 
         nameField = new JTextField();
-        nameField.setForeground(new Color(255, 255, 255));
-        nameField.setBackground(new Color(0, 112, 255));
-        nameField.setBorder(null);
-        nameField.setPreferredSize(new Dimension(250, 50));
+        nameField.setForeground(new Color(0, 112, 255));
+        nameField.setBackground(new Color(255, 255, 255));
+        nameField.setPreferredSize(new Dimension(250, 30));
         nameField.setFont(customFont.getRobotoMonoRegFont(12));
+        nameField.setBorder(lineBorder);
         center.add(nameField);
+
+        JPanel emptyL2 = new JPanel();
+        emptyL2.setPreferredSize(new Dimension(550, 10));
+        emptyL2.setOpaque(false);
+        center.add(emptyL2);
 
         JLabel passLabel = new JLabel("Mật Khẩu: ");
         passLabel.setForeground(new Color(0, 112, 255));
-        passLabel.setPreferredSize(new Dimension(150, 60));
+        passLabel.setPreferredSize(new Dimension(150, 30));
         passLabel.setFont(customFont.getRobotoMonoRegFont(12));
         center.add(passLabel);
 
         password = new JTextField();
-        password.setForeground(new Color(255, 255, 255));
-        password.setBackground(new Color(0, 112, 255));
-        password.setBorder(null);
-        password.setPreferredSize(new Dimension(250, 50));
+        password.setForeground(new Color(0, 112, 255));
+        password.setBackground(new Color(255, 255, 255));
+        password.setPreferredSize(new Dimension(250, 30));
         password.setFont(customFont.getRobotoMonoRegFont(12));
+        password.setBorder(lineBorder);
         center.add(password);
 
         return center;
