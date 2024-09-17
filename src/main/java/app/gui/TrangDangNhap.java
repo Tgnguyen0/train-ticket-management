@@ -120,7 +120,7 @@ public class TrangDangNhap extends JFrame {
         password = new JTextField();
         password.setForeground(new Color(0, 112, 255));
         password.setBackground(new Color(255, 255, 255));
-        password.setPreferredSize(new Dimension(250, 30));
+        password.setPreferredSize(new Dimension(250, 31));
         password.setFont(customFont.getRobotoMonoRegFont(12));
         password.setBorder(lineBorder);
         center.add(password);
