@@ -39,8 +39,8 @@ public class TrangDangNhap extends JFrame implements MouseListener, ActionListen
         setSize(new Dimension(750, 535));
         setIconImage(icon.getImage());
         setLocationRelativeTo(null);
+
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setBackground(new Color(96, 69, 113));
         setResizable(false);
         getContentPane().setBackground(new Color(255, 255, 255));
         setLayout(new BorderLayout());
