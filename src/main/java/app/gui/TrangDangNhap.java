@@ -10,39 +10,36 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-
 import javax.swing.BorderFactory;
-import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
-
 import app.init_font.CustomFont;
 
 public class TrangDangNhap extends JFrame implements MouseListener, ActionListener {
     private JTextField nameField;
-    private JTextField password;
+    private JPasswordField passwordField; // Changed to JPasswordField
     private JButton loginButton;
     private JButton logoutButton;
     private JLabel forgetPassLabel;
+    private boolean isCorrect = false;
     private CustomFont customFont = new CustomFont();
 
     public TrangDangNhap() {
         ImageIcon icon = new ImageIcon("train_ticket_management_app/assets/icon.png"); // For vscode
         setTitle("Đăng Nhập");
         setSize(new Dimension(750, 535));
-
         setIconImage(icon.getImage());
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-
         setBackground(new Color(96, 69, 113));
         setResizable(false);
         getContentPane().setBackground(new Color(255, 255, 255));
@@ -60,23 +57,11 @@ public class TrangDangNhap extends JFrame implements MouseListener, ActionListen
         bannerE.setLayout(new BoxLayout(bannerE, BoxLayout.Y_AXIS));
 
         String imagePath = "train_ticket_management_app/assets/rua.png";
-
-        // Create an ImageIcon from the original image
         ImageIcon imageIcon = new ImageIcon(imagePath);
-
-        // Get the original image from the ImageIcon
         Image originalImage = imageIcon.getImage();
-
-        // Scale the image to the desired size
         Image scaledImage = originalImage.getScaledInstance(238, 500, Image.SCALE_SMOOTH);
-
-        // Create a new ImageIcon with the scaled image
         ImageIcon scaledIcon = new ImageIcon(scaledImage);
-
-        // Create a JLabel with the scaled image
         JLabel imageLabel = new JLabel(scaledIcon);
-
-        // Add the imageLabel to the banner panel
         bannerE.add(imageLabel);
         return bannerE;
     }
@@ -128,13 +113,13 @@ public class TrangDangNhap extends JFrame implements MouseListener, ActionListen
         passLabel.setFont(customFont.getRobotoMonoRegFont(Font.PLAIN, 12));
         center.add(passLabel);
 
-        password = new JTextField();
-        password.setForeground(new Color(0, 112, 255));
-        password.setBackground(new Color(255, 255, 255));
-        password.setPreferredSize(new Dimension(250, 31));
-        password.setFont(customFont.getRobotoMonoRegFont(Font.PLAIN, 12));
-        password.setBorder(lineBorder);
-        center.add(password);
+        passwordField = new JPasswordField(); // Changed to JPasswordField
+        passwordField.setForeground(new Color(0, 112, 255));
+        passwordField.setBackground(new Color(255, 255, 255));
+        passwordField.setPreferredSize(new Dimension(250, 31));
+        passwordField.setFont(customFont.getRobotoMonoRegFont(Font.PLAIN, 12));
+        passwordField.setBorder(lineBorder);
+        center.add(passwordField);
 
         JPanel emptyL3 = new JPanel();
         emptyL3.setPreferredSize(new Dimension(550, 15));
@@ -147,6 +132,7 @@ public class TrangDangNhap extends JFrame implements MouseListener, ActionListen
         loginButton.setFont(customFont.getRobotoMonoRegFont(Font.PLAIN, 12));
         loginButton.setPreferredSize(new Dimension(100, 30));
         loginButton.addMouseListener(this);
+        loginButton.addActionListener(this);
         center.add(loginButton);
 
         logoutButton = new JButton("Thoát");
@@ -170,6 +156,10 @@ public class TrangDangNhap extends JFrame implements MouseListener, ActionListen
         center.add(forgetPassLabel);
 
         return center;
+    }
+
+    public Boolean successfulLogin() {
+        return isCorrect;
     }
 
     public static void main(String[] args) {
@@ -200,9 +190,13 @@ public class TrangDangNhap extends JFrame implements MouseListener, ActionListen
 
         if (source == loginButton) {
             loginButton.setBackground(new Color(66, 186, 255));
-        } else if (source == logoutButton) {
+        }
+
+        if (source == logoutButton) {
             logoutButton.setBackground(new Color(66, 186, 255));
-        } else if (source == forgetPassLabel) {
+        }
+
+        if (source == forgetPassLabel) {
             forgetPassLabel.setForeground(new Color(66, 186, 255));
         }
     }
@@ -213,16 +207,37 @@ public class TrangDangNhap extends JFrame implements MouseListener, ActionListen
 
         if (source == loginButton) {
             loginButton.setBackground(new Color(0, 112, 255));
-        } else if (source == logoutButton) {
+        }
+
+        if (source == logoutButton) {
             logoutButton.setBackground(new Color(0, 112, 255));
-        } else if (source == forgetPassLabel) {
+        }
+
+        if (source == forgetPassLabel) {
             forgetPassLabel.setForeground(new Color(0, 112, 255));
         }
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        Object source = e.getSource();
 
+        if (source == loginButton) {
+            String username = nameField.getText();
+            String password = new String(passwordField.getPassword());
+
+            if (username.equals("Admin") && password.equals("123")) {
+                isCorrect = true;
+                this.setVisible(false);
+                TrangChu page = new TrangChu();
+                page.setVisible(true);
+            } else {
+                isCorrect = false;
+            }
+        }
+
+        if (source == logoutButton) {
+            System.exit(0);
+        }
     }
-
 }
