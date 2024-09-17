@@ -16,10 +16,11 @@ public class TrangChu extends JFrame {
         setIconImage(icon.getImage());
         setTitle("Trang Chủ");
 
+        getContentPane().setBackground(new Color(255, 255, 255));
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false);
-        getContentPane().setBackground(new Color(255, 255, 255));
         setLayout(new FlowLayout());
+
     }
 
 }

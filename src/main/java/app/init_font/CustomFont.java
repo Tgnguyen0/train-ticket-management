@@ -13,8 +13,7 @@ public class CustomFont {
 
         try {
             // Load the font file (assuming it's in the project directory)
-            // CSFONT-TwistyPixel
-            // FVF Fernando 08
+
             File[] fontFile = {
                     new File("train_ticket_management_app/font/RobotoMono-Regular.ttf"),
                     new File("train_ticket_management_app/font/RobotoMono-Bold.ttf"),
