@@ -15,12 +15,21 @@ public class CustomFont {
             // Load the font file (assuming it's in the project directory)
             // CSFONT-TwistyPixel
             // FVF Fernando 08
-            File[] fontFile = {
+            /*File[] fontFile = {
                     new File("train_ticket_management_app/font/RobotoMono-Regular.ttf"),
                     new File("train_ticket_management_app/font/RobotoMono-Bold.ttf"),
                     new File("train_ticket_management_app/font/RobotoMono-BoldItalic.ttf"),
                     new File("train_ticket_management_app/font/RobotoMono-Italic.ttf")
-            };
+            };*/
+
+            /* For eclipse, intelJ */
+              File[] fontFile = {
+              new File("font/RobotoMono-Regular.ttf"),
+              new File("font/RobotoMono-Bold.ttf"),
+              new File("font/RobotoMono-BoldItalic.ttf"),
+              new File("font/RobotoMono-Italic.ttf")
+              };
+
 
             // File fontFile = new File("font/FVF Fernando 08.ttf"); // for eclipse, intelj
             for (int i = 0; i < fontFile.length; i++) {

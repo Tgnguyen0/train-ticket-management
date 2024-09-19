@@ -34,7 +34,8 @@ public class TrangDangNhap extends JFrame implements MouseListener, ActionListen
     private CustomFont customFont = new CustomFont();
 
     public TrangDangNhap() {
-        ImageIcon icon = new ImageIcon("train_ticket_management_app/assets/icon.png"); // For vscode
+        //ImageIcon icon = new ImageIcon("train_ticket_management_app/assets/icon.png"); // For vscode
+        ImageIcon icon = new ImageIcon("D:/PhamV.Hinh/HocKi1_2024-2025/PTUD/train_ticket_management_app/assets/icon.png"); // for eclipse, Intelj
         setTitle("Đăng Nhập");
         setSize(new Dimension(750, 535));
         setIconImage(icon.getImage());
@@ -56,7 +57,8 @@ public class TrangDangNhap extends JFrame implements MouseListener, ActionListen
         bannerE.setPreferredSize(new Dimension(238, 500));
         bannerE.setLayout(new BoxLayout(bannerE, BoxLayout.Y_AXIS));
 
-        String imagePath = "train_ticket_management_app/assets/rua.png";
+        //String imagePath = "train_ticket_management_app/assets/rua.png";
+        String imagePath = "assets/rua.png";
         ImageIcon imageIcon = new ImageIcon(imagePath);
         Image originalImage = imageIcon.getImage();
         Image scaledImage = originalImage.getScaledInstance(238, 500, Image.SCALE_SMOOTH);
