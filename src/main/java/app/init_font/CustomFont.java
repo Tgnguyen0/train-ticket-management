@@ -57,7 +57,7 @@ public class CustomFont {
     }
 
     public Font getRobotoMonoRegFont(int style, float size) {
-        Font font = new Font("Arial", style, (int) size);
+        Font font = new Font("Serif", style, (int) size);
 
         if (style >= 0 && style < RobotoMonoRegFont.size()) {
             font = RobotoMonoRegFont.get(style).deriveFont(style, size);
