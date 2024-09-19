@@ -14,6 +14,7 @@ public class CustomFont {
         try {
             // Load the font file (assuming it's in the project directory)
 
+            /* For vscode */
             File[] fontFile = {
                     new File("train_ticket_management_app/font/RobotoMono-Regular.ttf"),
                     new File("train_ticket_management_app/font/RobotoMono-Bold.ttf"),
@@ -21,7 +22,16 @@ public class CustomFont {
                     new File("train_ticket_management_app/font/RobotoMono-Italic.ttf")
             };
 
-            // File fontFile = new File("font/FVF Fernando 08.ttf"); // for eclipse, intelj
+            /* For eclipse, intelJ */
+            /*
+             * File[] fontFile = {
+             * new File("train_ticket_management_app/font/RobotoMono-Regular.ttf"),
+             * new File("train_ticket_management_app/font/RobotoMono-Bold.ttf"),
+             * new File("train_ticket_management_app/font/RobotoMono-BoldItalic.ttf"),
+             * new File("train_ticket_management_app/font/RobotoMono-Italic.ttf")
+             * };
+             */
+
             for (int i = 0; i < fontFile.length; i++) {
                 Font font = Font.createFont(Font.TRUETYPE_FONT, fontFile[i]);
 
