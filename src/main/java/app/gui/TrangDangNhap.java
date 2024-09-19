@@ -22,20 +22,34 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
+
+import app.Controller.Action_TrangDangNhap;
 import app.init_font.CustomFont;
 
-public class TrangDangNhap extends JFrame implements MouseListener, ActionListener {
-    private JTextField nameField;
-    private JPasswordField passwordField; // Changed to JPasswordField
-    private JButton loginButton;
-    private JButton logoutButton;
-    private JLabel forgetPassLabel;
-    private boolean isCorrect = false;
-    private CustomFont customFont = new CustomFont();
+public class TrangDangNhap extends JFrame{
+    public JTextField nameField;
+    public JPasswordField passwordField;
+    public JButton loginButton;
+    public JButton logoutButton;
+    public JLabel forgetPassLabel;
+    public boolean isCorrect = false;
+    public CustomFont customFont = new CustomFont();
 
+    public  Color white = new Color(255, 255, 255);
+    public Color brandeisBlue = new Color(0, 112, 255);
+    public Color lightBlue = new Color(66, 186, 255);
+    public Border lineBorder = BorderFactory.createMatteBorder(0, 0, 1, 0, new Color(brandeisBlue.getRGB()));
+    public Border rightLineBorder = BorderFactory.createMatteBorder(0, 0, 0, 5, new Color(brandeisBlue.getRGB()));
+
+    /*
+        chứa các toàn bộ tham số action controller để xử lý actionlistener và mouselistener
+     */
+    private ActionListener ac;
+    private MouseListener mouse ;
     public TrangDangNhap() {
         //ImageIcon icon = new ImageIcon("train_ticket_management_app/assets/icon.png"); // For vscode
-        ImageIcon icon = new ImageIcon("D:/PhamV.Hinh/HocKi1_2024-2025/PTUD/train_ticket_management_app/assets/icon.png"); // for eclipse, Intelj
+        ImageIcon icon = new ImageIcon("assets/icon.png"); // for eclipse, Intelj
+        // ImageIcon icon = new ImageIcon("assets/icon.png"); // Cho eclipse, intelj
         setTitle("Đăng Nhập");
         setSize(new Dimension(750, 535));
         setIconImage(icon.getImage());
@@ -43,21 +57,27 @@ public class TrangDangNhap extends JFrame implements MouseListener, ActionListen
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false);
-        getContentPane().setBackground(new Color(255, 255, 255));
+        getContentPane().setBackground(new Color(white.getRGB()));
         setLayout(new BorderLayout());
 
-        add(createLoginPanel(), BorderLayout.CENTER);
-        add(createBannerPanel(), BorderLayout.EAST);
+        // add actionlistener và mouselistener cho các button
+        this.ac = new Action_TrangDangNhap(this);
+        this.mouse = new Action_TrangDangNhap(this);
+
+        createLoginPanel();
+        createBannerPanel();
+
     }
 
     // Banner Panel
-    public JPanel createBannerPanel() {
+    public void createBannerPanel() {
         JPanel bannerE = new JPanel();
         bannerE.setOpaque(false);
         bannerE.setPreferredSize(new Dimension(238, 500));
         bannerE.setLayout(new BoxLayout(bannerE, BoxLayout.Y_AXIS));
 
         //String imagePath = "train_ticket_management_app/assets/rua.png";
+        /* cho elipse, intelj */
         String imagePath = "assets/rua.png";
         ImageIcon imageIcon = new ImageIcon(imagePath);
         Image originalImage = imageIcon.getImage();
@@ -65,16 +85,13 @@ public class TrangDangNhap extends JFrame implements MouseListener, ActionListen
         ImageIcon scaledIcon = new ImageIcon(scaledImage);
         JLabel imageLabel = new JLabel(scaledIcon);
         bannerE.add(imageLabel);
-        return bannerE;
+        add(bannerE, BorderLayout.EAST);
     }
 
     // Login Panel
-    public JPanel createLoginPanel() {
-        Border lineBorder = BorderFactory.createMatteBorder(0, 0, 1, 0, new Color(0, 112, 255));
-        Border rightLineBorder = BorderFactory.createMatteBorder(0, 0, 0, 5, new Color(0, 112, 255));
-
+    public void createLoginPanel() {
         JPanel center = new JPanel();
-        center.setBackground(new Color(255, 255, 255));
+        center.setBackground(new Color(white.getRGB()));
         center.setPreferredSize(new Dimension(550, 500));
         center.setLayout(new FlowLayout(FlowLayout.CENTER));
         center.setBorder(rightLineBorder);
@@ -84,80 +101,96 @@ public class TrangDangNhap extends JFrame implements MouseListener, ActionListen
         emptyL1.setOpaque(false);
         center.add(emptyL1);
 
+        // Tạo tiêu đề programLabel
         JLabel programLabel = new JLabel("Quản lý bán vé tại ga", SwingConstants.CENTER);
-        programLabel.setForeground(new Color(0, 112, 255));
+        programLabel.setForeground(new Color(brandeisBlue.getRGB()));
         programLabel.setPreferredSize(new Dimension(550, 100));
         programLabel.setFont(customFont.getRobotoMonoRegFont(Font.BOLD, 20));
         center.add(programLabel);
 
+        // Tạo tiêu đề nameLabel
         JLabel nameLabel = new JLabel("Tên Đăng Nhập: ");
-        nameLabel.setForeground(new Color(0, 112, 255));
+        nameLabel.setForeground(new Color(brandeisBlue.getRGB()));
         nameLabel.setPreferredSize(new Dimension(150, 30));
         nameLabel.setFont(customFont.getRobotoMonoRegFont(Font.PLAIN, 12));
         center.add(nameLabel);
 
+        // Tạo thanh tên ngườ dùng nameField
         nameField = new JTextField();
-        nameField.setForeground(new Color(0, 112, 255));
-        nameField.setBackground(new Color(255, 255, 255));
+        nameField.setForeground(new Color(brandeisBlue.getRGB()));
+        nameField.setBackground(new Color(white.getRGB()));
         nameField.setPreferredSize(new Dimension(250, 30));
         nameField.setFont(customFont.getRobotoMonoRegFont(Font.PLAIN, 12));
         nameField.setBorder(lineBorder);
         center.add(nameField);
 
+        // Cách dòng hoàn chỉnh
         JPanel emptyL2 = new JPanel();
         emptyL2.setPreferredSize(new Dimension(550, 10));
         emptyL2.setOpaque(false);
         center.add(emptyL2);
 
+        // Tạo tiêu đề passLabel
         JLabel passLabel = new JLabel("Mật Khẩu: ");
-        passLabel.setForeground(new Color(0, 112, 255));
+        passLabel.setForeground(new Color(brandeisBlue.getRGB()));
         passLabel.setPreferredSize(new Dimension(150, 30));
         passLabel.setFont(customFont.getRobotoMonoRegFont(Font.PLAIN, 12));
         center.add(passLabel);
 
-        passwordField = new JPasswordField(); // Changed to JPasswordField
-        passwordField.setForeground(new Color(0, 112, 255));
-        passwordField.setBackground(new Color(255, 255, 255));
+        // Tạo thanh mật khẩu passwordField
+        passwordField = new JPasswordField();
+        passwordField.setForeground(new Color(brandeisBlue.getRGB()));
+        passwordField.setBackground(new Color(white.getRGB()));
         passwordField.setPreferredSize(new Dimension(250, 31));
         passwordField.setFont(customFont.getRobotoMonoRegFont(Font.PLAIN, 12));
         passwordField.setBorder(lineBorder);
         center.add(passwordField);
 
+        // Cách dòng hoàn chỉnh
         JPanel emptyL3 = new JPanel();
         emptyL3.setPreferredSize(new Dimension(550, 15));
         emptyL3.setOpaque(false);
         center.add(emptyL3);
 
+        // Tạo nút loginButton
         loginButton = new JButton("Đăng Nhập");
-        loginButton.setForeground(new Color(255, 255, 255));
-        loginButton.setBackground(new Color(0, 112, 255));
         loginButton.setFont(customFont.getRobotoMonoRegFont(Font.PLAIN, 12));
         loginButton.setPreferredSize(new Dimension(100, 30));
-        loginButton.addMouseListener(this);
-        loginButton.addActionListener(this);
+        loginButton.setForeground(new Color(white.getRGB()));
+        loginButton.setBackground(new Color(brandeisBlue.getRGB()));
+        loginButton.setFocusPainted(false); // Bỏ viền khi click (focus)
+        loginButton.setBorderPainted(false); // Bỏ viền của nút
+        loginButton.addActionListener(ac);
+        loginButton.addMouseListener(mouse);
         center.add(loginButton);
 
+        // Tạo nút logoutButton
         logoutButton = new JButton("Thoát");
-        logoutButton.setForeground(new Color(255, 255, 255));
-        logoutButton.setBackground(new Color(0, 112, 255));
         logoutButton.setFont(customFont.getRobotoMonoRegFont(Font.PLAIN, 12));
         logoutButton.setPreferredSize(new Dimension(100, 30));
-        logoutButton.addMouseListener(this);
+        logoutButton.setForeground(new Color(white.getRGB()));
+        logoutButton.setBackground(new Color(brandeisBlue.getRGB()));
+        logoutButton.setFocusPainted(false); // Bỏ viền khi click (focus)
+        logoutButton.setBorderPainted(false); // Bỏ viền của nút
+        logoutButton.addActionListener(ac);
+        logoutButton.addMouseListener(mouse);
         center.add(logoutButton);
 
+        // Cách dòng hoàn chỉnh
         JPanel emptyL4 = new JPanel();
         emptyL4.setPreferredSize(new Dimension(550, 20));
         emptyL4.setOpaque(false);
         center.add(emptyL4);
 
+        // Tạo tiêu đề forgetPassLabel
         forgetPassLabel = new JLabel("Quên Mật Khẩu ?", SwingConstants.CENTER);
-        forgetPassLabel.setForeground(new Color(0, 112, 255));
+        forgetPassLabel.setForeground(new Color(brandeisBlue.getRGB()));
         forgetPassLabel.setPreferredSize(new Dimension(550, 30));
         forgetPassLabel.setFont(customFont.getRobotoMonoRegFont(Font.ITALIC, 14));
-        forgetPassLabel.addMouseListener(this);
+        forgetPassLabel.addMouseListener(mouse);
         center.add(forgetPassLabel);
 
-        return center;
+        add(center, BorderLayout.CENTER);
     }
 
     public Boolean successfulLogin() {
@@ -169,77 +202,5 @@ public class TrangDangNhap extends JFrame implements MouseListener, ActionListen
             TrangDangNhap loginPage = new TrangDangNhap();
             loginPage.setVisible(true);
         });
-    }
-
-    @Override
-    public void mouseClicked(MouseEvent e) {
-        throw new UnsupportedOperationException("Unimplemented method 'mouseClicked'");
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-        throw new UnsupportedOperationException("Unimplemented method 'mousePressed'");
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-        throw new UnsupportedOperationException("Unimplemented method 'mouseReleased'");
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-        Object source = e.getSource();
-
-        if (source == loginButton) {
-            loginButton.setBackground(new Color(66, 186, 255));
-        }
-
-        if (source == logoutButton) {
-            logoutButton.setBackground(new Color(66, 186, 255));
-        }
-
-        if (source == forgetPassLabel) {
-            forgetPassLabel.setForeground(new Color(66, 186, 255));
-        }
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-        Object source = e.getSource();
-
-        if (source == loginButton) {
-            loginButton.setBackground(new Color(0, 112, 255));
-        }
-
-        if (source == logoutButton) {
-            logoutButton.setBackground(new Color(0, 112, 255));
-        }
-
-        if (source == forgetPassLabel) {
-            forgetPassLabel.setForeground(new Color(0, 112, 255));
-        }
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        Object source = e.getSource();
-
-        if (source == loginButton) {
-            String username = nameField.getText();
-            String password = new String(passwordField.getPassword());
-
-            if (username.equals("Admin") && password.equals("123")) {
-                isCorrect = true;
-                this.setVisible(false);
-                TrangChu page = new TrangChu();
-                page.setVisible(true);
-            } else {
-                isCorrect = false;
-            }
-        }
-
-        if (source == logoutButton) {
-            System.exit(0);
-        }
     }
 }
