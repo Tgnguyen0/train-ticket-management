@@ -52,11 +52,20 @@ public class TrangDangNhap extends JFrame{
         // ImageIcon icon = new ImageIcon("assets/icon.png"); // Cho eclipse, intelj
         setTitle("Đăng Nhập");
         setSize(new Dimension(750, 535));
+
+        // set icon image cho app
         setIconImage(icon.getImage());
+
+        // setting vị trí của app luôn nằm ở giữa
         setLocationRelativeTo(null);
 
+        // close app đồng thời cũng sẽ đóng cả trình duyệt
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+
+        // không cho phép thay đổi kích thước của màn hình
         setResizable(false);
+
+        // cài đăt cho màu nền của app trở thành màu trắng
         getContentPane().setBackground(new Color(white.getRGB()));
         setLayout(new BorderLayout());
 
