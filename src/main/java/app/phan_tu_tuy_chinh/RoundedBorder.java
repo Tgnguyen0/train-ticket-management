@@ -1,4 +1,4 @@
-package app.custom_component;
+package app.phan_tu_tuy_chinh;
 
 import java.awt.Component;
 import java.awt.Graphics;

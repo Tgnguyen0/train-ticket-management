@@ -40,11 +40,11 @@ public class TrangDangNhap extends JFrame {
     public Border duongVienPhai = BorderFactory.createMatteBorder(0, 0, 0, 5, new Color(xanhBrandeis.getRGB()));
 
     /*
-     * chứa các toàn bộ tham số action controller để xử lý actionlistener và
+     * chứa các toàn bộ tham số hanhDongtion controller để xử lý actionlistener và
      * mouselistener
      */
-    private ActionListener ac;
-    private MouseListener mouse;
+    private ActionListener hanhDong;
+    private MouseListener thaoTacChuot;
 
     public TrangDangNhap() {
         ImageIcon icon = new ImageIcon("train_ticket_management_app/assets/icon.png"); // For vscode
@@ -59,9 +59,9 @@ public class TrangDangNhap extends JFrame {
         getContentPane().setBackground(new Color(trang.getRGB()));
         setLayout(new BorderLayout());
 
-        // add actionlistener và mouselistener cho các button
-        this.ac = new HanhDong_TrangDangNhap(this);
-        this.mouse = new HanhDong_TrangDangNhap(this);
+        // add ActionListener và mouselistener cho các button
+        this.hanhDong = new HanhDong_TrangDangNhap(this);
+        this.thaoTacChuot = new HanhDong_TrangDangNhap(this);
 
         createLoginPanel();
         createBannerPanel();
@@ -70,10 +70,10 @@ public class TrangDangNhap extends JFrame {
 
     // Banner Panel
     public void createBannerPanel() {
-        JPanel bannerE = new JPanel();
-        bannerE.setOpaque(false);
-        bannerE.setPreferredSize(new Dimension(238, 500));
-        bannerE.setLayout(new BoxLayout(bannerE, BoxLayout.Y_AXIS));
+        JPanel bieuNgu = new JPanel();
+        bieuNgu.setOpaque(false);
+        bieuNgu.setPreferredSize(new Dimension(238, 500));
+        bieuNgu.setLayout(new BoxLayout(bieuNgu, BoxLayout.Y_AXIS));
 
         String imagePath = "train_ticket_management_app/assets/rua.png"; // for vscode
         /* cho elipse, intelj */
@@ -83,36 +83,36 @@ public class TrangDangNhap extends JFrame {
         Image scaledImage = originalImage.getScaledInstance(238, 500, Image.SCALE_SMOOTH);
         ImageIcon scaledIcon = new ImageIcon(scaledImage);
         JLabel imageLabel = new JLabel(scaledIcon);
-        bannerE.add(imageLabel);
-        add(bannerE, BorderLayout.EAST);
+        bieuNgu.add(imageLabel);
+        add(bieuNgu, BorderLayout.EAST);
     }
 
     // Login Panel
     public void createLoginPanel() {
-        JPanel center = new JPanel();
-        center.setBackground(new Color(trang.getRGB()));
-        center.setPreferredSize(new Dimension(550, 500));
-        center.setLayout(new FlowLayout(FlowLayout.CENTER));
-        center.setBorder(duongVienPhai);
+        JPanel giua = new JPanel();
+        giua.setBackground(new Color(trang.getRGB()));
+        giua.setPreferredSize(new Dimension(550, 500));
+        giua.setLayout(new FlowLayout(FlowLayout.CENTER));
+        giua.setBorder(duongVienPhai);
 
-        JPanel emptyL1 = new JPanel();
-        emptyL1.setPreferredSize(new Dimension(550, 50));
-        emptyL1.setOpaque(false);
-        center.add(emptyL1);
+        JPanel cachDong1 = new JPanel();
+        cachDong1.setPreferredSize(new Dimension(550, 50));
+        cachDong1.setOpaque(false);
+        giua.add(cachDong1);
 
-        // Tạo tiêu đề programLabel
-        JLabel programLabel = new JLabel("Quản lý bán vé tại ga", SwingConstants.CENTER);
-        programLabel.setForeground(new Color(xanhBrandeis.getRGB()));
-        programLabel.setPreferredSize(new Dimension(550, 100));
-        programLabel.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.BOLD, 20));
-        center.add(programLabel);
+        // Tạo tiêu đề tieuDeChuongTrinh
+        JLabel tieuDeChuongTrinh = new JLabel("Quản lý bán vé tại ga", SwingConstants.CENTER);
+        tieuDeChuongTrinh.setForeground(new Color(xanhBrandeis.getRGB()));
+        tieuDeChuongTrinh.setPreferredSize(new Dimension(550, 100));
+        tieuDeChuongTrinh.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.BOLD, 20));
+        giua.add(tieuDeChuongTrinh);
 
-        // Tạo tiêu đề nameLabel
-        JLabel nameLabel = new JLabel("Tên Đăng Nhập: ");
-        nameLabel.setForeground(new Color(xanhBrandeis.getRGB()));
-        nameLabel.setPreferredSize(new Dimension(150, 30));
-        nameLabel.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, 12));
-        center.add(nameLabel);
+        // Tạo tiêu đề tieuDeTen
+        JLabel tieuDeTen = new JLabel("Tên Đăng Nhập: ");
+        tieuDeTen.setForeground(new Color(xanhBrandeis.getRGB()));
+        tieuDeTen.setPreferredSize(new Dimension(150, 30));
+        tieuDeTen.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, 12));
+        giua.add(tieuDeTen);
 
         // Tạo thanh tên ngườ dùng truongTen
         truongTen = new JTextField();
@@ -121,20 +121,20 @@ public class TrangDangNhap extends JFrame {
         truongTen.setPreferredSize(new Dimension(250, 30));
         truongTen.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, 12));
         truongTen.setBorder(duongVien);
-        center.add(truongTen);
+        giua.add(truongTen);
 
         // Cách dòng hoàn chỉnh
-        JPanel emptyL2 = new JPanel();
-        emptyL2.setPreferredSize(new Dimension(550, 10));
-        emptyL2.setOpaque(false);
-        center.add(emptyL2);
+        JPanel cachDong2 = new JPanel();
+        cachDong2.setPreferredSize(new Dimension(550, 10));
+        cachDong2.setOpaque(false);
+        giua.add(cachDong2);
 
         // Tạo tiêu đề passLabel
         JLabel passLabel = new JLabel("Mật Khẩu: ");
         passLabel.setForeground(new Color(xanhBrandeis.getRGB()));
         passLabel.setPreferredSize(new Dimension(150, 30));
         passLabel.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, 12));
-        center.add(passLabel);
+        giua.add(passLabel);
 
         // Tạo thanh mật khẩu truongMatKhau
         truongMatKhau = new JPasswordField();
@@ -143,13 +143,13 @@ public class TrangDangNhap extends JFrame {
         truongMatKhau.setPreferredSize(new Dimension(250, 31));
         truongMatKhau.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, 12));
         truongMatKhau.setBorder(duongVien);
-        center.add(truongMatKhau);
+        giua.add(truongMatKhau);
 
         // Cách dòng hoàn chỉnh
-        JPanel emptyL3 = new JPanel();
-        emptyL3.setPreferredSize(new Dimension(550, 15));
-        emptyL3.setOpaque(false);
-        center.add(emptyL3);
+        JPanel cachDong3 = new JPanel();
+        cachDong3.setPreferredSize(new Dimension(550, 15));
+        cachDong3.setOpaque(false);
+        giua.add(cachDong3);
 
         // Tạo nút nutDangNhap
         nutDangNhap = new JButton("Đăng Nhập");
@@ -159,9 +159,9 @@ public class TrangDangNhap extends JFrame {
         nutDangNhap.setBackground(new Color(xanhBrandeis.getRGB()));
         nutDangNhap.setFocusPainted(false); // Bỏ viền khi click (focus)
         nutDangNhap.setBorderPainted(false); // Bỏ viền của nút
-        nutDangNhap.addActionListener(ac);
-        nutDangNhap.addMouseListener(mouse);
-        center.add(nutDangNhap);
+        nutDangNhap.addActionListener(hanhDong);
+        nutDangNhap.addMouseListener(thaoTacChuot);
+        giua.add(nutDangNhap);
 
         // Tạo nút nutDangXuat
         nutDangXuat = new JButton("Thoát");
@@ -171,31 +171,31 @@ public class TrangDangNhap extends JFrame {
         nutDangXuat.setBackground(new Color(xanhBrandeis.getRGB()));
         nutDangXuat.setFocusPainted(false); // Bỏ viền khi click (focus)
         nutDangXuat.setBorderPainted(false); // Bỏ viền của nút
-        nutDangXuat.addActionListener(ac);
-        nutDangXuat.addMouseListener(mouse);
-        center.add(nutDangXuat);
+        nutDangXuat.addActionListener(hanhDong);
+        nutDangXuat.addMouseListener(thaoTacChuot);
+        giua.add(nutDangXuat);
 
         // Cách dòng hoàn chỉnh
-        JPanel emptyL4 = new JPanel();
-        emptyL4.setPreferredSize(new Dimension(550, 20));
-        emptyL4.setOpaque(false);
-        center.add(emptyL4);
+        JPanel cachDong4 = new JPanel();
+        cachDong4.setPreferredSize(new Dimension(550, 20));
+        cachDong4.setOpaque(false);
+        giua.add(cachDong4);
 
         // Tạo tiêu đề nhanQuenMatKhau
         nhanQuenMatKhau = new JLabel("Quên Mật Khẩu ?", SwingConstants.CENTER);
         nhanQuenMatKhau.setForeground(new Color(xanhBrandeis.getRGB()));
         nhanQuenMatKhau.setPreferredSize(new Dimension(550, 30));
         nhanQuenMatKhau.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.ITALIC, 14));
-        nhanQuenMatKhau.addMouseListener(mouse);
-        center.add(nhanQuenMatKhau);
+        nhanQuenMatKhau.addMouseListener(thaoTacChuot);
+        giua.add(nhanQuenMatKhau);
 
-        add(center, BorderLayout.CENTER);
+        add(giua, BorderLayout.CENTER);
     }
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            TrangDangNhap loginPage = new TrangDangNhap();
-            loginPage.setVisible(true);
+            TrangDangNhap trangDangNhap = new TrangDangNhap();
+            trangDangNhap.setVisible(true);
         });
     }
 }

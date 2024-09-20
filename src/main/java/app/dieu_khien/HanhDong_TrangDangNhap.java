@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-import app.giao_dien.TrangChu;
+import app.giao_dien.TrangDinhHuong;
 import app.giao_dien.TrangDangNhap;
 
 public class HanhDong_TrangDangNhap implements ActionListener, MouseListener {
@@ -28,7 +28,7 @@ public class HanhDong_TrangDangNhap implements ActionListener, MouseListener {
             if (username.equals("Admin") && password.equals("123")) {
                 this.trangDangNhap.matKhauDung = true;
                 this.trangDangNhap.setVisible(false);
-                TrangChu page = new TrangChu();
+                TrangDinhHuong page = new TrangDinhHuong();
                 page.setVisible(true);
             } else {
                 this.trangDangNhap.matKhauDung = false;
