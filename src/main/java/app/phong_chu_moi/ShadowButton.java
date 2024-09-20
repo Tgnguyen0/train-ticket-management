@@ -1,4 +1,4 @@
-package app.phong_moi;
+package app.phong_chu_moi;
 
 import javax.swing.*;
 import java.awt.*;

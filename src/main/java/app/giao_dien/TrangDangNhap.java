@@ -22,7 +22,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
 
 import app.dieu_khien.HanhDong_TrangDangNhap;
-import app.phong_moi.PhongChuMoi;
+import app.phong_chu_moi.PhongChuMoi;
 
 public class TrangDangNhap extends JFrame {
     public JTextField truongTen;
