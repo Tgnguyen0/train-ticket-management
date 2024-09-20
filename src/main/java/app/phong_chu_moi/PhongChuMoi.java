@@ -13,22 +13,23 @@ public class PhongChuMoi {
 
         try {
             /* For vscode */
-            File[] taiLieuPhong = {
-                    new File("train_ticket_management_app/font/RobotoMono-Regular.ttf"),
-                    new File("train_ticket_management_app/font/RobotoMono-Bold.ttf"),
-                    new File("train_ticket_management_app/font/RobotoMono-BoldItalic.ttf"),
-                    new File("train_ticket_management_app/font/RobotoMono-Italic.ttf")
-            };
+//            File[] taiLieuPhong = {
+//                    new File("train_ticket_management_app/font/RobotoMono-Regular.ttf"),
+//                    new File("train_ticket_management_app/font/RobotoMono-Bold.ttf"),
+//                    new File("train_ticket_management_app/font/RobotoMono-BoldItalic.ttf"),
+//                    new File("train_ticket_management_app/font/RobotoMono-Italic.ttf")
+//            };
 
             /* For eclipse, intelJ */
-            /*
-             * File[] taiLieuPhong = {
-             * new File("train_ticket_management_app/font/RobotoMono-Regular.ttf"),
-             * new File("train_ticket_management_app/font/RobotoMono-Bold.ttf"),
-             * new File("train_ticket_management_app/font/RobotoMono-BoldItalic.ttf"),
-             * new File("train_ticket_management_app/font/RobotoMono-Italic.ttf")
-             * };
-             */
+
+
+             File[] taiLieuPhong = {
+              new File("font/RobotoMono-Regular.ttf"),
+              new File("font/RobotoMono-Bold.ttf"),
+              new File("font/RobotoMono-BoldItalic.ttf"),
+              new File("font/RobotoMono-Italic.ttf")
+              };
+
 
             for (int i = 0; i < taiLieuPhong.length; i++) {
                 Font phong = Font.createFont(Font.TRUETYPE_FONT, taiLieuPhong[i]);
@@ -41,7 +42,7 @@ public class PhongChuMoi {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            // this.phongRobotoMonoReg = new Font("Arial", Font.PLAIN, 12);
+//             this.phongRobotoMonoReg = new Font("Arial", Font.PLAIN, 12);
         }
     }
 

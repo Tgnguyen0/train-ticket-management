@@ -51,7 +51,7 @@ public class TrangDinhHuong extends JFrame {
 
     // Function tạo GUI chính
     public TrangDinhHuong() {
-        ImageIcon icon = new ImageIcon("train_ticket_management_app/assets/icon.png"); // Cho vscode
+        ImageIcon icon = new ImageIcon("assets/icon.png"); // Cho vscode
         // ImageIcon icon = new ImageIcon("asset/icon.png"); // Cho eclipse, Intelj
         setTitle("Quản lý bán vé tại ga");
         setSize(new Dimension(1200, 700));
@@ -172,7 +172,7 @@ public class TrangDinhHuong extends JFrame {
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
 
-                String imagePath = "train_ticket_management_app/assets/icon.png"; // Cho vscode
+                String imagePath = "assets/icon.png"; // Cho vscode
                 // String imagePath = "assets/icon.png"; // Cho intelJ, eclipse
 
                 File imageFile = new File(imagePath);

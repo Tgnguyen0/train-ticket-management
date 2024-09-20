@@ -47,7 +47,7 @@ public class TrangDangNhap extends JFrame {
     private MouseListener thaoTacChuot;
 
     public TrangDangNhap() {
-        ImageIcon icon = new ImageIcon("train_ticket_management_app/assets/icon.png"); // For vscode
+        ImageIcon icon = new ImageIcon("assets/icon.png"); // For vscode
         // ImageIcon icon = new ImageIcon("assets/icon.png"); // for eclipse, Intelj
         setTitle("Đăng Nhập");
         setSize(new Dimension(750, 535));
@@ -75,7 +75,7 @@ public class TrangDangNhap extends JFrame {
         bieuNgu.setPreferredSize(new Dimension(238, 500));
         bieuNgu.setLayout(new BoxLayout(bieuNgu, BoxLayout.Y_AXIS));
 
-        String imagePath = "train_ticket_management_app/assets/rua.png"; // for vscode
+        String imagePath = "assets/rua.png"; // for vscode
         /* cho elipse, intelj */
         // String imagePath = "assets/rua.png";
         ImageIcon imageIcon = new ImageIcon(imagePath);
