@@ -40,8 +40,8 @@ public class TrangDinhHuong extends JFrame {
     private Color xanhBrandeis = new Color(0, 112, 255);
     private Color xanhNhat = new Color(66, 186, 255);
     private int charSize = 13;
-    private int doCaoNut = 50;
-    private int doRongNut = 160;
+    private int chieuDaiNut = 160;
+    private int chieuRongNut = 50;
     private PhongChuMoi phongTuyChinh = new PhongChuMoi();
     private Border vienNhat = BorderFactory.createMatteBorder(0, 0, 1, 0, new Color(xanhNhat.getRGB()));
     private Border vienDam = BorderFactory.createMatteBorder(0, 0, 1, 0, new Color(xanhBrandeis.getRGB()));
@@ -72,7 +72,7 @@ public class TrangDinhHuong extends JFrame {
 
     public void taoThanhDinhHuong() {
         JPanel thanhDinhHuong = new JPanel();
-        thanhDinhHuong.setPreferredSize(new Dimension(1200, doCaoNut));
+        thanhDinhHuong.setPreferredSize(new Dimension(1200, chieuRongNut));
         thanhDinhHuong.setBackground(new Color(trang.getRGB()));
         // thanhDinhHuong.setBackground(Color.RED);
         thanhDinhHuong.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
@@ -80,7 +80,7 @@ public class TrangDinhHuong extends JFrame {
 
         // Tạo Nút dẫn đến trang chủ
         nutTrangChu = new BongCuaChu("Trang Chủ");
-        nutTrangChu.setPreferredSize(new Dimension(doRongNut, doCaoNut));
+        nutTrangChu.setPreferredSize(new Dimension(chieuDaiNut, chieuRongNut));
         nutTrangChu.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, charSize));
         nutTrangChu.setForeground(new Color(xanhBrandeis.getRGB()));
         nutTrangChu.setBackground(new Color(trang.getRGB()));
@@ -93,7 +93,7 @@ public class TrangDinhHuong extends JFrame {
 
         // Tạo Nút đến trang bán hàng
         nutVe = new BongCuaChu("Đặt Vé");
-        nutVe.setPreferredSize(new Dimension(doRongNut, doCaoNut));
+        nutVe.setPreferredSize(new Dimension(chieuDaiNut, chieuRongNut));
         nutVe.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, charSize));
         nutVe.setForeground(new Color(xanhBrandeis.getRGB()));
         nutVe.setBackground(new Color(trang.getRGB()));
@@ -106,7 +106,7 @@ public class TrangDinhHuong extends JFrame {
 
         // Tạo Nút đến trang hóa đơn
         nutHoaDon = new BongCuaChu("Hóa Đơn");
-        nutHoaDon.setPreferredSize(new Dimension(doRongNut, doCaoNut));
+        nutHoaDon.setPreferredSize(new Dimension(chieuDaiNut, chieuRongNut));
         nutHoaDon.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, charSize));
         nutHoaDon.setForeground(new Color(xanhBrandeis.getRGB()));
         nutHoaDon.setBackground(new Color(trang.getRGB()));
@@ -120,7 +120,7 @@ public class TrangDinhHuong extends JFrame {
 
         // Tạo Nút đến trang khách hàng
         nutKhachHang = new BongCuaChu("Khuyến Mại");
-        nutKhachHang.setPreferredSize(new Dimension(doRongNut, doCaoNut));
+        nutKhachHang.setPreferredSize(new Dimension(chieuDaiNut, chieuRongNut));
         nutKhachHang.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, charSize));
         nutKhachHang.setForeground(new Color(xanhBrandeis.getRGB()));
         nutKhachHang.setBackground(new Color(trang.getRGB()));
@@ -133,7 +133,7 @@ public class TrangDinhHuong extends JFrame {
 
         // Tạo Nút đến trang thống kê
         nutThongKe = new BongCuaChu("Thống Kê");
-        nutThongKe.setPreferredSize(new Dimension(doRongNut, doCaoNut));
+        nutThongKe.setPreferredSize(new Dimension(chieuDaiNut, chieuRongNut));
         nutThongKe.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, charSize));
         nutThongKe.setForeground(new Color(xanhBrandeis.getRGB()));
         nutThongKe.setBackground(new Color(trang.getRGB()));
@@ -146,7 +146,7 @@ public class TrangDinhHuong extends JFrame {
 
         // Tạo Nút đến trang sản phẩm
         nutGioiThieu = new BongCuaChu("Giới Thiệu");
-        nutGioiThieu.setPreferredSize(new Dimension(doRongNut, doCaoNut));
+        nutGioiThieu.setPreferredSize(new Dimension(chieuDaiNut, chieuRongNut));
         nutGioiThieu.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, charSize));
         nutGioiThieu.setForeground(new Color(xanhBrandeis.getRGB()));
         nutGioiThieu.setBackground(new Color(trang.getRGB()));
@@ -159,12 +159,12 @@ public class TrangDinhHuong extends JFrame {
 
         // Tạo Trang người dùng
         JPanel thanhNguoiDung = new JPanel();
-        thanhNguoiDung.setPreferredSize(new Dimension(100, doCaoNut));
+        thanhNguoiDung.setPreferredSize(new Dimension(1200, chieuRongNut));
         thanhNguoiDung.setBackground(new Color(trang.getRGB()));
         thanhNguoiDung.setBorder(this.vienDam);
         thanhNguoiDung.setLayout(new FlowLayout(FlowLayout.RIGHT, 0, 5));
 
-        double doCaoTK = doCaoNut * 0.8;
+        double doCaoTK = chieuRongNut * 0.8;
 
         // Tạo Nút đến trang nhân viên
         nutNhanVien = new JButton() {
@@ -210,20 +210,23 @@ public class TrangDinhHuong extends JFrame {
     }
 
     public void taoTrangChua() {
-        // Khởi tạo trang chứa
+        // Khởi tạo trang chứa các trang khác
         this.trangChua = new JPanel();
-        this.trangChua.setPreferredSize(new Dimension(200, 200));
-        this.trangChua.setLayout(new CardLayout());
+        this.trangChua.setPreferredSize(new Dimension(1200, 600));
+        this.trangChua.setBackground(Color.red);
+        this.trangChua.setLayout(new BorderLayout());
 
-        this.trangChu = new TrangChu(); // Khởi tạo trang Trang chủ
+        // Khởi tạo trang Trang chủ
+        this.trangChu = new TrangChu();
+        this.trangChua.add(trangChu, BorderLayout.CENTER);
 
-        trangChua.add(trangChu, "Trang Chủ");
+        add(this.trangChua);
     }
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            TrangDinhHuong trangChu = new TrangDinhHuong();
-            trangChu.setVisible(true);
+            TrangDinhHuong trangDinhHuong = new TrangDinhHuong();
+            trangDinhHuong.setVisible(true);
         });
     }
 }
