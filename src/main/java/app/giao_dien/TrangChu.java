@@ -15,7 +15,6 @@ public class TrangChu extends JPanel {
     public TrangChu() {
         setPreferredSize(new Dimension(1200, 600)); // Default size
         setLayout(new BorderLayout()); // Use BorderLayout for proper resizing
-        setVisible(true);
         setBackground(Color.red); // Background color, if the image doesn't fill the space
         setFont(this.phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, 13));
     }
