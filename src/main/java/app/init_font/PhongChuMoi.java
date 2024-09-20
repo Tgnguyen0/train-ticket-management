@@ -45,8 +45,13 @@ public class PhongChuMoi {
         }
     }
 
+<<<<<<< HEAD:src/main/java/app/init_font/PhongChuMoi.java
     public Font layPhongRobotoMonoReg(int style, float size) {
         Font font = new Font("Arial", style, (int) size);
+=======
+    public Font getRobotoMonoRegFont(int style, float size) {
+        Font font = new Font("Serif", style, (int) size);
+>>>>>>> ab244a938eef000bb1e9e3d6e79e7031c9455586:src/main/java/app/init_font/CustomFont.java
 
         if (style >= 0 && style < phongRobotoMonoReg.size()) {
             font = phongRobotoMonoReg.get(style).deriveFont(style, size);

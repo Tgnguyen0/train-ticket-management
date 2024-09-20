@@ -12,23 +12,31 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.Border;
 
+<<<<<<< HEAD:src/main/java/app/giao_dien/TrangChu.java
 import app.custom_component.RoundedBorder;
 import app.init_font.PhongChuMoi;
+=======
+import app.Controller.Action_TrangChu;
+import app.Controller.Action_TrangDangNhap;
+import app.init_font.CustomFont;
+import app.init_font.ShadowButton;
+>>>>>>> ab244a938eef000bb1e9e3d6e79e7031c9455586:src/main/java/app/gui/TrangChu.java
 
 // @important
 // old Color: 161, 103, 37
 // old OnClick Color: 196, 125, 44
 
-public class TrangChu extends JFrame implements MouseListener, ActionListener {
-    private JPanel trangChua;
-    private JButton nutTrangChu;
-    private JButton nutVe;
-    private JButton nutHoaDon;
-    private JButton nutGioiThieu;
-    private JButton nutKhachHang;
-    private JButton nutThongKe;
-    private JButton nutNhanVien;
+public class TrangChu extends JFrame {
+    public JPanel trangChua;
+    public JButton nutTrangChu;
+    public JButton nutVe;
+    public JButton nutHoaDon;
+    public JButton nutGioiThieu;
+    public JButton nutKhachHang;
+    public JButton nutThongKe;
+    public JButton nutNhanVien;
 
+<<<<<<< HEAD:src/main/java/app/giao_dien/TrangChu.java
     private Color white = new Color(255, 255, 255);
     private Color brandeisBlue = new Color(0, 112, 255);
     private Color lightBlue = new Color(66, 186, 255);
@@ -38,7 +46,20 @@ public class TrangChu extends JFrame implements MouseListener, ActionListener {
     private PhongChuMoi phongTuyChinh = new PhongChuMoi();
     private Border vienNhat = BorderFactory.createMatteBorder(0, 0, 1, 0, new Color(lightBlue.getRGB()));
     private Border vienDam = BorderFactory.createMatteBorder(0, 0, 1, 0, new Color(brandeisBlue.getRGB()));
+=======
+    public Color white = new Color(255, 255, 255);
+    public Color brandeisBlue = new Color(0, 112, 255);
+    public Color lightBlue = new Color(66, 186, 255);
+    public int charSize = 14;
+    public int doCaoNut = 50;
+    public int doRongNut = 160;
+    public CustomFont customFont = new CustomFont();
+    public Border lightLineBorder = BorderFactory.createMatteBorder(0, 0, 1, 0, new Color(lightBlue.getRGB()));
+    public Border darkLineBorder = BorderFactory.createMatteBorder(0, 0, 1, 0, new Color(brandeisBlue.getRGB()));
+>>>>>>> ab244a938eef000bb1e9e3d6e79e7031c9455586:src/main/java/app/gui/TrangChu.java
 
+    public ActionListener ac;
+    public  MouseListener mouse;
     // Function tạo GUI chính
     public TrangChu() {
         ImageIcon icon = new ImageIcon("train_ticket_management_app/assets/icon.png"); // Cho vscode
@@ -53,8 +74,16 @@ public class TrangChu extends JFrame implements MouseListener, ActionListener {
         setResizable(true);
         setLayout(new BorderLayout());
 
+<<<<<<< HEAD:src/main/java/app/giao_dien/TrangChu.java
         taoThanhDinhHuong();
         taoTrangChua();
+=======
+        this.ac = new Action_TrangChu(this);
+        this.mouse = new Action_TrangChu(this);
+
+        createNavBar();
+        createContentPage();
+>>>>>>> ab244a938eef000bb1e9e3d6e79e7031c9455586:src/main/java/app/gui/TrangChu.java
     }
 
     public void taoThanhDinhHuong() {
@@ -66,8 +95,9 @@ public class TrangChu extends JFrame implements MouseListener, ActionListener {
         thanhDinhHuong.setBorder(this.vienDam);
 
         // Tạo Nút dẫn đến trang chủ
-        nutTrangChu = new JButton("Trang Chủ");
+        nutTrangChu = new ShadowButton("Trang Chủ");
         nutTrangChu.setPreferredSize(new Dimension(doRongNut, doCaoNut));
+<<<<<<< HEAD:src/main/java/app/giao_dien/TrangChu.java
         nutTrangChu.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, charSize));
         nutTrangChu.setForeground(new Color(brandeisBlue.getRGB()));
         nutTrangChu.setBackground(new Color(white.getRGB()));
@@ -77,10 +107,23 @@ public class TrangChu extends JFrame implements MouseListener, ActionListener {
         nutTrangChu.addMouseListener(this);
         nutTrangChu.addActionListener(this);
         thanhDinhHuong.add(nutTrangChu);
+=======
+        nutTrangChu.setFont(customFont.getRobotoMonoRegFont(Font.BOLD , charSize));
+        nutTrangChu.setForeground(new Color(brandeisBlue.getRGB()));
+        nutTrangChu.setBackground(new Color(white.getRGB()));
+        nutTrangChu.setBorder(this.darkLineBorder);
+        nutTrangChu.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        nutTrangChu.setFocusPainted(false); // Bỏ viền khi click (focus)
+        nutTrangChu.setContentAreaFilled(false); // Bỏ fill màu mặc định của JButton (nếu cần)
+        nutTrangChu.addMouseListener(mouse);
+        nutTrangChu.addActionListener(ac);
+        navBar.add(nutTrangChu);
+>>>>>>> ab244a938eef000bb1e9e3d6e79e7031c9455586:src/main/java/app/gui/TrangChu.java
 
         // Tạo Nút đến trang bán hàng
-        nutVe = new JButton("Đặt Vé");
+        nutVe = new ShadowButton("Đặt Vé");
         nutVe.setPreferredSize(new Dimension(doRongNut, doCaoNut));
+<<<<<<< HEAD:src/main/java/app/giao_dien/TrangChu.java
         nutVe.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, charSize));
         nutVe.setForeground(new Color(brandeisBlue.getRGB()));
         nutVe.setBackground(new Color(white.getRGB()));
@@ -90,10 +133,23 @@ public class TrangChu extends JFrame implements MouseListener, ActionListener {
         nutVe.addMouseListener(this);
         nutVe.addActionListener(this);
         thanhDinhHuong.add(nutVe);
+=======
+        nutVe.setFont(customFont.getRobotoMonoRegFont(Font.BOLD , charSize));
+        nutVe.setForeground(new Color(brandeisBlue.getRGB()));
+        nutVe.setBackground(new Color(white.getRGB()));
+        nutVe.setBorder(this.darkLineBorder);
+        nutVe.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        nutVe.setFocusPainted(false); // Bỏ viền khi click (focus)
+        nutVe.setContentAreaFilled(false); // Bỏ fill màu mặc định của JButton (nếu cần)
+        nutVe.addMouseListener(mouse);
+        nutVe.addActionListener(ac);
+        navBar.add(nutVe);
+>>>>>>> ab244a938eef000bb1e9e3d6e79e7031c9455586:src/main/java/app/gui/TrangChu.java
 
         // Tạo Nút đến trang hóa đơn
-        nutHoaDon = new JButton("Hóa Đơn");
+        nutHoaDon = new ShadowButton("Hóa Đơn");
         nutHoaDon.setPreferredSize(new Dimension(doRongNut, doCaoNut));
+<<<<<<< HEAD:src/main/java/app/giao_dien/TrangChu.java
         nutHoaDon.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, charSize));
         nutHoaDon.setForeground(new Color(brandeisBlue.getRGB()));
         nutHoaDon.setBackground(new Color(white.getRGB()));
@@ -103,10 +159,23 @@ public class TrangChu extends JFrame implements MouseListener, ActionListener {
         nutHoaDon.setEnabled(false);
         nutHoaDon.addMouseListener(this);
         thanhDinhHuong.add(nutHoaDon);
+=======
+        nutHoaDon.setFont(customFont.getRobotoMonoRegFont(Font.BOLD , charSize));
+        nutHoaDon.setForeground(new Color(brandeisBlue.getRGB()));
+        nutHoaDon.setBackground(new Color(white.getRGB()));
+        nutHoaDon.setBorder(this.darkLineBorder);
+        nutHoaDon.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        nutHoaDon.setFocusPainted(false); // Bỏ viền khi click (focus)
+        nutHoaDon.setContentAreaFilled(false); // Bỏ fill màu mặc định của JButton (nếu cần)
+        nutHoaDon.setEnabled(false);
+        nutHoaDon.addMouseListener(mouse);
+        navBar.add(nutHoaDon);
+>>>>>>> ab244a938eef000bb1e9e3d6e79e7031c9455586:src/main/java/app/gui/TrangChu.java
 
         // Tạo Nút đến trang khách hàng
-        nutKhachHang = new JButton("Khuyến Mại");
+        nutKhachHang = new ShadowButton("Khuyến Mại");
         nutKhachHang.setPreferredSize(new Dimension(doRongNut, doCaoNut));
+<<<<<<< HEAD:src/main/java/app/giao_dien/TrangChu.java
         nutKhachHang.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, charSize));
         nutKhachHang.setForeground(new Color(brandeisBlue.getRGB()));
         nutKhachHang.setBackground(new Color(white.getRGB()));
@@ -116,10 +185,23 @@ public class TrangChu extends JFrame implements MouseListener, ActionListener {
         nutKhachHang.addMouseListener(this);
         nutKhachHang.addActionListener(this);
         thanhDinhHuong.add(nutKhachHang);
+=======
+        nutKhachHang.setFont(customFont.getRobotoMonoRegFont(Font.BOLD , charSize));
+        nutKhachHang.setForeground(new Color(brandeisBlue.getRGB()));
+        nutKhachHang.setBackground(new Color(white.getRGB()));
+        nutKhachHang.setBorder(this.darkLineBorder);
+        nutKhachHang.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        nutKhachHang.setFocusPainted(false); // Bỏ viền khi click (focus)
+        nutKhachHang.setContentAreaFilled(false); // Bỏ fill màu mặc định của JButton (nếu cần)
+        nutKhachHang.addMouseListener(mouse);
+        nutKhachHang.addActionListener(ac);
+        navBar.add(nutKhachHang);
+>>>>>>> ab244a938eef000bb1e9e3d6e79e7031c9455586:src/main/java/app/gui/TrangChu.java
 
         // Tạo Nút đến trang thống kê
-        nutThongKe = new JButton("Thống Kê");
+        nutThongKe = new ShadowButton("Thống Kê");
         nutThongKe.setPreferredSize(new Dimension(doRongNut, doCaoNut));
+<<<<<<< HEAD:src/main/java/app/giao_dien/TrangChu.java
         nutThongKe.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, charSize));
         nutThongKe.setForeground(new Color(brandeisBlue.getRGB()));
         nutThongKe.setBackground(new Color(white.getRGB()));
@@ -129,10 +211,23 @@ public class TrangChu extends JFrame implements MouseListener, ActionListener {
         nutThongKe.addMouseListener(this);
         nutThongKe.addActionListener(this);
         thanhDinhHuong.add(nutThongKe);
+=======
+        nutThongKe.setFont(customFont.getRobotoMonoRegFont(Font.BOLD  , charSize));
+        nutThongKe.setForeground(new Color(brandeisBlue.getRGB()));
+        nutThongKe.setBackground(new Color(white.getRGB()));
+        nutThongKe.setBorder(this.darkLineBorder);
+        nutThongKe.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        nutThongKe.setFocusPainted(false); // Bỏ viền khi click (focus)
+        nutThongKe.setContentAreaFilled(false); // Bỏ fill màu mặc định của JButton (nếu cần)
+        nutThongKe.addMouseListener(mouse);
+        nutThongKe.addActionListener(ac);
+        navBar.add(nutThongKe);
+>>>>>>> ab244a938eef000bb1e9e3d6e79e7031c9455586:src/main/java/app/gui/TrangChu.java
 
         // Tạo Nút đến trang sản phẩm
-        nutGioiThieu = new JButton("Giới Thiệu");
+        nutGioiThieu = new ShadowButton("Giới Thiệu");
         nutGioiThieu.setPreferredSize(new Dimension(doRongNut, doCaoNut));
+<<<<<<< HEAD:src/main/java/app/giao_dien/TrangChu.java
         nutGioiThieu.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, charSize));
         nutGioiThieu.setForeground(new Color(brandeisBlue.getRGB()));
         nutGioiThieu.setBackground(new Color(white.getRGB()));
@@ -142,6 +237,18 @@ public class TrangChu extends JFrame implements MouseListener, ActionListener {
         nutGioiThieu.addMouseListener(this);
         nutGioiThieu.addActionListener(this);
         thanhDinhHuong.add(nutGioiThieu);
+=======
+        nutGioiThieu.setFont(customFont.getRobotoMonoRegFont(Font.BOLD , charSize));
+        nutGioiThieu.setForeground(new Color(brandeisBlue.getRGB()));
+        nutGioiThieu.setBackground(new Color(white.getRGB()));
+        nutGioiThieu.setBorder(this.darkLineBorder);
+        nutGioiThieu.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        nutGioiThieu.setFocusPainted(false); // Bỏ viền khi click (focus)
+        nutGioiThieu.setContentAreaFilled(false); // Bỏ fill màu mặc định của JButton (nếu cần)
+        nutGioiThieu.addMouseListener(mouse);
+        nutGioiThieu.addActionListener(ac);
+        navBar.add(nutGioiThieu);
+>>>>>>> ab244a938eef000bb1e9e3d6e79e7031c9455586:src/main/java/app/gui/TrangChu.java
 
         JPanel userPanel = new JPanel();
         userPanel.setPreferredSize(new Dimension(100, doCaoNut));
@@ -186,7 +293,7 @@ public class TrangChu extends JFrame implements MouseListener, ActionListener {
         nutNhanVien.setFocusPainted(false); // Bỏ viền khi click (focus)
         nutNhanVien.setContentAreaFilled(false); // Bỏ fill màu mặc định của JButton (nếu cần)
 
-        nutNhanVien.addActionListener(this);
+        nutNhanVien.addActionListener(ac);
         userPanel.add(nutNhanVien);
 
         thanhDinhHuong.add(userPanel);
@@ -201,6 +308,7 @@ public class TrangChu extends JFrame implements MouseListener, ActionListener {
         this.trangChua.setLayout(new CardLayout());
     }
 
+<<<<<<< HEAD:src/main/java/app/giao_dien/TrangChu.java
     @Override
     public void mouseClicked(MouseEvent e) {
         throw new UnsupportedOperationException("Unimplemented method 'mouseClicked'");
@@ -259,5 +367,12 @@ public class TrangChu extends JFrame implements MouseListener, ActionListener {
                 cardLayout.show(trangChua, "Employee Page");
                 break;
         }
+=======
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+           TrangChu trangChu = new TrangChu();
+            trangChu.setVisible(true);
+        });
+>>>>>>> ab244a938eef000bb1e9e3d6e79e7031c9455586:src/main/java/app/gui/TrangChu.java
     }
 }
