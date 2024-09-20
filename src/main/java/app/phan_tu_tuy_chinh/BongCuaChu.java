@@ -1,11 +1,10 @@
-package app.init_font;
+package app.phan_tu_tuy_chinh;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.geom.RoundRectangle2D;
 
-public class ShadowButton extends JButton {
-    public ShadowButton(String text) {
+public class BongCuaChu extends JButton {
+    public BongCuaChu(String text) {
         super(text);
         setFocusPainted(false);
         setContentAreaFilled(false);
