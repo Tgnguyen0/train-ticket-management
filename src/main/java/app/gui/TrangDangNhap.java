@@ -24,7 +24,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
 
 import app.Controller.Action_TrangDangNhap;
-import app.init_font.CustomFont;
+import app.phong_moi.CustomFont;
 
 public class TrangDangNhap extends JFrame{
     public JTextField nameField;

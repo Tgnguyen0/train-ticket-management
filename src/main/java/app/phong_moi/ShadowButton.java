@@ -1,4 +1,4 @@
-package app.init_font;
+package app.phong_moi;
 
 import javax.swing.*;
 import java.awt.*;
