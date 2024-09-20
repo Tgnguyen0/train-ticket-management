@@ -73,7 +73,7 @@ public class TrangChu extends JFrame {
         navBar.setBorder(this.darkLineBorder);
 
         // Tạo Nút dẫn đến trang chủ
-        nutTrangChu = new ShadowButton("Trang Chủ");
+        nutTrangChu = new ShadowButton("Trang chủ");
         nutTrangChu.setPreferredSize(new Dimension(doRongNut, doCaoNut));
         nutTrangChu.setFont(customFont.getRobotoMonoRegFont(Font.BOLD , charSize));
         nutTrangChu.setForeground(new Color(brandeisBlue.getRGB()));
@@ -87,7 +87,7 @@ public class TrangChu extends JFrame {
         navBar.add(nutTrangChu);
 
         // Tạo Nút đến trang bán hàng
-        nutVe = new ShadowButton("Đặt Vé");
+        nutVe = new ShadowButton("Đặt vé");
         nutVe.setPreferredSize(new Dimension(doRongNut, doCaoNut));
         nutVe.setFont(customFont.getRobotoMonoRegFont(Font.BOLD , charSize));
         nutVe.setForeground(new Color(brandeisBlue.getRGB()));
@@ -101,7 +101,7 @@ public class TrangChu extends JFrame {
         navBar.add(nutVe);
 
         // Tạo Nút đến trang hóa đơn
-        nutHoaDon = new ShadowButton("Hóa Đơn");
+        nutHoaDon = new ShadowButton("Hóa đơn");
         nutHoaDon.setPreferredSize(new Dimension(doRongNut, doCaoNut));
         nutHoaDon.setFont(customFont.getRobotoMonoRegFont(Font.BOLD , charSize));
         nutHoaDon.setForeground(new Color(brandeisBlue.getRGB()));
@@ -115,7 +115,7 @@ public class TrangChu extends JFrame {
         navBar.add(nutHoaDon);
 
         // Tạo Nút đến trang khách hàng
-        nutKhachHang = new ShadowButton("Khuyến Mại");
+        nutKhachHang = new ShadowButton("Khuyến mại");
         nutKhachHang.setPreferredSize(new Dimension(doRongNut, doCaoNut));
         nutKhachHang.setFont(customFont.getRobotoMonoRegFont(Font.BOLD , charSize));
         nutKhachHang.setForeground(new Color(brandeisBlue.getRGB()));
@@ -129,7 +129,7 @@ public class TrangChu extends JFrame {
         navBar.add(nutKhachHang);
 
         // Tạo Nút đến trang thống kê
-        nutThongKe = new ShadowButton("Thống Kê");
+        nutThongKe = new ShadowButton("Thống kê");
         nutThongKe.setPreferredSize(new Dimension(doRongNut, doCaoNut));
         nutThongKe.setFont(customFont.getRobotoMonoRegFont(Font.BOLD  , charSize));
         nutThongKe.setForeground(new Color(brandeisBlue.getRGB()));
@@ -143,7 +143,7 @@ public class TrangChu extends JFrame {
         navBar.add(nutThongKe);
 
         // Tạo Nút đến trang sản phẩm
-        nutGioiThieu = new ShadowButton("Giới Thiệu");
+        nutGioiThieu = new ShadowButton("Giới thiệu");
         nutGioiThieu.setPreferredSize(new Dimension(doRongNut, doCaoNut));
         nutGioiThieu.setFont(customFont.getRobotoMonoRegFont(Font.BOLD , charSize));
         nutGioiThieu.setForeground(new Color(brandeisBlue.getRGB()));
