@@ -1,4 +1,4 @@
-package app.gui;
+package app.giao_dien;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -12,7 +12,8 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.Border;
 
-import app.init_font.CustomFont;
+import app.custom_component.RoundedBorder;
+import app.init_font.PhongChuMoi;
 
 // @important
 // old Color: 161, 103, 37
@@ -34,9 +35,9 @@ public class TrangChu extends JFrame implements MouseListener, ActionListener {
     private int charSize = 13;
     private int doCaoNut = 50;
     private int doRongNut = 160;
-    private CustomFont customFont = new CustomFont();
-    private Border lightLineBorder = BorderFactory.createMatteBorder(0, 0, 1, 0, new Color(lightBlue.getRGB()));
-    private Border darkLineBorder = BorderFactory.createMatteBorder(0, 0, 1, 0, new Color(brandeisBlue.getRGB()));
+    private PhongChuMoi phongTuyChinh = new PhongChuMoi();
+    private Border vienNhat = BorderFactory.createMatteBorder(0, 0, 1, 0, new Color(lightBlue.getRGB()));
+    private Border vienDam = BorderFactory.createMatteBorder(0, 0, 1, 0, new Color(brandeisBlue.getRGB()));
 
     // Function tạo GUI chính
     public TrangChu() {
@@ -52,100 +53,100 @@ public class TrangChu extends JFrame implements MouseListener, ActionListener {
         setResizable(true);
         setLayout(new BorderLayout());
 
-        createNavBar();
-        createContentPage();
+        taoThanhDinhHuong();
+        taoTrangChua();
     }
 
-    public void createNavBar() {
-        JPanel navBar = new JPanel();
-        navBar.setPreferredSize(new Dimension(1200, doCaoNut));
-        navBar.setBackground(new Color(white.getRGB()));
-        // navBar.setBackground(Color.RED);
-        navBar.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
-        navBar.setBorder(this.darkLineBorder);
+    public void taoThanhDinhHuong() {
+        JPanel thanhDinhHuong = new JPanel();
+        thanhDinhHuong.setPreferredSize(new Dimension(1200, doCaoNut));
+        thanhDinhHuong.setBackground(new Color(white.getRGB()));
+        // thanhDinhHuong.setBackground(Color.RED);
+        thanhDinhHuong.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
+        thanhDinhHuong.setBorder(this.vienDam);
 
         // Tạo Nút dẫn đến trang chủ
         nutTrangChu = new JButton("Trang Chủ");
         nutTrangChu.setPreferredSize(new Dimension(doRongNut, doCaoNut));
-        nutTrangChu.setFont(customFont.getRobotoMonoRegFont(Font.PLAIN, charSize));
+        nutTrangChu.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, charSize));
         nutTrangChu.setForeground(new Color(brandeisBlue.getRGB()));
         nutTrangChu.setBackground(new Color(white.getRGB()));
-        nutTrangChu.setBorder(this.darkLineBorder);
+        nutTrangChu.setBorder(this.vienDam);
         nutTrangChu.setFocusPainted(false); // Bỏ viền khi click (focus)
         nutTrangChu.setContentAreaFilled(false); // Bỏ fill màu mặc định của JButton (nếu cần)
         nutTrangChu.addMouseListener(this);
         nutTrangChu.addActionListener(this);
-        navBar.add(nutTrangChu);
+        thanhDinhHuong.add(nutTrangChu);
 
         // Tạo Nút đến trang bán hàng
         nutVe = new JButton("Đặt Vé");
         nutVe.setPreferredSize(new Dimension(doRongNut, doCaoNut));
-        nutVe.setFont(customFont.getRobotoMonoRegFont(Font.PLAIN, charSize));
+        nutVe.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, charSize));
         nutVe.setForeground(new Color(brandeisBlue.getRGB()));
         nutVe.setBackground(new Color(white.getRGB()));
-        nutVe.setBorder(this.darkLineBorder);
+        nutVe.setBorder(this.vienDam);
         nutVe.setFocusPainted(false); // Bỏ viền khi click (focus)
         nutVe.setContentAreaFilled(false); // Bỏ fill màu mặc định của JButton (nếu cần)
         nutVe.addMouseListener(this);
         nutVe.addActionListener(this);
-        navBar.add(nutVe);
+        thanhDinhHuong.add(nutVe);
 
         // Tạo Nút đến trang hóa đơn
         nutHoaDon = new JButton("Hóa Đơn");
         nutHoaDon.setPreferredSize(new Dimension(doRongNut, doCaoNut));
-        nutHoaDon.setFont(customFont.getRobotoMonoRegFont(Font.PLAIN, charSize));
+        nutHoaDon.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, charSize));
         nutHoaDon.setForeground(new Color(brandeisBlue.getRGB()));
         nutHoaDon.setBackground(new Color(white.getRGB()));
-        nutHoaDon.setBorder(this.darkLineBorder);
+        nutHoaDon.setBorder(this.vienDam);
         nutHoaDon.setFocusPainted(false); // Bỏ viền khi click (focus)
         nutHoaDon.setContentAreaFilled(false); // Bỏ fill màu mặc định của JButton (nếu cần)
         nutHoaDon.setEnabled(false);
         nutHoaDon.addMouseListener(this);
-        navBar.add(nutHoaDon);
+        thanhDinhHuong.add(nutHoaDon);
 
         // Tạo Nút đến trang khách hàng
         nutKhachHang = new JButton("Khuyến Mại");
         nutKhachHang.setPreferredSize(new Dimension(doRongNut, doCaoNut));
-        nutKhachHang.setFont(customFont.getRobotoMonoRegFont(Font.PLAIN, charSize));
+        nutKhachHang.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, charSize));
         nutKhachHang.setForeground(new Color(brandeisBlue.getRGB()));
         nutKhachHang.setBackground(new Color(white.getRGB()));
-        nutKhachHang.setBorder(this.darkLineBorder);
+        nutKhachHang.setBorder(this.vienDam);
         nutKhachHang.setFocusPainted(false); // Bỏ viền khi click (focus)
         nutKhachHang.setContentAreaFilled(false); // Bỏ fill màu mặc định của JButton (nếu cần)
         nutKhachHang.addMouseListener(this);
         nutKhachHang.addActionListener(this);
-        navBar.add(nutKhachHang);
+        thanhDinhHuong.add(nutKhachHang);
 
         // Tạo Nút đến trang thống kê
         nutThongKe = new JButton("Thống Kê");
         nutThongKe.setPreferredSize(new Dimension(doRongNut, doCaoNut));
-        nutThongKe.setFont(customFont.getRobotoMonoRegFont(Font.PLAIN, charSize));
+        nutThongKe.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, charSize));
         nutThongKe.setForeground(new Color(brandeisBlue.getRGB()));
         nutThongKe.setBackground(new Color(white.getRGB()));
-        nutThongKe.setBorder(this.darkLineBorder);
+        nutThongKe.setBorder(this.vienDam);
         nutThongKe.setFocusPainted(false); // Bỏ viền khi click (focus)
         nutThongKe.setContentAreaFilled(false); // Bỏ fill màu mặc định của JButton (nếu cần)
         nutThongKe.addMouseListener(this);
         nutThongKe.addActionListener(this);
-        navBar.add(nutThongKe);
+        thanhDinhHuong.add(nutThongKe);
 
         // Tạo Nút đến trang sản phẩm
         nutGioiThieu = new JButton("Giới Thiệu");
         nutGioiThieu.setPreferredSize(new Dimension(doRongNut, doCaoNut));
-        nutGioiThieu.setFont(customFont.getRobotoMonoRegFont(Font.PLAIN, charSize));
+        nutGioiThieu.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, charSize));
         nutGioiThieu.setForeground(new Color(brandeisBlue.getRGB()));
         nutGioiThieu.setBackground(new Color(white.getRGB()));
-        nutGioiThieu.setBorder(darkLineBorder);
+        nutGioiThieu.setBorder(vienDam);
         nutGioiThieu.setFocusPainted(false); // Bỏ viền khi click (focus)
         nutGioiThieu.setContentAreaFilled(false); // Bỏ fill màu mặc định của JButton (nếu cần)
         nutGioiThieu.addMouseListener(this);
         nutGioiThieu.addActionListener(this);
-        navBar.add(nutGioiThieu);
+        thanhDinhHuong.add(nutGioiThieu);
 
         JPanel userPanel = new JPanel();
         userPanel.setPreferredSize(new Dimension(100, doCaoNut));
         userPanel.setBackground(new Color(white.getRGB()));
-        userPanel.setBorder(this.darkLineBorder);
+        userPanel.setBorder(this.vienDam);
         userPanel.setLayout(new FlowLayout(FlowLayout.RIGHT, 0, 5));
 
         double doCaoTK = doCaoNut * 0.8;
@@ -156,8 +157,8 @@ public class TrangChu extends JFrame implements MouseListener, ActionListener {
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
 
-                //String imagePath = "train_ticket_management_app/assets/icon.png"; // Cho vscode
-                String imagePath = "assets/icon.png"; // Cho intelJ, eclipse
+                String imagePath = "train_ticket_management_app/assets/icon.png"; // Cho vscode
+                // String imagePath = "assets/icon.png"; // Cho intelJ, eclipse
 
                 File imageFile = new File(imagePath);
 
@@ -176,7 +177,7 @@ public class TrangChu extends JFrame implements MouseListener, ActionListener {
         };
 
         nutNhanVien.setPreferredSize(new Dimension((int) doCaoTK, (int) doCaoTK));
-        nutNhanVien.setFont(customFont.getRobotoMonoRegFont(Font.PLAIN, 12));
+        nutNhanVien.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, 12));
         nutNhanVien.setForeground(new Color(brandeisBlue.getRGB()));
         nutNhanVien.setBackground(new Color(white.getRGB()));
 
@@ -188,12 +189,12 @@ public class TrangChu extends JFrame implements MouseListener, ActionListener {
         nutNhanVien.addActionListener(this);
         userPanel.add(nutNhanVien);
 
-        navBar.add(userPanel);
+        thanhDinhHuong.add(userPanel);
 
-        add(navBar, BorderLayout.NORTH);
+        add(thanhDinhHuong, BorderLayout.NORTH);
     }
 
-    public void createContentPage() {
+    public void taoTrangChua() {
         // Khởi tạo trang chứa
         this.trangChua = new JPanel();
         this.trangChua.setPreferredSize(new Dimension(200, 200));
@@ -220,14 +221,14 @@ public class TrangChu extends JFrame implements MouseListener, ActionListener {
     public void mouseEntered(MouseEvent e) {
         JButton enteredButton = (JButton) e.getComponent();
         enteredButton.setForeground(new Color(lightBlue.getRGB())); // Thay đổi màu khi hover
-        enteredButton.setBorder(this.lightLineBorder);
+        enteredButton.setBorder(this.vienNhat);
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
         JButton exitedButton = (JButton) e.getComponent();
         exitedButton.setForeground(new Color(brandeisBlue.getRGB())); // Khôi phục màu ban đầu khi di chuột ra khỏi nút
-        exitedButton.setBorder(this.darkLineBorder);
+        exitedButton.setBorder(this.vienDam);
     }
 
     @Override
@@ -240,19 +241,19 @@ public class TrangChu extends JFrame implements MouseListener, ActionListener {
                 cardLayout.show(trangChua, "Home Page");
                 break;
             case "Bán Hàng":
-                cardLayout.show(trangChua, "Sell Page");
+                cardLayout.show(trangChua, "Trang Đặt Vé");
                 break;
             case "Hóa Đơn":
-                cardLayout.show(trangChua, "Receipt Page");
+                cardLayout.show(trangChua, "Trang Hóa Đơn");
                 break;
             case "Sản Phẩm":
-                cardLayout.show(trangChua, "Product Page");
+                cardLayout.show(trangChua, "Trang Khách Hàng");
                 break;
             case "Khuyến Mại":
-                cardLayout.show(trangChua, "Promotion Page");
+                cardLayout.show(trangChua, "Trang Thống Kê");
                 break;
             case "Thống Kê":
-                cardLayout.show(trangChua, "Statistic Page");
+                cardLayout.show(trangChua, "Trang Giới Thiệu");
                 break;
             case "Nhân Viên":
                 cardLayout.show(trangChua, "Employee Page");

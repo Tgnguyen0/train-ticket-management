@@ -5,33 +5,24 @@ import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.util.ArrayList;
 
-public class CustomFont {
-    private ArrayList<Font> RobotoMonoRegFont;
+public class PhongChuMoi {
+    private ArrayList<Font> phongRobotoMonoReg;
 
-    public CustomFont() {
-        this.RobotoMonoRegFont = new ArrayList<>();
+    public PhongChuMoi() {
+        this.phongRobotoMonoReg = new ArrayList<>();
 
         try {
             /* For vscode */
-            /*File[] fontFile = {
+            File[] taiLieuPhong = {
                     new File("train_ticket_management_app/font/RobotoMono-Regular.ttf"),
                     new File("train_ticket_management_app/font/RobotoMono-Bold.ttf"),
                     new File("train_ticket_management_app/font/RobotoMono-BoldItalic.ttf"),
                     new File("train_ticket_management_app/font/RobotoMono-Italic.ttf")
-            };*/
-
-            /* For eclipse, intelJ */
-              File[] fontFile = {
-              new File("font/RobotoMono-Regular.ttf"),
-              new File("font/RobotoMono-Bold.ttf"),
-              new File("font/RobotoMono-BoldItalic.ttf"),
-              new File("font/RobotoMono-Italic.ttf")
-              };
-
+            };
 
             /* For eclipse, intelJ */
             /*
-             * File[] fontFile = {
+             * File[] taiLieuPhong = {
              * new File("train_ticket_management_app/font/RobotoMono-Regular.ttf"),
              * new File("train_ticket_management_app/font/RobotoMono-Bold.ttf"),
              * new File("train_ticket_management_app/font/RobotoMono-BoldItalic.ttf"),
@@ -39,28 +30,26 @@ public class CustomFont {
              * };
              */
 
-
-
-            for (int i = 0; i < fontFile.length; i++) {
-                Font font = Font.createFont(Font.TRUETYPE_FONT, fontFile[i]);
+            for (int i = 0; i < taiLieuPhong.length; i++) {
+                Font phong = Font.createFont(Font.TRUETYPE_FONT, taiLieuPhong[i]);
 
                 // Register the font with the graphics environment
-                GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-                ge.registerFont(font);
+                GraphicsEnvironment moiTruong = GraphicsEnvironment.getLocalGraphicsEnvironment();
+                moiTruong.registerFont(phong);
 
-                this.RobotoMonoRegFont.add(font);
+                this.phongRobotoMonoReg.add(phong);
             }
         } catch (Exception e) {
             e.printStackTrace();
-            // this.RobotoMonoRegFont = new Font("Arial", Font.PLAIN, 12);
+            // this.phongRobotoMonoReg = new Font("Arial", Font.PLAIN, 12);
         }
     }
 
-    public Font getRobotoMonoRegFont(int style, float size) {
+    public Font layPhongRobotoMonoReg(int style, float size) {
         Font font = new Font("Arial", style, (int) size);
 
-        if (style >= 0 && style < RobotoMonoRegFont.size()) {
-            font = RobotoMonoRegFont.get(style).deriveFont(style, size);
+        if (style >= 0 && style < phongRobotoMonoReg.size()) {
+            font = phongRobotoMonoReg.get(style).deriveFont(style, size);
         }
 
         return font;
