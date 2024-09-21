@@ -1,9 +1,7 @@
 package app.giao_dien;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
@@ -40,10 +38,11 @@ public class TrangDinhHuong extends JFrame {
     public Color trang = new Color(255, 255, 255);
     public Color xanhBrandeis = new Color(0, 112, 255);
     public Color xanhNhat = new Color(66, 186, 255);
-    private int charSize = 13;
-    private int chieuDaiNut = 160;
-    private int chieuRongNut = 50;
+
     private PhongChuMoi phongTuyChinh = new PhongChuMoi();
+    public int charSize = 13;
+    public int chieuDaiNut = 160;
+    public int chieuRongNut = 50;
     public Border vienNhat = BorderFactory.createMatteBorder(0, 0, 1, 0, new Color(xanhNhat.getRGB()));
     public Border vienDam = BorderFactory.createMatteBorder(0, 0, 1, 0, new Color(xanhBrandeis.getRGB()));
 
