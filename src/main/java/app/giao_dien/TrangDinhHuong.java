@@ -73,7 +73,6 @@ public class TrangDinhHuong extends JFrame {
         JPanel thanhDinhHuong = new JPanel();
         thanhDinhHuong.setPreferredSize(new Dimension(1200, chieuRongNut));
         thanhDinhHuong.setBackground(new Color(trang.getRGB()));
-        // thanhDinhHuong.setBackground(Color.RED);
         thanhDinhHuong.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
         thanhDinhHuong.setBorder(this.vienDam);
 
