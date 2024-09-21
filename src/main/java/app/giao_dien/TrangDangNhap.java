@@ -47,8 +47,7 @@ public class TrangDangNhap extends JFrame {
     private MouseListener thaoTacChuot;
 
     public TrangDangNhap() {
-        ImageIcon icon = new ImageIcon("assets/icon.png"); // For vscode
-        // ImageIcon icon = new ImageIcon("assets/icon.png"); // for eclipse, Intelj
+        ImageIcon icon = new ImageIcon("assets/icon.png");
         setTitle("Đăng Nhập");
         setSize(new Dimension(750, 535));
         setIconImage(icon.getImage());
@@ -59,7 +58,7 @@ public class TrangDangNhap extends JFrame {
         getContentPane().setBackground(new Color(trang.getRGB()));
         setLayout(new BorderLayout());
 
-        // add ActionListener và mouselistener cho các button
+        // Thêm ActionListener và MouseListener cho các nút
         this.hanhDong = new HanhDong_TrangDangNhap(this);
         this.thaoTacChuot = new HanhDong_TrangDangNhap(this);
 
@@ -75,7 +74,7 @@ public class TrangDangNhap extends JFrame {
         bieuNgu.setPreferredSize(new Dimension(238, 500));
         bieuNgu.setLayout(new BoxLayout(bieuNgu, BoxLayout.Y_AXIS));
 
-        String imagePath = "assets/rua.png"; // for vscode
+        String imagePath = "assets/rua.png";
         /* cho elipse, intelj */
         // String imagePath = "assets/rua.png";
         ImageIcon imageIcon = new ImageIcon(imagePath);

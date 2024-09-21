@@ -34,25 +34,25 @@ public class TrangDinhHuong extends JFrame {
 
     /* Các trang được khởi tạo */
     public TrangChu trangChu;
+    public TrangDatVe trangDatVe;
 
     /* Khởi tạo phông chữ màu sắc */
-    private Color trang = new Color(255, 255, 255);
-    private Color xanhBrandeis = new Color(0, 112, 255);
-    private Color xanhNhat = new Color(66, 186, 255);
+    public Color trang = new Color(255, 255, 255);
+    public Color xanhBrandeis = new Color(0, 112, 255);
+    public Color xanhNhat = new Color(66, 186, 255);
     private int charSize = 13;
     private int chieuDaiNut = 160;
     private int chieuRongNut = 50;
     private PhongChuMoi phongTuyChinh = new PhongChuMoi();
-    private Border vienNhat = BorderFactory.createMatteBorder(0, 0, 1, 0, new Color(xanhNhat.getRGB()));
-    private Border vienDam = BorderFactory.createMatteBorder(0, 0, 1, 0, new Color(xanhBrandeis.getRGB()));
+    public Border vienNhat = BorderFactory.createMatteBorder(0, 0, 1, 0, new Color(xanhNhat.getRGB()));
+    public Border vienDam = BorderFactory.createMatteBorder(0, 0, 1, 0, new Color(xanhBrandeis.getRGB()));
 
-    public ActionListener hanhDong;
-    public MouseListener thaoTacChuot;
+    private ActionListener hanhDong;
+    private MouseListener thaoTacChuot;
 
     // Function tạo GUI chính
     public TrangDinhHuong() {
-        ImageIcon icon = new ImageIcon("assets/icon.png"); // Cho vscode
-        // ImageIcon icon = new ImageIcon("asset/icon.png"); // Cho eclipse, Intelj
+        ImageIcon icon = new ImageIcon("assets/icon.png");
         setTitle("Quản lý bán vé tại ga");
         setSize(new Dimension(1200, 700));
 
@@ -63,11 +63,12 @@ public class TrangDinhHuong extends JFrame {
         setResizable(true);
         setLayout(new BorderLayout());
 
+        // Thêm ActionListener và MouseListener cho các nút
+        this.hanhDong = new HanhDong_TrangDinhHuong(this);
+        this.thaoTacChuot = new HanhDong_TrangDinhHuong(this);
+
         taoThanhDinhHuong();
         taoTrangChua();
-
-        // this.hanhDong = new HanhDong_TrangChu(this);
-        // this.thaoTacChuot = new HanhDong_TrangChu(this);
     }
 
     public void taoThanhDinhHuong() {
@@ -213,12 +214,13 @@ public class TrangDinhHuong extends JFrame {
         // Khởi tạo trang chứa các trang khác
         this.trangChua = new JPanel();
         this.trangChua.setPreferredSize(new Dimension(1200, 600));
-        this.trangChua.setBackground(Color.red);
-        this.trangChua.setLayout(new BorderLayout());
+        this.trangChua.setLayout(new CardLayout());
 
-        // Khởi tạo trang Trang chủ
-        this.trangChu = new TrangChu();
-        this.trangChua.add(trangChu, BorderLayout.CENTER);
+        this.trangChu = new TrangChu(); // Khởi tạo trang Trang chủ
+        this.trangDatVe = new TrangDatVe(); // Khởi tạo trang Trang Đặt Vé
+
+        this.trangChua.add(trangChu, "Trang Chu");
+        this.trangChua.add(trangDatVe, "Trang Dat Ve");
 
         add(this.trangChua);
     }

@@ -23,7 +23,7 @@ public class TrangChu extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g); // Always call the superclass's method first
 
-        String duongDanAnh = "train_ticket_management_app/assets/trang-chu.png"; // Path to your image file
+        String duongDanAnh = "assets/trang-chu.png"; // Path to your image file
         File taiLieuAnh = new File(duongDanAnh);
 
         // Load and draw the image
