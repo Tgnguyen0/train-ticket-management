@@ -347,7 +347,6 @@ public class TrangDatVe extends JPanel {
         nutHienThiSoDoGhe.setBorderPainted(false);
         nutHienThiSoDoGhe.addActionListener(hanhDong);
         nutHienThiSoDoGhe.addMouseListener(thaoTacChuot);
-        nutHienThiSoDoGhe.setEnabled(false);
         donDatVe.add(nutHienThiSoDoGhe);
 
         trangDonDatVe.add(trangChuaDonDat);

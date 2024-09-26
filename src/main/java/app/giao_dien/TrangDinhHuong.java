@@ -214,10 +214,9 @@ public class TrangDinhHuong extends JFrame {
 
         this.trangChu = new TrangChu(); // Khởi tạo trang Trang chủ
         this.trangDatVe = new TrangDatVe();
-
+        
         this.trangChua.add(trangChu, "Trang Chu");
         this.trangChua.add(trangDatVe, "Trang Dat Ve");
-
         add(this.trangChua);
     }
 

@@ -24,10 +24,6 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
             switch(loaiGhe) {
                 case "Ghế phụ":
                     break;
-                case "Ghế cứng":
-                    TrangSoDoGheCungDieuHoa trangSoDoGheCung = new TrangSoDoGheCungDieuHoa();
-                    trangSoDoGheCung.setVisible(true);
-                    break;
                 case "Ghế mềm":
                     TrangSoDoGheMemDieuHoa trangSoDoGheMem = new TrangSoDoGheMemDieuHoa();
                     trangSoDoGheMem.setVisible(true);
