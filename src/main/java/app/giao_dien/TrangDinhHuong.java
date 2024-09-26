@@ -33,6 +33,7 @@ public class TrangDinhHuong extends JFrame {
     /* Các trang được khởi tạo */
     public TrangChu trangChu;
     public TrangDatVe trangDatVe;
+    public TrangGioiThieu trangGioiThieu;
 
     /* Khởi tạo phông chữ màu sắc */
     public Color trang = new Color(255, 255, 255);
@@ -215,8 +216,11 @@ public class TrangDinhHuong extends JFrame {
 
         this.trangChu = new TrangChu(); // Khởi tạo trang Trang chủ
         this.trangDatVe = new TrangDatVe(); // Khởi tạo trang Trang Đặt Vé
+        this.trangGioiThieu = new TrangGioiThieu(); // Khởi tạo trang Giới Thiệu
+
         this.trangChua.add(trangChu, "Trang Chu");
         this.trangChua.add(trangDatVe, "Trang Dat Ve");
+        this.trangChua.add(trangGioiThieu,"Trang Gioi Thieu");
         add(this.trangChua);
     }
 
