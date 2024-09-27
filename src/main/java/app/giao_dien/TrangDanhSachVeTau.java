@@ -1,12 +1,11 @@
 package app.giao_dien;
 
-import app.phan_tu_tuy_chinh.MauCuaCotTrongBangDS;
-import app.phan_tu_tuy_chinh.MauCuaNgangTrongBangDS;
+import app.phan_tu_tuy_chinh.CustomCellRenderer;
+import app.phan_tu_tuy_chinh.CustomHeaderRenderer;
 import app.phong_chu_moi.PhongChuMoi;
 
 import javax.swing.*;
 import javax.swing.border.Border;
-import javax.swing.border.LineBorder;
 import javax.swing.table.*;
 import java.awt.*;
 

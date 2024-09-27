@@ -134,8 +134,8 @@ public class TrangDinhHuong extends JFrame {
         nutThongKe = new BongCuaChu("Thống Kê");
         nutThongKe.setPreferredSize(new Dimension(chieuDaiNut, chieuRongNut));
         nutThongKe.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, charSize));
-        nutThongKe.setForeground(new Color(xanhBrandeis.getRGB()));
-        nutThongKe.setBackground(new Color(trang.getRGB()));
+        nutThongKe.setForeground(xanhBrandeis);
+        nutThongKe.setBackground(trang);
         nutThongKe.setBorder(this.vienDam);
         nutThongKe.setFocusPainted(false); // Bỏ viền khi click (focus)
         nutThongKe.setContentAreaFilled(false); // Bỏ fill màu mặc định của JButton (nếu cần)
@@ -171,8 +171,7 @@ public class TrangDinhHuong extends JFrame {
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
 
-                String imagePath = "assets/icon.png"; // Cho vscode
-                // String imagePath = "assets/icon.png"; // Cho intelJ, eclipse
+                String imagePath = "assets/icon.png";
 
                 File imageFile = new File(imagePath);
 

@@ -1,4 +1,4 @@
-package app.giao_dien;
+package app.phan_tu_tuy_chinh;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
