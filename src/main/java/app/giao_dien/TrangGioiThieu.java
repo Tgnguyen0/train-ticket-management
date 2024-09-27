@@ -92,6 +92,7 @@ public class TrangGioiThieu extends JPanel {
 
         //panel chứa hình ảnh
         JPanel_lichSu_hinhAnh = new JPanel(new BorderLayout());
+        JPanel_lichSu_hinhAnh.setBackground(Color.white);
         JLabel JLabel_lichSuHinhThanh = new JLabel("Lịch sử hình thành", SwingConstants.CENTER);
         JLabel_lichSuHinhThanh.setFont(phongTuyChinh.layPhongRobotoMonoReg(2,13));
         JLabel_lichSuHinhThanh.setForeground(xanhBrandeis);
@@ -102,9 +103,10 @@ public class TrangGioiThieu extends JPanel {
         ImageIcon img_lichSu = new ImageIcon("assets/nhaGa.jpg");
         JLabel JLabel_hinhAnhLichSu = new JLabel(img_lichSu);
 
+
         JPanel_lichSu_hinhAnh.add(JLabel_hinhAnhLichSu, BorderLayout.SOUTH);
 
-        JPanel_tongHopNoiDung.add(JLabel_lichSuHinhThanh, BorderLayout.WEST);
+        JPanel_tongHopNoiDung.add(JPanel_lichSu_hinhAnh, BorderLayout.WEST);
         trangChua.add(JPanel_tongHopNoiDung, BorderLayout.CENTER);
     }
 }
