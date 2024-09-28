@@ -34,12 +34,14 @@ public class TrangGioiThieu extends JPanel {
     private MouseListener thaoTacChuot;
     private JPanel JPanel_tieuDe;
     private JLabel JLabel_tieuDeLon;
-    private JPanel JPanel_tongHopNoiDung;
+    private JPanel JPanel_tongHopNoiDungLichSu;
     private JPanel JPanel_lichSu;
     private JPanel jPanel_lichSu_phanHinhAnh;
     private JLabel jLabel_lichSuHinhThanh;
     private JLabel jLabel_hinhAnhLichSu;
     private JPanel jPanel_lichSu_phanText;
+    private JLabel jLabel_hinhAnhNhanVien;
+    private JLabel jLabel_hinhAnhHotline;
 
     public TrangGioiThieu() {
         setPreferredSize(new Dimension(1200, 700));
@@ -66,13 +68,16 @@ public class TrangGioiThieu extends JPanel {
         JLabel_tieuDeLon = new JLabel("<html>Giới Thiệu Ứng Dụng Đặt Vé Tàu - Ga Gò Vấp<br></html>",SwingConstants.CENTER);
         JLabel_tieuDeLon.setFont(this.phongTuyChinh.layPhongRobotoMonoReg(2, 30));
         JLabel_tieuDeLon.setForeground(xanhBrandeis);
+        JLabel_tieuDeLon.setBorder(BorderFactory.createEmptyBorder(15, 0, 0, 0));
         JLabel_tieuDeLon.setBackground(Color.white);
 
 
         //tạo tiêu đề nhỏ
-        JLabel JLable_tieuDeNho = new JLabel("<html><div style=\"text-align: center; font-size: large;\">&#8213;Ga Gò Vấp tự hào mang đến cho bạn một ứng dụng đặt vé tàu&#8213;<br>tiện lợi, hiện đại và nhanh chóng</div></html>",SwingConstants.CENTER);
-        JLable_tieuDeNho.setFont(phongTuyChinh.layPhongRobotoMonoReg(1,15));
+        JLabel JLable_tieuDeNho = new JLabel("<html><div style=\"text-align: center;\">&#8213;Ga Gò Vấp tự hào mang đến cho bạn một ứng dụng đặt vé tàu&#8213;<br>tiện lợi, hiện đại và nhanh chóng</div></html>",SwingConstants.CENTER);
+        JLable_tieuDeNho.setFont(phongTuyChinh.layPhongRobotoMonoReg(3,15));
         JLable_tieuDeNho.setForeground(xanhBrandeis);
+        JLable_tieuDeNho.setBorder(BorderFactory.createEmptyBorder(15, 0, 0, 0));
+
 
         JPanel_tieuDe.add(JLabel_tieuDeLon, BorderLayout.NORTH);
         JPanel_tieuDe.add(JLable_tieuDeNho, BorderLayout.CENTER);
@@ -85,18 +90,20 @@ public class TrangGioiThieu extends JPanel {
 
 
     private void taoThongTinGioiThieu() {
-        //chia nội dung thành 2 panel là lịch sử và thông tin phần mềm
+        //chia nội dung thành 2 panel là lịch sử và contact
 
-        // tạo 1 panel chứa tất cả nội dung
-        JPanel_tongHopNoiDung = new JPanel();
-        JPanel_tongHopNoiDung.setLayout(new BorderLayout());
+        // tạo 1 panel chứa tất cả nội dung LS
+        JPanel_tongHopNoiDungLichSu = new JPanel();
+        JPanel_tongHopNoiDungLichSu.setLayout(new BorderLayout());
+        JPanel_tongHopNoiDungLichSu.setBackground(Color.white);
+        JPanel_tongHopNoiDungLichSu.setBorder(BorderFactory.createEmptyBorder(0, 0, 40, 0));
 
-        //PANEL PHẦN LỊCH SỬ
+        //*********************PANEL PHẦN LỊCH SỬ***********************
 
 
         // chia lịch sử ra thành 2 panel nhỏ. 1 là hình, 1 là text
 
-        // PHẦN HÌNH ********************************
+        // PHẦN HÌNH *********
 
         //panel chứa hình ảnh
         jPanel_lichSu_phanHinhAnh = new JPanel(new BorderLayout());
@@ -129,13 +136,9 @@ public class TrangGioiThieu extends JPanel {
             e.printStackTrace();
         }
 
-
-
-
         jPanel_lichSu_phanHinhAnh.add(jLabel_hinhAnhLichSu, BorderLayout.SOUTH);
 
         // PHẦN TEXT ********************************
-
         jPanel_lichSu_phanText = new JPanel();
         jPanel_lichSu_phanText.setLayout(new BorderLayout());
         jPanel_lichSu_phanText.setBackground(Color.white);
@@ -153,11 +156,121 @@ public class TrangGioiThieu extends JPanel {
 
 
         // add các thành phần
+        JPanel_tongHopNoiDungLichSu.add(jPanel_lichSu_phanHinhAnh, BorderLayout.WEST);
+        JPanel_tongHopNoiDungLichSu.add(jPanel_lichSu_phanText, BorderLayout.EAST);
 
 
-        JPanel_tongHopNoiDung.add(jPanel_lichSu_phanHinhAnh, BorderLayout.WEST);
-        JPanel_tongHopNoiDung.add(jPanel_lichSu_phanText, BorderLayout.EAST);
-        trangChua.add(JPanel_tongHopNoiDung, BorderLayout.CENTER);
+        //*********************PANEL PHẦN CONTACT VÀ LÝ DO***********************
+        // tạo panel chứa nội dung tong hop
+        JPanel JPanel_tongHopContactVaLyDo = new JPanel();
+        JPanel_tongHopContactVaLyDo.setLayout(new BorderLayout());
+        JPanel_tongHopContactVaLyDo.setBackground(Color.white);
+
+        // tạo panel chứa nội dung lý do
+        JPanel JPanel_lyDo = new JPanel();
+        JPanel_lyDo.setBorder(BorderFactory.createEmptyBorder(0, 30, 0, 0));
+        JPanel_lyDo.setLayout(new BorderLayout());
+        JPanel_lyDo.setBackground(Color.white);
+        JLabel jLabel_lyDo = new JLabel("Lý do chọn ứng dụng", SwingConstants.LEFT);
+        jLabel_lyDo.setFont(phongTuyChinh.layPhongRobotoMonoReg(2, 13));
+        jLabel_lyDo.setForeground(xanhBrandeis);
+        JPanel_lyDo.add(jLabel_lyDo, BorderLayout.NORTH);
+        // xu ly anh lý do
+        jLabel_hinhAnhNhanVien = new JLabel();
+        try {
+            BufferedImage image = ImageIO.read(new File("assets/nhanVien.png"));
+
+            // Thay đổi kích thước ảnh trước khi bo góc (200x100)
+            Image resizedImage = image.getScaledInstance(200, 200, Image.SCALE_SMOOTH);
+
+            // Bo góc ảnh đã được thay đổi kích thước với góc bo 40px và thêm viền
+            BufferedImage roundedImageWithBorder = createRoundedImageWithBorder(toBufferedImage(resizedImage), 40, 1, xanhBrandeis);
+
+            // Chuyển đổi ảnh bo góc với viền thành ImageIcon
+            ImageIcon iconImage = new ImageIcon(roundedImageWithBorder);
+
+            // Đưa icon vào JLabel
+            jLabel_hinhAnhNhanVien = new JLabel(iconImage);
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        JPanel_lyDo.add(jLabel_hinhAnhNhanVien, BorderLayout.WEST);
+
+        // tạo nội dung lý do
+        String content_lyDo = "<html> <div style=\"text-align: justify;\"> <br>"
+                + "&#10003; Dễ Dàng Sử Dụng<br><br>"
+                + "&#10003; Quản Lý Về Hiệu Quả<br><br>"
+                + "&#10003; Thông Tin Chi Tiết<br><br>"
+                + "&#10003; Tích Hợp Thanh Toán<br><br>"
+                + "&#10003; Nâng Cao Trải Nghiệm Khách Hàng<br><br>"
+                + "&#10003; Tiết Kiệm Thời Gian<br>"
+                + "</div></html>";
+
+        JLabel jLabel_lyDo_text = new JLabel(content_lyDo);
+        jLabel_lyDo_text.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 0));
+        jLabel_lyDo_text.setFont(phongTuyChinh.layPhongRobotoMonoReg(2, 13));
+        jLabel_lyDo_text.setForeground(xanhBrandeis);
+        JPanel_lyDo.add(jLabel_lyDo_text, BorderLayout.EAST);
+
+
+        // tạo panel chứa nội dung contact
+        JPanel JPanel_contact = new JPanel();
+        JPanel_contact.setLayout(new BorderLayout());
+        JPanel_contact.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 0));
+        JPanel_contact.setBackground(Color.white);
+        JLabel jLabel_contact = new JLabel("Thông tin liên hệ", SwingConstants.LEFT);
+        jLabel_contact.setFont(phongTuyChinh.layPhongRobotoMonoReg(2, 13));
+        jLabel_contact.setForeground(xanhBrandeis);
+        JPanel_contact.add(jLabel_contact, BorderLayout.NORTH);
+
+        // tạo nội dung hinh anh contact
+        // xu ly anh contact
+        jLabel_hinhAnhHotline = new JLabel();
+        try {
+            BufferedImage image = ImageIO.read(new File("assets/hotline.png"));
+
+            // Thay đổi kích thước ảnh trước khi bo góc (200x100)
+            Image resizedImage = image.getScaledInstance(300, 200, Image.SCALE_SMOOTH);
+
+            // Bo góc ảnh đã được thay đổi kích thước với góc bo 40px và thêm viền
+            BufferedImage roundedImageWithBorder = createRoundedImageWithBorder(toBufferedImage(resizedImage), 40, 1, xanhBrandeis);
+
+            // Chuyển đổi ảnh bo góc với viền thành ImageIcon
+            ImageIcon iconImage = new ImageIcon(roundedImageWithBorder);
+
+            // Đưa icon vào JLabel
+            jLabel_hinhAnhHotline = new JLabel(iconImage);
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        JPanel_contact.add(jLabel_hinhAnhHotline, BorderLayout.CENTER);
+
+        // tao noi dung contact
+        String content_contact = "<html> <div style=\"text-align: justify;\"> "
+                + "<b>Email</b>:<br> gaGV@gmail.com<br><br>"
+                + "<b>Hotline</b>:<br> 0909-123-456<br><br>"
+                + "<b>Địa chỉ văn phòng</b>: <br> 123 Đường Thống Nhất, Quận <br> Gò Vấp, TP. Hồ Chí Minh, Việt Nam<br>";
+        JLabel jLabel_contact_text = new JLabel(content_contact);
+        jLabel_contact_text.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 0));
+        jLabel_contact_text.setFont(phongTuyChinh.layPhongRobotoMonoReg(2, 13));
+        jLabel_contact_text.setForeground(xanhBrandeis);
+        JPanel_contact.add(jLabel_contact_text, BorderLayout.EAST);
+
+
+
+
+
+        JPanel_tongHopContactVaLyDo.add(JPanel_lyDo, BorderLayout.WEST);
+        JPanel_tongHopContactVaLyDo.add(JPanel_contact, BorderLayout.EAST);
+
+        //add vao trang chua
+        trangChua.add(JPanel_tongHopNoiDungLichSu, BorderLayout.CENTER);
+        trangChua.add(JPanel_tongHopContactVaLyDo, BorderLayout.SOUTH);
     }
 
     // Hàm tạo ảnh bo góc với viền
