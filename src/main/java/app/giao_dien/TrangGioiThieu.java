@@ -2,11 +2,15 @@ package app.giao_dien;
 
 import app.phong_chu_moi.PhongChuMoi;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
+import java.awt.geom.RoundRectangle2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
 
 public class TrangGioiThieu extends JPanel {
     /* Khoi tao Cac thanh phan */
@@ -31,7 +35,8 @@ public class TrangGioiThieu extends JPanel {
     private JLabel JLabel_tieuDeLon;
     private JPanel JPanel_tongHopNoiDung;
     private JPanel JPanel_lichSu;
-    private JPanel JPanel_lichSu_hinhAnh;
+    private JPanel jPanel_lichSu_hinhAnh;
+    private JLabel jLabel_lichSuHinhThanh;
 
     public TrangGioiThieu() {
         setPreferredSize(new Dimension(1200, 700));
@@ -90,23 +95,70 @@ public class TrangGioiThieu extends JPanel {
 
         // chia lịch sử ra thành 2 panel nhỏ. 1 là hình, 1 là text
 
+        // PHẦN HÌNH ********************************
+
         //panel chứa hình ảnh
-        JPanel_lichSu_hinhAnh = new JPanel(new BorderLayout());
-        JPanel_lichSu_hinhAnh.setBackground(Color.white);
-        JLabel JLabel_lichSuHinhThanh = new JLabel("Lịch sử hình thành", SwingConstants.CENTER);
-        JLabel_lichSuHinhThanh.setFont(phongTuyChinh.layPhongRobotoMonoReg(2,13));
-        JLabel_lichSuHinhThanh.setForeground(xanhBrandeis);
+        jPanel_lichSu_hinhAnh = new JPanel(new BorderLayout());
+        jPanel_lichSu_hinhAnh.setBackground(Color.white);
+        jLabel_lichSuHinhThanh = new JLabel("Lịch sử hình thành", SwingConstants.CENTER);
+        jLabel_lichSuHinhThanh.setFont(phongTuyChinh.layPhongRobotoMonoReg(2, 13));
+        jLabel_lichSuHinhThanh.setForeground(xanhBrandeis);
 
-        JPanel_lichSu_hinhAnh.add(JLabel_lichSuHinhThanh, BorderLayout.NORTH);
+        jPanel_lichSu_hinhAnh.add(jLabel_lichSuHinhThanh, BorderLayout.NORTH);
+        // Xử lý ảnh
+        Image roundedImage;
+        try {
+            BufferedImage image = ImageIO.read(new File("assets/nhaGa.jpg"));
+            Image resizedImage = image.getScaledInstance(300, 200, Image.SCALE_SMOOTH);
 
-        //tạo hình ảnh
-        ImageIcon img_lichSu = new ImageIcon("assets/nhaGa.jpg");
-        JLabel JLabel_hinhAnhLichSu = new JLabel(img_lichSu);
+            roundedImage = createRoundedImage(image, 40);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        JLabel jLabel_hinhAnhLichSu = new JLabel(new ImageIcon(roundedImage));
 
 
-        JPanel_lichSu_hinhAnh.add(JLabel_hinhAnhLichSu, BorderLayout.SOUTH);
+        jPanel_lichSu_hinhAnh.add(jLabel_hinhAnhLichSu, BorderLayout.SOUTH);
 
-        JPanel_tongHopNoiDung.add(JPanel_lichSu_hinhAnh, BorderLayout.WEST);
+        // PHẦN LIST ********************************
+
+        JPanel jPanel_lichSu_list = new JPanel();
+        jPanel_lichSu_list.setLayout(new FlowLayout());
+        jPanel_lichSu_list.setBackground(Color.white);
+        String content = "<html> <div style=\"text-align: justify;\"> <br>"
+                + "&#9906; 2010: Ga Gò Vấp chính thức được thành lập, cung cấp dịch vụ bán vé tàu tại ga <br> cho hành khách địa phương và du khách.<br>"
+                + "&#9906; 2010 - 2024: Trong giai đoạn này, ga ghi vé bằng tay để phục vụ số lượng <br> khách lớn, giúp hàng triệu hành khách mỗi năm có chuyến đi thuận lợi.<br>"
+                + "&#9906; 2024: Ra mắt ứng dụng đặt vé tàu \"Ga Gò Vấp\", cho phép người dùng dễ dàng <br> tìm kiếm và đặt vé tàu chỉ với vài cú chạm, đánh dấu bước tiến quan trọng <br> trong việc nâng cao trải nghiệm khách hàng."
+                + "</div></html>";
+
+        JLabel jLabel_list = new JLabel(content);
+        jLabel_list.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 0));
+        jLabel_list.setFont(phongTuyChinh.layPhongRobotoMonoReg(1, 13));
+        jLabel_list.setForeground(xanhBrandeis);
+        jPanel_lichSu_list.add(jLabel_list);
+
+
+        // add các thành phần
+        JPanel_tongHopNoiDung.add(jPanel_lichSu_list, BorderLayout.EAST);
+        JPanel_tongHopNoiDung.add(jPanel_lichSu_hinhAnh, BorderLayout.WEST);
         trangChua.add(JPanel_tongHopNoiDung, BorderLayout.CENTER);
+    }
+
+    public static BufferedImage createRoundedImage(BufferedImage image, int cornerRadius) {
+        int width = image.getWidth();
+        int height = image.getHeight();
+
+        // Tạo một BufferedImage mới với cùng kích thước
+        BufferedImage output = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+
+        // Vẽ ảnh bo góc vào BufferedImage
+        Graphics2D g2 = output.createGraphics();
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2.setClip(new RoundRectangle2D.Float(0, 0, width, height, cornerRadius, cornerRadius));
+        g2.drawImage(image, 0, 0, null);
+        g2.dispose();
+
+        return output;
     }
 }
