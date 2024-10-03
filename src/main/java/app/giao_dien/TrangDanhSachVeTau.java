@@ -1,13 +1,17 @@
 package app.giao_dien;
 
+<<<<<<< HEAD
 import app.phan_tu_tuy_chinh.CustomButtonRender;
 import app.phan_tu_tuy_chinh.MauCuaCotTrongBangDS;
 import app.phan_tu_tuy_chinh.MauCuaNgangTrongBangDS;
+=======
+import app.phan_tu_tuy_chinh.CustomCellRenderer;
+import app.phan_tu_tuy_chinh.CustomHeaderRenderer;
+>>>>>>> 95d2c46533140aa6b0596902d8d51176d2007e62
 import app.phong_chu_moi.PhongChuMoi;
 
 import javax.swing.*;
 import javax.swing.border.Border;
-import javax.swing.border.LineBorder;
 import javax.swing.table.*;
 import java.awt.*;
 import java.awt.event.FocusEvent;

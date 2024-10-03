@@ -27,6 +27,9 @@ public class HanhDong_TrangDinhHuong implements ActionListener, MouseListener {
             case "Đặt Vé":
                 cardLayout.show(this.trangDinhHuong.trangChua, "Trang Dat Ve");
                 break;
+            case "Giới Thiệu":
+                cardLayout.show(this.trangDinhHuong.trangChua, "Trang Gioi Thieu");
+                break;
         }
     }
 
@@ -43,14 +46,29 @@ public class HanhDong_TrangDinhHuong implements ActionListener, MouseListener {
     }
 
     public void mouseEntered(MouseEvent e) {
-        JButton enteredButton = (JButton) e.getComponent();
-        enteredButton.setForeground(new Color(this.trangDinhHuong.xanhNhat.getRGB())); // Thay đổi màu khi hover
-        enteredButton.setBorder(this.trangDinhHuong.vienNhat);
+        if (e.getComponent() instanceof JButton) {
+            JButton enteredButton = (JButton) e.getComponent();
+            enteredButton.setForeground(new Color(this.trangDinhHuong.xanhNhat.getRGB())); // Thay đổi màu khi hover
+            enteredButton.setBorder(this.trangDinhHuong.vienNhat);
+        }
+
+        if (e.getComponent() instanceof JTextField) {
+            JTextField enteredTextField = (JTextField) e.getComponent();
+            enteredTextField.setBorder(this.trangDinhHuong.vienNhat); // Thay đổi màu khi hover
+        }
+
     }
 
     public void mouseExited(MouseEvent e) {
-        JButton exitedButton = (JButton) e.getComponent();
-        exitedButton.setForeground(new Color(this.trangDinhHuong.xanhBrandeis.getRGB())); // Khôi phục màu ban đầu khi di chuột ra khỏi nút
-        exitedButton.setBorder(this.trangDinhHuong.vienDam);
+        if (e.getComponent() instanceof JButton) {
+            JButton exitedButton = (JButton) e.getComponent();
+            exitedButton.setForeground(new Color(this.trangDinhHuong.xanhBrandeis.getRGB())); // Khôi phục màu ban đầu khi di chuột ra khỏi nút
+            exitedButton.setBorder(this.trangDinhHuong.vienDam);
+        }
+
+        if (e.getComponent() instanceof JTextField) {
+            JTextField exitedTextField = (JTextField) e.getComponent();
+            exitedTextField.setBorder(this.trangDinhHuong.vienDam); // Khôi phục màu ban đầu khi di chuột ra khỏi nút
+        }
     }
 }
