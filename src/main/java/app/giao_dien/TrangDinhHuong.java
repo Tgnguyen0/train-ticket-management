@@ -219,11 +219,7 @@ public class TrangDinhHuong extends JFrame {
 
         this.trangChua.add(trangChu, "Trang Chu");
         this.trangChua.add(trangDatVe, "Trang Dat Ve");
-<<<<<<< HEAD
-
-=======
         this.trangChua.add(trangGioiThieu,"Trang Gioi Thieu");
->>>>>>> 95d2c46533140aa6b0596902d8d51176d2007e62
         add(this.trangChua);
     }
 
