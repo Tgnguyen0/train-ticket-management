@@ -113,7 +113,7 @@ public class TrangDangNhap extends JFrame {
         tieuDeTen.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, 12));
         giua.add(tieuDeTen);
 
-        // Tạo thanh tên ngườ dùng truongTen
+        // Tạo thanh tên người dùng truongTen
         truongTen = new JTextField();
         truongTen.setForeground(new Color(xanhBrandeis.getRGB()));
         truongTen.setBackground(new Color(trang.getRGB()));
