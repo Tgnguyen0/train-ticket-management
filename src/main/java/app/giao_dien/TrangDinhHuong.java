@@ -33,6 +33,7 @@ public class TrangDinhHuong extends JFrame {
     /* Các trang được khởi tạo */
     public TrangChu trangChu;
     public TrangDatVe trangDatVe;
+    public TrangHoaDon trangHoaDon;
     public TrangGioiThieu trangGioiThieu;
 
     /* Khởi tạo phông chữ màu sắc */
@@ -112,7 +113,7 @@ public class TrangDinhHuong extends JFrame {
         nutHoaDon.setBorder(this.vienDam);
         nutHoaDon.setFocusPainted(false); // Bỏ viền khi click (focus)
         nutHoaDon.setContentAreaFilled(false); // Bỏ fill màu mặc định của JButton (nếu cần)
-        nutHoaDon.setEnabled(false);
+        //nutHoaDon.setEnabled(false);
         nutHoaDon.addMouseListener(this.thaoTacChuot);
         nutHoaDon.addActionListener(this.hanhDong);
         thanhDinhHuong.add(nutHoaDon);
@@ -215,10 +216,12 @@ public class TrangDinhHuong extends JFrame {
 
         this.trangChu = new TrangChu(); // Khởi tạo trang Trang chủ
         this.trangDatVe = new TrangDatVe(); // Khởi tạo trang Trang Đặt Vé
+        this.trangHoaDon = new TrangHoaDon(); // Khởi tạo trang Trang Hóa Đơn
         this.trangGioiThieu = new TrangGioiThieu(); // Khởi tạo trang Giới Thiệu
 
         this.trangChua.add(trangChu, "Trang Chu");
         this.trangChua.add(trangDatVe, "Trang Dat Ve");
+        this.trangChua.add(trangHoaDon,"Trang Hoa Don");
         this.trangChua.add(trangGioiThieu,"Trang Gioi Thieu");
         add(this.trangChua);
     }
