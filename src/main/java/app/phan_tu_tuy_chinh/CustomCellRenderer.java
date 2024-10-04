@@ -10,7 +10,6 @@ public class CustomCellRenderer extends DefaultTableCellRenderer {
     public Color xam200 = new Color(233, 236, 239); // https://getbootstrap.com/docs/5.0/utilities/colors/#:~:text=Convey%20meaning%20through%20color%20with%20a%20handful%20of%20color%20utility
 
     public CustomCellRenderer() {
-        setBorder(BorderFactory.createEmptyBorder()); // Loại bỏ khung viền
         setHorizontalAlignment(CENTER);
     }
 
