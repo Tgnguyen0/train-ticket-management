@@ -220,16 +220,11 @@ public class TrangDinhHuong extends JFrame {
         this.trangDatVe = new TrangDatVe(); // Khởi tạo trang Trang Đặt Vé
         this.trangHoaDon = new TrangHoaDon(); // Khởi tạo trang Trang Hóa Đơn
         this.trangGioiThieu = new TrangGioiThieu(); // Khởi tạo trang Giới Thiệu
-        test trangDanhSachVe = new test();
+
         this.trangChua.add(trangChu, "Trang Chu");
         this.trangChua.add(trangDatVe, "Trang Dat Ve");
-<<<<<<< HEAD
-        this.trangChua.add(trangDanhSachVe,"Trang Gioi Thieu");
-
-=======
         this.trangChua.add(trangHoaDon,"Trang Hoa Don");
         this.trangChua.add(trangGioiThieu,"Trang Gioi Thieu");
->>>>>>> 0a3fbeb14b2e134b68aa55397e99e032018a5da7
         add(this.trangChua);
     }
 
@@ -250,7 +245,8 @@ public class TrangDinhHuong extends JFrame {
 
                     // Đặt màu nền và màu chữ khi chọn cho JTextField
                     UIManager.put("TextField.selectionBackground", new Color(0, 112, 255)); // Màu nền khi chọn
-                    UIManager.put("TextField.selectionForeground", new Color(255, 255, 255)); // Màu chữ khi chọn
+                    UIManager.put("TextField.selectionForeground", new Color(255, 255, 255)); // Màu chữ khi chọncho JComboBox
+
 
                     break;
                 }

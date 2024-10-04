@@ -9,10 +9,10 @@ public class CustomComboBoxRenderer extends DefaultListCellRenderer {
         Component c = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
         if (isSelected) {
             c.setBackground(new Color(0, 112, 255)); // Màu nền khi chọn
-            c.setForeground(Color.WHITE); // Màu chữ khi chọn
+            c.setForeground(new Color(255, 255, 255)); // Màu chữ khi chọn
         } else {
-            c.setBackground(Color.WHITE); // Màu nền mặc định
-            c.setForeground(Color.BLACK); // Màu chữ mặc định
+            c.setBackground(new Color(255, 255, 255)); // Màu nền mặc định
+            c.setForeground(new Color(0, 112, 255)); // Màu chữ mặc định
         }
         return c;
     }
