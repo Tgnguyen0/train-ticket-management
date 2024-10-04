@@ -5,14 +5,18 @@ import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
 
 public class CustomCellRenderer extends DefaultTableCellRenderer {
+    public Color xanhBrandeis = new Color(0, 112, 255);
+    public Color trang = new Color(255, 255, 255);
+    public Color xam200 = new Color(233, 236, 239); // https://getbootstrap.com/docs/5.0/utilities/colors/#:~:text=Convey%20meaning%20through%20color%20with%20a%20handful%20of%20color%20utility
+
     public CustomCellRenderer() {
-//        setBorder(BorderFactory.createEmptyBorder()); // Loại bỏ khung viền
         setHorizontalAlignment(CENTER);
     }
 
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
         Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+<<<<<<< HEAD
         // gỡ bỏ đường viền mỗi khi click vào ô
         ((JComponent) c).setBorder(BorderFactory.createEmptyBorder());
         c.setBackground(row % 2 == 0 ? Color.decode("#E9E9E9"): Color.WHITE); // Đặt màu nền xanh dương cho các hàng chẵn
@@ -24,6 +28,9 @@ public class CustomCellRenderer extends DefaultTableCellRenderer {
         else {
             c.setForeground(new Color(0, 112, 255));
         }
+=======
+        c.setBackground(row % 2 == 0 ? xam200 : trang); // Đặt màu nền trắng cho các hàng chẵn
+>>>>>>> 0a3fbeb14b2e134b68aa55397e99e032018a5da7
         return c;
     }
 }

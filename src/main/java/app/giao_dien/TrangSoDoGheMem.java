@@ -5,11 +5,14 @@ import app.phong_chu_moi.PhongChuMoi;
 
 import javax.swing.*;
 import javax.swing.border.Border;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.MatteBorder;
+import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
 
-public class TrangSoDoGheMemDieuHoa extends JFrame {
+public class TrangSoDoGheMem extends JFrame {
     /**/
     public JPanel trangChua;
 
@@ -18,7 +21,7 @@ public class TrangSoDoGheMemDieuHoa extends JFrame {
     int soGhe;
     int soToa;
     ArrayList<Integer> cacGheDaChon;
-    String[] muc = {"D1", "A4", "A7", "B3", "C2"};
+    String[] muc = {"D1", "A4"};
 
     /* Khoi Tao Phong Chu Mau Sac */
     public int kichThuocChu = 13;
@@ -31,12 +34,12 @@ public class TrangSoDoGheMemDieuHoa extends JFrame {
     public Border vienNhat = BorderFactory.createLineBorder(xanhNhat);
     public Border vienDam = BorderFactory.createLineBorder(xanhBrandeis);
     public Border gachChanNhat = BorderFactory.createMatteBorder(0, 0, 1, 0, xanhNhat);
-    public Border gachChanDam = BorderFactory.createMatteBorder(0, 0, 1, 0, xanhBrandeis);
+    public Border gachChanDam = BorderFactory.createMatteBorder(5, 5, 5, 5, xanhBrandeis);
 
     /**/
     private ItemListener mucDaChon;
 
-    public TrangSoDoGheMemDieuHoa() {
+    public TrangSoDoGheMem() {
         ImageIcon icon = new ImageIcon("assets/icon.png");
 
         setSize(new Dimension(800, 400));
@@ -90,24 +93,55 @@ public class TrangSoDoGheMemDieuHoa extends JFrame {
     }
 
     public void taoTrangChuaCacSoDoGhe() {
+        MatteBorder duongVienTuyChinhTren = BorderFactory.createMatteBorder(1, 1, 1, 1, xanhBrandeis);
+
+        // Tạo đường viền có tiêu đề
+        TitledBorder duongVienChuTren = BorderFactory.createTitledBorder(
+                duongVienTuyChinhTren,
+                "  Cửa Sổ    ",
+                TitledBorder.TOP,
+                TitledBorder.TOP,
+                phongTuyChinh.layPhongRobotoMonoReg(Font.BOLD, 12),
+                xanhBrandeis);
+
+        MatteBorder duongVienTuyChinhDuoi = BorderFactory.createMatteBorder(0, 0, 1, 0, xanhBrandeis);
+
+        // Tạo đường viền có tiêu đề
+        TitledBorder duongVienChuDuoi = BorderFactory.createTitledBorder(
+                duongVienTuyChinhDuoi,
+                "  Cửa Sổ    ",
+                TitledBorder.BOTTOM,
+                TitledBorder.BOTTOM,
+                phongTuyChinh.layPhongRobotoMonoReg(Font.BOLD, 12),
+                xanhBrandeis);
+
+        CompoundBorder duongVienKetHop = BorderFactory.createCompoundBorder(duongVienChuTren, duongVienChuDuoi);
+
+        JPanel trangChuaCacSoDoGhe = new JPanel();
+        trangChuaCacSoDoGhe.setLayout(new FlowLayout(FlowLayout.CENTER));
+        trangChuaCacSoDoGhe.setPreferredSize(new Dimension(800, 280));
+        trangChuaCacSoDoGhe.setBackground(trang);
+
         this.trangChua = new JPanel();
-        trangChua.setPreferredSize(new Dimension(800, 280));
+        trangChua.setPreferredSize(new Dimension(760, 245));
         trangChua.setBackground(trang);
         trangChua.setLayout(new CardLayout());
 
         JPanel soDoGheToaD1 = taoTrangSoDoGhe();
+        soDoGheToaD1.setBorder(duongVienKetHop);
+
         JPanel soDoGheToaA4 = taoTrangSoDoGhe();
         soDoGheToaA4.setBackground(Color.RED);
 
         trangChua.add(soDoGheToaD1, "D1");
         trangChua.add(soDoGheToaA4, "A4");
+        trangChuaCacSoDoGhe.add(trangChua);
 
-        add(trangChua, BorderLayout.SOUTH);
+        add(trangChuaCacSoDoGhe, BorderLayout.SOUTH);
     }
 
     public JPanel taoTrangSoDoGhe() {
         JPanel trangSoDoGhe = new JPanel();
-        trangSoDoGhe.setPreferredSize(new Dimension(800, 300));
         trangSoDoGhe.setBackground(trang);
         trangSoDoGhe.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 10));
 
@@ -181,7 +215,7 @@ public class TrangSoDoGheMemDieuHoa extends JFrame {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            TrangSoDoGheMemDieuHoa trangSoDoGheMemDieuHoa = new TrangSoDoGheMemDieuHoa();
+            TrangSoDoGheMem trangSoDoGheMemDieuHoa = new TrangSoDoGheMem();
             trangSoDoGheMemDieuHoa.setVisible(true);
         });
     }

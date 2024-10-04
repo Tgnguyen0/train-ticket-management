@@ -1,16 +1,15 @@
 package app.dieu_khien;
 
-import app.giao_dien.TrangDatVe;
-import app.giao_dien.TrangSoDoGheMemDieuHoa;
+import app.giao_dien.TrangSoDoGheMem;
 
 import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
 public class HanhDong_TrangSoDoGheMemDieuHoa implements ItemListener {
-    TrangSoDoGheMemDieuHoa trangSoDoGheMemDieuHoa;
+    TrangSoDoGheMem trangSoDoGheMemDieuHoa;
 
-    public HanhDong_TrangSoDoGheMemDieuHoa(TrangSoDoGheMemDieuHoa trangSoDoGheMemDieuHoa) {
+    public HanhDong_TrangSoDoGheMemDieuHoa(TrangSoDoGheMem trangSoDoGheMemDieuHoa) {
         this.trangSoDoGheMemDieuHoa = trangSoDoGheMemDieuHoa;
     }
 

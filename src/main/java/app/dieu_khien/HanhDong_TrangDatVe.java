@@ -1,7 +1,9 @@
 package app.dieu_khien;
 
 import app.giao_dien.TrangDatVe;
-import app.giao_dien.TrangSoDoGheMemDieuHoa;
+import app.giao_dien.TrangSoDoGheMem;
+import app.giao_dien.TrangSoDoGiuong4;
+import app.giao_dien.TrangSoDoGiuong6;
 
 import javax.swing.*;
 import java.awt.*;
@@ -25,11 +27,35 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
                 case "Ghế phụ":
                     break;
                 case "Ghế mềm":
-                    TrangSoDoGheMemDieuHoa trangSoDoGheMem = new TrangSoDoGheMemDieuHoa();
+                    TrangSoDoGheMem trangSoDoGheMem = new TrangSoDoGheMem();
                     trangSoDoGheMem.setVisible(true);
+                    break;
+                case "Giường nằm 4 tầng":
+                    TrangSoDoGiuong4 trangSoDoGiuong4 = new TrangSoDoGiuong4();
+                    trangSoDoGiuong4.setVisible(true);
+                    break;
+                case "Giường nằm 6 tầng":
+                    TrangSoDoGiuong6 trangSoDoGiuong6 = new TrangSoDoGiuong6();
+                    trangSoDoGiuong6.setVisible(true);
                     break;
             }
 
+        }
+
+        if (source == this.trangDatVe.nutLuaChonKhuHoi) {
+            this.trangDatVe.nutLuaChonMotChieu.setSelected(false);
+        }
+
+        if (source == this.trangDatVe.nutLuaChonMotChieu) {
+            this.trangDatVe.nutLuaChonKhuHoi.setSelected(false);
+        }
+
+        if (source == this.trangDatVe.nutLuaChonNam) {
+            this.trangDatVe.nutLuaChonNu.setSelected(false);
+        }
+
+        if (source == this.trangDatVe.nutLuaChonNu) {
+            this.trangDatVe.nutLuaChonNam.setSelected(false);
         }
     }
 
