@@ -15,7 +15,7 @@ import java.awt.*;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 
-public class TrangDanhSachVeTau extends JFrame {
+public class TrangDanhSachVeTau extends JPanel {
 
     private PhongChuMoi phongChuChinh = new PhongChuMoi();
     private JPanel trangChua ;
@@ -59,8 +59,8 @@ public class TrangDanhSachVeTau extends JFrame {
         tapBangDanhSach();
         this.trangChua.add(this.trangChua_PhanDau, BorderLayout.NORTH);
         this.trangChua.add(trangChua_BangDanhSach, BorderLayout.CENTER);
-         setDefaultCloseOperation(EXIT_ON_CLOSE);
-         setLocationRelativeTo(null);
+//         setDefaultCloseOperation(EXIT_ON_CLOSE);
+//         setLocationRelativeTo(null);
         this.add(this.trangChua);
         this.setVisible(true);
     }

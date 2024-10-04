@@ -8,8 +8,8 @@ public class CustomHeaderRenderer extends DefaultTableCellRenderer {
     public CustomHeaderRenderer() {
         setHorizontalAlignment(CENTER);
         setBorder(BorderFactory.createEmptyBorder()); // Loại bỏ khung viền
-        setBackground(Color.BLUE);
-        setForeground(Color.WHITE);
+//        setBackground(Color.WHITE);
+//        setForeground(Color.WHITE);
 
     }
 

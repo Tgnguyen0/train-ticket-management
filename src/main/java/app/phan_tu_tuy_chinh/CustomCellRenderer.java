@@ -18,8 +18,12 @@ public class CustomCellRenderer extends DefaultTableCellRenderer {
         c.setBackground(row % 2 == 0 ? Color.decode("#E9E9E9"): Color.WHITE); // Đặt màu nền xanh dương cho các hàng chẵn
 //        c.setBackground(Color.BLUE); // Đặt màu nền nếu cần
         if (isSelected) {
-            c.setBackground(Color.CYAN);  // Màu nền cho hàng được chọn (bạn có thể đổi màu)
-    }
+            c.setBackground(new Color(0, 112, 255));
+            c.setForeground(new Color(255, 255, 255));// Màu nền cho hàng được chọn (bạn có thể đổi màu)
+        }
+        else {
+            c.setForeground(new Color(0, 112, 255));
+        }
         return c;
     }
 }

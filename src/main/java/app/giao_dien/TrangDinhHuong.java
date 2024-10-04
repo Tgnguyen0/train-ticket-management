@@ -88,6 +88,8 @@ public class TrangDinhHuong extends JFrame {
         nutTrangChu.setContentAreaFilled(false); // Bỏ fill màu mặc định của JButton (nếu cần)
         nutTrangChu.addMouseListener(this.thaoTacChuot);
         nutTrangChu.addActionListener(this.hanhDong);
+
+
         thanhDinhHuong.add(nutTrangChu);
 
         // Tạo Nút đến trang bán hàng
@@ -216,17 +218,45 @@ public class TrangDinhHuong extends JFrame {
         this.trangChu = new TrangChu(); // Khởi tạo trang Trang chủ
         this.trangDatVe = new TrangDatVe(); // Khởi tạo trang Trang Đặt Vé
         this.trangGioiThieu = new TrangGioiThieu(); // Khởi tạo trang Giới Thiệu
-
+        test trangDanhSachVe = new test();
         this.trangChua.add(trangChu, "Trang Chu");
         this.trangChua.add(trangDatVe, "Trang Dat Ve");
-        this.trangChua.add(trangGioiThieu,"Trang Gioi Thieu");
+        this.trangChua.add(trangDanhSachVe,"Trang Gioi Thieu");
+
         add(this.trangChua);
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
+        try {
+            for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    UIManager.setLookAndFeel(info.getClassName());
+
+                    // Cấu hình thuộc tính Nimbus
+                    UIManager.put("control", new javax.swing.plaf.ColorUIResource(255, 255, 255)); // Màu nền
+                    UIManager.put("nimbusBase", new javax.swing.plaf.ColorUIResource(255, 255, 255)); // Màu cơ bản
+                    UIManager.put("nimbusBorder", new javax.swing.plaf.ColorUIResource(0, 112, 255)); // Màu viền
+                    UIManager.put("nimbusLightBackground", new javax.swing.plaf.ColorUIResource(255, 255, 255)); // Màu nền sáng
+                    UIManager.put("nimbusFocus", new javax.swing.plaf.ColorUIResource(255, 255, 255)); // Màu focus
+                    UIManager.put("textForeground", new Color(0, 112, 255)); // Màu chữ
+                    UIManager.put("ComboBox.foreground", new Color(0, 112, 255)); // Màu chữ cho JComboBox
+
+                    // Đặt màu nền và màu chữ khi chọn cho JTextField
+                    UIManager.put("TextField.selectionBackground", new Color(0, 112, 255)); // Màu nền khi chọn
+                    UIManager.put("TextField.selectionForeground", new Color(255, 255, 255)); // Màu chữ khi chọn
+
+                    break;
+                }
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+// Sau đó, khởi chạy giao diện của bạn
+        java.awt.EventQueue.invokeLater(() -> {
             TrangDinhHuong trangDinhHuong = new TrangDinhHuong();
             trangDinhHuong.setVisible(true);
         });
+
     }
 }
