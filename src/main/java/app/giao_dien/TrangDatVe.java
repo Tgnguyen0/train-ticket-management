@@ -167,6 +167,7 @@ public class TrangDatVe extends JPanel {
         nutLuaChonMotChieu.setOpaque(false);
         nutLuaChonMotChieu.setBorder(vienDam);
         nutLuaChonMotChieu.setHorizontalTextPosition(SwingConstants.LEFT);
+        nutLuaChonMotChieu.addActionListener(hanhDong);
         donDatVe.add(nutLuaChonMotChieu);
 
         // Tạo nút lựa chọn khứ hồi
@@ -180,6 +181,7 @@ public class TrangDatVe extends JPanel {
         nutLuaChonKhuHoi.setBorder(vienDam);
         nutLuaChonKhuHoi.setContentAreaFilled(false);
         nutLuaChonKhuHoi.setHorizontalTextPosition(SwingConstants.LEFT);
+        nutLuaChonKhuHoi.addActionListener(hanhDong);
         donDatVe.add(nutLuaChonKhuHoi);
 
         JLabel tieuDeNgayDi = new JLabel("Ngày Xuất Phát:");
@@ -423,6 +425,7 @@ public class TrangDatVe extends JPanel {
         nutLuaChonNam.setOpaque(false);
         nutLuaChonNam.setBorder(vienDam);
         nutLuaChonNam.setHorizontalTextPosition(SwingConstants.LEFT);
+        nutLuaChonNam.addActionListener(hanhDong);
         phanThongTin.add(nutLuaChonNam);
 
         // Tạo nút lựa chọn giới tính nữ
@@ -436,6 +439,7 @@ public class TrangDatVe extends JPanel {
         nutLuaChonNu.setBorder(vienDam);
         nutLuaChonNu.setContentAreaFilled(false);
         nutLuaChonNu.setHorizontalTextPosition(SwingConstants.LEFT);
+        nutLuaChonNu.addActionListener(hanhDong);
         phanThongTin.add(nutLuaChonNu);
 
         JLabel tieuDeThuDienTu = new JLabel("Thư Điện Tử:");

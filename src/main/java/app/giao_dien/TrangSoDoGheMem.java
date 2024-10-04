@@ -12,7 +12,7 @@ import java.awt.*;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
 
-public class TrangSoDoGheMemDieuHoa extends JFrame {
+public class TrangSoDoGheMem extends JFrame {
     /**/
     public JPanel trangChua;
 
@@ -39,7 +39,7 @@ public class TrangSoDoGheMemDieuHoa extends JFrame {
     /**/
     private ItemListener mucDaChon;
 
-    public TrangSoDoGheMemDieuHoa() {
+    public TrangSoDoGheMem() {
         ImageIcon icon = new ImageIcon("assets/icon.png");
 
         setSize(new Dimension(800, 400));
@@ -215,7 +215,7 @@ public class TrangSoDoGheMemDieuHoa extends JFrame {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            TrangSoDoGheMemDieuHoa trangSoDoGheMemDieuHoa = new TrangSoDoGheMemDieuHoa();
+            TrangSoDoGheMem trangSoDoGheMemDieuHoa = new TrangSoDoGheMem();
             trangSoDoGheMemDieuHoa.setVisible(true);
         });
     }
