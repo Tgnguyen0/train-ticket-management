@@ -1,6 +1,7 @@
 package app.giao_dien;
 
 import app.dieu_khien.HanhDong_TrangDatVe;
+import app.phan_tu_tuy_chinh.CustomComboBoxRenderer;
 import app.phong_chu_moi.PhongChuMoi;
 
 import javax.swing.*;
@@ -129,6 +130,7 @@ public class TrangDatVe extends JPanel {
         thanhCacDiemDi.addItem("Soda");
         thanhCacDiemDi.addItem("Kem");
         thanhCacDiemDi.setPreferredSize(new Dimension(chieuDaiNut, chieuRongNut));
+        thanhCacDiemDi.setRenderer(new CustomComboBoxRenderer());
         donDatVe.add(thanhCacDiemDi);
 
         JLabel tieuDeDiemDen = new JLabel("Điểm đến:");
@@ -148,6 +150,7 @@ public class TrangDatVe extends JPanel {
         thanhCacDiemDen.addItem("Soda");
         thanhCacDiemDen.addItem("Kem");
         thanhCacDiemDen.setPreferredSize(new Dimension(chieuDaiNut, chieuRongNut));
+        thanhCacDiemDen.setRenderer(new CustomComboBoxRenderer());
         donDatVe.add(thanhCacDiemDen);
 
         JLabel tieuDeLoaiVe = new JLabel("Loại Vé:");
@@ -167,6 +170,7 @@ public class TrangDatVe extends JPanel {
         nutLuaChonMotChieu.setOpaque(false);
         nutLuaChonMotChieu.setBorder(vienDam);
         nutLuaChonMotChieu.setHorizontalTextPosition(SwingConstants.LEFT);
+        nutLuaChonMotChieu.addActionListener(hanhDong);
         donDatVe.add(nutLuaChonMotChieu);
 
         // Tạo nút lựa chọn khứ hồi
@@ -180,6 +184,7 @@ public class TrangDatVe extends JPanel {
         nutLuaChonKhuHoi.setBorder(vienDam);
         nutLuaChonKhuHoi.setContentAreaFilled(false);
         nutLuaChonKhuHoi.setHorizontalTextPosition(SwingConstants.LEFT);
+        nutLuaChonKhuHoi.addActionListener(hanhDong);
         donDatVe.add(nutLuaChonKhuHoi);
 
         JLabel tieuDeNgayDi = new JLabel("Ngày Xuất Phát:");
@@ -241,6 +246,7 @@ public class TrangDatVe extends JPanel {
         thanhCacLoaiGhe.addItem("Giường nằm 6 tầng");
         thanhCacLoaiGhe.addItem("Giường nằm 2 tầng");
         thanhCacLoaiGhe.setPreferredSize(new Dimension(chieuDaiNut, chieuRongNut));
+        thanhCacLoaiGhe.setRenderer(new CustomComboBoxRenderer());
         thanhCacLoaiGhe.addItemListener(mucDaChon);
         donDatVe.add(thanhCacLoaiGhe);
 
@@ -423,6 +429,7 @@ public class TrangDatVe extends JPanel {
         nutLuaChonNam.setOpaque(false);
         nutLuaChonNam.setBorder(vienDam);
         nutLuaChonNam.setHorizontalTextPosition(SwingConstants.LEFT);
+        nutLuaChonNam.addActionListener(hanhDong);
         phanThongTin.add(nutLuaChonNam);
 
         // Tạo nút lựa chọn giới tính nữ
@@ -436,6 +443,7 @@ public class TrangDatVe extends JPanel {
         nutLuaChonNu.setBorder(vienDam);
         nutLuaChonNu.setContentAreaFilled(false);
         nutLuaChonNu.setHorizontalTextPosition(SwingConstants.LEFT);
+        nutLuaChonNu.addActionListener(hanhDong);
         phanThongTin.add(nutLuaChonNu);
 
         JLabel tieuDeThuDienTu = new JLabel("Thư Điện Tử:");

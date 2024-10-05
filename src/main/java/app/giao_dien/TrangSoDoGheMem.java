@@ -1,6 +1,7 @@
 package app.giao_dien;
 
 import app.dieu_khien.HanhDong_TrangSoDoGheMemDieuHoa;
+import app.phan_tu_tuy_chinh.CustomComboBoxRenderer;
 import app.phong_chu_moi.PhongChuMoi;
 
 import javax.swing.*;
@@ -12,7 +13,7 @@ import java.awt.*;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
 
-public class TrangSoDoGheMemDieuHoa extends JFrame {
+public class TrangSoDoGheMem extends JFrame {
     /**/
     public JPanel trangChua;
 
@@ -39,7 +40,7 @@ public class TrangSoDoGheMemDieuHoa extends JFrame {
     /**/
     private ItemListener mucDaChon;
 
-    public TrangSoDoGheMemDieuHoa() {
+    public TrangSoDoGheMem() {
         ImageIcon icon = new ImageIcon("assets/icon.png");
 
         setSize(new Dimension(800, 400));
@@ -87,6 +88,7 @@ public class TrangSoDoGheMemDieuHoa extends JFrame {
         thanhCacToa.setFocusable(false);
         thanhCacToa.setPreferredSize(new Dimension(210, 30));
         thanhCacToa.addItemListener(mucDaChon);
+        thanhCacToa.setRenderer(new CustomComboBoxRenderer());
         trangChuaCacToa.add(thanhCacToa);
 
         add(trangChuaCacToa, BorderLayout.CENTER);
@@ -215,7 +217,7 @@ public class TrangSoDoGheMemDieuHoa extends JFrame {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            TrangSoDoGheMemDieuHoa trangSoDoGheMemDieuHoa = new TrangSoDoGheMemDieuHoa();
+            TrangSoDoGheMem trangSoDoGheMemDieuHoa = new TrangSoDoGheMem();
             trangSoDoGheMemDieuHoa.setVisible(true);
         });
     }
