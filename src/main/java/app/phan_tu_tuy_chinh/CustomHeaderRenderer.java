@@ -11,6 +11,9 @@ public class CustomHeaderRenderer extends DefaultTableCellRenderer {
     public CustomHeaderRenderer() {
         setHorizontalAlignment(CENTER);
         setBorder(BorderFactory.createEmptyBorder()); // Loại bỏ khung viền
+//        setBackground(Color.WHITE);
+//        setForeground(Color.WHITE);
+
         setBackground(trang);
         setForeground(xanhBrandeis);
     }

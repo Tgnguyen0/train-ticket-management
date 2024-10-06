@@ -1,9 +1,6 @@
 package app.dieu_khien;
 
-import app.giao_dien.TrangDatVe;
-import app.giao_dien.TrangSoDoGheMem;
-import app.giao_dien.TrangSoDoGiuong4;
-import app.giao_dien.TrangSoDoGiuong6;
+import app.giao_dien.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -56,6 +53,9 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
 
         if (source == this.trangDatVe.nutLuaChonNu) {
             this.trangDatVe.nutLuaChonNam.setSelected(false);
+        }
+        if(source == this.trangDatVe.nutDSVe){
+            TrangDanhSachVeTau.moGiaoDienDanhSach();
         }
     }
 

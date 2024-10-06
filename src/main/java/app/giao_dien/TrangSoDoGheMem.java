@@ -1,6 +1,7 @@
 package app.giao_dien;
 
 import app.dieu_khien.HanhDong_TrangSoDoGheMemDieuHoa;
+import app.phan_tu_tuy_chinh.CustomComboBoxRenderer;
 import app.phong_chu_moi.PhongChuMoi;
 
 import javax.swing.*;
@@ -87,6 +88,7 @@ public class TrangSoDoGheMem extends JFrame {
         thanhCacToa.setFocusable(false);
         thanhCacToa.setPreferredSize(new Dimension(210, 30));
         thanhCacToa.addItemListener(mucDaChon);
+        thanhCacToa.setRenderer(new CustomComboBoxRenderer());
         trangChuaCacToa.add(thanhCacToa);
 
         add(trangChuaCacToa, BorderLayout.CENTER);
