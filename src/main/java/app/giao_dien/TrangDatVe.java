@@ -2,6 +2,7 @@ package app.giao_dien;
 
 import app.dieu_khien.HanhDong_TrangDatVe;
 import app.phong_chu_moi.PhongChuMoi;
+import com.toedter.calendar.JCalendar;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -19,8 +20,8 @@ public class TrangDatVe extends JPanel {
     public JComboBox<String> thanhCacDiemDen;
     public JRadioButton nutLuaChonMotChieu;
     public JRadioButton nutLuaChonKhuHoi;
-    public JTextField thanhNhapNgayDi;
-    public JTextField thanhNhapNgayTroVe;
+    public JCalendar thanhNhapNgayDi;
+    public JCalendar thanhNhapNgayTroVe;
     public JTextField thanhNhapGioDen;
     public JComboBox<String> thanhCacLoaiGhe;
     public JButton nutGiamSoLuongTreEm;
@@ -190,7 +191,7 @@ public class TrangDatVe extends JPanel {
         tieuDeNgayDi.setFont(phongTuyChinh.layPhongRobotoMonoReg(2, kichThuocChu));
         donDatVe.add(tieuDeNgayDi);
 
-        thanhNhapNgayDi = new JTextField();
+        thanhNhapNgayDi = new JCalendar();
         thanhNhapNgayDi.setForeground(xanhBrandeis);
         thanhNhapNgayDi.setBackground(trang);
         thanhNhapNgayDi.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, kichThuocChu));
@@ -204,7 +205,7 @@ public class TrangDatVe extends JPanel {
         tieuDeNgayTroVe.setFont(phongTuyChinh.layPhongRobotoMonoReg(2, kichThuocChu));
         donDatVe.add(tieuDeNgayTroVe);
 
-        thanhNhapNgayTroVe = new JTextField();
+        thanhNhapNgayTroVe = new JCalendar();
         thanhNhapNgayTroVe.setForeground(xanhBrandeis);
         thanhNhapNgayTroVe.setBackground(trang);
         thanhNhapNgayTroVe.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, kichThuocChu));
