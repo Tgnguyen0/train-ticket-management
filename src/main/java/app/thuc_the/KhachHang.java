@@ -1,7 +1,6 @@
 package app.thuc_the;
 
 import app.ClassEnum.GIOI_TINH;
-
 public class KhachHang {
     private String maKH;
     private String tenKH;
@@ -16,7 +15,7 @@ public class KhachHang {
         this.diaChi = diaChi;
         this.soDT = soDT;
         this.email = email;
-        this.gioiTinh = gioiTinh;
+        this.setGioiTinh(gioiTinh);
     }
 
     public KhachHang() {
@@ -78,7 +77,7 @@ public class KhachHang {
                 ", diaChi='" + diaChi + '\'' +
                 ", soDT='" + soDT + '\'' +
                 ", email='" + email + '\'' +
-                ", gioiTinh=" + gioiTinh +
+                ", gioiTinh=" + getGioiTinh() +
                 '}';
     }
 }

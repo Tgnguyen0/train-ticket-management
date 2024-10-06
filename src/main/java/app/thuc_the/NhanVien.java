@@ -1,7 +1,5 @@
 package app.thuc_the;
 
-import app.ClassEnum.GIOI_TINH;
-
 import java.sql.Date;
 
 public class NhanVien {
