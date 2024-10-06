@@ -1,6 +1,5 @@
 package app.thuc_the;
 
-import app.ClassEnum.GIOI_TINH;
 public class KhachHang {
     private String maKH;
     private String tenKH;

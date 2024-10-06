@@ -1,4 +1,4 @@
-package app.ClassEnum;
+package app.thuc_the;
 
 public enum GIOI_TINH {
     NAM("Nam"),
