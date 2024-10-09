@@ -1,5 +1,6 @@
 package app.giao_dien;
 
+import app.dieu_khien.HanhDong_TrangDatVe;
 import app.dieu_khien.HanhDong_TrangSoDoGheMemDieuHoa;
 import app.phan_tu_tuy_chinh.CustomComboBoxRenderer;
 import app.phong_chu_moi.PhongChuMoi;
@@ -10,7 +11,9 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.MatteBorder;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.awt.event.ItemListener;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 public class TrangSoDoGheMem extends JFrame {
@@ -39,6 +42,8 @@ public class TrangSoDoGheMem extends JFrame {
 
     /**/
     private ItemListener mucDaChon;
+    private ActionListener hanhDong;
+    private MouseListener thaoTacChuot;
 
     public TrangSoDoGheMem() {
         ImageIcon icon = new ImageIcon("assets/icon.png");
@@ -52,6 +57,8 @@ public class TrangSoDoGheMem extends JFrame {
         setResizable(false);
 
         this.mucDaChon = new HanhDong_TrangSoDoGheMemDieuHoa(this);
+        this.hanhDong = new HanhDong_TrangSoDoGheMemDieuHoa(this);
+        this.thaoTacChuot = new HanhDong_TrangSoDoGheMemDieuHoa(this);
 
         taoTrangTieuDe();
         taoTrangCacToa();
@@ -174,6 +181,7 @@ public class TrangSoDoGheMem extends JFrame {
                     ghe.setForeground(trang); // Đặt màu chữ
                     ghe.setFocusPainted(false); // Bỏ viền khi click (focus)
                     ghe.setBorderPainted(false);
+                    ghe.addActionListener(this.hanhDong);
 
                     if (i <= 1) {
                         chua2GheDocTren.add(ghe);
