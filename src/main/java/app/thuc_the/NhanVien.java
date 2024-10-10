@@ -1,6 +1,8 @@
 package app.thuc_the;
 
 import java.sql.Date;
+import java.util.Objects;
+import java.util.Set;
 
 public class NhanVien {
     private String maNV;
@@ -11,6 +13,7 @@ public class NhanVien {
     private GIOI_TINH gioiTinh;
     private String password;
     private String vaiTro;
+    private Set<HoaDon> danhSachHoaDon;
 
     public NhanVien(String maNV, String tenNV, Date ngaySinh, String diaChia, String soDT, GIOI_TINH gioiTinh, String password, String vaiTro) {
         this.maNV = maNV;
@@ -88,6 +91,26 @@ public class NhanVien {
 
     public void setVaiTro(String vaiTro) {
         this.vaiTro = vaiTro;
+    }
+
+    public Set<HoaDon> getDanhSachHoaDon() {
+        return danhSachHoaDon;
+    }
+
+    public void setDanhSachHoaDon(Set<HoaDon> danhSachHoaDon) {
+        this.danhSachHoaDon = danhSachHoaDon;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof NhanVien nhanVien)) return false;
+        return Objects.equals(getMaNV(), nhanVien.getMaNV());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getMaNV());
     }
 
     @Override
