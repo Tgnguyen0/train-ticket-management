@@ -387,7 +387,6 @@ public class TrangDatVe extends JPanel {
         thanhNhapHoTen.setForeground(xanhBrandeis);
         thanhNhapHoTen.setBackground(trang);
         thanhNhapHoTen.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, kichThuocChu));
-        thanhNhapHoTen.setBorder(gachChanDam);
         thanhNhapHoTen.setPreferredSize(new Dimension(chieuDaiNut, chieuRongNut));
         phanThongTin.add(thanhNhapHoTen);
 
@@ -401,7 +400,6 @@ public class TrangDatVe extends JPanel {
         thanhNhapDienThoai.setForeground(xanhBrandeis);
         thanhNhapDienThoai.setBackground(trang);
         thanhNhapDienThoai.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, kichThuocChu));
-        thanhNhapDienThoai.setBorder(gachChanDam);
         thanhNhapDienThoai.setPreferredSize(new Dimension(chieuDaiNut, chieuRongNut + 1));
         phanThongTin.add(thanhNhapDienThoai);
 
@@ -421,7 +419,6 @@ public class TrangDatVe extends JPanel {
         nutLuaChonNam.setFocusPainted(false);
         nutLuaChonNam.setContentAreaFilled(false);
         nutLuaChonNam.setOpaque(false);
-        nutLuaChonNam.setBorder(vienDam);
         nutLuaChonNam.setHorizontalTextPosition(SwingConstants.LEFT);
         nutLuaChonNam.addActionListener(hanhDong);
         phanThongTin.add(nutLuaChonNam);
@@ -434,7 +431,6 @@ public class TrangDatVe extends JPanel {
         nutLuaChonNu.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, kichThuocChu));
         nutLuaChonNu.setBackground(trang);
         nutLuaChonNu.setFocusPainted(false);
-        nutLuaChonNu.setBorder(vienDam);
         nutLuaChonNu.setContentAreaFilled(false);
         nutLuaChonNu.setHorizontalTextPosition(SwingConstants.LEFT);
         nutLuaChonNu.addActionListener(hanhDong);
@@ -450,7 +446,6 @@ public class TrangDatVe extends JPanel {
         thanhNhapThuDienTu.setForeground(xanhBrandeis);
         thanhNhapThuDienTu.setBackground(trang);
         thanhNhapThuDienTu.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, kichThuocChu));
-        thanhNhapThuDienTu.setBorder(gachChanDam);
         thanhNhapThuDienTu.setPreferredSize(new Dimension(chieuDaiNut, chieuRongNut));
         phanThongTin.add(thanhNhapThuDienTu);
 
@@ -464,7 +459,6 @@ public class TrangDatVe extends JPanel {
         thanhNhapNgaySinh.setForeground(xanhBrandeis);
         thanhNhapNgaySinh.setBackground(trang);
         thanhNhapNgaySinh.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, kichThuocChu));
-        thanhNhapNgaySinh.setBorder(gachChanDam);
         thanhNhapNgaySinh.setPreferredSize(new Dimension(chieuDaiNut, chieuRongNut + 1));
         phanThongTin.add(thanhNhapNgaySinh);
 
@@ -479,7 +473,6 @@ public class TrangDatVe extends JPanel {
         thanhNhapGhiChu.setForeground(xanhBrandeis);
         thanhNhapGhiChu.setBackground(trang);
         thanhNhapGhiChu.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, kichThuocChu));
-        thanhNhapGhiChu.setBorder(vienDam);
         thanhNhapGhiChu.setLineWrap(true); // Cho chữ chỉ trong 1 vùng
         thanhNhapGhiChu.setWrapStyleWord(true); // Cho chữ chỉ trong giới hạn cái JTextArea
         thanhNhapGhiChu.setPreferredSize(new Dimension(chieuDaiNut, chieuRongNut * 3));
@@ -501,7 +494,6 @@ public class TrangDatVe extends JPanel {
         thanhNhapTongTien.setForeground(xanhBrandeis);
         thanhNhapTongTien.setBackground(trang);
         thanhNhapTongTien.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, kichThuocChu));
-        thanhNhapTongTien.setBorder(gachChanDam);
         thanhNhapTongTien.setPreferredSize(new Dimension(chieuDaiNut, chieuRongNut + 1));
         phanThanhToan.add(thanhNhapTongTien);
 
@@ -515,7 +507,6 @@ public class TrangDatVe extends JPanel {
         nutThanhToan.setFont(phongTuyChinh.layPhongRobotoMonoReg(2, kichThuocChu));
         nutThanhToan.setForeground(trang);
         nutThanhToan.setBackground(xanhBrandeis);
-        nutThanhToan.setBorder(this.vienDam);
         nutThanhToan.addActionListener(hanhDong);
         nutThanhToan.addMouseListener(thaoTacChuot);
         nutThanhToan.setFocusPainted(false); // Bỏ viền khi click (focus)

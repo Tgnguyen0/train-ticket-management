@@ -102,30 +102,6 @@ public class TrangSoDoGheMem extends JFrame {
     }
 
     public void taoTrangChuaCacSoDoGhe() {
-        MatteBorder duongVienTuyChinhTren = BorderFactory.createMatteBorder(1, 1, 1, 1, xanhBrandeis);
-
-        // Tạo đường viền có tiêu đề
-        TitledBorder duongVienChuTren = BorderFactory.createTitledBorder(
-                duongVienTuyChinhTren,
-                "  Cửa Sổ    ",
-                TitledBorder.TOP,
-                TitledBorder.TOP,
-                phongTuyChinh.layPhongRobotoMonoReg(Font.BOLD, 12),
-                xanhBrandeis);
-
-        MatteBorder duongVienTuyChinhDuoi = BorderFactory.createMatteBorder(0, 0, 1, 0, xanhBrandeis);
-
-        // Tạo đường viền có tiêu đề
-        TitledBorder duongVienChuDuoi = BorderFactory.createTitledBorder(
-                duongVienTuyChinhDuoi,
-                "  Cửa Sổ    ",
-                TitledBorder.BOTTOM,
-                TitledBorder.BOTTOM,
-                phongTuyChinh.layPhongRobotoMonoReg(Font.BOLD, 12),
-                xanhBrandeis);
-
-        CompoundBorder duongVienKetHop = BorderFactory.createCompoundBorder(duongVienChuTren, duongVienChuDuoi);
-
         JPanel trangChuaCacSoDoGhe = new JPanel();
         trangChuaCacSoDoGhe.setLayout(new FlowLayout(FlowLayout.CENTER));
         trangChuaCacSoDoGhe.setPreferredSize(new Dimension(800, 280));
@@ -137,7 +113,6 @@ public class TrangSoDoGheMem extends JFrame {
         trangChua.setLayout(new CardLayout());
 
         JPanel soDoGheToaD1 = taoTrangSoDoGhe();
-        soDoGheToaD1.setBorder(duongVienKetHop);
 
         JPanel soDoGheToaA4 = taoTrangSoDoGhe();
         soDoGheToaA4.setBackground(Color.RED);

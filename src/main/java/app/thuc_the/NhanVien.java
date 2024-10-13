@@ -1,18 +1,22 @@
 package app.thuc_the;
 
 import java.sql.Date;
+import java.time.LocalDate;
+import java.util.Objects;
+import java.util.Set;
 
 public class NhanVien {
     private String maNV;
     private String tenNV;
-    private Date ngaySinh;
+    private LocalDate ngaySinh;
     private String diaChia;
     private String soDT;
     private GIOI_TINH gioiTinh;
     private String password;
     private String vaiTro;
+    private Set<HoaDon> danhSachHoaDon;
 
-    public NhanVien(String maNV, String tenNV, Date ngaySinh, String diaChia, String soDT, GIOI_TINH gioiTinh, String password, String vaiTro) {
+    public NhanVien(String maNV, String tenNV, LocalDate ngaySinh, String diaChia, String soDT, GIOI_TINH gioiTinh, String password, String vaiTro) {
         this.maNV = maNV;
         this.tenNV = tenNV;
         this.ngaySinh = ngaySinh;
@@ -30,8 +34,15 @@ public class NhanVien {
         return maNV;
     }
 
-    public void setMaNV(String maNV) {
-        this.maNV = maNV;
+    public String setMaNV() {
+        String MaNV;
+        String nam = String.valueOf(LocalDate.now().getYear());
+
+        nam = nam.substring(nam.length() - 2);
+
+        MaNV = "NV" + nam;
+
+        return MaNV;
     }
 
     public String getTenNV() {
@@ -42,11 +53,11 @@ public class NhanVien {
         this.tenNV = tenNV;
     }
 
-    public Date getNgaySinh() {
+    public LocalDate getNgaySinh() {
         return ngaySinh;
     }
 
-    public void setNgaySinh(Date ngaySinh) {
+    public void setNgaySinh(LocalDate ngaySinh) {
         this.ngaySinh = ngaySinh;
     }
 
@@ -88,6 +99,26 @@ public class NhanVien {
 
     public void setVaiTro(String vaiTro) {
         this.vaiTro = vaiTro;
+    }
+
+    public Set<HoaDon> getDanhSachHoaDon() {
+        return danhSachHoaDon;
+    }
+
+    public void setDanhSachHoaDon(Set<HoaDon> danhSachHoaDon) {
+        this.danhSachHoaDon = danhSachHoaDon;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof NhanVien nhanVien)) return false;
+        return Objects.equals(getNgaySinh(), nhanVien.getNgaySinh());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getNgaySinh());
     }
 
     @Override
