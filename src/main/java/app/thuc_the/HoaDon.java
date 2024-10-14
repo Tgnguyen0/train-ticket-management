@@ -21,7 +21,7 @@ public class HoaDon {
     public HoaDon() {
     }
 
-    public String getMaHoaDon(int soNgauNhien) {
+    public String getMaHoaDon() {
         return maHoaDon;
     }
 
