@@ -27,13 +27,17 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
                     TrangSoDoGheMem trangSoDoGheMem = new TrangSoDoGheMem();
                     trangSoDoGheMem.setVisible(true);
                     break;
-                case "Giường nằm 4 tầng":
+                case "Giường nằm 2 tầng":
                     TrangSoDoGiuong4 trangSoDoGiuong4 = new TrangSoDoGiuong4();
                     trangSoDoGiuong4.setVisible(true);
                     break;
-                case "Giường nằm 6 tầng":
+                case "Giường nằm 3 tầng":
                     TrangSoDoGiuong6 trangSoDoGiuong6 = new TrangSoDoGiuong6();
                     trangSoDoGiuong6.setVisible(true);
+                    break;
+                case "Giường nằm 1 tầng":
+                    TrangSoDoGiuong2 trangSoDoGiuong2 = new TrangSoDoGiuong2();
+                    trangSoDoGiuong2.setVisible(true);
                     break;
             }
 

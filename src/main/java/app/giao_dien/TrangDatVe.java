@@ -238,9 +238,9 @@ public class TrangDatVe extends JPanel {
         thanhCacLoaiGhe.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, kichThuocChu));
         thanhCacLoaiGhe.setFocusable(false);
         thanhCacLoaiGhe.addItem("Ghế mềm");
-        thanhCacLoaiGhe.addItem("Giường nằm 4 tầng");
-        thanhCacLoaiGhe.addItem("Giường nằm 6 tầng");
         thanhCacLoaiGhe.addItem("Giường nằm 2 tầng");
+        thanhCacLoaiGhe.addItem("Giường nằm 3 tầng");
+        thanhCacLoaiGhe.addItem("Giường nằm 1 tầng");
         thanhCacLoaiGhe.setPreferredSize(new Dimension(chieuDaiNut, chieuRongNut));
         thanhCacLoaiGhe.setRenderer(new CustomComboBoxRenderer());
         thanhCacLoaiGhe.addItemListener(mucDaChon);
