@@ -16,8 +16,8 @@ public class NhanVien {
     private String vaiTro;
     private Set<HoaDon> danhSachHoaDon;
 
-    public NhanVien(String maNV, String tenNV, LocalDate ngaySinh, String diaChi, String soDT, GIOI_TINH gioiTinh, String password, String vaiTro) {
-        this.maNV = maNV;
+    public NhanVien(int soNgauNhien, String tenNV, LocalDate ngaySinh, String diaChi, String soDT, GIOI_TINH gioiTinh, String password, String vaiTro) {
+        this.maNV = setMaNV(soNgauNhien);
         this.tenNV = tenNV;
         this.ngaySinh = ngaySinh;
         this.diaChi = diaChi;
@@ -34,15 +34,15 @@ public class NhanVien {
         return maNV;
     }
 
-    public String setMaNV() {
-        String MaNV;
+    public String setMaNV(int soNgauNhien) {
+        String maNV;
         String nam = String.valueOf(LocalDate.now().getYear());
 
         nam = nam.substring(nam.length() - 2);
 
-        MaNV = "NV" + nam;
+        maNV = "NV" + nam + soNgauNhien;
 
-        return MaNV;
+        return maNV;
     }
 
     public String getTenNV() {

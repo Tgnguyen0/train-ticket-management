@@ -10,8 +10,8 @@ public class HoaDon {
     KhachHang khachHang;
     ChiTietHoaDon chiTietHoaDon;
 
-    public HoaDon(LocalDate ngayLapHoaDon, KhachHang khachHang, ChiTietHoaDon chiTietHoaDon) {
-        this.maHoaDon = setMaHoaDon();
+    public HoaDon(int soNgauNhien, LocalDate ngayLapHoaDon, KhachHang khachHang, ChiTietHoaDon chiTietHoaDon) {
+        this.maHoaDon = setMaHoaDon(soNgauNhien);
         this.ngayLapHoaDon = ngayLapHoaDon;
         this.khachHang = khachHang;
         this.chiTietHoaDon = chiTietHoaDon;
@@ -21,11 +21,11 @@ public class HoaDon {
     public HoaDon() {
     }
 
-    public String getMaHoaDon() {
+    public String getMaHoaDon(int soNgauNhien) {
         return maHoaDon;
     }
 
-    public String setMaHoaDon() {
+    public String setMaHoaDon(int soNgauNhien) {
         String maHoaDon;
         String ngayTrongThang = String.valueOf(LocalDate.now().getDayOfMonth());
         String thang = String.valueOf(LocalDate.now().getMonthValue());
@@ -33,7 +33,7 @@ public class HoaDon {
 
         nam = nam.substring(nam.length() - 2);
 
-        maHoaDon = nam + thang + ngayTrongThang;
+        maHoaDon = nam + thang + ngayTrongThang + String.valueOf(soNgauNhien);
 
         return maHoaDon;
     }

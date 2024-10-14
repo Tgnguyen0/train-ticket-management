@@ -1,5 +1,6 @@
 package app.thuc_the;
 
+import java.time.LocalDate;
 import java.util.Objects;
 import java.util.Set;
 
@@ -18,8 +19,12 @@ public class Ga {
         return maGa;
     }
 
-    public void setMaGa(String maGa) {
-        this.maGa = maGa;
+    public String setMaGa(int soNgauNhien) {
+        String maGa;
+
+        maGa = "VNGA" + soNgauNhien;
+
+        return maGa;
     }
 
     public String getTenGa() {

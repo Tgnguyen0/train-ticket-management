@@ -10,16 +10,20 @@ public class Toa {
     private Tau tau;
 
     private Set<Ghe> danhSachGhe;
+
     public Toa() {
     }
-
 
     public String getMaToa() {
         return maToa;
     }
 
-    public void setMaToa(String maToa) {
-        this.maToa = maToa;
+    public String setMaToa(int soThuTu) {
+        String maToa;
+
+        maToa = "VN" + String.valueOf(soThuTu);
+
+        return maToa;
     }
 
     public String getTenToa() {
