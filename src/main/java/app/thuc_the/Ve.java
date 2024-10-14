@@ -15,6 +15,7 @@ public class Ve {
     KhachHang khachHang;
     Ghe ghe;
     String loaiVe;
+    Tau tau;
 
     public Ve(String maVe, String loaiDoiTuong, LocalDate ngayKhoiHanh, LocalDate ngayDatVe, DaiNgo daiNgo, String gaKhoiHanh, String gaKetThuc, double giaVe, KhachHang khachHang, Ghe ghe, String loaiVe) {
         this.maVe = maVe;
@@ -38,7 +39,7 @@ public class Ve {
     }
 
     public void setMaVe(String maVe) {
-        this.maVe = maVe;
+
     }
 
     public String getLoaiDoiTuong() {
@@ -119,6 +120,14 @@ public class Ve {
 
     public void setLoaiVe(String loaiVe) {
         this.loaiVe = loaiVe;
+    }
+
+    public void setTau(Tau tau) {
+        this.tau = tau;
+    }
+
+    public Tau getTau() {
+        return this.tau;
     }
 
     @Override

@@ -9,18 +9,18 @@ public class NhanVien {
     private String maNV;
     private String tenNV;
     private LocalDate ngaySinh;
-    private String diaChia;
+    private String diaChi;
     private String soDT;
     private GIOI_TINH gioiTinh;
     private String password;
     private String vaiTro;
     private Set<HoaDon> danhSachHoaDon;
 
-    public NhanVien(String maNV, String tenNV, LocalDate ngaySinh, String diaChia, String soDT, GIOI_TINH gioiTinh, String password, String vaiTro) {
+    public NhanVien(String maNV, String tenNV, LocalDate ngaySinh, String diaChi, String soDT, GIOI_TINH gioiTinh, String password, String vaiTro) {
         this.maNV = maNV;
         this.tenNV = tenNV;
         this.ngaySinh = ngaySinh;
-        this.diaChia = diaChia;
+        this.diaChi = diaChi;
         this.soDT = soDT;
         this.gioiTinh = gioiTinh;
         this.password = password;
@@ -61,12 +61,12 @@ public class NhanVien {
         this.ngaySinh = ngaySinh;
     }
 
-    public String getDiaChia() {
-        return diaChia;
+    public String getDiaChi() {
+        return diaChi;
     }
 
-    public void setDiaChia(String diaChia) {
-        this.diaChia = diaChia;
+    public void setDiaChi(String diaChi) {
+        this.diaChi = diaChi;
     }
 
     public String getSoDT() {
@@ -127,7 +127,7 @@ public class NhanVien {
                 "maNV='" + maNV + '\'' +
                 ", tenNV='" + tenNV + '\'' +
                 ", ngaySinh=" + ngaySinh +
-                ", diaChia='" + diaChia + '\'' +
+                ", diaChi='" + diaChi + '\'' +
                 ", soDT='" + soDT + '\'' +
                 ", gioiTinh=" + gioiTinh +
                 ", password='" + password + '\'' +
