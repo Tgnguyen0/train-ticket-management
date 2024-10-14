@@ -1,4 +1,4 @@
-package app.LienKetCoSoDuLieu;
+package app.ket_noi_co_so_du_lieu;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
