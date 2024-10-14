@@ -9,6 +9,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.Border;
+import javax.swing.border.MatteBorder;
 
 import app.phan_tu_tuy_chinh.*;
 import app.phong_chu_moi.*;
@@ -239,15 +240,16 @@ public class TrangDinhHuong extends JFrame {
                     UIManager.put("nimbusBase", new javax.swing.plaf.ColorUIResource(255, 255, 255)); // Màu cơ bản
                     UIManager.put("nimbusBorder", new javax.swing.plaf.ColorUIResource(0, 112, 255)); // Màu viền
                     UIManager.put("nimbusLightBackground", new javax.swing.plaf.ColorUIResource(255, 255, 255)); // Màu nền sáng
-                    UIManager.put("nimbusFocus", new javax.swing.plaf.ColorUIResource(255, 255, 255)); // Màu focus
+                    UIManager.put("nimbusFocus", new javax.swing.plaf.ColorUIResource(0, 112, 255)); // Màu focus
                     UIManager.put("textForeground", new Color(0, 112, 255)); // Màu chữ
                     UIManager.put("ComboBox.foreground", new Color(0, 112, 255)); // Màu chữ cho JComboBox
+                    UIManager.put("ComboBox.background", new Color(255, 255, 255));
+                    UIManager.put("JCalendar.border", new Color(255, 255, 255));
 
                     // Đặt màu nền và màu chữ khi chọn cho JTextField
                     UIManager.put("TextField.selectionBackground", new Color(0, 112, 255)); // Màu nền khi chọn
                     UIManager.put("TextField.selectionForeground", new Color(255, 255, 255)); // Màu chữ khi chọncho JComboBox
-
-
+                    
                     break;
                 }
             }

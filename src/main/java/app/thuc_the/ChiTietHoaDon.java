@@ -1,5 +1,6 @@
 package app.thuc_the;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Set;
@@ -19,8 +20,17 @@ public class ChiTietHoaDon {
         return MaChiTietHoaDon;
     }
 
-    public void setMaChiTietHoaDon(String maChiTietHoaDon) {
-        MaChiTietHoaDon = maChiTietHoaDon;
+    public String setMaChiTietHoaDon() {
+        String maChiTietHoaDon;
+        String ngayTrongThang = String.valueOf(LocalDate.now().getDayOfMonth());
+        String thang = String.valueOf(LocalDate.now().getMonthValue());
+        String nam = String.valueOf(LocalDate.now().getYear());
+
+        nam = nam.substring(nam.length() - 2);
+
+        maChiTietHoaDon = nam + thang + ngayTrongThang;
+
+        return maChiTietHoaDon;
     }
 
     public Set<Ve> getDanhSachVe() {

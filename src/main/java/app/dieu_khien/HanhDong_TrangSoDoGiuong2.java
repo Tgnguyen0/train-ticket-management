@@ -1,31 +1,33 @@
 package app.dieu_khien;
 
-import app.giao_dien.TrangSoDoGheMem;
+import app.giao_dien.TrangSoDoGiuong2;
+import app.giao_dien.TrangSoDoGiuong4;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class HanhDong_TrangSoDoGheMemDieuHoa implements ItemListener, ActionListener, MouseListener {
-    TrangSoDoGheMem trangSoDoGheMemDieuHoa;
+public class HanhDong_TrangSoDoGiuong2 implements ItemListener, ActionListener, MouseListener {
+    TrangSoDoGiuong2 trangSoDoGiuong2;
 
-    public HanhDong_TrangSoDoGheMemDieuHoa(TrangSoDoGheMem trangSoDoGheMemDieuHoa) {
-        this.trangSoDoGheMemDieuHoa = trangSoDoGheMemDieuHoa;
+    public HanhDong_TrangSoDoGiuong2(TrangSoDoGiuong2 trangSoDoGiuong2) {
+        this.trangSoDoGiuong2 = trangSoDoGiuong2;
     }
 
     @Override
     public void itemStateChanged(ItemEvent e) {
-        CardLayout cardLayout = (CardLayout) this.trangSoDoGheMemDieuHoa.trangChua.getLayout();
+        CardLayout cardLayout = (CardLayout) this.trangSoDoGiuong2.trangChuaSoDoGiuong.getLayout();
 
         if (e.getStateChange() == ItemEvent.SELECTED) {
             String loaiGheDaChon = (String) e.getItem();
+            System.out.println("Selected item: " + loaiGheDaChon);
 
             switch (loaiGheDaChon) {
                 case "D1":
-                    cardLayout.show(this.trangSoDoGheMemDieuHoa.trangChua, "D1");
+                    cardLayout.show(this.trangSoDoGiuong2.trangChuaSoDoGiuong, "D1");
                     break;
-                case "A4":
-                    cardLayout.show(this.trangSoDoGheMemDieuHoa.trangChua, "A4");
+                case "A1":
+                    cardLayout.show(this.trangSoDoGiuong2.trangChuaSoDoGiuong, "A1");
                     break;
             }
         }

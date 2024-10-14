@@ -17,8 +17,12 @@ public class Tau {
         return soHieu;
     }
 
-    public void setSoHieu(String soHieu) {
-        this.soHieu = soHieu;
+    public String setSoHieu(String xauNgauNhien) {
+        String soHieu;
+
+        soHieu = "VN" + String.valueOf(xauNgauNhien);
+
+        return soHieu;
     }
 
     public int getSoToa() {

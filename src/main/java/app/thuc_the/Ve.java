@@ -15,8 +15,9 @@ public class Ve {
     KhachHang khachHang;
     Ghe ghe;
     String loaiVe;
+    Tau tau;
 
-    public Ve(String maVe, String loaiDoiTuong, LocalDate ngayKhoiHanh, LocalDate ngayDatVe, DaiNgo daiNgo, String gaKhoiHanh, String gaKetThuc, double giaVe, KhachHang khachHang, Ghe ghe, String loaiVe) {
+    public Ve(String loaiDoiTuong, LocalDate ngayKhoiHanh, LocalDate ngayDatVe, DaiNgo daiNgo, String gaKhoiHanh, String gaKetThuc, double giaVe, KhachHang khachHang, Ghe ghe, String loaiVe) {
         this.maVe = maVe;
         this.loaiDoiTuong = loaiDoiTuong;
         this.ngayKhoiHanh = ngayKhoiHanh;
@@ -37,8 +38,17 @@ public class Ve {
         return maVe;
     }
 
-    public void setMaVe(String maVe) {
-        this.maVe = maVe;
+    public String setMaVe() {
+        String maVe;
+        String ngayTrongThang = String.valueOf(LocalDate.now().getDayOfMonth());
+        String thang = String.valueOf(LocalDate.now().getMonthValue());
+        String nam = String.valueOf(LocalDate.now().getYear());
+
+        nam = nam.substring(nam.length() - 2);
+
+        maVe = "V" + nam + thang + ngayTrongThang;
+
+        return maVe;
     }
 
     public String getLoaiDoiTuong() {
@@ -119,6 +129,14 @@ public class Ve {
 
     public void setLoaiVe(String loaiVe) {
         this.loaiVe = loaiVe;
+    }
+
+    public void setTau(Tau tau) {
+        this.tau = tau;
+    }
+
+    public Tau getTau() {
+        return this.tau;
     }
 
     @Override
