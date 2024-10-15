@@ -1,29 +1,26 @@
 package app.thuc_the;
 
-import java.sql.Date;
+import java.time.LocalDate;
+import java.util.Objects;
 
 public class LichCapBenGa {
-    private String maLich, moTa;
-    private Tau tau_soHieuTau;
-    private Date gioCapBen, gioKhoiHanh;
+    String maLich;
+    Tau tau;
+    LocalDate gioCapBen;
+    LocalDate gioKhoiHanh;
+    String moTa;
+    Ga ga;
 
     public LichCapBenGa() {
     }
 
-    public LichCapBenGa(String maLich, String moTa, Tau soHieuTau, Date gioCapBen, Date gioKhoiHanh) {
+    public LichCapBenGa(String maLich, Tau tau, LocalDate gioCapBen, LocalDate gioKhoiHanh, String moTa, Ga ga) {
         this.maLich = maLich;
-        this.moTa = moTa;
-        this.tau_soHieuTau = soHieuTau;
+        this.tau = tau;
         this.gioCapBen = gioCapBen;
         this.gioKhoiHanh = gioKhoiHanh;
-    }
-
-    public Tau getTau_soHieuTau() {
-        return tau_soHieuTau;
-    }
-
-    public void setTau_soHieuTau(Tau tau_soHieuTau) {
-        this.tau_soHieuTau = tau_soHieuTau;
+        this.moTa = moTa;
+        this.ga = ga;
     }
 
     public String getMaLich() {
@@ -34,6 +31,30 @@ public class LichCapBenGa {
         this.maLich = maLich;
     }
 
+    public Tau getTau() {
+        return tau;
+    }
+
+    public void setTau(Tau tau) {
+        this.tau = tau;
+    }
+
+    public LocalDate getGioCapBen() {
+        return gioCapBen;
+    }
+
+    public void setGioCapBen(LocalDate gioCapBen) {
+        this.gioCapBen = gioCapBen;
+    }
+
+    public LocalDate getGioKhoiHanh() {
+        return gioKhoiHanh;
+    }
+
+    public void setGioKhoiHanh(LocalDate gioKhoiHanh) {
+        this.gioKhoiHanh = gioKhoiHanh;
+    }
+
     public String getMoTa() {
         return moTa;
     }
@@ -42,19 +63,23 @@ public class LichCapBenGa {
         this.moTa = moTa;
     }
 
-    public Date getGioCapBen() {
-        return gioCapBen;
+    public Ga getGa() {
+        return ga;
     }
 
-    public void setGioCapBen(Date gioCapBen) {
-        this.gioCapBen = gioCapBen;
+    public void setGa(Ga ga) {
+        this.ga = ga;
     }
 
-    public Date getGioKhoiHanh() {
-        return gioKhoiHanh;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof LichCapBenGa that)) return false;
+        return Objects.equals(getMaLich(), that.getMaLich());
     }
 
-    public void setGioKhoiHanh(Date gioKhoiHanh) {
-        this.gioKhoiHanh = gioKhoiHanh;
+    @Override
+    public int hashCode() {
+        return Objects.hash(getMaLich());
     }
 }

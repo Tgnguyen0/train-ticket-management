@@ -2,11 +2,11 @@ package app.dieu_khien;
 
 import app.giao_dien.TrangSoDoGheMem;
 
+import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
+import java.awt.event.*;
 
-public class HanhDong_TrangSoDoGheMemDieuHoa implements ItemListener {
+public class HanhDong_TrangSoDoGheMemDieuHoa implements ItemListener, ActionListener, MouseListener {
     TrangSoDoGheMem trangSoDoGheMemDieuHoa;
 
     public HanhDong_TrangSoDoGheMemDieuHoa(TrangSoDoGheMem trangSoDoGheMemDieuHoa) {
@@ -29,5 +29,36 @@ public class HanhDong_TrangSoDoGheMemDieuHoa implements ItemListener {
                     break;
             }
         }
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        JButton gheSo = (JButton) e.getSource();
+        gheSo.setEnabled(false);
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+
     }
 }

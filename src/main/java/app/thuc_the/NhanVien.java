@@ -1,22 +1,26 @@
 package app.thuc_the;
 
 import java.sql.Date;
+import java.time.LocalDate;
+import java.util.Objects;
+import java.util.Set;
 
 public class NhanVien {
     private String maNV;
     private String tenNV;
-    private Date ngaySinh;
-    private String diaChia;
+    private LocalDate ngaySinh;
+    private String diaChi;
     private String soDT;
     private GIOI_TINH gioiTinh;
     private String password;
     private String vaiTro;
+    private Set<HoaDon> danhSachHoaDon;
 
-    public NhanVien(String maNV, String tenNV, Date ngaySinh, String diaChia, String soDT, GIOI_TINH gioiTinh, String password, String vaiTro) {
-        this.maNV = maNV;
+    public NhanVien(int soNgauNhien, String tenNV, LocalDate ngaySinh, String diaChi, String soDT, GIOI_TINH gioiTinh, String password, String vaiTro) {
+        this.maNV = setMaNV(soNgauNhien);
         this.tenNV = tenNV;
         this.ngaySinh = ngaySinh;
-        this.diaChia = diaChia;
+        this.diaChi = diaChi;
         this.soDT = soDT;
         this.gioiTinh = gioiTinh;
         this.password = password;
@@ -30,8 +34,15 @@ public class NhanVien {
         return maNV;
     }
 
-    public void setMaNV(String maNV) {
-        this.maNV = maNV;
+    public String setMaNV(int soNgauNhien) {
+        String maNV;
+        String nam = String.valueOf(LocalDate.now().getYear());
+
+        nam = nam.substring(nam.length() - 2);
+
+        maNV = "NV" + nam + soNgauNhien;
+
+        return maNV;
     }
 
     public String getTenNV() {
@@ -42,20 +53,20 @@ public class NhanVien {
         this.tenNV = tenNV;
     }
 
-    public Date getNgaySinh() {
+    public LocalDate getNgaySinh() {
         return ngaySinh;
     }
 
-    public void setNgaySinh(Date ngaySinh) {
+    public void setNgaySinh(LocalDate ngaySinh) {
         this.ngaySinh = ngaySinh;
     }
 
-    public String getDiaChia() {
-        return diaChia;
+    public String getDiaChi() {
+        return diaChi;
     }
 
-    public void setDiaChia(String diaChia) {
-        this.diaChia = diaChia;
+    public void setDiaChi(String diaChi) {
+        this.diaChi = diaChi;
     }
 
     public String getSoDT() {
@@ -90,13 +101,33 @@ public class NhanVien {
         this.vaiTro = vaiTro;
     }
 
+    public Set<HoaDon> getDanhSachHoaDon() {
+        return danhSachHoaDon;
+    }
+
+    public void setDanhSachHoaDon(Set<HoaDon> danhSachHoaDon) {
+        this.danhSachHoaDon = danhSachHoaDon;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof NhanVien nhanVien)) return false;
+        return Objects.equals(getNgaySinh(), nhanVien.getNgaySinh());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getNgaySinh());
+    }
+
     @Override
     public String toString() {
         return "NhanVien{" +
                 "maNV='" + maNV + '\'' +
                 ", tenNV='" + tenNV + '\'' +
                 ", ngaySinh=" + ngaySinh +
-                ", diaChia='" + diaChia + '\'' +
+                ", diaChi='" + diaChi + '\'' +
                 ", soDT='" + soDT + '\'' +
                 ", gioiTinh=" + gioiTinh +
                 ", password='" + password + '\'' +

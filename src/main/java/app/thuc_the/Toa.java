@@ -1,27 +1,29 @@
 package app.thuc_the;
 
+import java.util.Objects;
+import java.util.Set;
+
 public class Toa {
     private String maToa;
     private String tenToa;
     private int soLuongGhe;
-    private Tau tau_soHieuTau;
+    private Tau tau;
+
+    private Set<Ghe> danhSachGhe;
 
     public Toa() {
-    }
-
-    public Toa(int soLuongGhe, String tenToa, String maToa, Tau tau_soHieuTau) {
-        this.soLuongGhe = soLuongGhe;
-        this.tenToa = tenToa;
-        this.maToa = maToa;
-        this.tau_soHieuTau = tau_soHieuTau;
     }
 
     public String getMaToa() {
         return maToa;
     }
 
-    public void setMaToa(String maToa) {
-        this.maToa = maToa;
+    public String setMaToa(int soThuTu) {
+        String maToa;
+
+        maToa = "VN" + String.valueOf(soThuTu);
+
+        return maToa;
     }
 
     public String getTenToa() {
@@ -40,11 +42,31 @@ public class Toa {
         this.soLuongGhe = soLuongGhe;
     }
 
-    public Tau getTau_soHieuTau() {
-        return tau_soHieuTau;
+    public Tau getTau() {
+        return tau;
     }
 
-    public void setTau_soHieuTau(Tau tau_soHieuTau) {
-        this.tau_soHieuTau = tau_soHieuTau;
+    public void setTau(Tau tau) {
+        this.tau = tau;
+    }
+
+    public Set<Ghe> getDanhSachGhe() {
+        return danhSachGhe;
+    }
+
+    public void setDanhSachGhe(Set<Ghe> danhSachGhe) {
+        this.danhSachGhe = danhSachGhe;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Toa toa)) return false;
+        return Objects.equals(getMaToa(), toa.getMaToa());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getMaToa());
     }
 }

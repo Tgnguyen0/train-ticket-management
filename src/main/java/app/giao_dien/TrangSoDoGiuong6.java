@@ -1,5 +1,7 @@
 package app.giao_dien;
 
+import app.dieu_khien.HanhDong_TrangSoDoGiuong4;
+import app.dieu_khien.HanhDong_TrangSoDoGiuong6;
 import app.phong_chu_moi.PhongChuMoi;
 
 import javax.swing.*;
@@ -8,10 +10,11 @@ import java.awt.*;
 import java.awt.event.ItemListener;
 
 public class TrangSoDoGiuong6 extends JFrame {
-    JPanel trangChua;
+    JPanel trangChuaTieuDeVaSoDo;
+    public JPanel trangChuaSoDoGiuong;
 
     int soNut = 28;
-    String[] muc = {"D1", "A4"};
+    String[] muc = {"D1", "A1"};
 
     /* Khoi Tao Phong Chu Mau Sac */
     public int kichThuocChu = 13;
@@ -39,18 +42,20 @@ public class TrangSoDoGiuong6 extends JFrame {
         setLayout(new BorderLayout());
         setResizable(true);
 
+        mucDaChon = new HanhDong_TrangSoDoGiuong6(this);
+
         taoTrangTieuDe();
         taoTrangCacToa();
 
-        trangChua = new JPanel();
-        trangChua.setBackground(trang);
-        trangChua.setPreferredSize(new Dimension(1000, 300));
-        trangChua.setLayout(new FlowLayout(FlowLayout.CENTER));
+        trangChuaTieuDeVaSoDo = new JPanel();
+        trangChuaTieuDeVaSoDo.setBackground(trang);
+        trangChuaTieuDeVaSoDo.setPreferredSize(new Dimension(1000, 300));
+        trangChuaTieuDeVaSoDo.setLayout(new FlowLayout(FlowLayout.CENTER));
 
         taoTieuDeTang();
         taoTrangChuaSoDoGhe();
 
-        add(trangChua, BorderLayout.SOUTH);
+        add(trangChuaTieuDeVaSoDo, BorderLayout.SOUTH);
     }
 
     public void taoTrangTieuDe() {
@@ -121,21 +126,38 @@ public class TrangSoDoGiuong6 extends JFrame {
         tieuDeTangDuoi.setPreferredSize(new Dimension(80, 30));
         trangChuaTieuDe.add(tieuDeTangDuoi);
 
-        trangChua.add(trangChuaTieuDe);
+        trangChuaTieuDeVaSoDo.add(trangChuaTieuDe);
     }
 
     public void taoTrangChuaSoDoGhe() {
+        this.trangChuaSoDoGiuong = new JPanel();
+        trangChuaSoDoGiuong.setBackground(trang);
+        trangChuaSoDoGiuong.setPreferredSize(new Dimension(850, 280));
+        trangChuaSoDoGiuong.setLayout(new CardLayout());
+
+        JPanel soDoGiuongToaD1 = taoTrangSoDoGhe();
+
+        JPanel soDoGiuongToaA1 = taoTrangSoDoGhe();
+        soDoGiuongToaA1.setBackground(Color.RED);
+
+        trangChuaSoDoGiuong.add(soDoGiuongToaD1, "D1");
+        trangChuaSoDoGiuong.add(soDoGiuongToaA1, "A1");
+
+        trangChuaTieuDeVaSoDo.add(trangChuaSoDoGiuong);
+    }
+
+    public JPanel taoTrangSoDoGhe() {
         int doTang = 0;
 
-        JPanel trangChuaSoDoGiuong = new JPanel();
-        trangChuaSoDoGiuong.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-        trangChuaSoDoGiuong.setPreferredSize(new Dimension(850, 280));
-        trangChuaSoDoGiuong.setBackground(trang);
+        JPanel trangSoDoGiuong = new JPanel();
+        trangSoDoGiuong.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+        trangSoDoGiuong.setPreferredSize(new Dimension(850, 280));
+        trangSoDoGiuong.setBackground(trang);
 
         for (int i = 0 ; i < 7; i++) {
             JPanel trangChuaKhoang = new JPanel();
             trangChuaKhoang.setBackground(trang);
-            trangChuaKhoang.setPreferredSize(new Dimension(110, 200));
+            trangChuaKhoang.setPreferredSize(new Dimension(110, 280));
 
             JLabel tieuDeKhoang = new JLabel("Khoang " + String.valueOf(i + 1), SwingConstants.CENTER);
             tieuDeKhoang.setPreferredSize(new Dimension(110, 30));
@@ -145,15 +167,15 @@ public class TrangSoDoGiuong6 extends JFrame {
             trangChuaKhoang.add(tieuDeKhoang);
 
             JPanel benGiuongChan = new JPanel();
-            benGiuongChan.setPreferredSize(new Dimension(50, 160));
+            benGiuongChan.setPreferredSize(new Dimension(50, 180));
             benGiuongChan.setBackground(trang);
 
             JPanel benGiuongLe = new JPanel();
-            benGiuongLe.setPreferredSize(new Dimension(50, 160 ));
+            benGiuongLe.setPreferredSize(new Dimension(50, 180));
             benGiuongLe.setBackground(trang);
 
             for (int j = 6 ; j >= 1; j--) {
-                JButton giuong = new JButton(String.valueOf(j + doTang * 4));
+                JButton giuong = new JButton(String.valueOf(j + doTang * 6));
                 giuong.setPreferredSize(new Dimension(chieuDaiNut,chieuRongNut));
                 giuong.setBackground(xanhBrandeis);
                 giuong.setForeground(trang);
@@ -171,12 +193,12 @@ public class TrangSoDoGiuong6 extends JFrame {
             trangChuaKhoang.add(benGiuongLe);
             trangChuaKhoang.add(benGiuongChan);
 
-            trangChuaSoDoGiuong.add(trangChuaKhoang);
+            trangSoDoGiuong.add(trangChuaKhoang);
 
             doTang++;
         }
 
-        trangChua.add(trangChuaSoDoGiuong);
+        return trangSoDoGiuong;
     }
 
     public static void main(String[] args) {

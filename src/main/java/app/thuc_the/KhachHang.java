@@ -1,5 +1,7 @@
 package app.thuc_the;
 
+import java.time.LocalDate;
+
 public class KhachHang {
     private String maKH;
     private String tenKH;
@@ -8,8 +10,8 @@ public class KhachHang {
     private String email;
     private GIOI_TINH gioiTinh;
 
-    public KhachHang(String maKH, String tenKH, String diaChi, String soDT, String email, GIOI_TINH gioiTinh) {
-        this.maKH = maKH;
+    public KhachHang(int soNgauNhien, String tenKH, String diaChi, String soDT, String email, GIOI_TINH gioiTinh) {
+        this.maKH = setMaKH(soNgauNhien);
         this.tenKH = tenKH;
         this.diaChi = diaChi;
         this.soDT = soDT;
@@ -24,8 +26,17 @@ public class KhachHang {
         return maKH;
     }
 
-    public void setMaKH(String maKH) {
-        this.maKH = maKH;
+    public String setMaKH(int soNgauNhien) {
+        String maKH;
+        String ngayTrongThang = String.valueOf(LocalDate.now().getDayOfMonth());
+        String thang = String.valueOf(LocalDate.now().getMonthValue());
+        String nam = String.valueOf(LocalDate.now().getYear());
+
+        nam = nam.substring(nam.length() - 2);
+
+        maKH = "KH" + nam + thang + ngayTrongThang + String.valueOf(soNgauNhien);
+
+        return maKH;
     }
 
     public String getTenKH() {
