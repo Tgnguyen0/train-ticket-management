@@ -60,6 +60,7 @@ public class TrangKhachHang extends JPanel {
         add(lable_timKiem);
 
         textField_timKiem = new JTextField();
+        textField_timKiem.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
         textField_timKiem.setFont(new Font("Tahoma", Font.PLAIN, 20));
         textField_timKiem.setBounds(789, 118, 176, 31);
         add(textField_timKiem);
@@ -85,7 +86,7 @@ public class TrangKhachHang extends JPanel {
 
         table = new JTable();
         table.setFont(new Font("Tahoma", Font.PLAIN, 13));
-        table.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+        table.setBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(0, 112, 255), new Color(0, 112, 255)));
         table.setModel(new DefaultTableModel(
                 new Object[][] {
                         {null, null, null, null, null},
