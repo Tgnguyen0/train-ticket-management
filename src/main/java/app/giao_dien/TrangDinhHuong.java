@@ -36,6 +36,7 @@ public class TrangDinhHuong extends JFrame {
     public TrangDatVe trangDatVe;
     public TrangHoaDon trangHoaDon;
     public TrangGioiThieu trangGioiThieu;
+    public TrangKhachHang trangKhachHang;
 
     /* Khởi tạo phông chữ màu sắc */
     public Color trang = new Color(255, 255, 255);
@@ -50,6 +51,7 @@ public class TrangDinhHuong extends JFrame {
 
     private ActionListener hanhDong;
     private MouseListener thaoTacChuot;
+
 
     // Function tạo GUI chính
     public TrangDinhHuong() {
@@ -123,7 +125,7 @@ public class TrangDinhHuong extends JFrame {
         thanhDinhHuong.add(nutHoaDon);
 
         // Tạo Nút đến trang khách hàng
-        nutKhachHang = new BongCuaChu("Khuyến Mại");
+        nutKhachHang = new BongCuaChu("Khách Hàng");
         nutKhachHang.setPreferredSize(new Dimension(chieuDaiNut, chieuRongNut));
         nutKhachHang.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, charSize));
         nutKhachHang.setForeground(new Color(xanhBrandeis.getRGB()));
@@ -222,11 +224,13 @@ public class TrangDinhHuong extends JFrame {
         this.trangDatVe = new TrangDatVe(); // Khởi tạo trang Trang Đặt Vé
         this.trangHoaDon = new TrangHoaDon(); // Khởi tạo trang Trang Hóa Đơn
         this.trangGioiThieu = new TrangGioiThieu(); // Khởi tạo trang Giới Thiệu
+        this.trangKhachHang = new TrangKhachHang(); // Khởi tạo trang Trang Khách Hàng
 
         this.trangChua.add(trangChu, "Trang Chu");
         this.trangChua.add(trangDatVe, "Trang Dat Ve");
         this.trangChua.add(trangHoaDon,"Trang Hoa Don");
         this.trangChua.add(trangGioiThieu,"Trang Gioi Thieu");
+        this.trangChua.add(trangKhachHang, "Trang Khach Hang");
         add(this.trangChua);
     }
 
