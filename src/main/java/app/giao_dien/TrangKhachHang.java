@@ -1,32 +1,24 @@
 package app.giao_dien;
 
-import javax.swing.JPanel;
+import app.Dao.KhachHang_DAO;
+import app.ket_noi_co_so_du_lieu.KetNoiCoSoDuLieu;
+import app.thuc_the.DanhSachKhachHang;
+import app.thuc_the.KhachHang;
+
+import javax.swing.*;
 import java.awt.BorderLayout;
-import java.awt.Dimension;
-import javax.swing.JLabel;
+
 import java.awt.Font;
-import javax.swing.SwingConstants;
-import java.awt.GridBagLayout;
+
 import java.awt.Color;
 
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
+
 import java.awt.GridLayout;
 import java.awt.FlowLayout;
-import javax.swing.JTabbedPane;
-import javax.swing.JDesktopPane;
-import javax.swing.JButton;
-import javax.swing.JTextField;
-import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JTextArea;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
+import java.util.ArrayList;
+
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
-import javax.swing.JSeparator;
-import javax.swing.JMenuBar;
-import javax.swing.border.Border;
+
 import javax.swing.border.LineBorder;
 
 
@@ -35,20 +27,24 @@ import javax.swing.border.LineBorder;
 public class TrangKhachHang extends JPanel {
 
     private static final long serialVersionUID = 1L;
+    private final JTextArea textArea_diaChi;
     private JTable table;
     private JTextField textField_HoTen;
     private JTextField textField_SDT;
+    private JTextField textField_timTen;
+    private JTextField textField_timSDT;
 
 
     /**
      * Create the panel.
      */
     public TrangKhachHang() {
-        setBorder(new LineBorder(new Color(0, 112, 255), 1, true));
+        setBorder(new LineBorder(new Color(0, 128, 255), 1, true));
         setLayout(new BorderLayout(10, 0));
         setSize(1200, 700);
 
         JLabel label_quanLyKH = new JLabel("<html><u>QUẢN LÝ KHÁCH HÀNG</u></html>");
+        label_quanLyKH.setBorder(BorderFactory.createEmptyBorder(0, 0, 20, 0));
         label_quanLyKH.setBackground(new Color(0, 64, 128));
         label_quanLyKH.setForeground(new Color(0, 128, 255));
         label_quanLyKH.setHorizontalAlignment(SwingConstants.CENTER);
@@ -78,7 +74,7 @@ public class TrangKhachHang extends JPanel {
 
 
         JPanel panel_thongTinKH = new JPanel();
-        panel_thongTinKH.setBorder(new LineBorder(new Color(0, 112, 255), 1, true));
+        panel_thongTinKH.setBorder(new LineBorder(new Color(0, 128, 255), 1, true));
         panel_noiDung.add(panel_thongTinKH);
         panel_thongTinKH.setLayout(null);
 
@@ -93,6 +89,7 @@ public class TrangKhachHang extends JPanel {
         label_maKH.setFont(new Font("Tahoma", Font.PLAIN, 20));
 
         textField_HoTen = new JTextField();
+        textField_HoTen.setBorder(new LineBorder(new Color(0, 128, 255)));
         textField_HoTen.setBounds(152, 35, 296, 45);
         panel_1.add(textField_HoTen);
         textField_HoTen.setFont(new Font("Tahoma", Font.PLAIN, 18));
@@ -114,6 +111,7 @@ public class TrangKhachHang extends JPanel {
         label_sdt.setFont(new Font("Tahoma", Font.PLAIN, 20));
 
         textField_SDT = new JTextField();
+        textField_SDT.setBorder(new LineBorder(new Color(0, 128, 255)));
         textField_SDT.setBounds(152, 90, 296, 45);
         panel_1.add(textField_SDT);
         textField_SDT.setFont(new Font("Tahoma", Font.PLAIN, 18));
@@ -136,8 +134,10 @@ public class TrangKhachHang extends JPanel {
         panel_1.add(label_diaChi);
         label_diaChi.setFont(new Font("Tahoma", Font.PLAIN, 20));
 
-        JTextArea textArea_diaChi = new JTextArea();
+        textArea_diaChi = new JTextArea();
         textArea_diaChi.setBounds(508, 35, 390, 100);
+        textArea_diaChi.setBorder(new LineBorder(new Color(0, 128, 255)));
+        textArea_diaChi.setLineWrap(true);
         panel_1.add(textArea_diaChi);
         textArea_diaChi.setFont(new Font("Monospaced", Font.PLAIN, 15));
 
@@ -154,8 +154,18 @@ public class TrangKhachHang extends JPanel {
                         "STT", "Mã khách hàng", "Họ và tên", "Số điện thoại", "Giới tính", "Địa chỉ"
                 }
         ));
+
         table.setFont(new Font("Tahoma", Font.PLAIN, 20));
         table.setBounds(0, 0, 1, 1);
+
+        KhachHang_DAO khachHang_dao = new KhachHang_DAO();
+        ArrayList<KhachHang> dsKH = (ArrayList<KhachHang>) khachHang_dao.ChonTatCa();
+
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        for (int i = 0; i < dsKH.size(); i++) {
+            model.addRow(new Object[] {i + 1, dsKH.get(i).getMaKH(), dsKH.get(i).getTenKH(), dsKH.get(i).getSoDT(), dsKH.get(i).getGioiTinh(), dsKH.get(i).getDiaChi()});
+        }
+
 
         JScrollPane scrollPane = new JScrollPane(table);
         panel_table.add(scrollPane);
@@ -164,8 +174,34 @@ public class TrangKhachHang extends JPanel {
         panel.setBorder(null);
         panel_table.add(panel, BorderLayout.NORTH);
 
+        JLabel label_timTen = new JLabel("Tìm theo tên:");
+        label_timTen.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        panel.add(label_timTen);
+
+        textField_timTen = new JTextField();
+        textField_timTen.setBorder(new LineBorder(new Color(0, 128, 255)));
+        textField_timTen.setFont(new Font("Tahoma", Font.PLAIN, 15));
+        panel.add(textField_timTen);
+        textField_timTen.setColumns(15);
+
+        JLabel label_timSDT = new JLabel("Tìm theo số điện thoại:");
+        label_timSDT.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        panel.add(label_timSDT);
+
+        textField_timSDT = new JTextField();
+        textField_timSDT.setBorder(new LineBorder(new Color(0, 128, 255)));
+        textField_timSDT.setFont(new Font("Tahoma", Font.PLAIN, 15));
+        panel.add(textField_timSDT);
+        textField_timSDT.setColumns(10);
+
+        JButton btn_tim = new JButton("Tìm");
+        btn_tim.setForeground(new Color(255, 255, 255));
+        btn_tim.setBackground(new Color(0, 128, 255));
+        btn_tim.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        panel.add(btn_tim);
+
         JPanel panel_2 = new JPanel();
-        panel_2.setBorder(new LineBorder(new Color(0, 112, 255)));
+        panel_2.setBorder(new LineBorder(new Color(0, 128, 255)));
         desktopPane.add(panel_2, BorderLayout.WEST);
         panel_2.setLayout(new GridLayout(2, 1, 0, 0));
 
@@ -175,15 +211,24 @@ public class TrangKhachHang extends JPanel {
 
         JButton btn_capNhat = new JButton("Cập nhật");
         btn_capNhat.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        btn_capNhat.setForeground(new Color(255, 255, 255));
+        btn_capNhat.setBackground(new Color(0, 128, 255));
         panel_3.add(btn_capNhat);
 
         JButton btn_XemLichSu = new JButton("Xem lịch sử đặt vé");
         btn_XemLichSu.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        btn_XemLichSu.setForeground(new Color(255, 255, 255));
+        btn_XemLichSu.setBackground(new Color(0, 128, 255));
         panel_3.add(btn_XemLichSu);
 
         JButton btn_lamMoi = new JButton("Làm mới");
         btn_lamMoi.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        btn_lamMoi.setForeground(new Color(255, 255, 255));
+        btn_lamMoi.setBackground(new Color(0, 128, 255));
         panel_3.add(btn_lamMoi);
 
+
+
     }
+
 }

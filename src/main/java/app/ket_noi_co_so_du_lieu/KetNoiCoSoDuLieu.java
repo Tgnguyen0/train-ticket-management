@@ -9,7 +9,11 @@ import java.sql.ResultSet;
 public class KetNoiCoSoDuLieu {
     // Cac thuoc tinh ket noi
     private static String driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";  // Driver de ket noi voi SQL Server
-    private static String duongDan = "jdbc:sqlserver://localhost\\MSSQLSERVER13:1433;databasename=IT_Coffee;encrypt=false"; // URL ket noi voi co so du lieu
+
+    //DOI MAY TINH NHO DOI LAI DUONG DAN CUA MAY MINH!!!!!!
+//  private static String duongDan = "jdbc:sqlserver://localhost\\MSSQLSERVER13:1433;databasename=IT_Coffee;encrypt=false"; // URL ket noi voi co so du lieu
+    private static String duongDan = "jdbc:sqlserver://localhost:1433;databaseName=TrainStationDatabase;user=sa;password=123;trustServerCertificate=true;";
+
     private static String nguoiDung = "sa";  // Ten dang nhap vao SQL Server
     private static String matKhau = "123";   // Mat khau dang nhap
 
@@ -33,6 +37,10 @@ public class KetNoiCoSoDuLieu {
      */
     public static PreparedStatement LayCauLenh(String cauLenhSQL, Object...thamSo) throws SQLException {
         Connection lienKet = DriverManager.getConnection(duongDan, nguoiDung, matKhau);  // Tao ket noi voi CSDL
+        if(lienKet == null) {
+            System.out.println("Ket noi that bai");
+            return null;
+        }
         PreparedStatement cauLenhChuanBi = null;
 
         // Kiem tra xem cau lenh co phai la mot stored procedure
