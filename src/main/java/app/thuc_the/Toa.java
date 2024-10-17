@@ -18,12 +18,8 @@ public class Toa {
         return maToa;
     }
 
-    public String setMaToa(int soThuTu) {
-        String maToa;
-
-        maToa = "VN" + String.valueOf(soThuTu);
-
-        return maToa;
+    public void setMaToa(String maToa) {
+        this.maToa = maToa;
     }
 
     public String getTenToa() {

@@ -55,7 +55,8 @@ public class TrangDinhHuong extends JFrame {
     public TrangDinhHuong() {
         ImageIcon icon = new ImageIcon("assets/icon.png");
         setTitle("Quản lý bán vé tại ga");
-        setSize(new Dimension(1200, 800));
+        //setSize(new Dimension(1200, 800));
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
 
         setIconImage(icon.getImage());
         setLocationRelativeTo(null);
