@@ -2,17 +2,18 @@ package app.giao_dien;
 
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
-
+import java.awt.Dimension;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
-
+import java.awt.GridBagLayout;
 import java.awt.Color;
 
-
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import java.awt.GridLayout;
 import java.awt.FlowLayout;
-
+import javax.swing.JTabbedPane;
 import javax.swing.JDesktopPane;
 import javax.swing.JButton;
 import javax.swing.JTextField;
@@ -22,7 +23,10 @@ import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-
+import javax.swing.table.JTableHeader;
+import javax.swing.JSeparator;
+import javax.swing.JMenuBar;
+import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 
 
@@ -40,7 +44,7 @@ public class TrangKhachHang extends JPanel {
      * Create the panel.
      */
     public TrangKhachHang() {
-        setBorder(new LineBorder(new Color(0, 0, 0), 2, true));
+        setBorder(new LineBorder(new Color(0, 112, 255), 1, true));
         setLayout(new BorderLayout(10, 0));
         setSize(1200, 700);
 
@@ -74,12 +78,12 @@ public class TrangKhachHang extends JPanel {
 
 
         JPanel panel_thongTinKH = new JPanel();
-        panel_thongTinKH.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
+        panel_thongTinKH.setBorder(new LineBorder(new Color(0, 112, 255), 1, true));
         panel_noiDung.add(panel_thongTinKH);
         panel_thongTinKH.setLayout(null);
 
         JPanel panel_1 = new JPanel();
-        panel_1.setBounds(58, 50, 943, 206);
+        panel_1.setBounds(89, 50, 943, 206);
         panel_thongTinKH.add(panel_1);
         panel_1.setLayout(null);
 
@@ -161,7 +165,7 @@ public class TrangKhachHang extends JPanel {
         panel_table.add(panel, BorderLayout.NORTH);
 
         JPanel panel_2 = new JPanel();
-        panel_2.setBorder(new LineBorder(new Color(0, 0, 0)));
+        panel_2.setBorder(new LineBorder(new Color(0, 112, 255)));
         desktopPane.add(panel_2, BorderLayout.WEST);
         panel_2.setLayout(new GridLayout(2, 1, 0, 0));
 
