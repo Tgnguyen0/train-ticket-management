@@ -26,6 +26,7 @@ public class KhachHang {
         return maKH;
     }
 
+    // Dùng khi tạo khách hàng mới
     public String setMaKH(int soNgauNhien) {
         String maKH;
         String ngayTrongThang = String.valueOf(LocalDate.now().getDayOfMonth());
@@ -37,6 +38,11 @@ public class KhachHang {
         maKH = "KH" + nam + thang + ngayTrongThang + String.valueOf(soNgauNhien);
 
         return maKH;
+    }
+
+    // Dùng khi lấy từ cơ sở dữ liệu
+    public void setMaKHTuCSDL(String maKH) {
+        this.maKH = maKH;
     }
 
     public String getTenKH() {

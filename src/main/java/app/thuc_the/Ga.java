@@ -19,12 +19,8 @@ public class Ga {
         return maGa;
     }
 
-    public String setMaGa(int soNgauNhien) {
-        String maGa;
-
-        maGa = "VNGA" + soNgauNhien;
-
-        return maGa;
+    public void setMaGa(String maGa) {
+        this.maGa = maGa;
     }
 
     public String getTenGa() {

@@ -51,6 +51,10 @@ public class Ve {
         return maVe;
     }
 
+    public void setMaVeTuCSDL(String maVe) {
+        this.maVe = maVe;
+    }
+
     public String getLoaiDoiTuong() {
         return loaiDoiTuong;
     }

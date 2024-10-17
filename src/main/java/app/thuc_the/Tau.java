@@ -10,6 +10,7 @@ public class Tau {
     private int soLuongKhachHangDaDatVe;
     private Set<Toa> danhSachToa;
     private Set<LichCapBenGa> danhSachLichCapBenTau;
+
     public Tau() {
     }
 
