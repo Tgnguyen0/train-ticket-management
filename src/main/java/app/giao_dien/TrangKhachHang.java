@@ -1,200 +1,189 @@
 package app.giao_dien;
 
 import javax.swing.JPanel;
-
+import java.awt.BorderLayout;
 import java.awt.Dimension;
-
 import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
-
 import java.awt.Font;
+import javax.swing.SwingConstants;
+import java.awt.GridBagLayout;
+import java.awt.Color;
 
 import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.JScrollPane;
-import java.awt.Color;
-import javax.swing.border.LineBorder;
-
-
-import java.awt.BorderLayout;
+import javax.swing.BoxLayout;
+import java.awt.GridLayout;
 import java.awt.FlowLayout;
-import java.io.Serial;
+import javax.swing.JTabbedPane;
+import javax.swing.JDesktopPane;
+import javax.swing.JButton;
+import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTextArea;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
+import javax.swing.JSeparator;
+import javax.swing.JMenuBar;
+import javax.swing.border.Border;
+import javax.swing.border.LineBorder;
+
+
 
 
 public class TrangKhachHang extends JPanel {
 
-    @Serial
     private static final long serialVersionUID = 1L;
+    private JTable table;
+    private JTextField textField_HoTen;
+    private JTextField textField_SDT;
 
-    private JTextField textField_tenKH;
-    private JTextField textField_sdt;
-    private JTable table_bangThongTinKH;
-    private JTextField textField_timTen;
-    private JTextField textField_timSDT;
 
     /**
      * Create the panel.
      */
     public TrangKhachHang() {
-        setPreferredSize(new Dimension(1200, 700));
-        setLayout(new BorderLayout(0, 0));
+        setBorder(new LineBorder(new Color(0, 0, 0), 2, true));
+        setLayout(new BorderLayout(10, 0));
+        setSize(1200, 700);
 
-        JLabel label_tieuDe = new JLabel("<html><u>Quản lý khách hàng</u></html>");
-        label_tieuDe.setHorizontalAlignment(SwingConstants.CENTER);
-        label_tieuDe.setFont(new Font("Tahoma", Font.PLAIN, 40));
-        label_tieuDe.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
-        add(label_tieuDe, BorderLayout.NORTH);
+        JLabel label_quanLyKH = new JLabel("<html><u>QUẢN LÝ KHÁCH HÀNG</u></html>");
+        label_quanLyKH.setBackground(new Color(0, 64, 128));
+        label_quanLyKH.setForeground(new Color(0, 128, 255));
+        label_quanLyKH.setHorizontalAlignment(SwingConstants.CENTER);
+        label_quanLyKH.setFont(new Font("Bahnschrift", Font.BOLD, 40));
+        add(label_quanLyKH, BorderLayout.NORTH);
 
-        JPanel panel_noiDung = new JPanel();
-        panel_noiDung.setBorder(null);
-        add(panel_noiDung, BorderLayout.CENTER);
-        panel_noiDung.setLayout(null);
+        JDesktopPane desktopPane = new JDesktopPane();
+        desktopPane.setForeground(new Color(0, 0, 128));
+        desktopPane.setBackground(new Color(0, 0, 128));
+        add(desktopPane, BorderLayout.CENTER);
+        desktopPane.setLayout(new BorderLayout(0, 0));
 
-        JLabel lblThngTinKhch = new JLabel("Thông tin khách hàng");
-        lblThngTinKhch.setBounds(10, 10, 324, 37);
+        JPanel panel_cumTieuDe = new JPanel();
+        panel_cumTieuDe.setBorder(null);
+        desktopPane.add(panel_cumTieuDe, BorderLayout.NORTH);
+        panel_cumTieuDe.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+
+        JLabel lblThngTinKhch = new JLabel(" Thông tin khách hàng");
         lblThngTinKhch.setHorizontalAlignment(SwingConstants.LEFT);
         lblThngTinKhch.setFont(new Font("Tahoma", Font.PLAIN, 30));
-        lblThngTinKhch.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 0));
-        panel_noiDung.add(lblThngTinKhch);
+        panel_cumTieuDe.add(lblThngTinKhch);
 
-        JPanel panel_cumThongTinKH = new JPanel();
-        panel_cumThongTinKH.setBorder(new LineBorder(new Color(0, 112, 255)));
-        panel_cumThongTinKH.setBounds(34, 58, 743, 217);
-        panel_noiDung.add(panel_cumThongTinKH);
-        panel_cumThongTinKH.setLayout(null);
+        JPanel panel_noiDung = new JPanel();
+        desktopPane.add(panel_noiDung, BorderLayout.CENTER);
+        panel_noiDung.setLayout(new GridLayout(2, 0, 0, 0));
+
+
+
+        JPanel panel_thongTinKH = new JPanel();
+        panel_thongTinKH.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
+        panel_noiDung.add(panel_thongTinKH);
+        panel_thongTinKH.setLayout(null);
+
+        JPanel panel_1 = new JPanel();
+        panel_1.setBounds(58, 50, 943, 206);
+        panel_thongTinKH.add(panel_1);
+        panel_1.setLayout(null);
 
         JLabel label_maKH = new JLabel("Mã khách hàng:");
-        label_maKH.setBounds(10, 10, 142, 25);
-        panel_cumThongTinKH.add(label_maKH);
+        label_maKH.setBounds(0, 0, 142, 25);
+        panel_1.add(label_maKH);
         label_maKH.setFont(new Font("Tahoma", Font.PLAIN, 20));
 
-        JLabel label_HienThiMaKH = new JLabel("<mã khách hàng>");
-        label_HienThiMaKH.setBounds(162, 10, 165, 25);
-        panel_cumThongTinKH.add(label_HienThiMaKH);
-        label_HienThiMaKH.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        textField_HoTen = new JTextField();
+        textField_HoTen.setBounds(152, 35, 296, 45);
+        panel_1.add(textField_HoTen);
+        textField_HoTen.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        textField_HoTen.setColumns(15);
 
-        JLabel label_tenKH = new JLabel("Họ và tên:");
-        label_tenKH.setBounds(351, 10, 93, 25);
-        panel_cumThongTinKH.add(label_tenKH);
-        label_tenKH.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        JLabel label_hienThiMaKH = new JLabel("<mã khách hàng>");
+        label_hienThiMaKH.setBounds(152, 0, 165, 25);
+        panel_1.add(label_hienThiMaKH);
+        label_hienThiMaKH.setFont(new Font("Tahoma", Font.PLAIN, 20));
 
-        textField_tenKH = new JTextField();
-        textField_tenKH.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        textField_tenKH.setBorder(new LineBorder(new Color(0, 112, 255)));
-        textField_tenKH.setBounds(478, 7, 255, 31);
-        panel_cumThongTinKH.add(textField_tenKH);
-        textField_tenKH.setColumns(10);
+        JLabel label_hoTen = new JLabel("Họ và tên:");
+        label_hoTen.setBounds(0, 44, 93, 25);
+        panel_1.add(label_hoTen);
+        label_hoTen.setFont(new Font("Tahoma", Font.PLAIN, 20));
 
-        JLabel lblSinThoi = new JLabel("Số điện thoại:");
-        lblSinThoi.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        lblSinThoi.setBounds(351, 60, 124, 25);
-        panel_cumThongTinKH.add(lblSinThoi);
+        JLabel label_sdt = new JLabel("Số điện thoại");
+        label_sdt.setBounds(0, 99, 117, 25);
+        panel_1.add(label_sdt);
+        label_sdt.setFont(new Font("Tahoma", Font.PLAIN, 20));
 
-        textField_sdt = new JTextField();
-        textField_sdt.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        textField_sdt.setBorder(new LineBorder(new Color(0, 112, 255)));
-        textField_sdt.setBounds(478, 57, 255, 31);
-        panel_cumThongTinKH.add(textField_sdt);
-        textField_sdt.setColumns(10);
+        textField_SDT = new JTextField();
+        textField_SDT.setBounds(152, 90, 296, 45);
+        panel_1.add(textField_SDT);
+        textField_SDT.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        textField_SDT.setColumns(15);
 
         JLabel lblGiiTnh = new JLabel("Giới tính:");
+        lblGiiTnh.setBounds(0, 143, 82, 25);
+        panel_1.add(lblGiiTnh);
         lblGiiTnh.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        lblGiiTnh.setBounds(10, 60, 82, 25);
-        panel_cumThongTinKH.add(lblGiiTnh);
 
         JComboBox comboBox = new JComboBox();
+        comboBox.setBounds(152, 145, 82, 25);
+        panel_1.add(comboBox);
+        comboBox.setFont(new Font("Tahoma", Font.PLAIN, 15));
         comboBox.setModel(new DefaultComboBoxModel(new String[] {"Nam", "Nữ"}));
         comboBox.setMaximumRowCount(2);
-        comboBox.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        comboBox.setBounds(162, 57, 78, 31);
-        panel_cumThongTinKH.add(comboBox);
 
-        JLabel lblaCh = new JLabel("Địa chỉ:");
-        lblaCh.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        lblaCh.setBounds(10, 107, 68, 25);
-        panel_cumThongTinKH.add(lblaCh);
+        JLabel label_diaChi = new JLabel("Địa chỉ:");
+        label_diaChi.setBounds(508, 0, 68, 25);
+        panel_1.add(label_diaChi);
+        label_diaChi.setFont(new Font("Tahoma", Font.PLAIN, 20));
 
         JTextArea textArea_diaChi = new JTextArea();
-        textArea_diaChi.setBounds(88, 111, 645, 96);
-        textArea_diaChi.setBorder(new LineBorder(new Color(0, 112, 255)));
-        panel_cumThongTinKH.add(textArea_diaChi);
+        textArea_diaChi.setBounds(508, 35, 390, 100);
+        panel_1.add(textArea_diaChi);
+        textArea_diaChi.setFont(new Font("Monospaced", Font.PLAIN, 15));
 
-        table_bangThongTinKH = new JTable();
-        table_bangThongTinKH.setModel(new DefaultTableModel(
+        JPanel panel_table = new JPanel();
+        panel_table.setBorder(null);
+        panel_noiDung.add(panel_table);
+        panel_table.setLayout(new BorderLayout(0, 0));
+
+        table = new JTable();
+        table.setModel(new DefaultTableModel(
                 new Object[][] {
                 },
                 new String[] {
                         "STT", "Mã khách hàng", "Họ và tên", "Số điện thoại", "Giới tính", "Địa chỉ"
                 }
         ));
-        table_bangThongTinKH.setBounds(0, 0, 1, 1);
+        table.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        table.setBounds(0, 0, 1, 1);
 
+        JScrollPane scrollPane = new JScrollPane(table);
+        panel_table.add(scrollPane);
 
-        JScrollPane scrollPane = new JScrollPane(table_bangThongTinKH);
-        scrollPane.setBounds(10, 347, 1180, 262);
-        panel_noiDung.add(scrollPane);
+        JPanel panel = new JPanel();
+        panel.setBorder(null);
+        panel_table.add(panel, BorderLayout.NORTH);
 
-        JPanel panel_cumNut = new JPanel();
-        panel_cumNut.setBounds(823, 58, 345, 217);
-        panel_noiDung.add(panel_cumNut);
-        panel_cumNut.setLayout(null);
+        JPanel panel_2 = new JPanel();
+        panel_2.setBorder(new LineBorder(new Color(0, 0, 0)));
+        desktopPane.add(panel_2, BorderLayout.WEST);
+        panel_2.setLayout(new GridLayout(2, 1, 0, 0));
 
-        JButton btn_CapNhat = new JButton("Cập nhật");
-        btn_CapNhat.setBounds(0, 0, 172, 108);
-        btn_CapNhat.setFont(new Font("Tahoma", Font.PLAIN, 25));
-        panel_cumNut.add(btn_CapNhat);
+        JPanel panel_3 = new JPanel();
+        panel_2.add(panel_3);
+        panel_3.setLayout(new GridLayout(3, 1, 0, 0));
 
-        JButton btn_LamMoi = new JButton("Làm mới");
-        btn_LamMoi.setBounds(172, 0, 172, 108);
-        btn_LamMoi.setFont(new Font("Tahoma", Font.PLAIN, 25));
-        panel_cumNut.add(btn_LamMoi);
+        JButton btn_capNhat = new JButton("Cập nhật");
+        btn_capNhat.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        panel_3.add(btn_capNhat);
 
-        JButton btn_xemLichSu = new JButton("Xem lịch sử đặt vé");
-        btn_xemLichSu.setBounds(0, 108, 344, 108);
-        btn_xemLichSu.setFont(new Font("Tahoma", Font.PLAIN, 25));
-        panel_cumNut.add(btn_xemLichSu);
+        JButton btn_XemLichSu = new JButton("Xem lịch sử đặt vé");
+        btn_XemLichSu.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        panel_3.add(btn_XemLichSu);
 
-        JLabel label_chucNang = new JLabel("Chức năng");
-        label_chucNang.setFont(new Font("Tahoma", Font.PLAIN, 30));
-        label_chucNang.setBounds(924, 10, 144, 37);
-        panel_noiDung.add(label_chucNang);
-
-        JPanel panel_cumTimKiem = new JPanel();
-        FlowLayout flowLayout = (FlowLayout) panel_cumTimKiem.getLayout();
-        flowLayout.setAlignment(FlowLayout.LEFT);
-        panel_cumTimKiem.setBounds(34, 285, 1134, 52);
-        panel_noiDung.add(panel_cumTimKiem);
-
-        JLabel label_timTen = new JLabel("Tìm kiếm theo tên:");
-        label_timTen.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        panel_cumTimKiem.add(label_timTen);
-
-        textField_timTen = new JTextField();
-        textField_timTen.setBorder(new LineBorder(new Color(0, 112, 255)));
-        textField_timTen.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        panel_cumTimKiem.add(textField_timTen);
-        textField_timTen.setColumns(10);
-
-        JLabel lblTmKimTheo = new JLabel("Tìm kiếm theo số điện thoại:");
-        lblTmKimTheo.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        panel_cumTimKiem.add(lblTmKimTheo);
-
-        textField_timSDT = new JTextField();
-        textField_timSDT.setBorder(new LineBorder(new Color(0, 112, 255)));
-        textField_timSDT.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        panel_cumTimKiem.add(textField_timSDT);
-        textField_timSDT.setColumns(10);
-
-        JButton btn_tim = new JButton("Tìm");
-        btn_tim.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        panel_cumTimKiem.add(btn_tim);
-
+        JButton btn_lamMoi = new JButton("Làm mới");
+        btn_lamMoi.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        panel_3.add(btn_lamMoi);
 
     }
 }
