@@ -1,8 +1,6 @@
 package app.giao_dien;
 
-import app.Dao.KhachHang_DAO;
-import app.ket_noi_co_so_du_lieu.KetNoiCoSoDuLieu;
-import app.thuc_the.DanhSachKhachHang;
+import app.dao.KhachHang_DAO;
 import app.thuc_the.KhachHang;
 
 import javax.swing.*;
@@ -155,9 +153,17 @@ public class TrangKhachHang extends JPanel {
                 }
         ));
 
-        table.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        table.setFont(new Font("Tahoma", Font.PLAIN, 13));
         table.setBounds(0, 0, 1, 1);
 
+        table.getColumnModel().getColumn(0).setPreferredWidth(30);
+        table.getColumnModel().getColumn(1).setPreferredWidth(80);
+        table.getColumnModel().getColumn(2).setPreferredWidth(200);
+        table.getColumnModel().getColumn(3).setPreferredWidth(100);
+        table.getColumnModel().getColumn(4).setPreferredWidth(30);
+        table.getColumnModel().getColumn(5).setPreferredWidth(400);
+
+        //LAY DATABASE LEN TABLE
         KhachHang_DAO khachHang_dao = new KhachHang_DAO();
         ArrayList<KhachHang> dsKH = (ArrayList<KhachHang>) khachHang_dao.ChonTatCa();
 
