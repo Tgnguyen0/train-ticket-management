@@ -1,7 +1,7 @@
 package app.giao_dien;
 
 import app.dao.KhachHang_DAO;
-import app.thuc_the.GIOI_TINH;
+import app.dieu_khien.HanhDong_TrangKhachHang;
 import app.thuc_the.KhachHang;
 
 import javax.swing.*;
@@ -26,13 +26,15 @@ import javax.swing.border.LineBorder;
 public class TrangKhachHang extends JPanel {
 
     private static final long serialVersionUID = 1L;
-    private final JTextArea textArea_diaChi;
-    private final JLabel label_hienThiMaKH;
-    private JTable table;
-    private JTextField textField_HoTen;
-    private JTextField textField_SDT;
-    private JTextField textField_timTen;
-    private JTextField textField_timSDT;
+    public final JTextArea textArea_diaChi;
+    public final JLabel label_hienThiMaKH;
+    public final JTextField textField_email;
+    public final JComboBox comboBox_gioiTinh;
+    public JTable table;
+    public JTextField textField_HoTen;
+    public JTextField textField_SDT;
+    public JTextField textField_timTen;
+    public JTextField textField_timSDT;
 
 
     /**
@@ -118,16 +120,16 @@ public class TrangKhachHang extends JPanel {
         textField_SDT.setColumns(15);
 
         JLabel lblGiiTnh = new JLabel("Giới tính:");
-        lblGiiTnh.setBounds(0, 143, 82, 25);
+        lblGiiTnh.setBounds(508, 153, 82, 25);
         panel_1.add(lblGiiTnh);
         lblGiiTnh.setFont(new Font("Tahoma", Font.PLAIN, 20));
 
-        JComboBox comboBox = new JComboBox();
-        comboBox.setBounds(152, 145, 82, 25);
-        panel_1.add(comboBox);
-        comboBox.setFont(new Font("Tahoma", Font.PLAIN, 15));
-        comboBox.setModel(new DefaultComboBoxModel(new String[] {"Nam", "Nữ"}));
-        comboBox.setMaximumRowCount(2);
+         comboBox_gioiTinh = new JComboBox();
+        comboBox_gioiTinh.setBounds(602, 155, 82, 25);
+        panel_1.add(comboBox_gioiTinh);
+        comboBox_gioiTinh.setFont(new Font("Tahoma", Font.PLAIN, 15));
+        comboBox_gioiTinh.setModel(new DefaultComboBoxModel(new String[] {"Nam", "Nữ"}));
+        comboBox_gioiTinh.setMaximumRowCount(2);
 
         JLabel label_diaChi = new JLabel("Địa chỉ:");
         label_diaChi.setBounds(508, 0, 68, 25);
@@ -166,6 +168,8 @@ public class TrangKhachHang extends JPanel {
         table.getColumnModel().getColumn(5).setPreferredWidth(100); // cot email
         table.getColumnModel().getColumn(6).setPreferredWidth(200); // cot dia chi
 
+
+
         //LAY DATABASE LEN TABLE
         KhachHang_DAO khachHang_dao = new KhachHang_DAO();
         ArrayList<KhachHang> dsKH = (ArrayList<KhachHang>) khachHang_dao.ChonTatCa();
@@ -174,6 +178,10 @@ public class TrangKhachHang extends JPanel {
         for (int i = 0; i < dsKH.size(); i++) {
             model.addRow(new Object[] {i + 1, dsKH.get(i).getMaKH(), dsKH.get(i).getTenKH(), dsKH.get(i).getSoDT(), dsKH.get(i).getGioiTinh(), dsKH.get(i).getEmail(), dsKH.get(i).getDiaChi()});
         }
+
+
+        ListSelectionModel selectionModel = table.getSelectionModel();
+        selectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
 
         JScrollPane scrollPane = new JScrollPane(table);
@@ -236,31 +244,19 @@ public class TrangKhachHang extends JPanel {
         btn_lamMoi.setBackground(new Color(0, 128, 255));
         panel_3.add(btn_lamMoi);
 
+        JLabel label_email = new JLabel("Email:");
+        label_email.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        label_email.setBounds(0, 153, 55, 25);
+        panel_1.add(label_email);
 
+        textField_email = new JTextField();
+        textField_email.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        textField_email.setColumns(15);
+        textField_email.setBorder(new LineBorder(new Color(0, 128, 255)));
+        textField_email.setBounds(152, 145, 296, 45);
+        panel_1.add(textField_email);
 
-    }
-    public KhachHang layThongTinKhachHangTuTable() {
-
-        DefaultTableModel model = (DefaultTableModel) table.getModel();
-        int row = table.getSelectedRow();
-        String maKH = (String) model.getValueAt(row, 1);
-        String hoTen = (String) model.getValueAt(row, 2);
-        String sdt = (String) model.getValueAt(row, 3);
-        String gioiTinh = (String) model.getValueAt(row, 4);
-        String email = (String) model.getValueAt(row, 5);
-        GIOI_TINH gt = GIOI_TINH.NAM;
-        if (gioiTinh.equals("Nữ")) {
-            gt = GIOI_TINH.NU;
-        }
-        String diaChi = (String) model.getValueAt(row, 6);
-        return new KhachHang(maKH, hoTen, diaChi, sdt, email, gt);
+        HanhDong_TrangKhachHang hd = new HanhDong_TrangKhachHang(this);
     }
 
-    public void hienThiThongTinKhachHang(KhachHang kh) {
-        kh = layThongTinKhachHangTuTable();
-        label_hienThiMaKH.setText(kh.getMaKH());
-        textField_HoTen.setText(kh.getTenKH());
-        textField_SDT.setText(kh.getSoDT());
-        textArea_diaChi.setText(kh.getDiaChi());
-    }
 }
