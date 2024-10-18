@@ -1,6 +1,7 @@
 package app.giao_dien;
 
 import app.dao.KhachHang_DAO;
+import app.thuc_the.GIOI_TINH;
 import app.thuc_the.KhachHang;
 
 import javax.swing.*;
@@ -26,6 +27,7 @@ public class TrangKhachHang extends JPanel {
 
     private static final long serialVersionUID = 1L;
     private final JTextArea textArea_diaChi;
+    private final JLabel label_hienThiMaKH;
     private JTable table;
     private JTextField textField_HoTen;
     private JTextField textField_SDT;
@@ -93,7 +95,7 @@ public class TrangKhachHang extends JPanel {
         textField_HoTen.setFont(new Font("Tahoma", Font.PLAIN, 18));
         textField_HoTen.setColumns(15);
 
-        JLabel label_hienThiMaKH = new JLabel("<mã khách hàng>");
+        label_hienThiMaKH = new JLabel("<mã khách hàng>");
         label_hienThiMaKH.setBounds(152, 0, 165, 25);
         panel_1.add(label_hienThiMaKH);
         label_hienThiMaKH.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -149,19 +151,20 @@ public class TrangKhachHang extends JPanel {
                 new Object[][] {
                 },
                 new String[] {
-                        "STT", "Mã khách hàng", "Họ và tên", "Số điện thoại", "Giới tính", "Địa chỉ"
+                        "STT", "Mã khách hàng", "Họ và tên", "Số điện thoại", "Giới tính","Email", "Địa chỉ"
                 }
         ));
 
         table.setFont(new Font("Tahoma", Font.PLAIN, 13));
         table.setBounds(0, 0, 1, 1);
 
-        table.getColumnModel().getColumn(0).setPreferredWidth(30);
-        table.getColumnModel().getColumn(1).setPreferredWidth(80);
-        table.getColumnModel().getColumn(2).setPreferredWidth(200);
-        table.getColumnModel().getColumn(3).setPreferredWidth(100);
-        table.getColumnModel().getColumn(4).setPreferredWidth(30);
-        table.getColumnModel().getColumn(5).setPreferredWidth(400);
+        table.getColumnModel().getColumn(0).setPreferredWidth(30); //cot stt
+        table.getColumnModel().getColumn(1).setPreferredWidth(80); // cot maKH
+        table.getColumnModel().getColumn(2).setPreferredWidth(200); // cot ten
+        table.getColumnModel().getColumn(3).setPreferredWidth(100); // cot sdt
+        table.getColumnModel().getColumn(4).setPreferredWidth(10); // cot gioi tinh
+        table.getColumnModel().getColumn(5).setPreferredWidth(100); // cot email
+        table.getColumnModel().getColumn(6).setPreferredWidth(200); // cot dia chi
 
         //LAY DATABASE LEN TABLE
         KhachHang_DAO khachHang_dao = new KhachHang_DAO();
@@ -169,7 +172,7 @@ public class TrangKhachHang extends JPanel {
 
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         for (int i = 0; i < dsKH.size(); i++) {
-            model.addRow(new Object[] {i + 1, dsKH.get(i).getMaKH(), dsKH.get(i).getTenKH(), dsKH.get(i).getSoDT(), dsKH.get(i).getGioiTinh(), dsKH.get(i).getDiaChi()});
+            model.addRow(new Object[] {i + 1, dsKH.get(i).getMaKH(), dsKH.get(i).getTenKH(), dsKH.get(i).getSoDT(), dsKH.get(i).getGioiTinh(), dsKH.get(i).getEmail(), dsKH.get(i).getDiaChi()});
         }
 
 
@@ -236,5 +239,28 @@ public class TrangKhachHang extends JPanel {
 
 
     }
+    public KhachHang layThongTinKhachHangTuTable() {
 
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        int row = table.getSelectedRow();
+        String maKH = (String) model.getValueAt(row, 1);
+        String hoTen = (String) model.getValueAt(row, 2);
+        String sdt = (String) model.getValueAt(row, 3);
+        String gioiTinh = (String) model.getValueAt(row, 4);
+        String email = (String) model.getValueAt(row, 5);
+        GIOI_TINH gt = GIOI_TINH.NAM;
+        if (gioiTinh.equals("Nữ")) {
+            gt = GIOI_TINH.NU;
+        }
+        String diaChi = (String) model.getValueAt(row, 6);
+        return new KhachHang(maKH, hoTen, diaChi, sdt, email, gt);
+    }
+
+    public void hienThiThongTinKhachHang(KhachHang kh) {
+        kh = layThongTinKhachHangTuTable();
+        label_hienThiMaKH.setText(kh.getMaKH());
+        textField_HoTen.setText(kh.getTenKH());
+        textField_SDT.setText(kh.getSoDT());
+        textArea_diaChi.setText(kh.getDiaChi());
+    }
 }
