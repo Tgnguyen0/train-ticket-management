@@ -47,26 +47,10 @@ public class HanhDong_TrangKhachHang implements ActionListener, MouseListener, L
     public void mouseExited(MouseEvent e) {
 
     }
+    
 
     @Override
-    public void valueChanged(ListSelectionEvent e, JTable table) {
-        if(!e.getValueIsAdjusting()){
-            int selectedRow = table.getSelectedRow();
-            if(selectedRow != -1){
-                String maKH = (String) table.getValueAt(selectedRow, 0);
-                String tenKH = (String) table.getValueAt(selectedRow, 1);
-                String diaChi = (String) table.getValueAt(selectedRow, 2);
-                String soDT = (String) table.getValueAt(selectedRow, 3);
-                String email = (String) table.getValueAt(selectedRow, 4);
-                String gioiTinh = (String) table.getValueAt(selectedRow, 5);
+    public void valueChanged(ListSelectionEvent e) {
 
-                trangKhachHang.;
-                trangKhachHang.setTenKH(tenKH);
-                trangKhachHang.setDiaChi(diaChi);
-                trangKhachHang.setSoDT(soDT);
-                trangKhachHang.setEmail(email);
-                trangKhachHang.setGioiTinh(gioiTinh);
-            }
-        }
     }
 }
