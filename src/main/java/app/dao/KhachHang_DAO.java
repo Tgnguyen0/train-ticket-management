@@ -1,5 +1,6 @@
 package app.dao;
 
+import app.giao_dien.TrangKhachHang;
 import app.ket_noi_co_so_du_lieu.KetNoiCoSoDuLieu;
 import app.thuc_the.GIOI_TINH;
 import app.thuc_the.KhachHang;
@@ -197,8 +198,8 @@ public class KhachHang_DAO {
 
     }
 
-    public List layDanhSachKhachHang_KhangVersion() {
-        List<KhachHang> list = new ArrayList<>();
+    public ArrayList<KhachHang> layDanhSachKhachHang_KhangVersion() {
+        ArrayList<KhachHang> list = new ArrayList<>();
 
         try {
             // Bước 1: tạo kết nối đến CSDL
@@ -230,6 +231,7 @@ public class KhachHang_DAO {
             }
 
             // Bước 5: đóng kết nối
+            st.close();
             connection.close();
         } catch (SQLException e) {
             // TODO Auto-generated catch block
@@ -238,5 +240,131 @@ public class KhachHang_DAO {
         return list;
     }
 
+    public ArrayList<KhachHang> timTheoTen_KhangVersion(String ten){
+        ArrayList<KhachHang> list = new ArrayList<>();
+        try {
+            // Bước 1: tạo kết nối đến CSDL
+            Connection connection = KetNoiCoSoDuLieu.ketNoiDB_KhangVersion();
+
+            // Bước 2: tạo ra đối tượng statement
+            String sql = "SELECT * FROM KhachHang WHERE TenKH LIKE ?";
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, "%" + ten + "%");
+
+            // Bước 3: thực thi câu lệnh SQL
+            ResultSet rs = st.executeQuery();
+
+            // Bước 4: xử lý kết quả
+            while (rs.next()) {
+                String maKH = rs.getString("MaKH");
+                String tenKH = rs.getString("TenKH");
+                String diaChi = rs.getString("DiaChi");
+                String soDT = rs.getString("SoDT");
+                String email = rs.getString("Email");
+                String gioiTinh = rs.getString("GioiTinh");
+
+                GIOI_TINH gt = GIOI_TINH.NAM;
+                if(!gioiTinh.equals(GIOI_TINH.NAM.getValue())){
+                    gt = GIOI_TINH.NU;
+                }
+
+                KhachHang kh = new KhachHang(maKH, tenKH, diaChi, soDT, email, gt);
+                list.add(kh);
+            }
+
+            // Bước 5: đóng kết nối
+            st.close();
+            connection.close();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+    }
+        return list;
+    }
+    public ArrayList<KhachHang> timTheoSDT_KhangVersion (String sdt){
+        ArrayList<KhachHang> list = new ArrayList<>();
+        try {
+            // Bước 1: tạo kết nối đến CSDL
+            Connection connection = KetNoiCoSoDuLieu.ketNoiDB_KhangVersion();
+
+            // Bước 2: tạo ra đối tượng statement
+            String sql = "SELECT * FROM KhachHang WHERE SoDT LIKE ?";
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, "%" + sdt + "%");
+
+            // Bước 3: thực thi câu lệnh SQL
+            ResultSet rs = st.executeQuery();
+
+            // Bước 4: xử lý kết quả
+            while (rs.next()) {
+                String maKH = rs.getString("MaKH");
+                String tenKH = rs.getString("TenKH");
+                String diaChi = rs.getString("DiaChi");
+                String soDT = rs.getString("SoDT");
+                String email = rs.getString("Email");
+                String gioiTinh = rs.getString("GioiTinh");
+
+                GIOI_TINH gt = GIOI_TINH.NAM;
+                if(!gioiTinh.equals(GIOI_TINH.NAM.getValue())){
+                    gt = GIOI_TINH.NU;
+                }
+
+                KhachHang kh = new KhachHang(maKH, tenKH, diaChi, soDT, email, gt);
+                list.add(kh);
+            }
+
+            // Bước 5: đóng kết nối
+            st.close();
+            connection.close();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+    }
+        return list;
+    }
+    public ArrayList<KhachHang> timTheoTenVaSDT_KhangVersion(String ten, String sdt){
+        ArrayList<KhachHang> list = new ArrayList<>();
+        try {
+            // Bước 1: tạo kết nối đến CSDL
+            Connection connection = KetNoiCoSoDuLieu.ketNoiDB_KhangVersion();
+
+            // Bước 2: tạo ra đối tượng statement
+            String sql = "SELECT * FROM KhachHang WHERE TenKH LIKE ? AND SoDT LIKE ?";
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, "%" + ten + "%");
+            st.setString(2, "%" + sdt + "%");
+
+            // Bước 3: thực thi câu lệnh SQL
+            ResultSet rs = st.executeQuery();
+
+            // Bước 4: xử lý kết quả
+            while (rs.next()) {
+                String maKH = rs.getString("MaKH");
+                String tenKH = rs.getString("TenKH");
+                String diaChi = rs.getString("DiaChi");
+                String soDT = rs.getString("SoDT");
+                String email = rs.getString("Email");
+                String gioiTinh = rs.getString("GioiTinh");
+
+                GIOI_TINH gt = GIOI_TINH.NAM;
+                if(!gioiTinh.equals(GIOI_TINH.NAM.getValue())){
+                    gt = GIOI_TINH.NU;
+                }
+
+                KhachHang kh = new KhachHang(maKH, tenKH, diaChi, soDT, email, gt);
+                list.add(kh);
+            }
+
+            // Bước 5: đóng kết nối
+            st.close();
+            connection.close();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+    }
+        return list;
+
+    }
 }
+
 
