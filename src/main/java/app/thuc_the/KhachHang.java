@@ -23,10 +23,10 @@ public class KhachHang implements Serializable {
     public KhachHang() {
     }
 
-    public KhachHang(String maKH, String tenKH, String diaChi, String soDT, String email, GIOI_TINH gioiTinh) {
+    public KhachHang(String maKH, String diaChi, String tenKH, String soDT, String email, GIOI_TINH gioiTinh) {
         this.maKH = maKH;
-        this.tenKH = tenKH;
         this.diaChi = diaChi;
+        this.tenKH = tenKH;
         this.soDT = soDT;
         this.email = email;
         this.gioiTinh = gioiTinh;

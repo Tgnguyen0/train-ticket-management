@@ -2,7 +2,7 @@ package app.thuc_the;
 
 public enum GIOI_TINH {
     NAM("Nam"),
-    NU("N?"),
+    NU("Nữ"),
     KHAC("Khác");
 
     private String value;
@@ -14,4 +14,6 @@ public enum GIOI_TINH {
     public String getValue() {
         return value;
     }
+
+
 }

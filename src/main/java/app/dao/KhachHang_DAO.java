@@ -120,7 +120,7 @@ public class KhachHang_DAO {
                     kh.setDiaChi(boKetQua.getString("DiaChi"));
                     kh.setSoDT(boKetQua.getString("SoDT"));
                     kh.setEmail(boKetQua.getString("Email"));
-                    kh.setGioiTinh(boKetQua.getString("GioiTinh") == GIOI_TINH.NAM.getValue() ? GIOI_TINH.NAM : GIOI_TINH.NU);
+                    kh.setGioiTinh(boKetQua.getString("GioiTinh").equals(GIOI_TINH.NAM.getValue())  ? GIOI_TINH.NAM : GIOI_TINH.NU);
                     list.add(kh);
                 }
             } finally {
