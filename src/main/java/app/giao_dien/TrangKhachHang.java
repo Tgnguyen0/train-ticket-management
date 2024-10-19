@@ -36,6 +36,7 @@ public class TrangKhachHang extends JPanel {
     public JTextField textField_SDT;
     public JTextField textField_timTen;
     public JTextField textField_timSDT;
+    private int soThuTuTable;
 
 
     /**
@@ -180,21 +181,7 @@ public class TrangKhachHang extends JPanel {
 
         table.setShowGrid(true);
 
-
-
-        //LAY DATABASE LEN TABLE
-        KhachHang_DAO khachHang_dao = new KhachHang_DAO();
-        ArrayList<KhachHang> dsKH = (ArrayList<KhachHang>) khachHang_dao.ChonTatCa();
-
-        DefaultTableModel model = (DefaultTableModel) table.getModel();
-        for (int i = 0; i < dsKH.size(); i++) {
-            model.addRow(new Object[] {i + 1, dsKH.get(i).getMaKH(), dsKH.get(i).getTenKH(), dsKH.get(i).getSoDT(), dsKH.get(i).getGioiTinh().getValue(), dsKH.get(i).getEmail(), dsKH.get(i).getDiaChi()});
-        }
-
-
-        ListSelectionModel selectionModel = table.getSelectionModel();
-        selectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-
+        this.layDSKH();
 
         JScrollPane scrollPane = new JScrollPane(table);
         panel_table.add(scrollPane);
@@ -278,10 +265,31 @@ public class TrangKhachHang extends JPanel {
         btn_chon.setBackground(new Color(0, 128, 255));
         panel_4.add(btn_chon);
 
+        //*************************ADD ACTION LISTENER*************************
+
         HanhDong_TrangKhachHang hd = new HanhDong_TrangKhachHang(this);
         btn_chon.addActionListener(hd);
         btn_lamMoi.addActionListener(hd);
         btn_capNhat.addActionListener(hd);
+    }
+    public void layDSKH (){
+        //LAY DATABASE LEN TABLE
+        KhachHang_DAO khachHang_dao = new KhachHang_DAO();
+        ArrayList<KhachHang> dsKH = (ArrayList<KhachHang>) khachHang_dao.layDanhSachKhachHang_KhangVersion();
+
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        model.setRowCount(0);
+        soThuTuTable = 0;
+        for (KhachHang kh : dsKH) {
+            soThuTuTable++;
+            model.addRow(new Object[]{
+                    soThuTuTable, kh.getMaKH(), kh.getTenKH(), kh.getSoDT(), kh.getGioiTinh().getValue(), kh.getEmail(), kh.getDiaChi()
+            });
+        }
+
+
+        ListSelectionModel selectionModel = table.getSelectionModel();
+        selectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     }
 
     public void chonKhachHang() {
@@ -314,21 +322,64 @@ public class TrangKhachHang extends JPanel {
     public void capNhat() {
         String maKH = label_hienThiMaKH.getText();
         String tenKH = textField_HoTen.getText();
+        tenKH = tenKH.trim().replaceAll("\\s+", " ");
         String diaChi = textArea_diaChi.getText();
-        String sdt = textField_SDT.getText();
+        String soDT = textField_SDT.getText();
         String email = textField_email.getText();
         GIOI_TINH gioiTinh = GIOI_TINH.NAM;
-        if (comboBox_gioiTinh.getSelectedIndex() == 1) {
+        if(comboBox_gioiTinh.getSelectedIndex() == 1){
             gioiTinh = GIOI_TINH.NU;
         }
-        KhachHang kh = new KhachHang(maKH, tenKH, diaChi, sdt, email, gioiTinh);
-
-        KhachHang_DAO khachHang_dao = new KhachHang_DAO();
-
-        if( khachHang_dao.CapNhatThongTinKhachHang(kh)) {
-            JOptionPane.showMessageDialog(null, "Cập nhật thành công!");
-        } else {
-            JOptionPane.showMessageDialog(null, "Cập nhật thất bại!");
+        if (!regexTen(tenKH) || !regexDiaChi(diaChi) || !regexSDT(soDT) || !regexEmail(email)) {
+            return;
         }
+        int result = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn cập nhật?", "Xác nhận cập nhật", JOptionPane.YES_NO_OPTION);
+        if (result == JOptionPane.NO_OPTION) {
+            return;
+        }
+        KhachHang kh = new KhachHang(maKH, tenKH, diaChi, soDT, email, gioiTinh);
+        KhachHang_DAO khachHang_dao = new KhachHang_DAO();
+        khachHang_dao.capNhatKhachHang_KhangVersion(kh);
+        this.layDSKH();
     }
+
+    public boolean regexSDT(String sdt){
+        String regex = "^[0-9]{10}$";
+        if(!sdt.matches(regex)){
+            JOptionPane.showMessageDialog(null, "Số điện thoại không hợp lệ");
+            return false;
+        }
+        return true;
+    }
+    public boolean regexEmail(String email){
+        String regex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$";
+
+        if(!email.matches(regex)){
+            JOptionPane.showMessageDialog(null, "Email không hợp lệ");
+            return false;
+        }
+        return true;
+    }
+    public boolean regexTen(String tenKH){
+        String regex = "^[\\p{L}]+(?:\\s+[\\p{L}'-]+)+$";
+        //xoa khoang trang thua giua cac tu
+
+
+        if(!tenKH.matches(regex)){
+            JOptionPane.showMessageDialog(null, "Tên không hợp lệ");
+            return false;
+        }
+        return true;
+    }
+    public boolean regexDiaChi(String diaChi){
+        String regex = "^([\\p{L}0-9\\s,.-]+)?$";
+
+        if(!diaChi.matches(regex)){
+            JOptionPane.showMessageDialog(null, "Địa chỉ không hợp lệ");
+            return false;
+        }
+        return true;
+    }
+
+
 }

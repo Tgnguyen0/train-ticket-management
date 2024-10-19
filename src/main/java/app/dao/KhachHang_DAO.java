@@ -3,7 +3,11 @@ package app.dao;
 import app.ket_noi_co_so_du_lieu.KetNoiCoSoDuLieu;
 import app.thuc_the.GIOI_TINH;
 import app.thuc_the.KhachHang;
+import org.jetbrains.annotations.NotNull;
 
+import javax.swing.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -14,6 +18,8 @@ public class KhachHang_DAO {
     String CAP_NHAT_SQL = "UPDATE TenKH=?, DiaChi=?, SoDT=?, Email=?, GioiTinh=? WHERE MaKH=?";
     String CHON_TAT_SQL = "use TrainStationDatabase SELECT * FROM KhachHang";
     String CHON_THEO_MA_SQL = "SELECT * FROM KhachHang WHERE MaKH=?";
+    String CAP_NHAT_KHACH_HANG_SQL = "UPDATE KhachHang SET TenKH=?, DiaChi=?, SoDT=?, Email=?, GioiTinh=? WHERE MaKH=?";
+
 
     List<KhachHang> dskh; // Tránh thông tin bị trùng
 
@@ -29,13 +35,13 @@ public class KhachHang_DAO {
 
     // Tìm Kiếm khách hàng
     public KhachHang TimKiemKhachHang(String tenKH, String diaChi, String sdt) {
-        for (int i = 0 ; i < dskh.size() ; i++) {
+        for (int i = 0; i < dskh.size(); i++) {
             boolean dungKh = true;
 
             // Kiểm tra điều kiện để chọn khách hàng cần tìm kiếm
             dungKh = tenKH.equals(dskh.get(i).getDiaChi()) &&
-                     diaChi.equals(dskh.get(i).getTenKH()) &&
-                     sdt.equals(dskh.get(i).getSoDT());
+                    diaChi.equals(dskh.get(i).getTenKH()) &&
+                    sdt.equals(dskh.get(i).getSoDT());
 
             if (dungKh) {
                 return dskh.get(i);
@@ -120,12 +126,12 @@ public class KhachHang_DAO {
                     kh.setDiaChi(boKetQua.getString("DiaChi"));
                     kh.setSoDT(boKetQua.getString("SoDT"));
                     kh.setEmail(boKetQua.getString("Email"));
-                    kh.setGioiTinh(boKetQua.getString("GioiTinh").equals(GIOI_TINH.NAM.getValue())  ? GIOI_TINH.NAM : GIOI_TINH.NU);
+                    kh.setGioiTinh(boKetQua.getString("GioiTinh").equals(GIOI_TINH.NAM.getValue()) ? GIOI_TINH.NAM : GIOI_TINH.NU);
                     list.add(kh);
                 }
             } finally {
                 if (boKetQua != null)
-                boKetQua.getStatement().getConnection().close();
+                    boKetQua.getStatement().getConnection().close();
             }
         } catch (SQLException ex) {
 
@@ -137,15 +143,100 @@ public class KhachHang_DAO {
 
     public List<KhachHang> ChonTheoTuKhoa(String keyword) {
         String sql = "SELECT * FROM KhachHang WHERE TenKH LIKE ?";
-        return this.ChonSQL(    sql, "%" + keyword + "%");
+        return this.ChonSQL(sql, "%" + keyword + "%");
     }
 
-    public void kiemTraDangNhap(String nguoiDung, String matKhau){
+    public void kiemTraDangNhap(String nguoiDung, String matKhau) {
 
-        if(nguoiDung.equals("sa") && matKhau.equals("123")){
+        if (nguoiDung.equals("sa") && matKhau.equals("123")) {
 
-        }else{
+        } else {
 
         }
     }
+    // Cập nhật thông tin khách hàng
+    public void capNhatKhachHang_KhangVersion(@NotNull KhachHang khachHang) {
+
+        try {
+            // Bước 1: tạo kết nối đến CSDL
+            Connection con = KetNoiCoSoDuLieu.ketNoiDB_KhangVersion();
+
+            // Bước 2: tạo ra đối tượng statement
+            String sql = "UPDATE KhachHang " +
+                    " SET " +
+                    " TenKH=?" +
+                    ", DiaChi=?" +
+                    ", SoDT=?" +
+                    ", Email=?" +
+                    ", GioiTinh=?" +
+                    " WHERE MaKH=?";
+
+            PreparedStatement st = con.prepareStatement(sql);
+            st.setString(1, khachHang.getTenKH());
+            st.setString(2, khachHang.getDiaChi());
+            st.setString(3, khachHang.getSoDT());
+            st.setString(4, khachHang.getEmail());
+            st.setString(5, khachHang.getGioiTinh().getValue());
+            st.setString(6, khachHang.getMaKH());
+            // Bước 3: thực thi câu lệnh SQL
+            int ketQuaThucHien = st.executeUpdate();
+            if (ketQuaThucHien > 0) {
+                JOptionPane.showMessageDialog(null, "Cập nhật thành công");
+            } else {
+                JOptionPane.showMessageDialog(null, "Cập nhật thất bại");
+            }
+
+
+            // Bước 4: đóng kết nối
+            st.close();
+            con.close();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+    }
+
+    public List layDanhSachKhachHang_KhangVersion() {
+        List<KhachHang> list = new ArrayList<>();
+
+        try {
+            // Bước 1: tạo kết nối đến CSDL
+            Connection connection = KetNoiCoSoDuLieu.ketNoiDB_KhangVersion();
+
+            // Bước 2: tạo ra đối tượng statement
+            String sql = "SELECT * FROM KhachHang";
+            PreparedStatement st = connection.prepareStatement(sql);
+
+            // Bước 3: thực thi câu lệnh SQL
+            ResultSet rs = st.executeQuery();
+
+            // Bước 4: xử lý kết quả
+            while (rs.next()) {
+                String maKH = rs.getString("MaKH");
+                String tenKH = rs.getString("TenKH");
+                String diaChi = rs.getString("DiaChi");
+                String soDT = rs.getString("SoDT");
+                String email = rs.getString("Email");
+                String gioiTinh = rs.getString("GioiTinh");
+
+                GIOI_TINH gt = GIOI_TINH.NAM;
+                if(!gioiTinh.equals(GIOI_TINH.NAM.getValue())){
+                    gt = GIOI_TINH.NU;
+                }
+
+                KhachHang kh = new KhachHang(maKH, tenKH, diaChi, soDT, email, gt);
+                list.add(kh);
+            }
+
+            // Bước 5: đóng kết nối
+            connection.close();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return list;
+    }
+
 }
+

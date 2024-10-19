@@ -5,12 +5,10 @@ import app.thuc_the.GIOI_TINH;
 import app.thuc_the.KhachHang;
 
 import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.table.DefaultTableModel;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+
 
 public class HanhDong_TrangKhachHang implements ActionListener{
     private TrangKhachHang trangKhachHang;
