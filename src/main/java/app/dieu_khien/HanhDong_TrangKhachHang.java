@@ -139,7 +139,7 @@ public class HanhDong_TrangKhachHang implements ActionListener, MouseListener {
            return;
         }
         else if(timSDT.isEmpty()){
-            if(!trangKhachHang.regexTen(timTen)){
+            if(!trangKhachHang.regexTimTen(timTen)){
                 return;
             }
             trangKhachHang.dsKH = khachHang_dao.timTheoTen_KhangVersion(timTen);

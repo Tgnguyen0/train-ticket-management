@@ -95,6 +95,10 @@ public class KhachHang implements Serializable {
         this.gioiTinh = gioiTinh;
     }
 
+    public String chiLayTen() {
+        return tenKH.lastIndexOf(" ") == -1 ? tenKH : tenKH.substring(tenKH.lastIndexOf(" ") + 1);
+    }
+
     @Override
     public String toString() {
         return "KhachHang{" +

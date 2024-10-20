@@ -15,6 +15,8 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.FlowLayout;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import javax.swing.table.DefaultTableModel;
 
@@ -282,6 +284,12 @@ public class TrangKhachHang extends JPanel {
     }
 
     public void hienDanhSachKhachHangRaBang(ArrayList<KhachHang> dsKH) {
+        Collections.sort(dsKH, new Comparator<KhachHang>() {
+            @Override
+            public int compare(KhachHang o1, KhachHang o2) {
+                return o1.chiLayTen().compareTo(o2.chiLayTen());
+            }
+        });
         DefaultTableModel model = (DefaultTableModel) this.table.getModel();
         model.setRowCount(0);
         int soThuTuTable = 0;
@@ -335,6 +343,16 @@ public class TrangKhachHang extends JPanel {
 
         if(!email.matches(regex)){
             JOptionPane.showMessageDialog(null, "Email không hợp lệ");
+            return false;
+        }
+        return true;
+    }
+    public static boolean regexTimTen (String tenKH){
+        String regex = "^[\\p{L}]+(?:\\s+[\\p{L}'-]+)*$";
+        //xoa khoang trang thua giua cac tu
+
+        if(!tenKH.matches(regex)){
+            JOptionPane.showMessageDialog(null, "Tên không hợp lệ");
             return false;
         }
         return true;
