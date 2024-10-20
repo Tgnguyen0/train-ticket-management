@@ -20,9 +20,6 @@ import javax.swing.table.DefaultTableModel;
 
 import javax.swing.border.LineBorder;
 
-
-
-
 public class TrangKhachHang extends JPanel {
 
     private static final long serialVersionUID = 1L;

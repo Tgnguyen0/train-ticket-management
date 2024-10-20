@@ -5,9 +5,11 @@ import app.giao_dien.TrangSoDoGiuong6;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 
 public class HanhDong_TrangSoDoGiuong6 implements ItemListener, ActionListener, MouseListener {
     TrangSoDoGiuong6 trangSoDoGiuong6;
+    ArrayList<String> soGiuong = new ArrayList<String>();
 
     public HanhDong_TrangSoDoGiuong6(TrangSoDoGiuong6 TrangSoDoGiuong6) {
         this.trangSoDoGiuong6 = TrangSoDoGiuong6;
@@ -19,7 +21,6 @@ public class HanhDong_TrangSoDoGiuong6 implements ItemListener, ActionListener, 
 
         if (e.getStateChange() == ItemEvent.SELECTED) {
             String loaiGheDaChon = (String) e.getItem();
-            System.out.println("Selected item: " + loaiGheDaChon);
 
             switch (loaiGheDaChon) {
                 case "D1":
@@ -34,8 +35,14 @@ public class HanhDong_TrangSoDoGiuong6 implements ItemListener, ActionListener, 
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        JButton gheSo = (JButton) e.getSource();
-        gheSo.setEnabled(false);
+        if (soGiuong.size() < 10) {
+            JButton giuongSo = (JButton) e.getSource();
+            giuongSo.setEnabled(false);
+
+            soGiuong.add(giuongSo.getText());
+        }
+
+        System.out.println(this.trangSoDoGiuong6.thanhCacToa.getSelectedItem() + " " + soGiuong.get(soGiuong.size() - 1));
     }
 
     @Override
