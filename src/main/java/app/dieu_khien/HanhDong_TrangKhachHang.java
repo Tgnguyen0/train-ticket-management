@@ -24,7 +24,7 @@ public class HanhDong_TrangKhachHang implements ActionListener, MouseListener {
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        if(e.getActionCommand().equals("Tìm")){
+        if (e.getActionCommand().equals("Tìm")) {
             this.tim();
         } else if (e.getActionCommand().equals("Làm mới")) {
             this.lamMoi();
@@ -43,7 +43,7 @@ public class HanhDong_TrangKhachHang implements ActionListener, MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        if(e.getSource() == this.trangKhachHang.table) {
+        if (e.getSource() == this.trangKhachHang.table) {
             int row = this.trangKhachHang.table.getSelectedRow();
             String maKH = this.trangKhachHang.table.getValueAt(row, 1).toString();
             String tenKH = this.trangKhachHang.table.getValueAt(row, 2).toString();
@@ -113,7 +113,7 @@ public class HanhDong_TrangKhachHang implements ActionListener, MouseListener {
         String soDT = trangKhachHang.textField_SDT.getText();
         String email = trangKhachHang.textField_email.getText();
         GIOI_TINH gioiTinh = GIOI_TINH.NAM;
-        if(trangKhachHang.comboBox_gioiTinh.getSelectedIndex() == 1){
+        if (trangKhachHang.comboBox_gioiTinh.getSelectedIndex() == 1) {
             gioiTinh = GIOI_TINH.NU;
         }
         if (!trangKhachHang.regexTen(tenKH) || !trangKhachHang.regexDiaChi(diaChi) || !trangKhachHang.regexSDT(soDT) || !trangKhachHang.regexEmail(email)) {
@@ -128,28 +128,28 @@ public class HanhDong_TrangKhachHang implements ActionListener, MouseListener {
         khachHang_dao.capNhatKhachHang_KhangVersion(kh);
         trangKhachHang.layToanBoKhachHang();
     }
+
     public void tim() {
         KhachHang_DAO khachHang_dao = new KhachHang_DAO();
         trangKhachHang.dsKH = new ArrayList<>();
         String timTen = trangKhachHang.textField_timTen.getText();
 
         String timSDT = trangKhachHang.textField_timSDT.getText();
-        if(timTen.isEmpty() && timSDT.isEmpty()){
-           JOptionPane.showMessageDialog(null, "Vui lòng nhập tên hoặc số điện thoại để tìm kiếm");
-           return;
-        }
-        else if(timSDT.isEmpty()){
-            if(!trangKhachHang.regexTimTen(timTen)){
+        if (timTen.isEmpty() && timSDT.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Vui lòng nhập tên hoặc số điện thoại để tìm kiếm");
+            return;
+        } else if (timSDT.isEmpty()) {
+            if (!trangKhachHang.regexTimTen(timTen)) {
                 return;
             }
             trangKhachHang.dsKH = khachHang_dao.timTheoTen_KhangVersion(timTen);
-        } else if (timTen.isEmpty()){
-            if(!trangKhachHang.regexSDT(timSDT)){
+        } else if (timTen.isEmpty()) {
+            if (!trangKhachHang.regexSDT(timSDT)) {
                 return;
             }
             trangKhachHang.dsKH = khachHang_dao.timTheoSDT_KhangVersion(timSDT);
         } else {
-            if(!trangKhachHang.regexTen(timTen) || !trangKhachHang.regexSDT(timSDT)){
+            if (!trangKhachHang.regexTimTen(timTen) || !trangKhachHang.regexSDT(timSDT)) {
                 return;
             }
             trangKhachHang.dsKH = khachHang_dao.timTheoTenVaSDT_KhangVersion(timTen, timSDT);
