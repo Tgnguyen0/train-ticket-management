@@ -12,7 +12,7 @@ import java.util.List;
 public class KhachHang_DAO {
     String NHAP_SQL = "INSERT INTO KhachHang (MaKH, TenKH, DiaChi, SoDT, Email, GioiTinh) values (?, ?, ?, ?, ?, ?)";
     String CAP_NHAT_SQL = "UPDATE TenKH=?, DiaChi=?, SoDT=?, Email=?, GioiTinh=? WHERE MaKH=?";
-    String CHON_TAT_SQL = "SELECT * FROM KhachHang";
+    String CHON_TAT_SQL = "use TrainStationDatabase SELECT * FROM KhachHang";
     String CHON_THEO_MA_SQL = "SELECT * FROM KhachHang WHERE MaKH=?";
 
     List<KhachHang> dskh; // Tránh thông tin bị trùng
@@ -109,6 +109,9 @@ public class KhachHang_DAO {
             ResultSet boKetQua = null;
             try {
                 boKetQua = KetNoiCoSoDuLieu.TruyVan(lenhSQL, thamSo);
+                if (boKetQua == null) {
+                    System.out.println("Không có kết quả trả về");
+                }
                 while (boKetQua.next()) {
                     KhachHang kh = new KhachHang();
 
@@ -121,9 +124,11 @@ public class KhachHang_DAO {
                     list.add(kh);
                 }
             } finally {
+                if (boKetQua != null)
                 boKetQua.getStatement().getConnection().close();
             }
         } catch (SQLException ex) {
+
             ex.printStackTrace();
             throw new RuntimeException(ex);
         }
