@@ -5,6 +5,8 @@ import app.giao_dien.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.time.LocalDate;
+import java.time.ZoneId;
 
 public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemListener {
     TrangDatVe trangDatVe;
@@ -21,8 +23,6 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
             String loaiGhe = (String) this.trangDatVe.thanhCacLoaiGhe.getSelectedItem();
 
             switch(loaiGhe) {
-                case "Ghế phụ":
-                    break;
                 case "Ghế mềm":
                     TrangSoDoGheMem trangSoDoGheMem = new TrangSoDoGheMem();
                     trangSoDoGheMem.setVisible(true);
@@ -40,7 +40,6 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
                     trangSoDoGiuong2.setVisible(true);
                     break;
             }
-
         }
 
         if (source == this.trangDatVe.nutLuaChonKhuHoi) {
@@ -58,9 +57,31 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
         if (source == this.trangDatVe.nutLuaChonNu) {
             this.trangDatVe.nutLuaChonNam.setSelected(false);
         }
+
         if(source == this.trangDatVe.nutDSVe){
             TrangDanhSachVeTau.moGiaoDienDanhSach();
         }
+
+        String diemDi = (String) trangDatVe.thanhCacDiemDi.getSelectedItem();
+        String diemDen = (String) trangDatVe.thanhCacDiemDen.getSelectedItem();
+        String loaiVe = trangDatVe.nutLuaChonKhuHoi.isSelected() ? "Khu Hoi" : "Mot Chieu";
+
+        LocalDate ngayKhoiHanh = trangDatVe.thanhNhapNgayDi
+                .getDate()
+                .toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate();
+
+        LocalDate ngayTroVe = trangDatVe.thanhNhapNgayTroVe
+                .getDate()
+                .toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate();
+
+        int soLuongTreEm = Integer.parseInt(trangDatVe.thanhSoLuongTreEm.getText());
+        int soLuongNguoiLon = Integer.parseInt(trangDatVe.thanhSoLuongNguoiLon.getText());
+
+        String loaiGheDaChon[] = new String[10];
     }
 
     @Override

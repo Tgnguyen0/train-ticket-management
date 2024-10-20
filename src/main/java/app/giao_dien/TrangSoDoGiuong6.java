@@ -1,17 +1,18 @@
 package app.giao_dien;
 
-import app.dieu_khien.HanhDong_TrangSoDoGiuong4;
 import app.dieu_khien.HanhDong_TrangSoDoGiuong6;
 import app.phong_chu_moi.PhongChuMoi;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.awt.event.ItemListener;
 
-public class TrangSoDoGiuong6 extends JFrame {
+public class TrangSoDoGiuong6 extends JPanel {
     JPanel trangChuaTieuDeVaSoDo;
     public JPanel trangChuaSoDoGiuong;
+    public JComboBox<String> thanhCacToa;
 
     int soNut = 28;
     String[] muc = {"D1", "A1"};
@@ -30,19 +31,21 @@ public class TrangSoDoGiuong6 extends JFrame {
     public Border gachChanDam = BorderFactory.createMatteBorder(0, 1, 0, 1, xanhBrandeis);
 
     private ItemListener mucDaChon;
+    private ActionListener hanhDong;
 
     public TrangSoDoGiuong6() {
         ImageIcon icon = new ImageIcon("assets/icon.png");
 
         setSize(new Dimension(1000, 420));
-        setIconImage(icon.getImage());
+        //setIconImage(icon.getImage());
         setBackground(trang);
-        setLocationRelativeTo(null);
-        setTitle("Sơ đồ ghế");
+        //setLocationRelativeTo(null);
+        //setTitle("Sơ đồ ghế");
         setLayout(new BorderLayout());
-        setResizable(true);
+        //setResizable(true);
 
         mucDaChon = new HanhDong_TrangSoDoGiuong6(this);
+        hanhDong = new HanhDong_TrangSoDoGiuong6(this);
 
         taoTrangTieuDe();
         taoTrangCacToa();
@@ -80,7 +83,7 @@ public class TrangSoDoGiuong6 extends JFrame {
         trangChuaCacToa.setPreferredSize(new Dimension(1000, 30));
         trangChuaCacToa.setBackground(trang);
 
-        JComboBox<String> thanhCacToa = new JComboBox<>(muc);
+        thanhCacToa = new JComboBox<>(muc);
         thanhCacToa.setForeground(xanhBrandeis);
         thanhCacToa.setBackground(trang);
         thanhCacToa.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, kichThuocChu));
@@ -180,6 +183,7 @@ public class TrangSoDoGiuong6 extends JFrame {
                 giuong.setBackground(xanhBrandeis);
                 giuong.setForeground(trang);
                 giuong.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, kichThuocChu));
+                giuong.addActionListener(hanhDong);
 
                 if (j % 2 != 0) {
                     benGiuongLe.add(giuong);
