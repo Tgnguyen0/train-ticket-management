@@ -16,9 +16,10 @@ import java.awt.event.ItemListener;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
-public class TrangSoDoGheMem extends JFrame {
+public class TrangSoDoGheMem extends JPanel {
     /**/
     public JPanel trangChua;
+    public JComboBox<String> thanhCacToa;
 
     /**/
     int gheSo;
@@ -42,19 +43,19 @@ public class TrangSoDoGheMem extends JFrame {
 
     /**/
     private ItemListener mucDaChon;
-    private ActionListener hanhDong;
+    public ActionListener hanhDong;
     private MouseListener thaoTacChuot;
 
     public TrangSoDoGheMem() {
         ImageIcon icon = new ImageIcon("assets/icon.png");
 
         setSize(new Dimension(800, 400));
-        setIconImage(icon.getImage());
+        //setIconImage(icon.getImage());
         setBackground(trang);
-        setLocationRelativeTo(null);
-        setTitle("Sơ đồ ghế");
+        //setLocationRelativeTo(null);
+        //setTitle("Sơ đồ ghế");
         setLayout(new BorderLayout());
-        setResizable(false);
+        //setResizable(false);
 
         this.mucDaChon = new HanhDong_TrangSoDoGheMemDieuHoa(this);
         this.hanhDong = new HanhDong_TrangSoDoGheMemDieuHoa(this);
@@ -87,7 +88,7 @@ public class TrangSoDoGheMem extends JFrame {
         trangChuaCacToa.setPreferredSize(new Dimension(800, 30));
         trangChuaCacToa.setBackground(trang);
 
-        JComboBox<String> thanhCacToa = new JComboBox<>(muc);
+        thanhCacToa = new JComboBox<>(muc);
         thanhCacToa.setForeground(xanhBrandeis);
         thanhCacToa.setBackground(trang);
         thanhCacToa.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, kichThuocChu));
@@ -113,8 +114,10 @@ public class TrangSoDoGheMem extends JFrame {
         trangChua.setLayout(new CardLayout());
 
         JPanel soDoGheToaD1 = taoTrangSoDoGhe();
+        soDoGheToaD1.setName("D1");
 
         JPanel soDoGheToaA4 = taoTrangSoDoGhe();
+        soDoGheToaA4.setName("A4");
         soDoGheToaA4.setBackground(Color.RED);
 
         trangChua.add(soDoGheToaD1, "D1");
@@ -128,6 +131,7 @@ public class TrangSoDoGheMem extends JFrame {
         JPanel trangSoDoGhe = new JPanel();
         trangSoDoGhe.setBackground(trang);
         trangSoDoGhe.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 10));
+        trangSoDoGhe.setName("D1");
 
         xepNutGhe(trangSoDoGhe);
 
@@ -180,6 +184,7 @@ public class TrangSoDoGheMem extends JFrame {
                     ghe.setForeground(trang); // Đặt màu chữ
                     ghe.setFocusPainted(false); // Bỏ viền khi click (focus)
                     ghe.setBorderPainted(false);
+                    ghe.addActionListener(this.hanhDong);
 
                     if (i <= 1) {
                         chua2GheDocTren.add(ghe);

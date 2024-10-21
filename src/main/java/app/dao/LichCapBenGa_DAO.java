@@ -1,4 +1,5 @@
-package app.Dao;
+package app.dao;
 
 public class LichCapBenGa_DAO {
+
 }

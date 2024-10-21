@@ -1,8 +1,9 @@
 package app.thuc_the;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class KhachHang {
+public class KhachHang implements Serializable {
     private String maKH;
     private String tenKH;
     private String diaChi;
@@ -22,10 +23,20 @@ public class KhachHang {
     public KhachHang() {
     }
 
+    public KhachHang(String maKH, String tenKH, String diaChi, String soDT, String email, GIOI_TINH gioiTinh) {
+        this.maKH = maKH;
+        this.tenKH = tenKH;
+        this.diaChi = diaChi;
+        this.soDT = soDT;
+        this.email = email;
+        this.gioiTinh = gioiTinh;
+    }
+
     public String getMaKH() {
         return maKH;
     }
 
+    // Dùng khi tạo khách hàng mới
     public String setMaKH(int soNgauNhien) {
         String maKH;
         String ngayTrongThang = String.valueOf(LocalDate.now().getDayOfMonth());
@@ -37,6 +48,11 @@ public class KhachHang {
         maKH = "KH" + nam + thang + ngayTrongThang + String.valueOf(soNgauNhien);
 
         return maKH;
+    }
+
+    // Dùng khi lấy từ cơ sở dữ liệu
+    public void setMaKHTuCSDL(String maKH) {
+        this.maKH = maKH;
     }
 
     public String getTenKH() {

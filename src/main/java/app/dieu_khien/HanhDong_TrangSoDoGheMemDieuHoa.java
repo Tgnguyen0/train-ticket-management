@@ -1,13 +1,17 @@
 package app.dieu_khien;
 
+import app.dao.Ghe_DAO;
 import app.giao_dien.TrangSoDoGheMem;
+import app.thuc_the.Ghe;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 
 public class HanhDong_TrangSoDoGheMemDieuHoa implements ItemListener, ActionListener, MouseListener {
     TrangSoDoGheMem trangSoDoGheMemDieuHoa;
+    ArrayList<String> soGhe = new ArrayList<String>();
 
     public HanhDong_TrangSoDoGheMemDieuHoa(TrangSoDoGheMem trangSoDoGheMemDieuHoa) {
         this.trangSoDoGheMemDieuHoa = trangSoDoGheMemDieuHoa;
@@ -33,8 +37,14 @@ public class HanhDong_TrangSoDoGheMemDieuHoa implements ItemListener, ActionList
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        JButton gheSo = (JButton) e.getSource();
-        gheSo.setEnabled(false);
+        if (soGhe.size() < 10) {
+            JButton gheSo = (JButton) e.getSource();
+            gheSo.setEnabled(false);
+
+            soGhe.add(gheSo.getText());
+        }
+
+        System.out.println(this.trangSoDoGheMemDieuHoa.thanhCacToa.getSelectedItem() + " " + soGhe.get(soGhe.size() - 1));
     }
 
     @Override

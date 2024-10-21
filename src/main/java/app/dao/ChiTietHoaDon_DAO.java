@@ -1,4 +1,4 @@
-package app.Dao;
+package app.dao;
 
 public class ChiTietHoaDon_DAO {
 }

@@ -20,6 +20,11 @@
 
   <dependencies>
     <dependency>
+      <groupId>com.microsoft.sqlserver</groupId>
+      <artifactId>mssql-jdbc</artifactId>
+      <version>12.2.0.jre8</version> <!-- Chọn phiên bản phù hợp -->
+    </dependency>
+    <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>4.11</version>

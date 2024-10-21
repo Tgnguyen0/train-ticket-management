@@ -12,18 +12,19 @@ public class NhanVien {
     private String diaChi;
     private String soDT;
     private GIOI_TINH gioiTinh;
-    private String password;
+    private String matKhau;
     private String vaiTro;
     private Set<HoaDon> danhSachHoaDon;
 
-    public NhanVien(int soNgauNhien, String tenNV, LocalDate ngaySinh, String diaChi, String soDT, GIOI_TINH gioiTinh, String password, String vaiTro) {
-        this.maNV = setMaNV(soNgauNhien);
+    public NhanVien(String maNV, String tenNV, LocalDate ngaySinh, String diaChi, String soDT, GIOI_TINH gioiTinh, String matKhau, String vaiTro) {
+        //this.maNV = setMaNV(soNgauNhien);
+        this.maNV = maNV;
         this.tenNV = tenNV;
         this.ngaySinh = ngaySinh;
         this.diaChi = diaChi;
         this.soDT = soDT;
         this.gioiTinh = gioiTinh;
-        this.password = password;
+        this.matKhau = matKhau;
         this.vaiTro = vaiTro;
     }
 
@@ -34,7 +35,7 @@ public class NhanVien {
         return maNV;
     }
 
-    public String setMaNV(int soNgauNhien) {
+    /*public String setMaNV(int soNgauNhien) {
         String maNV;
         String nam = String.valueOf(LocalDate.now().getYear());
 
@@ -43,6 +44,10 @@ public class NhanVien {
         maNV = "NV" + nam + soNgauNhien;
 
         return maNV;
+    }*/
+
+    public void setMaNV(String maNV) {
+        this.maNV = maNV;
     }
 
     public String getTenNV() {
@@ -85,12 +90,12 @@ public class NhanVien {
         this.gioiTinh = gioiTinh;
     }
 
-    public String getPassword() {
-        return password;
+    public String getMatKhau() {
+        return matKhau;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setMatKhau(String matKhau) {
+        this.matKhau = matKhau;
     }
 
     public String getVaiTro() {
@@ -130,7 +135,7 @@ public class NhanVien {
                 ", diaChi='" + diaChi + '\'' +
                 ", soDT='" + soDT + '\'' +
                 ", gioiTinh=" + gioiTinh +
-                ", password='" + password + '\'' +
+                ", matKhau='" + matKhau + '\'' +
                 ", vaiTro='" + vaiTro + '\'' +
                 '}';
     }

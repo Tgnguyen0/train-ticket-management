@@ -36,6 +36,7 @@ public class TrangDinhHuong extends JFrame {
     public TrangDatVe trangDatVe;
     public TrangHoaDon trangHoaDon;
     public TrangGioiThieu trangGioiThieu;
+    public TrangKhachHang trangKhachHang;
 
     /* Khởi tạo phông chữ màu sắc */
     public Color trang = new Color(255, 255, 255);
@@ -47,6 +48,7 @@ public class TrangDinhHuong extends JFrame {
     public int chieuRongNut = 50;
     public Border vienNhat = BorderFactory.createMatteBorder(0, 0, 1, 0, new Color(xanhNhat.getRGB()));
     public Border vienDam = BorderFactory.createMatteBorder(0, 0, 1, 0, new Color(xanhBrandeis.getRGB()));
+    public Image anhDaiDien;
 
     private ActionListener hanhDong;
     private MouseListener thaoTacChuot;
@@ -55,11 +57,20 @@ public class TrangDinhHuong extends JFrame {
     public TrangDinhHuong() {
         ImageIcon icon = new ImageIcon("assets/icon.png");
         setTitle("Quản lý bán vé tại ga");
-        setSize(new Dimension(1200, 800));
+        //setSize(new Dimension(1200, 800));
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
 
         setIconImage(icon.getImage());
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+
+        try {
+            File imageFile = new File("assets/icon.png");
+            anhDaiDien = ImageIO.read(imageFile);
+            anhDaiDien = anhDaiDien.getScaledInstance((int) chieuDaiNut, (int) chieuRongNut, Image.SCALE_SMOOTH);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         setResizable(true);
         setLayout(new BorderLayout());
@@ -122,7 +133,7 @@ public class TrangDinhHuong extends JFrame {
         thanhDinhHuong.add(nutHoaDon);
 
         // Tạo Nút đến trang khách hàng
-        nutKhachHang = new BongCuaChu("Khuyến Mại");
+        nutKhachHang = new BongCuaChu("Khách Hàng");
         nutKhachHang.setPreferredSize(new Dimension(chieuDaiNut, chieuRongNut));
         nutKhachHang.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, charSize));
         nutKhachHang.setForeground(new Color(xanhBrandeis.getRGB()));
@@ -162,41 +173,16 @@ public class TrangDinhHuong extends JFrame {
 
         // Tạo Trang người dùng
         JPanel thanhNguoiDung = new JPanel();
-        thanhNguoiDung.setPreferredSize(new Dimension(1200, chieuRongNut));
-        thanhNguoiDung.setBackground(new Color(trang.getRGB()));
+        thanhNguoiDung.setPreferredSize(new Dimension(550, chieuRongNut));
+        thanhNguoiDung.setBackground(trang);
         thanhNguoiDung.setBorder(this.vienDam);
         thanhNguoiDung.setLayout(new FlowLayout(FlowLayout.RIGHT, 0, 5));
 
         double doCaoTK = chieuRongNut * 0.8;
 
         // Tạo Nút đến trang nhân viên
-        nutNhanVien = new JButton() {
-            @Override
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-
-                String imagePath = "assets/icon.png";
-
-                File imageFile = new File(imagePath);
-
-                try {
-                    Image avatar = ImageIO.read(imageFile);
-                    double newWidth = doCaoTK; // Lấy độ rộng của nút
-                    double newHeight = doCaoTK; // Lấy độ cao của nút
-                    // Chỉnh kích thước ảnh phù hợp
-                    avatar = avatar.getScaledInstance((int) newWidth, (int) newHeight, Image.SCALE_SMOOTH);
-
-                    g.drawImage(avatar, 0, 0, null);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        };
-
+        nutNhanVien = new NutAnh("assets/icon.png", doCaoTK, doCaoTK, "");
         nutNhanVien.setPreferredSize(new Dimension((int) doCaoTK, (int) doCaoTK));
-        nutNhanVien.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, 12));
-        nutNhanVien.setForeground(new Color(xanhBrandeis.getRGB()));
-        nutNhanVien.setBackground(new Color(trang.getRGB()));
 
         // Bỏ viền và focus của nút
         nutNhanVien.setBorderPainted(false); // Bỏ viền của nút
@@ -221,11 +207,13 @@ public class TrangDinhHuong extends JFrame {
         this.trangDatVe = new TrangDatVe(); // Khởi tạo trang Trang Đặt Vé
         this.trangHoaDon = new TrangHoaDon(); // Khởi tạo trang Trang Hóa Đơn
         this.trangGioiThieu = new TrangGioiThieu(); // Khởi tạo trang Giới Thiệu
+        this.trangKhachHang = new TrangKhachHang(); // Khởi tạo trang Trang Khách Hàng
 
         this.trangChua.add(trangChu, "Trang Chu");
         this.trangChua.add(trangDatVe, "Trang Dat Ve");
         this.trangChua.add(trangHoaDon,"Trang Hoa Don");
         this.trangChua.add(trangGioiThieu,"Trang Gioi Thieu");
+        this.trangChua.add(trangKhachHang, "Trang Khach Hang");
         add(this.trangChua);
     }
 
@@ -257,7 +245,7 @@ public class TrangDinhHuong extends JFrame {
             ex.printStackTrace();
         }
 
-// Sau đó, khởi chạy giao diện của bạn
+        // Sau đó, khởi chạy giao diện của bạn
         java.awt.EventQueue.invokeLater(() -> {
             TrangDinhHuong trangDinhHuong = new TrangDinhHuong();
             trangDinhHuong.setVisible(true);
