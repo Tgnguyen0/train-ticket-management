@@ -10,7 +10,7 @@ public class KetNoiCoSoDuLieu {
     // Cac thuoc tinh ket noi
     private static String driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";  // Driver de ket noi voi SQL Server
 
-    //DOI MAY TINH NHO DOI LAI DUONG DAN CUA MAY MINH!!!!!!
+    //DOI MAY TINH NHO XEM LAI DUONG DAN CUA MAY MINH!!!!!!
     private static String duongDan = "jdbc:sqlserver://localhost\\MSSQLSERVER13:1433;databasename=IT_Coffee;encrypt=false"; // URL ket noi voi co so du lieu cua TAN
     private static String duongDan_Khang = "jdbc:sqlserver://localhost:1433;databaseName=TrainStationDatabase;user=sa;password=123;trustServerCertificate=true;"; // URL ket noi voi co so du lieu cua KHANG
 
