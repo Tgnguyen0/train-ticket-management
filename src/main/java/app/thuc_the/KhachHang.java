@@ -11,6 +11,7 @@ public class KhachHang implements Serializable {
     private String email;
     private GIOI_TINH gioiTinh;
 
+
     public KhachHang(int soNgauNhien, String tenKH, String diaChi, String soDT, String email, GIOI_TINH gioiTinh) {
         this.maKH = setMaKH(soNgauNhien);
         this.tenKH = tenKH;
@@ -21,6 +22,15 @@ public class KhachHang implements Serializable {
     }
 
     public KhachHang() {
+    }
+
+    public KhachHang(String tenKH, String diaChi, String soDT, String email, GIOI_TINH gioiTinh) {
+        this.maKH = setMaKH_KhangVersion();
+        this.tenKH = tenKH;
+        this.diaChi = diaChi;
+        this.soDT = soDT;
+        this.email = email;
+        this.setGioiTinh(gioiTinh);
     }
 
     public KhachHang(String maKH, String tenKH, String diaChi, String soDT, String email, GIOI_TINH gioiTinh) {
@@ -34,6 +44,10 @@ public class KhachHang implements Serializable {
 
     public String getMaKH() {
         return maKH;
+    }
+
+    public String setMaKH_KhangVersion(){
+        return this.maKH = MaKhachHangTuDong.taoMaKhachHangTuDong();
     }
 
     // Dùng khi tạo khách hàng mới

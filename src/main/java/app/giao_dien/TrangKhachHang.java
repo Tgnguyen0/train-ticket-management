@@ -268,6 +268,8 @@ public class TrangKhachHang extends JPanel {
         btn_lamMoiDSKH.setBackground(new Color(0, 128, 255));
 
         panel_4.add(btn_lamMoiDSKH);
+        JButton btn_themKH = new JButton("Thêm khách hàng");
+        panel_4.add(btn_themKH);
 
 
 
@@ -279,6 +281,7 @@ public class TrangKhachHang extends JPanel {
         table.addMouseListener(hd);
         btn_tim.addActionListener(hd);
         btn_lamMoiDSKH.addActionListener(hd);
+        btn_themKH.addActionListener(hd);
 
         //*************************ADD ACTION LISTENER*************************
     }

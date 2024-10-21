@@ -365,6 +365,37 @@ public class KhachHang_DAO {
         return list;
 
     }
+    public static int themKhachHang(KhachHang khachHang){
+        int ketQuaThucThi = 0;
+        try {
+            // Bước 1: tạo kết nối đến CSDL
+            Connection connection = KetNoiCoSoDuLieu.ketNoiDB_KhangVersion();
+
+            // Bước 2: tạo ra đối tượng statement
+            String sql = "INSERT INTO KhachHang (MaKH, TenKH, DiaChi, SoDT, Email, GioiTinh) values (?, ?, ?, ?, ?, ?)";
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, khachHang.getMaKH());
+            st.setString(2, khachHang.getTenKH());
+            st.setString(3, khachHang.getDiaChi());
+            st.setString(4, khachHang.getSoDT());
+            st.setString(5, khachHang.getEmail());
+            st.setString(6, khachHang.getGioiTinh().getValue());
+
+            // Bước 3: thực thi câu lệnh SQL
+            ketQuaThucThi = st.executeUpdate();
+
+            // Bước 4: xử lý kết quả
+
+
+            // Bước 5: đóng kết nối
+            st.close();
+            connection.close();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return ketQuaThucThi;
+    }
 }
 
 
