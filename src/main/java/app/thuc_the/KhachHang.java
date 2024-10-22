@@ -24,7 +24,6 @@ public class KhachHang implements Serializable {
     }
 
     public KhachHang(String tenKH, String diaChi, String soDT, String email, GIOI_TINH gioiTinh) {
-        this.maKH = setMaKH_KhangVersion();
         this.tenKH = tenKH;
         this.diaChi = diaChi;
         this.soDT = soDT;
@@ -45,9 +44,9 @@ public class KhachHang implements Serializable {
         return maKH;
     }
 
-    public String setMaKH_KhangVersion(){
-        return this.maKH = MaKhachHangTuDong.taoMaKhachHangTuDong();
-    }
+//    public String setMaKH_KhangVersion(){
+//        return this.maKH = MaKhachHangTuDong.taoMaKhachHangTuDong();
+//    }
 
     // Dùng khi tạo khách hàng mới
     public String setMaKH(int soNgauNhien) {

@@ -269,6 +269,9 @@ public class TrangKhachHang extends JPanel {
 
         panel_4.add(btn_lamMoiDSKH);
         JButton btn_themKH = new JButton("Thêm khách hàng");
+        btn_themKH.setForeground(Color.WHITE);
+        btn_themKH.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        btn_themKH.setBackground(new Color(0, 128, 255));
         panel_4.add(btn_themKH);
 
 
@@ -342,7 +345,7 @@ public class TrangKhachHang extends JPanel {
         return true;
     }
     public static boolean regexEmail(String email){
-        String regex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$";
+        String regex = "^([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6})*$";
 
         if(!email.matches(regex)){
             JOptionPane.showMessageDialog(null, "Email không hợp lệ");
