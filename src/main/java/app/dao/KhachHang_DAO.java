@@ -369,14 +369,16 @@ public class KhachHang_DAO {
             Connection connection = KetNoiCoSoDuLieu.ketNoiDB_KhangVersion();
 
             // Bước 2: tạo ra đối tượng statement
-            String sql = "INSERT INTO KhachHang (MaKH, TenKH, DiaChi, SoDT, Email, GioiTinh) values (?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO KhachHang (TenKH, DiaChi, SoDT, Email, GioiTinh) values ( ?, ?, ?, ?, ?)";
             PreparedStatement st = connection.prepareStatement(sql);
-            st.setString(1, khachHang.getMaKH());
-            st.setString(2, khachHang.getTenKH());
-            st.setString(3, khachHang.getDiaChi());
-            st.setString(4, khachHang.getSoDT());
-            st.setString(5, khachHang.getEmail());
-            st.setString(6, khachHang.getGioiTinh().getValue());
+            st.setString(1, khachHang.getTenKH());
+            st.setString(2, khachHang.getDiaChi());
+            st.setString(3, khachHang.getSoDT());
+            st.setString(4, khachHang.getEmail());
+            st.setString(5, khachHang.getGioiTinh().getValue());
+
+
+
 
             // Bước 3: thực thi câu lệnh SQL
             ketQuaThucThi = st.executeUpdate();

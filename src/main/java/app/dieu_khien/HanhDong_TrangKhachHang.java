@@ -42,17 +42,22 @@ public class HanhDong_TrangKhachHang implements ActionListener, MouseListener {
         String ten = trangKhachHang.textField_HoTen.getText();
         String sdt = trangKhachHang.textField_SDT.getText();
         String diaChi = trangKhachHang.textArea_diaChi.getText();
-        String gioiTinh = trangKhachHang.comboBox_gioiTinh.getSelectedItem().toString();
-        if(gioiTinh.equals("Nữ")){
-            gioiTinh ="NU";
-        } else {
-            gioiTinh ="NAM";
-        }
-        GIOI_TINH gt = GIOI_TINH.valueOf(gioiTinh);
         String email = trangKhachHang.textField_email.getText();
-        KhachHang khachHang = new KhachHang(ten, diaChi, sdt, email, gt); System.out.println(khachHang.toString());
+        if(!trangKhachHang.regexTen(ten) || !trangKhachHang.regexDiaChi(diaChi) || !trangKhachHang.regexSDT(sdt) || !trangKhachHang.regexEmail(email)){
+            return;
+        }
+        String gioiTinh = trangKhachHang.comboBox_gioiTinh.getSelectedItem().toString();
+        GIOI_TINH gt = GIOI_TINH.NAM;
+        if(gioiTinh.equals("Nữ")){
+            gt = GIOI_TINH.NU;
+        }
+
+
+        KhachHang khachHang = new KhachHang(ten, diaChi, sdt, email, gt);
+        System.out.println(khachHang.toString() + " " + khachHang.getGioiTinh().getValue());
         if(KhachHang_DAO.themKhachHang(khachHang) > 0){
             JOptionPane.showMessageDialog(null, "Thêm khách hàng mới thành công!");
+            this.lamMoi();
         } else {
             JOptionPane.showMessageDialog(null, "Thêm khách hàng mới thất bại!");
         }
