@@ -21,19 +21,14 @@ public class HanhDong_TrangCacTau implements ActionListener, MouseListener {
     public void actionPerformed(ActionEvent e) {
         CardLayout cardLayout = (CardLayout) this.trangSoDoChung.trangChua.getLayout();
         String command = e.getActionCommand();
+        System.out.println(command);
 
         switch (command) {
-            case "":
-                cardLayout.show(this.trangSoDoChung.trangChua, "Trang Ghe Mem");
+            case "Tau 1":
+                cardLayout.show(this.trangSoDoChung.trangChua, "Cac toa cua tau 1");
                 break;
-            case "Đặt Vé":
-                cardLayout.show(this.trangSoDoChung.trangChua, "Trang Giuong 6");
-                break;
-            case "Hóa Đơn":
-                cardLayout.show(this.trangSoDoChung.trangChua, "Trang Giuong 4");
-                break;
-            case "Giới Thiệu":
-                cardLayout.show(this.trangSoDoChung.trangChua, "Trang Giuong 2");
+            case "Tau 2":
+                cardLayout.show(this.trangSoDoChung.trangChua, "Cac toa cua tau 2");
                 break;
         }
     }
@@ -46,19 +41,19 @@ public class HanhDong_TrangCacTau implements ActionListener, MouseListener {
             // Đặt ảnh cho nút tau1 và đặt lại ảnh gốc cho các nút còn lại
             this.trangSoDoChung.nutTau1.datAnhDangChon();
             this.trangSoDoChung.nutTau2.datAnhMacDinh();
-            this.trangSoDoChung.nutTau3.datAnhMacDinh();
-            this.trangSoDoChung.nutTau4.datAnhMacDinh();
+            //this.trangSoDoChung.nutTau3.datAnhMacDinh();
+            //this.trangSoDoChung.nutTau4.datAnhMacDinh();
         }
 
         if (source == this.trangSoDoChung.nutTau2) {
             // Đặt ảnh cho nút tau2 và đặt lại ảnh gốc cho các nút còn lại
             this.trangSoDoChung.nutTau2.datAnhDangChon();
             this.trangSoDoChung.nutTau1.datAnhMacDinh();
-            this.trangSoDoChung.nutTau3.datAnhMacDinh();
-            this.trangSoDoChung.nutTau4.datAnhMacDinh();
+            //this.trangSoDoChung.nutTau3.datAnhMacDinh();
+            //this.trangSoDoChung.nutTau4.datAnhMacDinh();
         }
 
-        if (source == this.trangSoDoChung.nutTau3) {
+        /*if (source == this.trangSoDoChung.nutTau3) {
             // Đặt ảnh cho nút tau3 và đặt lại ảnh gốc cho các nút còn lại
             this.trangSoDoChung.nutTau3.datAnhDangChon();
             this.trangSoDoChung.nutTau1.datAnhMacDinh();
@@ -72,7 +67,7 @@ public class HanhDong_TrangCacTau implements ActionListener, MouseListener {
             this.trangSoDoChung.nutTau1.datAnhMacDinh();
             this.trangSoDoChung.nutTau2.datAnhMacDinh();
             this.trangSoDoChung.nutTau3.datAnhMacDinh();
-        }
+        }*/
     }
 
     @Override

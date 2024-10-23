@@ -1,50 +1,41 @@
 package app.dieu_khien;
 
-import app.dao.Ghe_DAO;
 import app.giao_dien.TrangSoDoGheMem;
-import app.thuc_the.Ghe;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.ArrayList;
 
-public class HanhDong_TrangSoDoGheMemDieuHoa implements ItemListener, ActionListener, MouseListener {
+public class HanhDong_TrangSoDoGheMemDieuHoa implements ActionListener, MouseListener {
     TrangSoDoGheMem trangSoDoGheMemDieuHoa;
-    ArrayList<String> soGhe = new ArrayList<String>();
+    String soGhe;
 
     public HanhDong_TrangSoDoGheMemDieuHoa(TrangSoDoGheMem trangSoDoGheMemDieuHoa) {
         this.trangSoDoGheMemDieuHoa = trangSoDoGheMemDieuHoa;
     }
 
     @Override
-    public void itemStateChanged(ItemEvent e) {
-        CardLayout cardLayout = (CardLayout) this.trangSoDoGheMemDieuHoa.trangChua.getLayout();
+    public void actionPerformed(ActionEvent e) {
+        JButton nutGhe = (JButton) e.getSource();
+        String ghe = nutGhe.getText();
 
-        if (e.getStateChange() == ItemEvent.SELECTED) {
-            String loaiGheDaChon = (String) e.getItem();
-
-            switch (loaiGheDaChon) {
-                case "D1":
-                    cardLayout.show(this.trangSoDoGheMemDieuHoa.trangChua, "D1");
-                    break;
-                case "A4":
-                    cardLayout.show(this.trangSoDoGheMemDieuHoa.trangChua, "A4");
-                    break;
+        // Nếu ghế đã chọn rồi, bỏ chọn (xóa khỏi Set và đổi màu lại)
+        if (this.trangSoDoGheMemDieuHoa.gheDao.layDsGhe().contains(ghe)) {
+            this.trangSoDoGheMemDieuHoa.gheDao.xoaGhe(ghe);
+            nutGhe.setBackground(this.trangSoDoGheMemDieuHoa.xanhBrandeis);
+        }
+        // Nếu ghế chưa chọn, thêm vào Set và đổi màu thành đỏ (giới hạn 10 ghế)
+        else {
+            if (this.trangSoDoGheMemDieuHoa.gheDao.layDsGhe().size() < 10) {
+                this.trangSoDoGheMemDieuHoa.gheDao.themGhe(ghe);
+                nutGhe.setBackground(this.trangSoDoGheMemDieuHoa.doDo);
+            } else {
+                JOptionPane.showMessageDialog(this.trangSoDoGheMemDieuHoa, "Bạn chỉ có thể chọn tối đa 10 ghế.");
             }
         }
-    }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if (soGhe.size() < 10) {
-            JButton gheSo = (JButton) e.getSource();
-            gheSo.setEnabled(false);
-
-            soGhe.add(gheSo.getText());
-        }
-
-        System.out.println(this.trangSoDoGheMemDieuHoa.thanhCacToa.getSelectedItem() + " " + soGhe.get(soGhe.size() - 1));
+        System.out.println("Ghe da chon (Ghe Mem): " + this.trangSoDoGheMemDieuHoa.gheDao.layDsGhe());
+        System.out.println(ghe);
     }
 
     @Override
@@ -64,11 +55,19 @@ public class HanhDong_TrangSoDoGheMemDieuHoa implements ItemListener, ActionList
 
     @Override
     public void mouseEntered(MouseEvent e) {
-
+        JButton nutDaChon = (JButton) e.getComponent();
+        nutDaChon.setBackground(new Color(this.trangSoDoGheMemDieuHoa.xanhNhat.getRGB())); // Thay đổi màu khi hover
+        nutDaChon.setBorder(this.trangSoDoGheMemDieuHoa.vienNhat);
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
+        JButton exitedButton = (JButton) e.getComponent();
+        exitedButton.setBackground(new Color(this.trangSoDoGheMemDieuHoa.xanhBrandeis.getRGB())); // Khôi phục màu ban đầu khi di chuột ra khỏi nút
+        exitedButton.setBorder(this.trangSoDoGheMemDieuHoa.vienDam);
+    }
 
+    public String laySoGhe() {
+        return this.soGhe;
     }
 }

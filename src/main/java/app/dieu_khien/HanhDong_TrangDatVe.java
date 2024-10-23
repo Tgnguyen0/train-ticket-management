@@ -20,26 +20,9 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
         Object source = e.getSource();
 
         if (source == this.trangDatVe.nutHienThiSoDoGhe) {
-            String loaiGhe = (String) this.trangDatVe.thanhCacLoaiGhe.getSelectedItem();
-
-            switch(loaiGhe) {
-                case "Ghế mềm":
-                    TrangSoDoGheMem trangSoDoGheMem = new TrangSoDoGheMem();
-                    trangSoDoGheMem.setVisible(true);
-                    break;
-                case "Giường nằm 2 tầng":
-                    TrangSoDoGiuong4 trangSoDoGiuong4 = new TrangSoDoGiuong4();
-                    trangSoDoGiuong4.setVisible(true);
-                    break;
-                case "Giường nằm 3 tầng":
-                    TrangSoDoGiuong6 trangSoDoGiuong6 = new TrangSoDoGiuong6();
-                    trangSoDoGiuong6.setVisible(true);
-                    break;
-                case "Giường nằm 1 tầng":
-                    TrangSoDoGiuong2 trangSoDoGiuong2 = new TrangSoDoGiuong2();
-                    trangSoDoGiuong2.setVisible(true);
-                    break;
-            }
+            TrangCacTau trangCacTau = new TrangCacTau();
+            trangCacTau.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            trangCacTau.setVisible(true);
         }
 
         if (source == this.trangDatVe.nutLuaChonKhuHoi) {
@@ -122,6 +105,7 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
         enteredButton.setBorder(this.trangDatVe.vienNhat);
     }
 
+    @Override
     public void mouseExited(MouseEvent e) {
         JButton exitedButton = (JButton) e.getComponent();
         exitedButton.setBackground(new Color(this.trangDatVe.xanhBrandeis.getRGB())); // Khôi phục màu ban đầu khi di chuột ra khỏi nút
