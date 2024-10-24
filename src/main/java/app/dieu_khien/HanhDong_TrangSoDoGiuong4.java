@@ -7,7 +7,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 
-public class HanhDong_TrangSoDoGiuong4 implements ItemListener, ActionListener, MouseListener {
+public class HanhDong_TrangSoDoGiuong4 implements ActionListener, MouseListener {
     TrangSoDoGiuong4 trangSoDoGiuong4;
     ArrayList<String> soGiuong = new ArrayList<String>();
 
@@ -15,35 +15,36 @@ public class HanhDong_TrangSoDoGiuong4 implements ItemListener, ActionListener, 
         this.trangSoDoGiuong4 = TrangSoDoGiuong4;
     }
 
-    @Override
-    public void itemStateChanged(ItemEvent e) {
-        CardLayout cardLayout = (CardLayout) this.trangSoDoGiuong4.trangChuaSoDoGiuong.getLayout();
+    public void actionPerformed(ActionEvent e) {
+        JButton nutGiuong = (JButton) e.getSource();
+        String ghe = nutGiuong.getText();
 
-        if (e.getStateChange() == ItemEvent.SELECTED) {
-            String loaiGheDaChon = (String) e.getItem();
-            System.out.println("Selected item: " + loaiGheDaChon);
+        // Nếu ghế đã chọn rồi, bỏ chọn (xóa khỏi Set và đổi màu lại)
+        if (this.trangSoDoGiuong4.gheDao.layDsGhe().contains(ghe)) {
+            this.trangSoDoGiuong4.gheDao.xoaGhe(ghe);
+            nutGiuong.setBackground(this.trangSoDoGiuong4.xanhBrandeis);
+        }
+        // Nếu ghế chưa chọn, thêm vào Set và đổi màu thành đỏ (giới hạn 10 ghế)
+        else {
+            if (this.trangSoDoGiuong4.gheDao.layDsGhe().size() < 10) {
+                this.trangSoDoGiuong4.gheDao.themGhe(ghe);
+                nutGiuong.setBackground(this.trangSoDoGiuong4.doDo);
+            } else {
+                JLabel thongBao = new JLabel("Bạn chỉ có thể chọn tối đa 10 ghế.");
+                thongBao.setFont(this.trangSoDoGiuong4.phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, 12));
 
-            switch (loaiGheDaChon) {
-                case "D1":
-                    cardLayout.show(this.trangSoDoGiuong4.trangChuaSoDoGiuong, "D1");
-                    break;
-                case "A1":
-                    cardLayout.show(this.trangSoDoGiuong4.trangChuaSoDoGiuong, "A1");
-                    break;
+                JOptionPane hienThiLoi = new JOptionPane(thongBao, JOptionPane.ERROR_MESSAGE);
+                hienThiLoi.setForeground(this.trangSoDoGiuong4.xanhBrandeis);
+
+                JDialog hoiThoai = hienThiLoi.createDialog("Lỗi chọn ghế");
+                ImageIcon bieuTuongTau = new ImageIcon("assets/icon.png"); // Đường dẫn đến biểu tượng
+                hoiThoai.setIconImage(bieuTuongTau.getImage());
+                hoiThoai.setVisible(true);
             }
         }
-    }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if (soGiuong.size() < 10) {
-            JButton giuongSo = (JButton) e.getSource();
-            giuongSo.setEnabled(false);
-
-            soGiuong.add(giuongSo.getText());
-        }
-
-        System.out.println(this.trangSoDoGiuong4.thanhCacToa.getSelectedItem() + " " + soGiuong.get(soGiuong.size() - 1));
+        System.out.println("Ghe da chon (Giuong 4): " + this.trangSoDoGiuong4.gheDao.layDsGhe());
+        System.out.println(ghe);
     }
 
     @Override
@@ -63,11 +64,15 @@ public class HanhDong_TrangSoDoGiuong4 implements ItemListener, ActionListener, 
 
     @Override
     public void mouseEntered(MouseEvent e) {
-
+        JButton enteredButton = (JButton) e.getComponent();
+        enteredButton.setBackground(new Color(this.trangSoDoGiuong4.xanhNhat.getRGB())); // Thay đổi màu khi hover
+        enteredButton.setBorder(this.trangSoDoGiuong4.vienNhat);
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-
+        JButton exitedButton = (JButton) e.getComponent();
+        exitedButton.setBackground(new Color(this.trangSoDoGiuong4.xanhBrandeis.getRGB())); // Khôi phục màu ban đầu khi di chuột ra khỏi nút
+        exitedButton.setBorder(this.trangSoDoGiuong4.vienDam);
     }
 }

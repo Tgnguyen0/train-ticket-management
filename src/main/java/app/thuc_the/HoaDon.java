@@ -7,15 +7,25 @@ public class HoaDon {
     String maHoaDon;
     LocalDate ngayLapHoaDon;
     double thanhTien;
-    KhachHang khachHang;
-    ChiTietHoaDon chiTietHoaDon;
+    String maKhachHang;
+    String maNhanVien;
+    int soLuong;
+    double tongTien;
+    String trangThai;
+    DaiNgo daiNgo;
+    float thue;
 
-    public HoaDon(int soNgauNhien, LocalDate ngayLapHoaDon, KhachHang khachHang, ChiTietHoaDon chiTietHoaDon) {
-        this.maHoaDon = setMaHoaDon(soNgauNhien);
+    public HoaDon(String maHoaDon, LocalDate ngayLapHoaDon, double thanhTien, String maKhachHang, String maNhanVien, int soLuong, double tongTien, String trangThai, DaiNgo daiNgo, float thue) {
+        this.maHoaDon = maHoaDon;
         this.ngayLapHoaDon = ngayLapHoaDon;
-        this.khachHang = khachHang;
-        this.chiTietHoaDon = chiTietHoaDon;
-       // this.thanhTien = (chiTietHoaDon.tongTien * chiTietHoaDon.soLuong) - ((chiTietHoaDon.tongTien * chiTietHoaDon.soLuong)* chiTietHoaDon.thue) ;
+        this.thanhTien = thanhTien;
+        this.maKhachHang = maKhachHang;
+        this.maNhanVien = maNhanVien;
+        this.soLuong = soLuong;
+        this.tongTien = tongTien;
+        this.trangThai = trangThai;
+        this.daiNgo = daiNgo;
+        this.thue = thue;
     }
 
     public HoaDon() {
@@ -54,20 +64,64 @@ public class HoaDon {
         this.thanhTien = thanhTien;
     }
 
-    public KhachHang getKhachHang() {
-        return khachHang;
+    public void setMaHoaDon(String maHoaDon) {
+        this.maHoaDon = maHoaDon;
     }
 
-    public void setKhachHang(KhachHang khachHang) {
-        this.khachHang = khachHang;
+    public String getMaKhachHang() {
+        return maKhachHang;
     }
 
-    public ChiTietHoaDon getChiTietHoaDon() {
-        return chiTietHoaDon;
+    public void setMaKhachHang(String maKhachHang) {
+        this.maKhachHang = maKhachHang;
     }
 
-    public void setChiTietHoaDon(ChiTietHoaDon chiTietHoaDon) {
-        this.chiTietHoaDon = chiTietHoaDon;
+    public String getMaNhanVien() {
+        return maNhanVien;
+    }
+
+    public void setMaNhanVien(String maNhanVien) {
+        this.maNhanVien = maNhanVien;
+    }
+
+    public int getSoLuong() {
+        return soLuong;
+    }
+
+    public void setSoLuong(int soLuong) {
+        this.soLuong = soLuong;
+    }
+
+    public double getTongTien() {
+        return tongTien;
+    }
+
+    public void setTongTien(double tongTien) {
+        this.tongTien = tongTien;
+    }
+
+    public String getTrangThai() {
+        return trangThai;
+    }
+
+    public void setTrangThai(String trangThai) {
+        this.trangThai = trangThai;
+    }
+
+    public DaiNgo getDaiNgo() {
+        return daiNgo;
+    }
+
+    public void setDaiNgo(DaiNgo daiNgo) {
+        this.daiNgo = daiNgo;
+    }
+
+    public float getThue() {
+        return thue;
+    }
+
+    public void setThue(float thue) {
+        this.thue = thue;
     }
 
     @Override

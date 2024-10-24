@@ -1,18 +1,16 @@
 package app.thuc_the;
 
-import java.time.LocalDate;
 import java.util.Objects;
 import java.util.Set;
 
-public class Ga {
+public class NhaGa {
     String maGa;
     String tenGa;
     String diaChi;
     String soDienThoaiLienHe;
     String thanhPho;
-    Set<LichCapBenGa> danhSachTauCapBen;
 
-    public Ga() {
+    public NhaGa() {
     }
 
     public String getMaGa() {
@@ -55,19 +53,12 @@ public class Ga {
         this.thanhPho = thanhPho;
     }
 
-    public Set<LichCapBenGa> getDanhSachTauCapBen() {
-        return danhSachTauCapBen;
-    }
-
-    public void setDanhSachTauCapBen(Set<LichCapBenGa> danhSachTauCapBen) {
-        this.danhSachTauCapBen = danhSachTauCapBen;
-    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Ga ga)) return false;
-        return Objects.equals(getMaGa(), ga.getMaGa());
+        if (!(o instanceof NhaGa nhaGa)) return false;
+        return Objects.equals(getMaGa(), nhaGa.getMaGa());
     }
 
     @Override

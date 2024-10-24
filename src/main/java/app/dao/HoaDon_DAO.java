@@ -19,6 +19,7 @@ public class HoaDon_DAO {
     }
 
     // Tìm Kiếm khách hàng
+    /*
     public HoaDon TimKiemHoaDon(String maHD, String tenKH, String sdt) {
         for (int i = 0 ; i < dshd.size() ; i++) {
             boolean dungHd = true;
@@ -35,14 +36,15 @@ public class HoaDon_DAO {
 
         return null;
     }
-
+    */
     // Cập Nhật thông tin cho khách hàng
+    /*
     public boolean CapNhatThongTinHoaDon(HoaDon hd) {
         HoaDon hdCanCapNhat = TimKiemHoaDon(hd.getMaHoaDon(), hd.getKhachHang().getTenKH(), hd.getKhachHang().getSoDT());
 
         return false;
     }
-
+    */
     // Lưu vào hóa đơn vào cơ sở dữ liệu
     public void luuKHVaoCSDL(HoaDon kh) {
 

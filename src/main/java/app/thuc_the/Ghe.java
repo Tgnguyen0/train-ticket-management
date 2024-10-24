@@ -4,18 +4,21 @@ import java.util.Objects;
 
 public class Ghe {
     private int maGhe;
-    private Toa toa;
+    private String maToa;
     private LOAI_GHE loaiGhe;
     private TRANG_THAI_GHE trangThai;
+
+    String soGhe;
 
     public Ghe() {
     }
 
-    public Ghe(int maGhe, Toa toa_maToa, LOAI_GHE loaiGhe, TRANG_THAI_GHE trangThai) {
+    public Ghe(int maGhe, String maToa, LOAI_GHE loaiGhe, TRANG_THAI_GHE trangThai, String soGhe) {
         this.maGhe = maGhe;
-        this.toa = toa_maToa;
+        this.maToa = maToa;
         this.loaiGhe = loaiGhe;
         this.trangThai = trangThai;
+        this.soGhe = soGhe;
     }
 
     public int getMaGhe() {
@@ -24,14 +27,6 @@ public class Ghe {
 
     public void setMaGhe(int maGhe) {
         this.maGhe = maGhe;
-    }
-
-    public Toa getToa_maToa() {
-        return toa;
-    }
-
-    public void setToa_maToa(Toa toa_maToa) {
-        this.toa = toa_maToa;
     }
 
     public LOAI_GHE getLoaiGhe() {
@@ -48,6 +43,22 @@ public class Ghe {
 
     public void setTrangThai(TRANG_THAI_GHE trangThai) {
         this.trangThai = trangThai;
+    }
+
+    public String getMaToa() {
+        return maToa;
+    }
+
+    public void setMaToa(String maToa) {
+        this.maToa = maToa;
+    }
+
+    public String getSoGhe() {
+        return soGhe;
+    }
+
+    public void setSoGhe(String soGhe) {
+        this.soGhe = soGhe;
     }
 
     @Override

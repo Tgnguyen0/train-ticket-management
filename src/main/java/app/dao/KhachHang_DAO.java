@@ -4,7 +4,6 @@ import app.ket_noi_co_so_du_lieu.KetNoiCoSoDuLieu;
 import app.thuc_the.GIOI_TINH;
 import app.thuc_the.KhachHang;
 import org.jetbrains.annotations.NotNull;
-
 import javax.swing.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -152,8 +151,9 @@ public class KhachHang_DAO {
 
         }
     }
+
     // Cập nhật thông tin khách hàng
-    public void capNhatKhachHang_KhangVersion(@NotNull KhachHang khachHang) {
+    public void capNhatKhachHang_KhangVersion(KhachHang khachHang) {
 
         try {
             // Bước 1: tạo kết nối đến CSDL
@@ -394,6 +394,37 @@ public class KhachHang_DAO {
             e.printStackTrace();
         }
         return ketQuaThucThi;
+    }
+
+    public KhachHang layKhachHangMuaVeTheoMaKhachHang(String maKhRequest){
+        KhachHang khachHang = null;
+        try {
+            Connection connection = KetNoiCoSoDuLieu.ketNoiDB_HinhDB();
+            String sql = "SELECT top 1  kh.MaKH, kh.TenKH, kh.DiaChi, kh.SoDT, kh.Email,  kh.GioiTinh\n" +
+                    "FROM Ve v \n" +
+                    "JOIN KhachHang kh ON v.MaKH = kh.MaKH \n" +
+                    "WHERE v.MaKH = " + maKhRequest + "\n"+
+                    "order by v.NgayDatVe DESC";
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            String maKh = rs.getString(1);
+            String tenKh = rs.getString(2);
+            String diaChi = rs.getString(3);
+            String soDienThoai = rs.getString(4);
+            String email = rs.getString(5);
+            String gioiTinh = rs.getString(6);
+            if(gioiTinh.compareToIgnoreCase(GIOI_TINH.NAM.getValue())== 0){
+                return  new KhachHang( maKh,  tenKh,  diaChi,  soDienThoai,  email, GIOI_TINH.NAM);
+            }
+            else {
+                return  new KhachHang( maKh,  tenKh,  diaChi,  soDienThoai,  email, GIOI_TINH.NU);
+            }
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        return  khachHang;
     }
 }
 

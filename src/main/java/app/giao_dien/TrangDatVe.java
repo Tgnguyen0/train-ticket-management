@@ -1,9 +1,9 @@
 package app.giao_dien;
 
+import app.dao.Ghe_DAO;
 import app.dieu_khien.HanhDong_TrangDatVe;
 import app.phan_tu_tuy_chinh.CustomComboBoxRenderer;
 import app.phong_chu_moi.PhongChuMoi;
-import com.toedter.calendar.JCalendar;
 import com.toedter.calendar.JDateChooser;
 
 import javax.swing.*;
@@ -38,7 +38,7 @@ public class TrangDatVe extends JPanel {
     public JRadioButton nutLuaChonNam;
     public JRadioButton nutLuaChonNu;
     public JTextField thanhNhapThuDienTu;
-    public JTextField thanhNhapNgaySinh;
+    public JDateChooser thanhNhapNgaySinh;
     public JTextArea thanhNhapGhiChu;
     public JTextField thanhNhapTongTien;
     public JButton nutThanhToan;
@@ -48,7 +48,7 @@ public class TrangDatVe extends JPanel {
     public int kichThuocChu = 12;
     public int chieuDaiNut = 210;
     public int chieuRongNut = 30;
-    private PhongChuMoi phongTuyChinh = new PhongChuMoi();
+    public PhongChuMoi phongTuyChinh = new PhongChuMoi();
     public Color trang = new Color(255, 255, 255);
     public Color xanhNhat = new Color(66, 186, 255);
     public Color xanhBrandeis = new Color(0, 112, 255);
@@ -60,8 +60,11 @@ public class TrangDatVe extends JPanel {
     private ActionListener hanhDong;
     private MouseListener thaoTacChuot;
     private ItemListener mucDaChon;
+    public Ghe_DAO gheDao;
 
     public TrangDatVe() {
+        this.gheDao = new Ghe_DAO();
+
         setPreferredSize(new Dimension(1200, 600));
         setLayout(new BorderLayout());
         setFont(this.phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, 13));
@@ -80,6 +83,10 @@ public class TrangDatVe extends JPanel {
         taoTrangThongTinKhachHang();
 
         add(trangDonDatVe, BorderLayout.CENTER);
+    }
+
+    public Ghe_DAO layGheDao() {
+        return this.gheDao;
     }
 
     private void taoDonThongTinVe() {
@@ -126,10 +133,10 @@ public class TrangDatVe extends JPanel {
         thanhCacDiemDi.setBackground(trang);
         thanhCacDiemDi.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, kichThuocChu));
         thanhCacDiemDi.setFocusable(false);
-        thanhCacDiemDi.addItem("Tất cả");
-        thanhCacDiemDi.addItem("Cà phê");
-        thanhCacDiemDi.addItem("Soda");
-        thanhCacDiemDi.addItem("Kem");
+        thanhCacDiemDi.addItem("Sài Gòn");
+        thanhCacDiemDi.addItem("Hà Nội");
+        thanhCacDiemDi.addItem("Đông Anh");
+        thanhCacDiemDi.addItemListener(mucDaChon);
         thanhCacDiemDi.setPreferredSize(new Dimension(chieuDaiNut, chieuRongNut));
         thanhCacDiemDi.setRenderer(new CustomComboBoxRenderer());
         donDatVe.add(thanhCacDiemDi);
@@ -145,10 +152,10 @@ public class TrangDatVe extends JPanel {
         thanhCacDiemDen.setBackground(trang);
         thanhCacDiemDen.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, kichThuocChu));
         thanhCacDiemDen.setFocusable(false);
-        thanhCacDiemDen.addItem("Tất cả");
-        thanhCacDiemDen.addItem("Cà phê");
-        thanhCacDiemDen.addItem("Soda");
-        thanhCacDiemDen.addItem("Kem");
+        thanhCacDiemDen.addItem("Sài Gòn");
+        thanhCacDiemDen.addItem("Hà Nội");
+        thanhCacDiemDen.addItem("Đông Anh");
+        thanhCacDiemDen.addItemListener(mucDaChon);
         thanhCacDiemDen.setPreferredSize(new Dimension(chieuDaiNut, chieuRongNut));
         thanhCacDiemDen.setRenderer(new CustomComboBoxRenderer());
         donDatVe.add(thanhCacDiemDen);
@@ -455,11 +462,12 @@ public class TrangDatVe extends JPanel {
         tieuDeNgaySinh.setFont(phongTuyChinh.layPhongRobotoMonoReg(2, kichThuocChu));
         phanThongTin.add(tieuDeNgaySinh);
 
-        thanhNhapNgaySinh = new JTextField();
+        thanhNhapNgaySinh = new JDateChooser();
         thanhNhapNgaySinh.setForeground(xanhBrandeis);
         thanhNhapNgaySinh.setBackground(trang);
         thanhNhapNgaySinh.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, kichThuocChu));
         thanhNhapNgaySinh.setPreferredSize(new Dimension(chieuDaiNut, chieuRongNut + 1));
+        thanhNhapNgaySinh.setFocusable(false);
         phanThongTin.add(thanhNhapNgaySinh);
 
         JLabel tieuDeGhiChu = new JLabel("Ghi Chú:");

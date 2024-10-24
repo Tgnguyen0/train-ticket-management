@@ -14,10 +14,8 @@ public class NhanVien {
     private GIOI_TINH gioiTinh;
     private String matKhau;
     private String vaiTro;
-    private Set<HoaDon> danhSachHoaDon;
 
     public NhanVien(String maNV, String tenNV, LocalDate ngaySinh, String diaChi, String soDT, GIOI_TINH gioiTinh, String matKhau, String vaiTro) {
-        //this.maNV = setMaNV(soNgauNhien);
         this.maNV = maNV;
         this.tenNV = tenNV;
         this.ngaySinh = ngaySinh;
@@ -106,13 +104,6 @@ public class NhanVien {
         this.vaiTro = vaiTro;
     }
 
-    public Set<HoaDon> getDanhSachHoaDon() {
-        return danhSachHoaDon;
-    }
-
-    public void setDanhSachHoaDon(Set<HoaDon> danhSachHoaDon) {
-        this.danhSachHoaDon = danhSachHoaDon;
-    }
 
     @Override
     public boolean equals(Object o) {
