@@ -335,7 +335,6 @@ public class TrangKhachHang extends JPanel {
 //        }
 //    }
 
-
     public static boolean regexSDT(String sdt){
         String regex = "^[0-9]{10}$";
         if(!sdt.matches(regex)){

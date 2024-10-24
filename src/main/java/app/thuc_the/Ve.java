@@ -18,7 +18,7 @@ public class Ve {
     Tau tau;
 
     public Ve(String loaiDoiTuong, LocalDate ngayKhoiHanh, LocalDate ngayDatVe, DaiNgo daiNgo, String gaKhoiHanh, String gaKetThuc, double giaVe, KhachHang khachHang, Ghe ghe, String loaiVe) {
-        this.maVe = maVe;
+        this.maVe = setMaVe();
         this.loaiDoiTuong = loaiDoiTuong;
         this.ngayKhoiHanh = ngayKhoiHanh;
         this.ngayDatVe = ngayDatVe;

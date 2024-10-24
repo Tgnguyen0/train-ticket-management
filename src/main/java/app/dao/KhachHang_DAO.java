@@ -4,7 +4,6 @@ import app.ket_noi_co_so_du_lieu.KetNoiCoSoDuLieu;
 import app.thuc_the.GIOI_TINH;
 import app.thuc_the.KhachHang;
 import org.jetbrains.annotations.NotNull;
-
 import javax.swing.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -152,8 +151,9 @@ public class KhachHang_DAO {
 
         }
     }
+
     // Cập nhật thông tin khách hàng
-    public void capNhatKhachHang_KhangVersion(@NotNull KhachHang khachHang) {
+    public void capNhatKhachHang_KhangVersion(KhachHang khachHang) {
 
         try {
             // Bước 1: tạo kết nối đến CSDL
