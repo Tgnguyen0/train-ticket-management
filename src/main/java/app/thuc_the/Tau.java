@@ -7,17 +7,15 @@ public class Tau {
     private String soHieu;
     private int soToa;
     private int soLuongToiDa;;
-    private Set<Toa> danhSachToa;
     private Set<LichCapBenGa> danhSachLichCapBenTau;
 
     public Tau() {
     }
 
-    public Tau(String soHieu, int soToa, int soLuongToiDa, Set<Toa> danhSachToa, Set<LichCapBenGa> danhSachLichCapBenTau) {
+    public Tau(String soHieu, int soToa, int soLuongToiDa, Set<LichCapBenGa> danhSachLichCapBenTau) {
         this.soHieu = soHieu;
         this.soToa = soToa;
         this.soLuongToiDa = soLuongToiDa;
-        this.danhSachToa = danhSachToa;
         this.danhSachLichCapBenTau = danhSachLichCapBenTau;
     }
 
@@ -39,14 +37,6 @@ public class Tau {
 
     public int getSoLuongToiDa() {
         return soLuongToiDa;
-    }
-
-    public Set<Toa> getDanhSachToa() {
-        return danhSachToa;
-    }
-
-    public void setDanhSachToa(Set<Toa> danhSachToa) {
-        this.danhSachToa = danhSachToa;
     }
 
     public void setSoLuongToiDa(int soLuongToiDa) {

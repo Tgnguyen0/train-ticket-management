@@ -2,78 +2,93 @@ package app.giao_dien;
 
 
 
+import app.dieu_khien.HanhDong_TrangDanhSachVe;
 import app.phan_tu_tuy_chinh.CustomCellRenderer;
 import app.phan_tu_tuy_chinh.CustomHeaderRenderer;
 import app.phong_chu_moi.PhongChuMoi;
+import app.thuc_the.Ve;
+import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
+
 
 import   javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import java.awt.*;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseListener;
 import java.awt.geom.RoundRectangle2D;
+import java.util.ArrayList;
+import java.util.List;
 
+@Slf4j
 public class TrangDanhSachVeTau extends JFrame{
 
-    private  JButton capNhat;
-    private  JPanel trangChua_ChiTietCacCongCu;
-    private  JScrollPane scrollpane;
-    private  JButton lamMoi;
-    private  JLabel soTienVeNguoiLon;
-    private  JLabel soTienVeTreEm;
-    private  JTable table;
-    private  JTextField thanhEmail;
-    private  JTextField thanhNgayDi;
-    private  JTextField thanhNgayVe;
-    private  JTextField thanhSoDienThoai;
-    private  JTextField thanhSoHieu;
-    private  JTextField thanhSoLuong;
-    private  JTextField thanhTenKhachHang;
-    private  JTextField thanhTimKiem;
-    private  JLabel tieuDe;
-    private  JLabel tieuDeTongTien;
-    private  JLabel tieuDeVeNguoiLon;
-    private  JLabel tieuDeVeTreEm;
-    private  JLabel tieuDe_DonGia;
-    private  JLabel tieuDe_Email;
-    private  JLabel tieuDe_NgayDi;
-    private  JLabel tieuDe_NgayVe;
-    private  JLabel tieuDe_SoDienThoai;
-    private  JLabel tieuDe_SoHieu;
-    private  JLabel tieuDe_SoLuong;
-    private  JLabel tieuDe_TenKhachHang;
-    private  JLabel tieuDe_ThongTinChiTiet;
-    private  JLabel timKiemVe;
-    private  JLabel tongTien;
-    private  JPanel tragChua_TieuDeThongTinChiTiet;
-    private  JPanel trangChua_CongCu;
-    private  JPanel trangChua_DanhSachVe;
-    private  JPanel trangChua_DonGia;
-    private  JPanel trangChua_Email;
-    private  JPanel trangChua_SoDienThoai;
-    private  JPanel trangChua_SoHieu;
-    private  JPanel trangChua_TableDanhSach;
-    private  JPanel trangChua_TenKhachHang;
-    private  JPanel trangChua_ThanhTimKiem;
-    private  JPanel trangChua_ThongTinChiTiet;
-    private  JPanel trangChua_ThongTinKhachang;
-    private  JPanel trangChua_ThongTinNgayDi;
-    private  JPanel trangChua_ThongTinNgayVe;
-    private  JPanel trangChua_ThongTinSoLuong;
-    private  JPanel trangChua_ThongTinSoTien;
-    private  JPanel trangChua_ThongTinVe;
-    private  JPanel trangChua_TieuDe;
-    private  JPanel trangChua_TongTien;
-    private  JPanel trangChua_VeNguoiLon;
-    private  JPanel trangChua_VeTreEm;
-    private  JButton xoa;
+    public  JButton capNhat;
+    public  JPanel trangChua_ChiTietCacCongCu;
+    public  JScrollPane scrollpane;
+    public  JButton lamMoi;
+    public  JLabel soTienVeNguoiLon;
+    public  JLabel soTienVeTreEm;
+    public  JTable table;
+    public  JTextField thanhEmail;
+    public  JTextField thanhNgayDi;
+    public  JTextField thanhNgayVe;
+    public  JTextField thanhSoDienThoai;
+    public  JTextField thanhSoHieu;
+    public  JTextField thanhSoLuong;
+    public  JTextField thanhTenKhachHang;
+    public  JTextField thanhTimKiem;
+    public  JLabel tieuDe;
+    public  JLabel tieuDeTongTien;
+    public  JLabel tieuDeVeNguoiLon;
+    public  JLabel tieuDeVeTreEm;
+    public  JLabel tieuDe_DonGia;
+    public  JLabel tieuDe_Email;
+    public  JLabel tieuDe_NgayDi;
+    public  JLabel tieuDe_NgayVe;
+    public  JLabel tieuDe_SoDienThoai;
+    public  JLabel tieuDe_SoHieu;
+    public  JLabel tieuDe_SoLuong;
+    public  JLabel tieuDe_TenKhachHang;
+    public  JLabel tieuDe_ThongTinChiTiet;
+    public  JLabel timKiemVe;
+    public  JLabel tongTien;
+    public  JPanel tragChua_TieuDeThongTinChiTiet;
+    public  JPanel trangChua_CongCu;
+    public  JPanel trangChua_DanhSachVe;
+    public  JPanel trangChua_DonGia;
+    public  JPanel trangChua_Email;
+    public  JPanel trangChua_SoDienThoai;
+    public  JPanel trangChua_SoHieu;
+    public  JPanel trangChua_TableDanhSach;
+    public  JPanel trangChua_TenKhachHang;
+    public  JPanel trangChua_ThanhTimKiem;
+    public  JPanel trangChua_ThongTinChiTiet;
+    public  JPanel trangChua_ThongTinKhachang;
+    public  JPanel trangChua_ThongTinNgayDi;
+    public  JPanel trangChua_ThongTinNgayVe;
+    public  JPanel trangChua_ThongTinSoLuong;
+    public  JPanel trangChua_ThongTinSoTien;
+    public  JPanel trangChua_ThongTinVe;
+    public  JPanel trangChua_TieuDe;
+    public  JPanel trangChua_TongTien;
+    public  JPanel trangChua_VeNguoiLon;
+    public  JPanel trangChua_VeTreEm;
+    public  JButton xoa;
     public DefaultTableModel model ;
     public Color xanhBrandeis = new Color(0, 112, 255);
     public  Color trang = new Color(255, 255, 255);
     public Border gachChanDam = BorderFactory.createMatteBorder(0, 0, 1, 0, xanhBrandeis);
-    private JButton timKiem;
+    public JButton timKiem;
 
-    private TrangDanhSachVeTau(){
+    /*
+        các thuộc tính xử lý hành động
+     */
+    ActionListener ac = new HanhDong_TrangDanhSachVe(this);
+    MouseListener mouse = new HanhDong_TrangDanhSachVe(this);
+    public TrangDanhSachVeTau(){
 
         // setting basic config for interface
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -131,7 +146,7 @@ public class TrangDanhSachVeTau extends JFrame{
         this.setVisible(true);
     }
 
-    private void thietLap_TrangChuaTieuDe(){
+    public void thietLap_TrangChuaTieuDe(){
         this.tieuDe = new JLabel();
         this.trangChua_TieuDe = new JPanel();
         this.tieuDe.setText("Danh Sách Vé Tàu");
@@ -155,7 +170,7 @@ public class TrangDanhSachVeTau extends JFrame{
         );
     }
 
-    private void thietLap_TrangChuaThanhTimKiem(){
+    public void thietLap_TrangChuaThanhTimKiem(){
         this.timKiemVe = new JLabel();
         this.thanhTimKiem = new JTextField();
         this.timKiem = new JButton();
@@ -166,7 +181,7 @@ public class TrangDanhSachVeTau extends JFrame{
         thanhTimKiem.setText("");
         thanhTimKiem.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.PLAIN, 13));
         thanhTimKiem.setBorder(gachChanDam);
-        
+
         timKiem.setText("Tìm kiếm");
         timKiemVe.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.PLAIN, 13));
         timKiem.setForeground(trang);
@@ -197,7 +212,7 @@ public class TrangDanhSachVeTau extends JFrame{
         );
     }
 
-    private void thietLap_TrangChuaTieuDEThongTinChiTiet(){
+    public void thietLap_TrangChuaTieuDEThongTinChiTiet(){
         this.tieuDe_ThongTinChiTiet = new JLabel();
         this.tragChua_TieuDeThongTinChiTiet = new JPanel();
 
@@ -223,7 +238,7 @@ public class TrangDanhSachVeTau extends JFrame{
         );
     }
 
-    private void thietLap_TrangChuaThongTinKhachHang(){
+    public void thietLap_TrangChuaThongTinKhachHang(){
         this.trangChua_ThongTinKhachang = new JPanel();
         this.trangChua_TenKhachHang = new JPanel();
         this.tieuDe_TenKhachHang = new JLabel();
@@ -363,7 +378,7 @@ public class TrangDanhSachVeTau extends JFrame{
         );
     }
 
-    private void thietLap_TrangChuaThongTinVe(){
+    public void thietLap_TrangChuaThongTinVe(){
         /*
             thiết lập giao diện cho thanh số hiệu
          */
@@ -545,7 +560,7 @@ public class TrangDanhSachVeTau extends JFrame{
         );
     }
 
-    private void thietLap_TrangChuaThongTinSoTien(){
+    public void thietLap_TrangChuaThongTinSoTien(){
         /*
             thiết lập giao diện cho thông tin số tiền
          */
@@ -704,7 +719,7 @@ public class TrangDanhSachVeTau extends JFrame{
     }
 
     // this page contain all informational customer.
-    private void thietLap_TrangChuaThongTinChiTiet(){
+    public void thietLap_TrangChuaThongTinChiTiet(){
 
         // thiết lập giao diện cho trang chứa thông tin chi tiết
         this.trangChua_ThongTinChiTiet = new JPanel();
@@ -739,7 +754,7 @@ public class TrangDanhSachVeTau extends JFrame{
         );
     }
 
-    private void thietLap_BangChuaDanhSachVeTau(){
+    public void thietLap_BangChuaDanhSachVeTau(){
          this.model =new DefaultTableModel(
                 new Object [][] {
 //                        {"1", "03294233", "TP.HCM", "VN123", "22:00pm","Giường 6 ghế", "A2", "A2.1", "12"},
@@ -807,10 +822,13 @@ public class TrangDanhSachVeTau extends JFrame{
         );
     }
 
-    private void thietLap_TrangChuaCongCuHoTro(){
+    public void thietLap_TrangChuaCongCuHoTro(){
         this.capNhat = new JButton();
+        capNhat.addActionListener(ac);
         this.xoa = new JButton();
+        xoa.addActionListener(ac);
         this.lamMoi = new JButton();
+        lamMoi.addActionListener(ac);
         this.trangChua_CongCu = new JPanel();
         this.trangChua_ChiTietCacCongCu = new JPanel();
 
@@ -873,7 +891,7 @@ public class TrangDanhSachVeTau extends JFrame{
     }
 
 
-    private void thietLap_TrangChuaDanhSachVe(){
+    public void thietLap_TrangChuaDanhSachVe(){
         this.trangChua_DanhSachVe = new JPanel();
 
         GroupLayout trangChua_DanhSachVeLayout = new   GroupLayout(trangChua_DanhSachVe);
@@ -898,7 +916,7 @@ public class TrangDanhSachVeTau extends JFrame{
         );
     }
 
-    private void thietLap_TrangGiaoDien(){
+    public void thietLap_TrangGiaoDien(){
         GroupLayout layout = new GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
 
@@ -938,7 +956,18 @@ public class TrangDanhSachVeTau extends JFrame{
 
     }
 
-    public static void moGiaoDienDanhSach() {
-        new TrangDanhSachVeTau();
+    public void dayDuLieuVaoBang(List<Ve> dsVe){
+        for (Ve ve:dsVe) {
+            log.info(ve.toString());
+        }
+
+
+
     }
+
+    public static   void moGiaoDienDanhSach(){
+        new TrangDanhSachVeTau().setVisible(true);
+    }
+
+
 }

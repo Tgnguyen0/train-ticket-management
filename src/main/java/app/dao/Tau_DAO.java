@@ -38,7 +38,7 @@ public class Tau_DAO {
                     tau.setSoHieu(boKetQua.getString("SoHieu"));
                     tau.setSoToa(boKetQua.getInt("SoToa"));
                     tau.setSoLuongToiDa(boKetQua.getInt("SoLuongToiDa"));
-                    tau.setSoLuongKhachHangDaDatVe(boKetQua.getInt("soLuongKhachHangDaDatVe"));
+                    //tau.setSoLuongKhachHangDaDatVe(boKetQua.getInt("soLuongKhachHangDaDatVe"));
                     //tau.setDanhSachToa();
                     //tau.setDanhSachLichCapBenTau();
                     list.add(tau);

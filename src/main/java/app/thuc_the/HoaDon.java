@@ -7,20 +7,20 @@ public class HoaDon {
     String maHoaDon;
     LocalDate ngayLapHoaDon;
     double thanhTien;
-    KhachHang khachHang;
-    NhanVien nhanVien;
+    String maKhachHang;
+    String maNhanVien;
     int soLuong;
     double tongTien;
     String trangThai;
-    float daiNgo;
+    DaiNgo daiNgo;
     float thue;
 
-    public HoaDon(String maHoaDon, LocalDate ngayLapHoaDon, double thanhTien, KhachHang khachHang, NhanVien nhanVien, int soLuong, double tongTien, String trangThai, float daiNgo, float thue) {
+    public HoaDon(String maHoaDon, LocalDate ngayLapHoaDon, double thanhTien, String maKhachHang, String maNhanVien, int soLuong, double tongTien, String trangThai, DaiNgo daiNgo, float thue) {
         this.maHoaDon = maHoaDon;
         this.ngayLapHoaDon = ngayLapHoaDon;
         this.thanhTien = thanhTien;
-        this.khachHang = khachHang;
-        this.nhanVien = nhanVien;
+        this.maKhachHang = maKhachHang;
+        this.maNhanVien = maNhanVien;
         this.soLuong = soLuong;
         this.tongTien = tongTien;
         this.trangThai = trangThai;
@@ -64,15 +64,65 @@ public class HoaDon {
         this.thanhTien = thanhTien;
     }
 
-    public KhachHang getKhachHang() {
-        return khachHang;
+    public void setMaHoaDon(String maHoaDon) {
+        this.maHoaDon = maHoaDon;
     }
 
-    public void setKhachHang(KhachHang khachHang) {
-        this.khachHang = khachHang;
+    public String getMaKhachHang() {
+        return maKhachHang;
     }
 
+    public void setMaKhachHang(String maKhachHang) {
+        this.maKhachHang = maKhachHang;
+    }
 
+    public String getMaNhanVien() {
+        return maNhanVien;
+    }
+
+    public void setMaNhanVien(String maNhanVien) {
+        this.maNhanVien = maNhanVien;
+    }
+
+    public int getSoLuong() {
+        return soLuong;
+    }
+
+    public void setSoLuong(int soLuong) {
+        this.soLuong = soLuong;
+    }
+
+    public double getTongTien() {
+        return tongTien;
+    }
+
+    public void setTongTien(double tongTien) {
+        this.tongTien = tongTien;
+    }
+
+    public String getTrangThai() {
+        return trangThai;
+    }
+
+    public void setTrangThai(String trangThai) {
+        this.trangThai = trangThai;
+    }
+
+    public DaiNgo getDaiNgo() {
+        return daiNgo;
+    }
+
+    public void setDaiNgo(DaiNgo daiNgo) {
+        this.daiNgo = daiNgo;
+    }
+
+    public float getThue() {
+        return thue;
+    }
+
+    public void setThue(float thue) {
+        this.thue = thue;
+    }
 
     @Override
     public boolean equals(Object o) {

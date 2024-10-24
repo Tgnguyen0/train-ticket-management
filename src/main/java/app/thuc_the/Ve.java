@@ -11,27 +11,24 @@ public class Ve {
     String loaiDoiTuong;
     LocalDate ngayKhoiHanh;
     LocalDate ngayDatVe;
-    DaiNgo daiNgo;
     String gaKhoiHanh;
     String gaKetThuc;
     double giaVe;
-    KhachHang khachHang;
-    Ghe ghe;
+    String maKhachHang;
+    String  maGhe;
     String loaiVe;
+    String maTau;
 
-    Tau tau;
-
-    public Ve(String maVe, String loaiDoiTuong, LocalDate ngayKhoiHanh, LocalDate ngayDatVe, DaiNgo daiNgo, String gaKhoiHanh, String gaKetThuc, double giaVe, KhachHang khachHang, Ghe ghe, String loaiVe) {
+    public Ve(String maVe, String loaiDoiTuong, LocalDate ngayKhoiHanh, LocalDate ngayDatVe,  String gaKhoiHanh, String gaKetThuc, double giaVe, String maKhachHang,String maGhe, String loaiVe) {
         this.maVe = maVe;
         this.loaiDoiTuong = loaiDoiTuong;
         this.ngayKhoiHanh = ngayKhoiHanh;
         this.ngayDatVe = ngayDatVe;
-        this.daiNgo = daiNgo;
         this.gaKhoiHanh = gaKhoiHanh;
         this.gaKetThuc = gaKetThuc;
         this.giaVe = giaVe;
-        this.khachHang = khachHang;
-        this.ghe = ghe;
+        this.maKhachHang = maKhachHang;
+        this.maGhe = maGhe;
         this.loaiVe = loaiVe;
     }
 
@@ -83,13 +80,6 @@ public class Ve {
         this.ngayDatVe = ngayDatVe;
     }
 
-    public DaiNgo getDaiNgo() {
-        return daiNgo;
-    }
-
-    public void setDaiNgo(DaiNgo daiNgo) {
-        this.daiNgo = daiNgo;
-    }
 
     public String getGaKhoiHanh() {
         return gaKhoiHanh;
@@ -115,37 +105,54 @@ public class Ve {
         this.giaVe = giaVe;
     }
 
-    public KhachHang getKhachHang() {
-        return khachHang;
+    public void setMaVe(String maVe) {
+        this.maVe = maVe;
     }
 
-    public void setKhachHang(KhachHang khachHang) {
-        this.khachHang = khachHang;
+    public String getMaHang() {
+        return maKhachHang;
     }
 
-    public Ghe getGhe() {
-        return ghe;
+    public void setMaHang(String maHang) {
+        this.maKhachHang = maHang;
     }
 
-    public void setGhe(Ghe ghe) {
-        this.ghe = ghe;
+    public String getMaKhachHang() {
+        return maKhachHang;
+    }
+
+    public void setMaKhachHang(String maKhachHang) {
+        this.maKhachHang = maKhachHang;
+    }
+
+    public String getMaGhe() {
+        return maGhe;
     }
 
     public String getLoaiVe() {
         return loaiVe;
     }
 
+    public String getMaTau() {
+        return maTau;
+    }
+
+    public void setMaGhe(String maGhe) {
+        this.maGhe = maGhe;
+    }
+
+
+
+    public void setMaTau(String maTau) {
+        this.maTau = maTau;
+    }
+
+
     public void setLoaiVe(String loaiVe) {
         this.loaiVe = loaiVe;
     }
 
-    public void setTau(Tau tau) {
-        this.tau = tau;
-    }
 
-    public Tau getTau() {
-        return this.tau;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -157,5 +164,23 @@ public class Ve {
     @Override
     public int hashCode() {
         return Objects.hash(getMaVe());
+    }
+
+    @Override
+    public String toString() {
+        return "Ve{" +
+                "maVe='" + maVe + '\'' +
+                ", loaiDoiTuong='" + loaiDoiTuong + '\'' +
+                ", ngayKhoiHanh=" + ngayKhoiHanh +
+                ", ngayDatVe=" + ngayDatVe +
+
+                ", gaKhoiHanh='" + gaKhoiHanh + '\'' +
+                ", gaKetThuc='" + gaKetThuc + '\'' +
+                ", giaVe=" + giaVe +
+                ", khachHang=" + maKhachHang +
+                ", ghe=" + maGhe +
+                ", loaiVe='" + loaiVe + '\'' +
+                ", tau=" + maTau +
+                '}';
     }
 }

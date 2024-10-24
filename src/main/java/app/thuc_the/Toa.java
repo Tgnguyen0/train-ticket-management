@@ -7,9 +7,8 @@ public class Toa {
     private String maToa;
     private String tenToa;
     private int soLuongGhe;
-    private Tau tau;
+    private String maTau;
 
-    private Set<Ghe> danhSachGhe;
 
     public Toa() {
     }
@@ -38,21 +37,6 @@ public class Toa {
         this.soLuongGhe = soLuongGhe;
     }
 
-    public Tau getTau() {
-        return tau;
-    }
-
-    public void setTau(Tau tau) {
-        this.tau = tau;
-    }
-
-    public Set<Ghe> getDanhSachGhe() {
-        return danhSachGhe;
-    }
-
-    public void setDanhSachGhe(Set<Ghe> danhSachGhe) {
-        this.danhSachGhe = danhSachGhe;
-    }
 
     @Override
     public boolean equals(Object o) {

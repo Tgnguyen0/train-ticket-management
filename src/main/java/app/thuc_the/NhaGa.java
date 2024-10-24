@@ -9,7 +9,6 @@ public class NhaGa {
     String diaChi;
     String soDienThoaiLienHe;
     String thanhPho;
-    Set<LichCapBenGa> danhSachTauCapBen;
 
     public NhaGa() {
     }
@@ -54,13 +53,6 @@ public class NhaGa {
         this.thanhPho = thanhPho;
     }
 
-    public Set<LichCapBenGa> getDanhSachTauCapBen() {
-        return danhSachTauCapBen;
-    }
-
-    public void setDanhSachTauCapBen(Set<LichCapBenGa> danhSachTauCapBen) {
-        this.danhSachTauCapBen = danhSachTauCapBen;
-    }
 
     @Override
     public boolean equals(Object o) {
