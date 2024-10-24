@@ -681,7 +681,8 @@ public class TrangChuaThongKeNhanVienTheoThang extends JPanel {
         buttonThongKeDoanhThu.setText("<html>Thống Kê Doanh Thu <br>        Nhà Ga</html>");
         // căn các chữ của button về giữa
 //        buttonThongKeDoanhThu.setHorizontalAlignment(SwingConstants.CENTER);
-        buttonThongKeTheoNamNhanVien.setText("<html>Thống Kê Doanh Thu <br>  Nhân Viên Theo Tháng</html>");
+
+        buttonThongKeTheoNamNhanVien.setText("Thống Kê Doanh Thu Nhân Viên Theo Tháng");
 
         javax.swing.GroupLayout trangChuaNutChuyenDoiTrangLayout = new javax.swing.GroupLayout(trangChuaNutChuyenDoiTrang);
         trangChuaNutChuyenDoiTrang.setLayout(trangChuaNutChuyenDoiTrangLayout);

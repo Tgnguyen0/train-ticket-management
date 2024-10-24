@@ -210,13 +210,16 @@ public class TrangDinhHuong extends JFrame {
         this.trangKhachHang = new TrangKhachHang(); // Khởi tạo trang Trang Khách Hàng
         this.trangChuaThongKeTheoNam = new TrangChuaThongKeNhanVienTheoNam();
 
+        // kiểm tra trang thống kê
         TrangChuaThongKeNhanVienTheoThang trangChuaThongKeNhanVienTheoThang = new TrangChuaThongKeNhanVienTheoThang(this);
+
         this.trangChua.add(trangChu, "Trang Chu");
         this.trangChua.add(trangDatVe, "Trang Dat Ve");
         this.trangChua.add(trangHoaDon,"Trang Hoa Don");
         this.trangChua.add(trangGioiThieu,"Trang Gioi Thieu");
         this.trangChua.add(trangKhachHang, "Trang Khach Hang");
-        this.trangChua.add(trangChuaThongKeNhanVienTheoThang, "Trang Thong Ke DT Theo Nam");
+        this.trangChua.add(trangChuaThongKeNhanVienTheoThang, "Trang Thong Ke");
+
         add(this.trangChua);
     }
 

@@ -334,7 +334,6 @@ public class TrangKhachHang extends JPanel {
 //            textArea_diaChi.setText(table.getValueAt(row, 6).toString());
 //        }
 //    }
-    
 
     public static boolean regexSDT(String sdt){
         String regex = "^[0-9]{10}$";

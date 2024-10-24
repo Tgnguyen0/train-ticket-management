@@ -58,6 +58,8 @@ public class HanhDong_TrangKhachHang implements ActionListener, MouseListener {
         if(KhachHang_DAO.themKhachHang(khachHang) > 0){
             JOptionPane.showMessageDialog(null, "Thêm khách hàng mới thành công!");
             this.lamMoi();
+        } else {
+            JOptionPane.showMessageDialog(null, "Thêm khách hàng mới thất bại!");
         }
         lamMoiDanhSach();
     }

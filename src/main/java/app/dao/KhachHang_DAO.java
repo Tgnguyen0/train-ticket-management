@@ -3,8 +3,7 @@ package app.dao;
 import app.ket_noi_co_so_du_lieu.KetNoiCoSoDuLieu;
 import app.thuc_the.GIOI_TINH;
 import app.thuc_the.KhachHang;
-
-
+import org.jetbrains.annotations.NotNull;
 import javax.swing.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -152,6 +151,7 @@ public class KhachHang_DAO {
 
         }
     }
+
     // Cập nhật thông tin khách hàng
     public void capNhatKhachHang_KhangVersion(KhachHang khachHang) {
 
@@ -180,6 +180,8 @@ public class KhachHang_DAO {
             int ketQuaThucHien = st.executeUpdate();
             if (ketQuaThucHien > 0) {
                 JOptionPane.showMessageDialog(null, "Cập nhật thành công");
+            } else {
+                JOptionPane.showMessageDialog(null, "Cập nhật thất bại");
             }
 
 
