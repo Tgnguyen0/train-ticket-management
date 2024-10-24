@@ -37,7 +37,7 @@ public class HanhDong_TrangDinhHuong implements ActionListener, MouseListener {
                 cardLayout.show(this.trangDinhHuong.trangChua, "Trang Khach Hang");
                 break;
             case "Thống Kê":
-                cardLayout.show(this.trangDinhHuong.trangChua, "Thong Ke");
+                cardLayout.show(this.trangDinhHuong.trangChua, "Trang Thong Ke");
                 break;
         }
     }

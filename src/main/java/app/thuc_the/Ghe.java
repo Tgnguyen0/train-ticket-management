@@ -8,14 +8,17 @@ public class Ghe {
     private LOAI_GHE loaiGhe;
     private TRANG_THAI_GHE trangThai;
 
+    String soGhe;
+
     public Ghe() {
     }
 
-    public Ghe(int maGhe, Toa toa_maToa, LOAI_GHE loaiGhe, TRANG_THAI_GHE trangThai) {
+    public Ghe(int maGhe, Toa toa, LOAI_GHE loaiGhe, TRANG_THAI_GHE trangThai, String soGhe) {
         this.maGhe = maGhe;
-        this.toa = toa_maToa;
+        this.toa = toa;
         this.loaiGhe = loaiGhe;
         this.trangThai = trangThai;
+        this.soGhe = soGhe;
     }
 
     public int getMaGhe() {

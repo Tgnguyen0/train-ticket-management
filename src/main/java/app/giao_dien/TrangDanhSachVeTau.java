@@ -163,7 +163,7 @@ public class TrangDanhSachVeTau extends JFrame{
 
         timKiemVe.setText("Tìm Kiếm vé ");
         timKiemVe.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.PLAIN, 13));
-        thanhTimKiem.setText("jTextField1");
+        thanhTimKiem.setText("");
         thanhTimKiem.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.PLAIN, 13));
         thanhTimKiem.setBorder(gachChanDam);
         
@@ -239,7 +239,7 @@ public class TrangDanhSachVeTau extends JFrame{
 
         tieuDe_TenKhachHang.setText("Họ và tên:");
         tieuDe_TenKhachHang.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.PLAIN, 13));
-        thanhTenKhachHang.setText("tên khách hàng");
+        thanhTenKhachHang.setText("");
         thanhTenKhachHang.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.PLAIN, 13));
         thanhTenKhachHang.setBorder(gachChanDam);
 
@@ -275,7 +275,7 @@ public class TrangDanhSachVeTau extends JFrame{
 
         tieuDe_SoDienThoai.setText("Số điện thoại:");
         tieuDe_SoDienThoai.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.PLAIN, 13));
-        thanhSoDienThoai.setText("số điện thoại");
+        thanhSoDienThoai.setText("");
         thanhSoDienThoai.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.PLAIN, 13));
         thanhSoDienThoai.setBorder(gachChanDam);
 
@@ -311,7 +311,7 @@ public class TrangDanhSachVeTau extends JFrame{
 
         tieuDe_Email.setText("Email:");
         tieuDe_Email.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.PLAIN, 13));
-        thanhEmail.setText("jTextField2");
+        thanhEmail.setText(" ");
         thanhEmail.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.PLAIN, 13));
         thanhEmail.setBorder(gachChanDam);
 
@@ -378,7 +378,7 @@ public class TrangDanhSachVeTau extends JFrame{
 
         tieuDe_SoHieu.setText("Số hiệu:");
         tieuDe_SoHieu.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.PLAIN, 13));
-        thanhSoHieu.setText("jTextField2");
+        thanhSoHieu.setText(" ");
         thanhSoHieu.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.PLAIN, 13));
         thanhSoHieu.setBorder(gachChanDam);
 
@@ -415,7 +415,7 @@ public class TrangDanhSachVeTau extends JFrame{
 
         tieuDe_NgayDi.setText("Ngày đi:");
         tieuDe_NgayDi.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.PLAIN, 13));
-        thanhNgayDi.setText("jTextField2");
+        thanhNgayDi.setText("");
         thanhNgayDi.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.PLAIN, 13));
         thanhNgayDi.setBorder(gachChanDam);
 
@@ -452,7 +452,7 @@ public class TrangDanhSachVeTau extends JFrame{
 
         tieuDe_NgayVe.setText("Ngày về:");
         tieuDe_NgayVe.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.PLAIN, 13));
-        thanhNgayVe.setText("jTextField2");
+        thanhNgayVe.setText("");
         thanhNgayVe.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.PLAIN, 13));
         thanhNgayVe.setBorder(gachChanDam);
 
@@ -488,7 +488,7 @@ public class TrangDanhSachVeTau extends JFrame{
 
         tieuDe_SoLuong.setText("Số lượng:");
         tieuDe_SoLuong.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.PLAIN, 13));
-        thanhSoLuong.setText("jTextField2");
+        thanhSoLuong.setText(" ");
         thanhSoLuong.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.PLAIN, 13));
         thanhSoLuong.setBorder(gachChanDam);
 
@@ -742,13 +742,16 @@ public class TrangDanhSachVeTau extends JFrame{
     private void thietLap_BangChuaDanhSachVeTau(){
          this.model =new DefaultTableModel(
                 new Object [][] {
-                        {"Phạm Văn Hinh", null, null, null, null, null, null, null, null},
-                        {"Phạm Văn Hinh", null, null, null},
-                        {null, null, null, null},
-                        {null, null, null, null}
+//                        {"1", "03294233", "TP.HCM", "VN123", "22:00pm","Giường 6 ghế", "A2", "A2.1", "12"},
+//                        {"2", "03293234", "TP.HCM", "VN123", "22:00pm","Giường 6 ghế", "A4", "A4.2", "22"},
+//                        {"3", "03294235", "TP.HCM", "VN123", "22:00pm","Giường 6 ghế", "B5", "B5.3", "34"},
+//                        {"4", "03294236", "TP.HCM", "VN123", "22:00pm","Giường 6 ghế", "C6", "C6.4", "56"},
+//                        {"5", "03294237", "TP.HCM", "VN123", "22:00pm","Giường 6 ghế", "D2", "D2.1", "31"},
+//                        {"6", "03294238", "TP.HCM", "VN123", "22:00pm","Giường 6 ghế", "A2", "A2.2", "34"},
+//                        {"7", "03294239", "TP.HCM", "VN123", "22:00pm","Giường 6 ghế", "B2", "B2.2", "23"},
                 },
                 new String [] {
-                        "Title 1", "Title 2", "Title 3", "Title 4", "Title 1", "Title 1", "Title 1", "Title 1" , "Title 1"
+                        "STT", "Mã Vé", "Điểm Đi", "Điểm Đến", "Giờ Đi", "Loại Ghế", "Toa", "Khoang" , "Vị Trí"
                 }
         ){
             @Override

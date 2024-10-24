@@ -9,18 +9,18 @@ public class LichCapBenGa {
     LocalDate gioCapBen;
     LocalDate gioKhoiHanh;
     String moTa;
-    Ga ga;
+    NhaGa nhaGa;
 
     public LichCapBenGa() {
     }
 
-    public LichCapBenGa(String maLich, Tau tau, LocalDate gioCapBen, LocalDate gioKhoiHanh, String moTa, Ga ga) {
+    public LichCapBenGa(String maLich, Tau tau, LocalDate gioCapBen, LocalDate gioKhoiHanh, String moTa, NhaGa nhaGa) {
         this.maLich = maLich;
         this.tau = tau;
         this.gioCapBen = gioCapBen;
         this.gioKhoiHanh = gioKhoiHanh;
         this.moTa = moTa;
-        this.ga = ga;
+        this.nhaGa = nhaGa;
     }
 
     public String getMaLich() {
@@ -63,12 +63,12 @@ public class LichCapBenGa {
         this.moTa = moTa;
     }
 
-    public Ga getGa() {
-        return ga;
+    public NhaGa getGa() {
+        return nhaGa;
     }
 
-    public void setGa(Ga ga) {
-        this.ga = ga;
+    public void setGa(NhaGa nhaGa) {
+        this.nhaGa = nhaGa;
     }
 
     @Override
