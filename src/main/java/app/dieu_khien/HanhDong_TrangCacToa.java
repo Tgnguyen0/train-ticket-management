@@ -15,19 +15,15 @@ import java.util.Stack;
 
 public class HanhDong_TrangCacToa implements ActionListener, MouseListener {
     TrangCacToa trangCacToa;
-    ArrayList<String> soCho;
-    Stack<String> soChoChon;
 
     public HanhDong_TrangCacToa(TrangCacToa trangCacToa) {
         this.trangCacToa = trangCacToa;
-        this.soCho = new ArrayList<String>();
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         CardLayout cardLayout = (CardLayout) this.trangCacToa.trangChua.getLayout();
         String command = e.getActionCommand();
-        System.out.println(command);
 
         switch (command) {
             case "1":

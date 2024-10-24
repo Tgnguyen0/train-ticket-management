@@ -22,7 +22,7 @@ public class TrangSoDoGiuong4 extends JPanel {
     public int kichThuocChu = 13;
     public int chieuDaiNut = 50;
     public int chieuRongNut = 50;
-    private PhongChuMoi phongTuyChinh = new PhongChuMoi();
+    public PhongChuMoi phongTuyChinh = new PhongChuMoi();
     public Color trang = new Color(255, 255, 255);
     public Color xanhNhat = new Color(66, 186, 255);
     public Color xanhBrandeis = new Color(0, 112, 255);

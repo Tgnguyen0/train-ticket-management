@@ -1,7 +1,7 @@
 package app.giao_dien;
 
 import app.dao.KhachHang_DAO;
-import app.thuc_the.GIOI_TINH;
+import app.dieu_khien.HanhDong_TrangKhachHang;
 import app.thuc_the.KhachHang;
 
 import javax.swing.*;
@@ -15,21 +15,31 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.FlowLayout;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import javax.swing.table.DefaultTableModel;
 
 import javax.swing.border.LineBorder;
 
+
+
+
 public class TrangKhachHang extends JPanel {
 
     private static final long serialVersionUID = 1L;
-    private final JTextArea textArea_diaChi;
-    private final JLabel label_hienThiMaKH;
-    private JTable table;
-    private JTextField textField_HoTen;
-    private JTextField textField_SDT;
-    private JTextField textField_timTen;
-    private JTextField textField_timSDT;
+    public final JTextArea textArea_diaChi;
+    public final JLabel label_hienThiMaKH;
+    public final JTextField textField_email;
+    public final JComboBox comboBox_gioiTinh;
+    private final JButton btn_lamMoiDSKH;
+    public JTable table;
+    public JTextField textField_HoTen;
+    public JTextField textField_SDT;
+    public JTextField textField_timTen;
+    public JTextField textField_timSDT;
+    private int soThuTuTable;
+    public ArrayList<KhachHang> dsKH;
 
 
     /**
@@ -115,16 +125,16 @@ public class TrangKhachHang extends JPanel {
         textField_SDT.setColumns(15);
 
         JLabel lblGiiTnh = new JLabel("Giới tính:");
-        lblGiiTnh.setBounds(0, 143, 82, 25);
+        lblGiiTnh.setBounds(508, 153, 82, 25);
         panel_1.add(lblGiiTnh);
         lblGiiTnh.setFont(new Font("Tahoma", Font.PLAIN, 20));
 
-        JComboBox comboBox = new JComboBox();
-        comboBox.setBounds(152, 145, 82, 25);
-        panel_1.add(comboBox);
-        comboBox.setFont(new Font("Tahoma", Font.PLAIN, 15));
-        comboBox.setModel(new DefaultComboBoxModel(new String[] {"Nam", "Nữ"}));
-        comboBox.setMaximumRowCount(2);
+        comboBox_gioiTinh = new JComboBox();
+        comboBox_gioiTinh.setBounds(602, 155, 82, 25);
+        panel_1.add(comboBox_gioiTinh);
+        comboBox_gioiTinh.setFont(new Font("Tahoma", Font.PLAIN, 15));
+        comboBox_gioiTinh.setModel(new DefaultComboBoxModel(new String[] {"Nam", "Nữ"}));
+        comboBox_gioiTinh.setMaximumRowCount(2);
 
         JLabel label_diaChi = new JLabel("Địa chỉ:");
         label_diaChi.setBounds(508, 0, 68, 25);
@@ -143,6 +153,8 @@ public class TrangKhachHang extends JPanel {
         panel_noiDung.add(panel_table);
         panel_table.setLayout(new BorderLayout(0, 0));
 
+
+
         table = new JTable();
         table.setModel(new DefaultTableModel(
                 new Object[][] {
@@ -150,28 +162,29 @@ public class TrangKhachHang extends JPanel {
                 new String[] {
                         "STT", "Mã khách hàng", "Họ và tên", "Số điện thoại", "Giới tính","Email", "Địa chỉ"
                 }
-        ));
+
+        ){
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                // Trả về false để không cho phép chỉnh sửa ô nào
+                return false;
+            }
+        });
 
         table.setFont(new Font("Tahoma", Font.PLAIN, 13));
         table.setBounds(0, 0, 1, 1);
 
         table.getColumnModel().getColumn(0).setPreferredWidth(30); //cot stt
-        table.getColumnModel().getColumn(1).setPreferredWidth(80); // cot maKH
-        table.getColumnModel().getColumn(2).setPreferredWidth(200); // cot ten
-        table.getColumnModel().getColumn(3).setPreferredWidth(100); // cot sdt
-        table.getColumnModel().getColumn(4).setPreferredWidth(10); // cot gioi tinh
+        table.getColumnModel().getColumn(1).setPreferredWidth(60); // cot maKH
+        table.getColumnModel().getColumn(2).setPreferredWidth(150); // cot ten
+        table.getColumnModel().getColumn(3).setPreferredWidth(50); // cot sdt
+        table.getColumnModel().getColumn(4).setPreferredWidth(15); // cot gioi tinh
         table.getColumnModel().getColumn(5).setPreferredWidth(100); // cot email
-        table.getColumnModel().getColumn(6).setPreferredWidth(200); // cot dia chi
+        table.getColumnModel().getColumn(6).setPreferredWidth(300); // cot dia chi
 
-        //LAY DATABASE LEN TABLE
-        KhachHang_DAO khachHang_dao = new KhachHang_DAO();
-        ArrayList<KhachHang> dsKH = (ArrayList<KhachHang>) khachHang_dao.ChonTatCa();
+        table.setShowGrid(true);
 
-        DefaultTableModel model = (DefaultTableModel) table.getModel();
-        for (int i = 0; i < dsKH.size(); i++) {
-            model.addRow(new Object[] {i + 1, dsKH.get(i).getMaKH(), dsKH.get(i).getTenKH(), dsKH.get(i).getSoDT(), dsKH.get(i).getGioiTinh(), dsKH.get(i).getEmail(), dsKH.get(i).getDiaChi()});
-        }
-
+        this.layToanBoKhachHang();
 
         JScrollPane scrollPane = new JScrollPane(table);
         panel_table.add(scrollPane);
@@ -233,31 +246,144 @@ public class TrangKhachHang extends JPanel {
         btn_lamMoi.setBackground(new Color(0, 128, 255));
         panel_3.add(btn_lamMoi);
 
+        JLabel label_email = new JLabel("Email:");
+        label_email.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        label_email.setBounds(0, 153, 55, 25);
+        panel_1.add(label_email);
+
+        textField_email = new JTextField();
+        textField_email.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        textField_email.setColumns(15);
+        textField_email.setBorder(new LineBorder(new Color(0, 128, 255)));
+        textField_email.setBounds(152, 145, 296, 45);
+        panel_1.add(textField_email);
+
+        JPanel panel_4 = new JPanel();
+        panel_2.add(panel_4);
+        panel_4.setLayout(new GridLayout(3, 1, 0, 0));
+
+        btn_lamMoiDSKH = new JButton("Làm mới danh sách");
+        btn_lamMoiDSKH.setForeground(Color.WHITE);
+        btn_lamMoiDSKH.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        btn_lamMoiDSKH.setBackground(new Color(0, 128, 255));
+
+        panel_4.add(btn_lamMoiDSKH);
+        JButton btn_themKH = new JButton("Thêm khách hàng");
+        btn_themKH.setForeground(Color.WHITE);
+        btn_themKH.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        btn_themKH.setBackground(new Color(0, 128, 255));
+        panel_4.add(btn_themKH);
 
 
+
+        //*************************ADD ACTION LISTENER*************************
+
+        HanhDong_TrangKhachHang hd = new HanhDong_TrangKhachHang(this);
+        btn_lamMoi.addActionListener(hd);
+        btn_capNhat.addActionListener(hd);
+        table.addMouseListener(hd);
+        btn_tim.addActionListener(hd);
+        btn_lamMoiDSKH.addActionListener(hd);
+        btn_themKH.addActionListener(hd);
+
+        //*************************ADD ACTION LISTENER*************************
     }
-    public KhachHang layThongTinKhachHangTuTable() {
 
-        DefaultTableModel model = (DefaultTableModel) table.getModel();
-        int row = table.getSelectedRow();
-        String maKH = (String) model.getValueAt(row, 1);
-        String hoTen = (String) model.getValueAt(row, 2);
-        String sdt = (String) model.getValueAt(row, 3);
-        String gioiTinh = (String) model.getValueAt(row, 4);
-        String email = (String) model.getValueAt(row, 5);
-        GIOI_TINH gt = GIOI_TINH.NAM;
-        if (gioiTinh.equals("Nữ")) {
-            gt = GIOI_TINH.NU;
+    public void hienDanhSachKhachHangRaBang(ArrayList<KhachHang> dsKH) {
+        Collections.sort(dsKH, new Comparator<KhachHang>() {
+            @Override
+            public int compare(KhachHang o1, KhachHang o2) {
+                return o1.chiLayTen().compareTo(o2.chiLayTen());
+            }
+        });
+        DefaultTableModel model = (DefaultTableModel) this.table.getModel();
+        model.setRowCount(0);
+        int soThuTuTable = 0;
+        for (KhachHang kh : dsKH) {
+            soThuTuTable++;
+            model.addRow(new Object[]{
+                    soThuTuTable, kh.getMaKH(), kh.getTenKH(), kh.getSoDT(), kh.getGioiTinh().getValue(), kh.getEmail(), kh.getDiaChi()
+            });
         }
-        String diaChi = (String) model.getValueAt(row, 6);
-        return new KhachHang(maKH, hoTen, diaChi, sdt, email, gt);
+        ListSelectionModel selectionModel = this.table.getSelectionModel();
+        selectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     }
 
-    public void hienThiThongTinKhachHang(KhachHang kh) {
-        kh = layThongTinKhachHangTuTable();
-        label_hienThiMaKH.setText(kh.getMaKH());
-        textField_HoTen.setText(kh.getTenKH());
-        textField_SDT.setText(kh.getSoDT());
-        textArea_diaChi.setText(kh.getDiaChi());
+    public void layToanBoKhachHang() {
+        //LAY DATABASE LEN TABLE
+        KhachHang_DAO khachHang_dao = new KhachHang_DAO();
+        this.dsKH = new ArrayList<>();
+        this.dsKH = khachHang_dao.layDanhSachKhachHang_KhangVersion();
+        hienDanhSachKhachHangRaBang(this.dsKH);
     }
+
+//    public void chonKhachHang() {
+//        int row = table.getSelectedRow();
+//        if (row == -1) {
+//            JOptionPane.showMessageDialog(null, "Vui lòng chọn khách hàng trong bảng!");
+//        } else {
+//            label_hienThiMaKH.setText(table.getValueAt(row, 1).toString());
+//            textField_HoTen.setText(table.getValueAt(row, 2).toString());
+//            textField_SDT.setText(table.getValueAt(row, 3).toString());
+//            if(table.getValueAt(row, 4).toString().equals("Nam")){
+//                comboBox_gioiTinh.setSelectedIndex(0);
+//            } else {
+//                comboBox_gioiTinh.setSelectedIndex(1);
+//            }
+//            textField_email.setText(table.getValueAt(row, 5).toString());
+//            textArea_diaChi.setText(table.getValueAt(row, 6).toString());
+//        }
+//    }
+    
+
+    public static boolean regexSDT(String sdt){
+        String regex = "^[0-9]{10}$";
+        if(!sdt.matches(regex)){
+            JOptionPane.showMessageDialog(null, "Số điện thoại không hợp lệ");
+            return false;
+        }
+        return true;
+    }
+    public static boolean regexEmail(String email){
+        String regex = "^([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6})*$";
+
+        if(!email.matches(regex)){
+            JOptionPane.showMessageDialog(null, "Email không hợp lệ");
+            return false;
+        }
+        return true;
+    }
+    public static boolean regexTimTen (String tenKH){
+        String regex = "^[\\p{L}]+(?:\\s+[\\p{L}'-]+)*$";
+        //xoa khoang trang thua giua cac tu
+
+        if(!tenKH.matches(regex)){
+            JOptionPane.showMessageDialog(null, "Tên không hợp lệ");
+            return false;
+        }
+        return true;
+    }
+    public static boolean regexTen(String tenKH){
+        String regex = "^[\\p{L}]+(?:\\s+[\\p{L}'-]+)+$";
+        //xoa khoang trang thua giua cac tu
+
+
+        if(!tenKH.matches(regex)){
+            JOptionPane.showMessageDialog(null, "Tên không hợp lệ");
+            return false;
+        }
+        return true;
+    }
+    public static boolean regexDiaChi(String diaChi){
+        String regex = "^([\\p{L}0-9\\s,.-]+)?$";
+
+        if(!diaChi.matches(regex)){
+            JOptionPane.showMessageDialog(null, "Địa chỉ không hợp lệ");
+            return false;
+        }
+        return true;
+    }
+
+
+
 }

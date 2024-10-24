@@ -29,7 +29,16 @@ public class HanhDong_TrangSoDoGiuong6 implements ActionListener, MouseListener 
                 this.trangSoDoGiuong6.gheDao.themGhe(ghe);
                 nutGiuong.setBackground(this.trangSoDoGiuong6.doDo);
             } else {
-                JOptionPane.showMessageDialog(this.trangSoDoGiuong6, "Bạn chỉ có thể chọn tối đa 10 ghế.");
+                JLabel thongBao = new JLabel("Bạn chỉ có thể chọn tối đa 10 ghế.");
+                thongBao.setFont(this.trangSoDoGiuong6.phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, 12));
+
+                JOptionPane hienThiLoi = new JOptionPane(thongBao, JOptionPane.ERROR_MESSAGE);
+                hienThiLoi.setForeground(this.trangSoDoGiuong6.xanhBrandeis);
+
+                JDialog hoiThoai = hienThiLoi.createDialog("Lỗi chọn ghế");
+                ImageIcon bieuTuongTau = new ImageIcon("assets/icon.png"); // Đường dẫn đến biểu tượng
+                hoiThoai.setIconImage(bieuTuongTau.getImage());
+                hoiThoai.setVisible(true);
             }
         }
 

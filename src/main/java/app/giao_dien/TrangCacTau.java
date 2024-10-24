@@ -1,5 +1,6 @@
 package app.giao_dien;
 
+import app.dao.Ghe_DAO;
 import app.dieu_khien.HanhDong_TrangCacTau;
 import app.dieu_khien.HanhDong_TrangCacToa;
 import app.phan_tu_tuy_chinh.NutAnh;
@@ -33,9 +34,12 @@ public class TrangCacTau extends JFrame {
 
     private ActionListener hanhDong;
     private MouseListener thaoTacChuot;
+    public Ghe_DAO gheDao;
 
     // Function tạo GUI chính
-    public TrangCacTau() {
+    public TrangCacTau(Ghe_DAO gheDao) {
+        this.gheDao = gheDao;
+
         ImageIcon icon = new ImageIcon("assets/icon.png");
         setTitle("Sơ đồ chung");
         //setSize(new Dimension(1200, 800));
@@ -54,6 +58,10 @@ public class TrangCacTau extends JFrame {
 
         taoThanhDinhHuongToa();
         taoTrangChua();
+    }
+
+    public void datGheDao(Ghe_DAO gheDao) {
+        this.gheDao = gheDao;
     }
 
     public void taoThanhDinhHuongToa() {
@@ -140,8 +148,10 @@ public class TrangCacTau extends JFrame {
         this.trangChua.setPreferredSize(new Dimension(1200, 600));
         this.trangChua.setLayout(new CardLayout());
 
-        this.trangCacToa1 = new TrangCacToa("Tàu 1");
-        this.trangCacToa2 = new TrangCacToa("Tàu 2");
+        System.out.println(String.valueOf(gheDao.layDsGhe().size()));
+
+        this.trangCacToa1 = new TrangCacToa("Tàu 1", this.gheDao);
+        this.trangCacToa2 = new TrangCacToa("Tàu 2", this.gheDao);
 
         this.trangChua.add(trangCacToa1, "Cac toa cua tau 1");
         this.trangChua.add(trangCacToa2, "Cac toa cua tau 2");
@@ -149,10 +159,10 @@ public class TrangCacTau extends JFrame {
         add(this.trangChua);
     }
 
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         SwingUtilities.invokeLater(() ->{
             TrangCacTau trangMoi = new TrangCacTau();
             trangMoi.setVisible(true);
         });
-    }
+    }*/
 }

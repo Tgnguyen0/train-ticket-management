@@ -1,6 +1,9 @@
 package app.dieu_khien;
 
 import app.giao_dien.*;
+import app.thuc_the.GIOI_TINH;
+import app.thuc_the.Ghe;
+import com.toedter.calendar.JDateChooser;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,13 +23,19 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
         Object source = e.getSource();
 
         if (source == this.trangDatVe.nutHienThiSoDoGhe) {
-            TrangCacTau trangCacTau = new TrangCacTau();
+            TrangCacTau trangCacTau = new TrangCacTau(this.trangDatVe.layGheDao());
             trangCacTau.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             trangCacTau.setVisible(true);
         }
 
+        if (source == this.trangDatVe.nutLuaChonMotChieu) {
+            this.trangDatVe.nutLuaChonKhuHoi.setSelected(false);
+            this.trangDatVe.thanhNhapNgayTroVe.setEnabled(false);
+        }
+
         if (source == this.trangDatVe.nutLuaChonKhuHoi) {
             this.trangDatVe.nutLuaChonMotChieu.setSelected(false);
+            this.trangDatVe.thanhNhapNgayTroVe.setEnabled(true);
         }
 
         if (source == this.trangDatVe.nutLuaChonMotChieu) {
@@ -64,7 +73,21 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
         int soLuongTreEm = Integer.parseInt(trangDatVe.thanhSoLuongTreEm.getText());
         int soLuongNguoiLon = Integer.parseInt(trangDatVe.thanhSoLuongNguoiLon.getText());
 
-        String loaiGheDaChon[] = new String[10];
+        String hoTen = this.trangDatVe.thanhNhapHoTen.getText();
+        String sdt = this.trangDatVe.thanhNhapDienThoai.getText();
+        String email = this.trangDatVe.thanhNhapThuDienTu.getText();
+
+        LocalDate ngaySinh = trangDatVe.thanhNhapNgaySinh
+                .getDate()
+                .toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate();
+
+        GIOI_TINH gioiTinh = trangDatVe.nutLuaChonNam.isSelected() ? GIOI_TINH.NAM : GIOI_TINH.NU;
+
+        for (int i = 0 ; i < this.trangDatVe.layGheDao().layDsGhe().size(); i++) {
+
+        }
     }
 
     @Override
@@ -72,13 +95,17 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
         if (e.getStateChange() == ItemEvent.SELECTED) {
             String loaiGheDaChon = (String) e.getItem();
 
-            switch (loaiGheDaChon) {
-                case "Ghế phụ":
-                    this.trangDatVe.nutHienThiSoDoGhe.setEnabled(false);
-                    break;
-                default:
-                    this.trangDatVe.nutHienThiSoDoGhe.setEnabled(true);
-                    break;
+            if (this.trangDatVe.thanhCacDiemDen.getSelectedItem().equals(this.trangDatVe.thanhCacDiemDi.getSelectedItem())) {
+                JLabel thongBao = new JLabel("Bạn chỉ có thể chọn tối đa 10 ghế.");
+                thongBao.setFont(this.trangDatVe.phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, 12));
+
+                JOptionPane hienThiLoi = new JOptionPane(thongBao, JOptionPane.ERROR_MESSAGE);
+                hienThiLoi.setForeground(this.trangDatVe.xanhBrandeis);
+
+                JDialog hoiThoai = hienThiLoi.createDialog("Lỗi chọn ghế");
+                ImageIcon bieuTuongTau = new ImageIcon("assets/icon.png"); // Đường dẫn đến biểu tượng
+                hoiThoai.setIconImage(bieuTuongTau.getImage());
+                hoiThoai.setVisible(true);
             }
         }
     }

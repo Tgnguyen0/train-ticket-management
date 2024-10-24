@@ -64,13 +64,12 @@ public class TrangCacToa extends JPanel {
     private MouseListener thaoTacChuot;
     public Ghe_DAO gheDao;
 
-    public TrangCacToa(String soHieu) {
+    public TrangCacToa(String soHieu, Ghe_DAO gheDao) {
         this.soHieu = soHieu;
+        this.gheDao = gheDao;
 
         setLayout(new BorderLayout());
         setPreferredSize(new Dimension(1200, 800));
-
-        this.gheDao = new Ghe_DAO();
 
         // Thêm ActionListener và MouseListener cho các nút
         this.hanhDong = new HanhDong_TrangCacToa(this);
@@ -79,6 +78,10 @@ public class TrangCacToa extends JPanel {
         taoThanhDinhHuongTau();
         taoTrangHuongDan();
         taoTrangChua();
+    }
+
+    public void datGheDao(Ghe_DAO gheDao) {
+        this.gheDao = gheDao;
     }
 
     public void taoThanhDinhHuongTau() {

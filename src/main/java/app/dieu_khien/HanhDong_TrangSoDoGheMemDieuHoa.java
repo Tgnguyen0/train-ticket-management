@@ -1,6 +1,7 @@
 package app.dieu_khien;
 
 import app.giao_dien.TrangSoDoGheMem;
+import app.phong_chu_moi.PhongChuMoi;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,6 +9,7 @@ import java.awt.event.*;
 
 public class HanhDong_TrangSoDoGheMemDieuHoa implements ActionListener, MouseListener {
     TrangSoDoGheMem trangSoDoGheMemDieuHoa;
+    PhongChuMoi phongTuyChinh = new PhongChuMoi();
     String soGhe;
 
     public HanhDong_TrangSoDoGheMemDieuHoa(TrangSoDoGheMem trangSoDoGheMemDieuHoa) {
@@ -30,7 +32,16 @@ public class HanhDong_TrangSoDoGheMemDieuHoa implements ActionListener, MouseLis
                 this.trangSoDoGheMemDieuHoa.gheDao.themGhe(ghe);
                 nutGhe.setBackground(this.trangSoDoGheMemDieuHoa.doDo);
             } else {
-                JOptionPane.showMessageDialog(this.trangSoDoGheMemDieuHoa, "Bạn chỉ có thể chọn tối đa 10 ghế.");
+                JLabel thongBao = new JLabel("Bạn chỉ có thể chọn tối đa 10 ghế.");
+                thongBao.setFont(this.trangSoDoGheMemDieuHoa.phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, 12));
+
+                JOptionPane hienThiLoi = new JOptionPane(thongBao, JOptionPane.ERROR_MESSAGE);
+                hienThiLoi.setForeground(this.trangSoDoGheMemDieuHoa.xanhBrandeis);
+
+                JDialog hoiThoai = hienThiLoi.createDialog("Lỗi chọn ghế");
+                ImageIcon bieuTuongTau = new ImageIcon("assets/icon.png"); // Đường dẫn đến biểu tượng
+                hoiThoai.setIconImage(bieuTuongTau.getImage());
+                hoiThoai.setVisible(true);
             }
         }
 

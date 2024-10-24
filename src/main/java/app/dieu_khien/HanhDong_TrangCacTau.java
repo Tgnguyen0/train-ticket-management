@@ -21,7 +21,6 @@ public class HanhDong_TrangCacTau implements ActionListener, MouseListener {
     public void actionPerformed(ActionEvent e) {
         CardLayout cardLayout = (CardLayout) this.trangSoDoChung.trangChua.getLayout();
         String command = e.getActionCommand();
-        System.out.println(command);
 
         switch (command) {
             case "Tau 1":

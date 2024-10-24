@@ -23,18 +23,30 @@ public class KhachHang implements Serializable {
     public KhachHang() {
     }
 
+    public KhachHang(String tenKH, String diaChi, String soDT, String email, GIOI_TINH gioiTinh) {
+        this.tenKH = tenKH;
+        this.diaChi = diaChi;
+        this.soDT = soDT;
+        this.email = email;
+        this.setGioiTinh(gioiTinh);
+    }
+
     public KhachHang(String maKH, String tenKH, String diaChi, String soDT, String email, GIOI_TINH gioiTinh) {
         this.maKH = maKH;
         this.tenKH = tenKH;
         this.diaChi = diaChi;
         this.soDT = soDT;
         this.email = email;
-        this.gioiTinh = gioiTinh;
+        this.setGioiTinh(gioiTinh);
     }
 
     public String getMaKH() {
         return maKH;
     }
+
+//    public String setMaKH_KhangVersion(){
+//        return this.maKH = MaKhachHangTuDong.taoMaKhachHangTuDong();
+//    }
 
     // Dùng khi tạo khách hàng mới
     public String setMaKH(int soNgauNhien) {
@@ -93,6 +105,10 @@ public class KhachHang implements Serializable {
 
     public void setGioiTinh(GIOI_TINH gioiTinh) {
         this.gioiTinh = gioiTinh;
+    }
+
+    public String chiLayTen() {
+        return tenKH.lastIndexOf(" ") == -1 ? tenKH : tenKH.substring(tenKH.lastIndexOf(" ") + 1);
     }
 
     @Override
