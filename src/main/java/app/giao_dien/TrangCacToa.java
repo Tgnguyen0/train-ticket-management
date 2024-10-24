@@ -34,18 +34,18 @@ public class TrangCacToa extends JPanel {
     public TrangSoDoGheMem trangSoDoGheMem1;
     public TrangSoDoGheMem trangSoDoGheMem2;
     public TrangSoDoGheMem trangSoDoGheMem3;
+    public TrangSoDoGheMem trangSoDoGheMem4;
 
     public TrangSoDoGiuong4 trangSoDoGiuong4So1;
     public TrangSoDoGiuong4 trangSoDoGiuong4So2;
     public TrangSoDoGiuong4 trangSoDoGiuong4So3;
-    public TrangSoDoGiuong4 trangSoDoGiuong4So4;
 
     public TrangSoDoGiuong6 trangSoDoGiuong6So1;
     public TrangSoDoGiuong6 trangSoDoGiuong6So2;
     public TrangSoDoGiuong6 trangSoDoGiuong6So3;
-    public TrangSoDoGiuong6 trangSoDoGiuong6So4;
 
-    public TrangSoDoGiuong2 trangSoDoGiuong2;
+    public TrangSoDoGiuong2 trangSoDoGiuong2So1;
+    public TrangSoDoGiuong2 trangSoDoGiuong2So2;
 
     /* Khởi tạo phông chữ màu sắc */
     public Color trang = new Color(255, 255, 255);
@@ -247,61 +247,61 @@ public class TrangCacToa extends JPanel {
         this.trangSoDoGheMem1 = new TrangSoDoGheMem();
         this.trangSoDoGheMem2 = new TrangSoDoGheMem();
         this.trangSoDoGheMem3 = new TrangSoDoGheMem();
+        this.trangSoDoGheMem4 = new TrangSoDoGheMem();
 
         // Thiết lập cho gheDaoTest của mỗi phần tử của TrangSoDoGheMem là cùng 1 danh sách
         trangSoDoGheMem1.datGheDao(gheDao);
         trangSoDoGheMem2.datGheDao(gheDao);
         trangSoDoGheMem3.datGheDao(gheDao);
+        trangSoDoGheMem4.datGheDao(gheDao);
 
         // Khởi tạo trang Trang Sơ đồ Giường 4
         this.trangSoDoGiuong4So1 = new TrangSoDoGiuong4();
         this.trangSoDoGiuong4So2 = new TrangSoDoGiuong4();
         this.trangSoDoGiuong4So3 = new TrangSoDoGiuong4();
-        this.trangSoDoGiuong4So4 = new TrangSoDoGiuong4();
 
         // Thiết lập cho gheDaoTest của mỗi phần tử của TrangSoDoGuong4 là cùng 1 danh sách
         trangSoDoGiuong4So1.datGiuongDao(gheDao);
         trangSoDoGiuong4So2.datGiuongDao(gheDao);
         trangSoDoGiuong4So3.datGiuongDao(gheDao);
-        trangSoDoGiuong4So4.datGiuongDao(gheDao);
 
         // Khởi tạo trang Trang Sơ đồ Giường 6
         this.trangSoDoGiuong6So1 = new TrangSoDoGiuong6();
         this.trangSoDoGiuong6So2 = new TrangSoDoGiuong6();
         this.trangSoDoGiuong6So3 = new TrangSoDoGiuong6();
-        this.trangSoDoGiuong6So4 = new TrangSoDoGiuong6();
 
         // Thiết lập cho gheDaoTest của mỗi phần tử của TrangSoDoGiuong6 là cùng 1 danh sách
         trangSoDoGiuong6So1.datGiuongDao(gheDao);
         trangSoDoGiuong6So2.datGiuongDao(gheDao);
         trangSoDoGiuong6So3.datGiuongDao(gheDao);
-        trangSoDoGiuong6So4.datGiuongDao(gheDao);
 
         // Khởi tạo trang Trang Sơ đồ Giường 2
-        this.trangSoDoGiuong2 = new TrangSoDoGiuong2();
+        this.trangSoDoGiuong2So1 = new TrangSoDoGiuong2();
+        this.trangSoDoGiuong2So2 = new TrangSoDoGiuong2();
 
         // Thiết lập cho gheDaoTest của mỗi phần tử của TrangSoDoGiuong2 là cùng 1 danh sách
-        trangSoDoGiuong2.datGiuongDao(gheDao);;
+        trangSoDoGiuong2So1.datGiuongDao(gheDao);
+        trangSoDoGiuong2So2.datGiuongDao(gheDao);
 
         // Thêm vào trangChua
         this.trangChua.add(trangSoDoGheMem1, "Trang Ghe Mem 1");
         this.trangChua.add(trangSoDoGheMem2, "Trang Ghe Mem 2");
         this.trangChua.add(trangSoDoGheMem3, "Trang Ghe Mem 3");
+        this.trangChua.add(trangSoDoGheMem4, "Trang Ghe Mem 4");
 
         // Thêm vào trangChua
         this.trangChua.add(trangSoDoGiuong6So1, "Trang Giuong 6 So 1");
         this.trangChua.add(trangSoDoGiuong6So2, "Trang Giuong 6 So 2");
         this.trangChua.add(trangSoDoGiuong6So3, "Trang Giuong 6 So 3");
-        this.trangChua.add(trangSoDoGiuong6So4, "Trang Giuong 6 So 4");
 
         // Thêm vào trangChua
         this.trangChua.add(trangSoDoGiuong4So1,"Trang Giuong 4 So 1");
         this.trangChua.add(trangSoDoGiuong4So2,"Trang Giuong 4 So 2");
         this.trangChua.add(trangSoDoGiuong4So3,"Trang Giuong 4 So 3");
-        this.trangChua.add(trangSoDoGiuong4So4,"Trang Giuong 4 So 4");
 
         // Thêm vào trangChua
-        this.trangChua.add(trangSoDoGiuong2,"Trang Giuong 2");
+        this.trangChua.add(trangSoDoGiuong2So1,"Trang Giuong 2 So 1");
+        this.trangChua.add(trangSoDoGiuong2So1,"Trang Giuong 2 So 2");
 
         add(this.trangChua, BorderLayout.SOUTH);
     }

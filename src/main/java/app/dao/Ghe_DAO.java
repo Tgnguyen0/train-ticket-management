@@ -4,6 +4,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Ghe_DAO {
+    String CHON_TAT_SQL = "SELECT * FROM Ghe";
+    String CHON_THEO_MA_SQL = "select * from Toa where MaToa =?";
+
     private Set<String> dsGhe;
 
     public Ghe_DAO() {

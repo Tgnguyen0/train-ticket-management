@@ -7,7 +7,7 @@ public class Tau {
     private String soHieu;
     private int soToa;
     private int soLuongToiDa;;
-    private int soLuongKhachHangDaDatVe;
+    //private int soLuongKhachHangDaDatVe;
     private Set<Toa> danhSachToa;
     private Set<LichCapBenGa> danhSachLichCapBenTau;
 
@@ -18,12 +18,8 @@ public class Tau {
         return soHieu;
     }
 
-    public String setSoHieu(String xauNgauNhien) {
-        String soHieu;
-
-        soHieu = "VN" + String.valueOf(xauNgauNhien);
-
-        return soHieu;
+    public void setSoHieu(String soHieu) {
+        this.soHieu = soHieu;
     }
 
     public int getSoToa() {
@@ -38,13 +34,13 @@ public class Tau {
         return soLuongToiDa;
     }
 
-    public int getSoLuongKhachHangDaDatVe() {
+    /*public int getSoLuongKhachHangDaDatVe() {
         return soLuongKhachHangDaDatVe;
     }
 
     public void setSoLuongKhachHangDaDatVe(int soLuongKhachHangDaDatVe) {
         this.soLuongKhachHangDaDatVe = soLuongKhachHangDaDatVe;
-    }
+    }*/
 
     public Set<Toa> getDanhSachToa() {
         return danhSachToa;

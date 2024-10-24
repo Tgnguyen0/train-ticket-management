@@ -11,8 +11,7 @@ public class KetNoiCoSoDuLieu {
     private static String driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";  // Driver de ket noi voi SQL Server
 
     //DOI MAY TINH NHO XEM LAI DUONG DAN CUA MAY MINH!!!!!!
-    private static String duongDan = "jdbc:sqlserver://localhost\\MSSQLSERVER13:1433;databasename=IT_Coffee;encrypt=false"; // URL ket noi voi co so du lieu cua TAN
-    private static String duongDan_Khang = "jdbc:sqlserver://localhost:1433;databaseName=TrainStationDatabase;user=sa;password=123;trustServerCertificate=true;"; // URL ket noi voi co so du lieu cua KHANG
+    private static String duongDan = "jdbc:sqlserver://localhost:1433;databaseName=TrainStationDatabase;user=sa;password=123;trustServerCertificate=true;"; // URL ket noi voi co so du lieu cua KHANG
 
     private static String nguoiDung = "sa";  // Ten dang nhap vao SQL Server
     private static String matKhau = "123";   // Mat khau dang nhap
@@ -35,12 +34,14 @@ public class KetNoiCoSoDuLieu {
      * @return PreparedStatement: Cau lenh SQL da chuan bi
      * @throws SQLException
      */
-    public static PreparedStatement LayCauLenh(String cauLenhSQL, Object...thamSo) throws SQLException {
+    public static PreparedStatement layCauLenh(String cauLenhSQL, Object...thamSo) throws SQLException {
         Connection lienKet = DriverManager.getConnection(duongDan, nguoiDung, matKhau);  // Tao ket noi voi CSDL
+
         if(lienKet == null) {
             System.out.println("Ket noi that bai");
             return null;
         }
+
         PreparedStatement cauLenhChuanBi = null;
 
         // Kiem tra xem cau lenh co phai la mot stored procedure
@@ -65,7 +66,7 @@ public class KetNoiCoSoDuLieu {
      */
     public static void CapNhat(String cauLenhSQL, Object...thamSo) {
         try {
-            PreparedStatement cauLenhChuanBi = KetNoiCoSoDuLieu.LayCauLenh(cauLenhSQL, thamSo);  // Chuan bi cau lenh
+            PreparedStatement cauLenhChuanBi = KetNoiCoSoDuLieu.layCauLenh(cauLenhSQL, thamSo);  // Chuan bi cau lenh
 
             try {
                 cauLenhChuanBi.executeUpdate();  // Thuc thi cau lenh SQL cap nhat du lieu
@@ -86,7 +87,8 @@ public class KetNoiCoSoDuLieu {
      */
     public static ResultSet TruyVan(String cauLenhSQL, Object...thamSo) {
         try {
-            PreparedStatement cauLenhChuanBi = KetNoiCoSoDuLieu.LayCauLenh(cauLenhSQL, thamSo);  // Chuan bi cau lenh
+            PreparedStatement cauLenhChuanBi = KetNoiCoSoDuLieu.layCauLenh(cauLenhSQL, thamSo);  // Chuan bi cau lenh
+
             return cauLenhChuanBi.executeQuery();  // Thuc thi truy van va tra ve ket qua ResultSet
         } catch (SQLException e) {
             e.printStackTrace();  // In loi ra console neu xay ra
@@ -100,7 +102,7 @@ public class KetNoiCoSoDuLieu {
      * @param thamSo: Cac tham so cho cau lenh SQL
      * @return Object: Gia tri don le tu ket qua truy van
      */
-    public static Object GiaTri(String cauLenhSQL, Object...thamSo) {
+    public static Object giaTri(String cauLenhSQL, Object...thamSo) {
         try {
             ResultSet boKetQua = KetNoiCoSoDuLieu.TruyVan(cauLenhSQL, thamSo);  // Thuc hien truy van
 
@@ -114,13 +116,16 @@ public class KetNoiCoSoDuLieu {
             throw new RuntimeException(e);  // Nem ra ngoai le neu co loi
         }
     }
+
     public static Connection ketNoiDB_KhangVersion() {
         Connection connection = null;
+
         try {
-            connection = DriverManager.getConnection(duongDan_Khang, nguoiDung, matKhau);
+            connection = DriverManager.getConnection(duongDan, nguoiDung, matKhau);
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
         return connection;
     }
 }

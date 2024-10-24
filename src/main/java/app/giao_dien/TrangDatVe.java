@@ -1,9 +1,12 @@
 package app.giao_dien;
 
 import app.dao.Ghe_DAO;
+import app.dao.Tau_DAO;
+import app.dao.Toa_DAO;
 import app.dieu_khien.HanhDong_TrangDatVe;
 import app.phan_tu_tuy_chinh.CustomComboBoxRenderer;
 import app.phong_chu_moi.PhongChuMoi;
+import app.thuc_the.Tau;
 import com.toedter.calendar.JDateChooser;
 
 import javax.swing.*;
@@ -14,6 +17,7 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseListener;
+import java.util.List;
 
 public class TrangDatVe extends JPanel {
     /* Khoi tao Cac thanh phan */
@@ -60,9 +64,23 @@ public class TrangDatVe extends JPanel {
     private ActionListener hanhDong;
     private MouseListener thaoTacChuot;
     private ItemListener mucDaChon;
+
+    public Tau_DAO tauDao;
+    public List<Tau> dsTau;
+
+    public Toa_DAO toaDao;
     public Ghe_DAO gheDao;
 
     public TrangDatVe() {
+        this.tauDao = new Tau_DAO();
+        this.toaDao = new Toa_DAO();
+        dsTau = this.tauDao.chonTatCa();
+
+        for (int i = 0; i < 4 ; i++) {
+            System.out.println(dsTau.get(i).getSoHieu());
+        }
+
+
         this.gheDao = new Ghe_DAO();
 
         setPreferredSize(new Dimension(1200, 600));
