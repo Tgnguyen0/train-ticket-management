@@ -426,5 +426,290 @@ public class KhachHang_DAO {
 
         return  khachHang;
     }
+
+    public static KhachHang layCuoiDanhSach () {
+        KhachHang kh = new KhachHang();
+        try {
+            Connection connection = KetNoiCoSoDuLieu.ketNoiDB_KhangVersion();
+            String sql = "SELECT TOP 1 * FROM KhachHang ORDER BY MaKH DESC";
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                kh.setMaKHTuCSDL(rs.getString("MaKH"));
+                kh.setTenKH(rs.getString("TenKH"));
+                kh.setDiaChi(rs.getString("DiaChi"));
+                kh.setSoDT(rs.getString("SoDT"));
+                kh.setEmail(rs.getString("Email"));
+                if (rs.getString("GioiTinh").equals(GIOI_TINH.NAM.getValue())) {
+                    kh.setGioiTinh(GIOI_TINH.NAM);
+                } else {
+                    kh.setGioiTinh(GIOI_TINH.NU);
+                }
+            }
+            st.close();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return kh;
+    }
+    public static KhachHang timTheoMaKH_KhangVersion(String maKH){
+        KhachHang kh = new KhachHang();
+        try {
+            Connection connection = KetNoiCoSoDuLieu.ketNoiDB_KhangVersion();
+            String sql = "SELECT * FROM KhachHang WHERE MaKH = ?";
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, maKH);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+
+                kh.setMaKHTuCSDL(rs.getString("MaKH"));
+                kh.setTenKH(rs.getString("TenKH"));
+                kh.setDiaChi(rs.getString("DiaChi"));
+                kh.setSoDT(rs.getString("SoDT"));
+                kh.setEmail(rs.getString("Email"));
+                if (rs.getString("GioiTinh").equals(GIOI_TINH.NAM.getValue())) {
+                    kh.setGioiTinh(GIOI_TINH.NAM);
+                } else {
+                    kh.setGioiTinh(GIOI_TINH.NU);
+                }
+                return kh;
+            }
+            st.close();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return kh;
+    }
+
+
+
+
+    public ArrayList<KhachHang> tim_ten(String timTen) {
+        ArrayList<KhachHang> list = new ArrayList<>();
+        try {
+            Connection connection = KetNoiCoSoDuLieu.ketNoiDB_KhangVersion();
+            String sql = "SELECT * FROM KhachHang WHERE TenKH LIKE ?";
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, "%" + timTen + "%");
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                String maKH = rs.getString("MaKH");
+                String tenKH = rs.getString("TenKH");
+                String diaChi = rs.getString("DiaChi");
+                String soDT = rs.getString("SoDT");
+                String email = rs.getString("Email");
+                String gioiTinh = rs.getString("GioiTinh");
+
+                GIOI_TINH gt = GIOI_TINH.NAM;
+                if(!gioiTinh.equals(GIOI_TINH.NAM.getValue())){
+                    gt = GIOI_TINH.NU;
+                }
+
+                KhachHang kh = new KhachHang(maKH, tenKH, diaChi, soDT, email, gt);
+                list.add(kh);
+            }
+            st.close();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+    } return list;
+    }
+
+    public ArrayList<KhachHang> tim_sdt(String timSDT) {
+        ArrayList<KhachHang> list = new ArrayList<>();
+        try {
+            Connection connection = KetNoiCoSoDuLieu.ketNoiDB_KhangVersion();
+            String sql = "SELECT * FROM KhachHang WHERE SoDT LIKE ?";
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, "%" + timSDT + "%");
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                String maKH = rs.getString("MaKH");
+                String tenKH = rs.getString("TenKH");
+                String diaChi = rs.getString("DiaChi");
+                String soDT = rs.getString("SoDT");
+                String email = rs.getString("Email");
+                String gioiTinh = rs.getString("GioiTinh");
+
+                GIOI_TINH gt = GIOI_TINH.NAM;
+                if(!gioiTinh.equals(GIOI_TINH.NAM.getValue())){
+                    gt = GIOI_TINH.NU;
+                }
+
+                KhachHang kh = new KhachHang(maKH, tenKH, diaChi, soDT, email, gt);
+                list.add(kh);
+            }
+            st.close();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+    }
+        return list;
+    }
+
+    public ArrayList<KhachHang> tim_email(String timEmail) {
+        ArrayList<KhachHang> list = new ArrayList<>();
+        try {
+            Connection connection = KetNoiCoSoDuLieu.ketNoiDB_KhangVersion();
+            String sql = "SELECT * FROM KhachHang WHERE Email LIKE ?";
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, "%" + timEmail + "%");
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                String maKH = rs.getString("MaKH");
+                String tenKH = rs.getString("TenKH");
+                String diaChi = rs.getString("DiaChi");
+                String soDT = rs.getString("SoDT");
+                String email = rs.getString("Email");
+                String gioiTinh = rs.getString("GioiTinh");
+
+                GIOI_TINH gt = GIOI_TINH.NAM;
+                if(!gioiTinh.equals(GIOI_TINH.NAM.getValue())){
+                    gt = GIOI_TINH.NU;
+                }
+
+                KhachHang kh = new KhachHang(maKH, tenKH, diaChi, soDT, email, gt);
+                list.add(kh);
+            }
+            st.close();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } return list;
+    }
+
+    public ArrayList<KhachHang> tim_ten_email(String timTen, String timEmail) {
+        ArrayList<KhachHang> list = new ArrayList<>();
+        try {
+            Connection connection = KetNoiCoSoDuLieu.ketNoiDB_KhangVersion();
+            String sql = "SELECT * FROM KhachHang WHERE TenKH LIKE ? AND Email LIKE ?";
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, "%" + timTen + "%");
+            st.setString(2, "%" + timEmail + "%");
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                String maKH = rs.getString("MaKH");
+                String tenKH = rs.getString("TenKH");
+                String diaChi = rs.getString("DiaChi");
+                String soDT = rs.getString("SoDT");
+                String email = rs.getString("Email");
+                String gioiTinh = rs.getString("GioiTinh");
+
+                GIOI_TINH gt = GIOI_TINH.NAM;
+                if(!gioiTinh.equals(GIOI_TINH.NAM.getValue())){
+                    gt = GIOI_TINH.NU;
+                }
+
+                KhachHang kh = new KhachHang(maKH, tenKH, diaChi, soDT, email, gt);
+                list.add(kh);
+            }
+            st.close();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();} return list;
+    }
+
+    public ArrayList<KhachHang> tim_sdt_email(String timSDT, String timEmail) {
+        ArrayList<KhachHang> list = new ArrayList<>();
+        try {
+            Connection connection = KetNoiCoSoDuLieu.ketNoiDB_KhangVersion();
+            String sql = "SELECT * FROM KhachHang WHERE SoDT LIKE ? AND Email LIKE ?";
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, "%" + timSDT + "%");
+            st.setString(2, "%" + timEmail + "%");
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                String maKH = rs.getString("MaKH");
+                String tenKH = rs.getString("TenKH");
+                String diaChi = rs.getString("DiaChi");
+                String soDT = rs.getString("SoDT");
+                String email = rs.getString("Email");
+                String gioiTinh = rs.getString("GioiTinh");
+
+                GIOI_TINH gt = GIOI_TINH.NAM;
+                if(!gioiTinh.equals(GIOI_TINH.NAM.getValue())){
+                    gt = GIOI_TINH.NU;
+                }
+
+                KhachHang kh = new KhachHang(maKH, tenKH, diaChi, soDT, email, gt);
+                list.add(kh);
+            }
+            st.close();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+    }
+        return list;
+    }
+
+    public ArrayList<KhachHang> tim_ten_sdt_email(String timTen, String timSDT, String timEmail) {
+        ArrayList<KhachHang> list = new ArrayList<>();
+        try {
+            Connection connection = KetNoiCoSoDuLieu.ketNoiDB_KhangVersion();
+            String sql = "SELECT * FROM KhachHang WHERE TenKH LIKE ? AND SoDT LIKE ? AND Email LIKE ?";
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, "%" + timTen + "%");
+            st.setString(2, "%" + timSDT + "%");
+            st.setString(3, "%" + timEmail + "%");
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                String maKH = rs.getString("MaKH");
+                String tenKH = rs.getString("TenKH");
+                String diaChi = rs.getString("DiaChi");
+                String soDT = rs.getString("SoDT");
+                String email = rs.getString("Email");
+                String gioiTinh = rs.getString("GioiTinh");
+
+                GIOI_TINH gt = GIOI_TINH.NAM;
+                if(!gioiTinh.equals(GIOI_TINH.NAM.getValue())){
+                    gt = GIOI_TINH.NU;
+                }
+
+                KhachHang kh = new KhachHang(maKH, tenKH, diaChi, soDT, email, gt);
+                list.add(kh);
+            }
+            st.close();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+    }
+        return list;
+    }
+
+    public ArrayList<KhachHang> tim_ten_sdt(String timTen, String timSDT) {
+        ArrayList<KhachHang> list = new ArrayList<>();
+        try {
+            Connection connection = KetNoiCoSoDuLieu.ketNoiDB_KhangVersion();
+            String sql = "SELECT * FROM KhachHang WHERE TenKH LIKE ? AND SoDT LIKE ?";
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, "%" + timTen + "%");
+            st.setString(2, "%" + timSDT + "%");
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                String maKH = rs.getString("MaKH");
+                String tenKH = rs.getString("TenKH");
+                String diaChi = rs.getString("DiaChi");
+                String soDT = rs.getString("SoDT");
+                String email = rs.getString("Email");
+                String gioiTinh = rs.getString("GioiTinh");
+
+                GIOI_TINH gt = GIOI_TINH.NAM;
+                if(!gioiTinh.equals(GIOI_TINH.NAM.getValue())){
+                    gt = GIOI_TINH.NU;
+                }
+
+                KhachHang kh = new KhachHang(maKH, tenKH, diaChi, soDT, email, gt);
+                list.add(kh);
+            }
+            st.close();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+    }
+        return list;
+    }
 }
 

@@ -1,26 +1,30 @@
 package app.dieu_khien;
 
 import app.dao.KhachHang_DAO;
+import app.giao_dien.TrangDinhHuong;
 import app.giao_dien.TrangKhachHang;
 import app.thuc_the.GIOI_TINH;
 import app.thuc_the.KhachHang;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
-import java.util.Locale;
 
 
 public class HanhDong_TrangKhachHang implements ActionListener, MouseListener {
     private TrangKhachHang trangKhachHang;
 
+
     public HanhDong_TrangKhachHang(TrangKhachHang trangKhachHang) {
         this.trangKhachHang = trangKhachHang;
     }
+
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -31,21 +35,78 @@ public class HanhDong_TrangKhachHang implements ActionListener, MouseListener {
             this.lamMoi();
         } else if (e.getActionCommand().equals("Cập nhật")) {
             this.capNhat();
-        } else if (e.getActionCommand().equals("Làm mới danh sách")) {
+        } else if (e.getActionCommand().equals("Làm trống danh sách")) {
             this.lamMoiDanhSach();
-        } else if (e.getActionCommand().equals("Thêm khách hàng")){
+        } else if (e.getActionCommand().equals("Xem toàn bộ")){
+            this.trangKhachHang.layToanBoKhachHang();
+        } else if (e.getActionCommand().equals("Thêm khách hàng")) {
             this.themKH();
+        } else if (e.getActionCommand().equals("Thêm vào hàng chờ")) {
+            this.trangKhachHang.themVaoHangCho();
+        } else if (e.getActionCommand().equals("Xoá khỏi hàng")) {
+            this.xoaKhoiHangCho();
+        } else if (e.getActionCommand().equals("Đặt vé")) {
+            this.datVe();
+        }
+    }
+
+    public boolean datVe() {
+        int row = this.trangKhachHang.table_hangCho.getRowCount();
+        this.trangKhachHang.dsHangCho = new ArrayList<>();
+        if(row == 0){
+            JOptionPane.showMessageDialog(null, "Hàng chờ trống!");
+        } else {
+           for (int i = 0; i < row; i++) {
+               trangKhachHang.dsHangCho.add(KhachHang_DAO.timTheoMaKH_KhangVersion(this.trangKhachHang.table_hangCho.getValueAt(i, 0).toString()));
+           }
+           this.trangKhachHang.clearTable(trangKhachHang.table_hangCho);
+           this.lamMoi();
+           this.lamMoiDanhSach();
+           this.trangKhachHang.hide();
+
+           CardLayout cardLayout = (CardLayout) TrangDinhHuong.getTrangChua().getLayout();
+           cardLayout.show(TrangDinhHuong.getTrangChua(), "Trang Dat Ve");
+
+           return true;
+        }
+        return false;
+    }
+
+    public void xoaKhoiHangCho() {
+        int row = this.trangKhachHang.table_hangCho.getSelectedRow();
+        if(row == -1){
+            JOptionPane.showMessageDialog(null, "Vui lòng chọn khách hàng trong hàng chờ!");
+        } else {
+            DefaultTableModel model = (DefaultTableModel) this.trangKhachHang.table_hangCho.getModel();
+            model.removeRow(row);
         }
     }
 
     private void themKH() {
         String ten = trangKhachHang.textField_HoTen.getText();
+        ten = ten.trim().replaceAll("\\s+", " ");
+        String[] words = ten.split(" ");
+        StringBuilder tenKhachHangTuInHoa = new StringBuilder();
+
+        // Lặp qua từng từ trong chuỗi
+        for (String word : words) {
+            if (word.length() > 0) {
+                // In hoa chữ cái đầu và nối phần còn lại
+                tenKhachHangTuInHoa.append(Character.toUpperCase(word.charAt(0)))
+                        .append(word.substring(1).toLowerCase()).append(" ");
+            }
+        }
         String sdt = trangKhachHang.textField_SDT.getText();
         String diaChi = trangKhachHang.textArea_diaChi.getText();
         String email = trangKhachHang.textField_email.getText();
         if(!trangKhachHang.regexTen(ten) || !trangKhachHang.regexDiaChi(diaChi) || !trangKhachHang.regexSDT(sdt) || !trangKhachHang.regexEmail(email)){
             return;
         }
+        int luaChon = JOptionPane.showConfirmDialog(null, "Bạn chắc chắn thêm khách hàng này?" , "Xác nhận thêm", JOptionPane.YES_NO_OPTION);
+        if (luaChon == JOptionPane.NO_OPTION) {
+            return;
+        }
+
         String gioiTinh = trangKhachHang.comboBox_gioiTinh.getSelectedItem().toString();
         GIOI_TINH gt = GIOI_TINH.NAM;
         if(gioiTinh.equals("Nữ")){
@@ -53,7 +114,7 @@ public class HanhDong_TrangKhachHang implements ActionListener, MouseListener {
         }
 
 
-        KhachHang khachHang = new KhachHang(ten, diaChi, sdt, email, gt);
+        KhachHang khachHang = new KhachHang(tenKhachHangTuInHoa.toString().trim(), diaChi, sdt, email, gt);
         System.out.println(khachHang.toString() + " " + khachHang.getGioiTinh().getValue());
         if(KhachHang_DAO.themKhachHang(khachHang) > 0){
             JOptionPane.showMessageDialog(null, "Thêm khách hàng mới thành công!");
@@ -62,12 +123,11 @@ public class HanhDong_TrangKhachHang implements ActionListener, MouseListener {
             JOptionPane.showMessageDialog(null, "Thêm khách hàng mới thất bại!");
         }
         lamMoiDanhSach();
+        this.trangKhachHang.hienKhachHangVuaThem(KhachHang_DAO.layCuoiDanhSach());
     }
 
     private void lamMoiDanhSach() {
-        trangKhachHang.layToanBoKhachHang();
-        trangKhachHang.textField_timTen.setText("");
-        trangKhachHang.textField_timSDT.setText("");
+        this.trangKhachHang.clearTable(trangKhachHang.table);
     }
 
     @Override
@@ -155,35 +215,51 @@ public class HanhDong_TrangKhachHang implements ActionListener, MouseListener {
         KhachHang kh = new KhachHang(maKH, tenKhachHangTuInHoa.toString().trim(), diaChi, soDT, email, gioiTinh);
         KhachHang_DAO khachHang_dao = new KhachHang_DAO();
         khachHang_dao.capNhatKhachHang_KhangVersion(kh);
-        trangKhachHang.layToanBoKhachHang();
+        lamMoi();
     }
 
     public void tim() {
         KhachHang_DAO khachHang_dao = new KhachHang_DAO();
         trangKhachHang.dsKH = new ArrayList<>();
         String timTen = trangKhachHang.textField_timTen.getText();
-
+        String timEmail = trangKhachHang.textField_timEmail.getText();
         String timSDT = trangKhachHang.textField_timSDT.getText();
-        if (timTen.isEmpty() && timSDT.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Vui lòng nhập tên hoặc số điện thoại để tìm kiếm");
+        if (timTen.isEmpty() && timSDT.isEmpty() && timEmail.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Vui lòng nhập thông tin tìm kiếm!");
             return;
-        } else if (timSDT.isEmpty()) {
-            if (!trangKhachHang.regexTimTen(timTen)) {
+        } else if (timEmail.equals("") && timSDT.equals("")) {
+            trangKhachHang.dsKH = khachHang_dao.tim_ten(timTen);
+        } else if (timTen.equals("") && timEmail.equals("")) {
+            trangKhachHang.dsKH = khachHang_dao.tim_sdt(timSDT);
+        } else if (timTen.equals("") && timSDT.equals("")) {
+            trangKhachHang.dsKH = khachHang_dao.tim_email(timEmail);
+        } else if (timSDT.equals("")){
+            trangKhachHang.dsKH = khachHang_dao.tim_ten_email(timTen, timEmail);
+        } else if (timTen.equals("")){
+            trangKhachHang.dsKH = khachHang_dao.tim_sdt_email(timSDT, timEmail);
+        } else if (timEmail.equals("")){
+            trangKhachHang.dsKH = khachHang_dao.tim_ten_sdt(timTen, timSDT);
+        }
+        else {
+            trangKhachHang.dsKH = khachHang_dao.tim_ten_sdt_email(timTen, timSDT, timEmail);
+        }
+        if (trangKhachHang.dsKH.size() == 0) {
+            int luaChon = JOptionPane.showConfirmDialog(null, "Bạn có muốn thêm khách hàng mới không?", "Không tìm thấy khách hàng!", JOptionPane.YES_NO_OPTION);
+            if (luaChon == JOptionPane.YES_OPTION) {
+                trangKhachHang.textField_SDT.setText(timSDT);
+                trangKhachHang.textField_email.setText(timEmail);
+                trangKhachHang.textField_HoTen.setText(timTen);
+                lamMoiTimKiem();
+            } else {
                 return;
             }
-            trangKhachHang.dsKH = khachHang_dao.timTheoTen_KhangVersion(timTen);
-        } else if (timTen.isEmpty()) {
-            if (!trangKhachHang.regexSDT(timSDT)) {
-                return;
-            }
-            trangKhachHang.dsKH = khachHang_dao.timTheoSDT_KhangVersion(timSDT);
-        } else {
-            if (!trangKhachHang.regexTimTen(timTen) || !trangKhachHang.regexSDT(timSDT)) {
-                return;
-            }
-            trangKhachHang.dsKH = khachHang_dao.timTheoTenVaSDT_KhangVersion(timTen, timSDT);
         }
 
         trangKhachHang.hienDanhSachKhachHangRaBang(trangKhachHang.dsKH);
+    }
+    public void lamMoiTimKiem(){
+        trangKhachHang.textField_timTen.setText("");
+        trangKhachHang.textField_timSDT.setText("");
+        trangKhachHang.textField_timEmail.setText("");
     }
 }
