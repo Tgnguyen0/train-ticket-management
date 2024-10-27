@@ -3,7 +3,6 @@ package app.dieu_khien;
 import app.dao.Ve_DAO;
 import app.dao.testDataVe;
 import app.giao_dien.TrangDanhSachVeTau;
-import app.giao_dien.TrangDinhHuong;
 import app.thuc_the.Ve;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
@@ -15,6 +14,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.sql.SQLException;
 import java.util.List;
+
 @Slf4j
 public class HanhDong_TrangDanhSachVe implements ActionListener, MouseListener {
     Logger logger = LoggerFactory.getLogger(TrangDanhSachVeTau.class);

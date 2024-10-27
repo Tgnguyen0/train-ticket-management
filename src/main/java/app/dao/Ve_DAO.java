@@ -108,7 +108,7 @@ public class Ve_DAO {
 
         try {
             i = 1;
-            KetNoiCoSoDuLieu.CapNhat(
+            KetNoiCoSoDuLieu.capNhat(
                     CAP_NHAT_SQL,
                     ve.getNgayDatVe(),
                     ve.getGiaVe(),
@@ -143,7 +143,7 @@ public class Ve_DAO {
         try {
             ResultSet boKetQua = null;
             try {
-                boKetQua = KetNoiCoSoDuLieu.TruyVan(lenhSQL, thamSo);
+                boKetQua = KetNoiCoSoDuLieu.truyVan(lenhSQL, thamSo);
                 while (boKetQua.next()) {
                     DaiNgo daiNgo = DaiNgo.GIAMGIAKHONGPHANTRAM;
                     Ve ve = new Ve();
@@ -197,7 +197,6 @@ public class Ve_DAO {
         }
     }
 
-
     public  List<Ve> layToanBoVe() throws SQLException {
         List<Ve> danhSachVe = new ArrayList<>();
         String sql = "select  * from Ve";
@@ -215,7 +214,7 @@ public class Ve_DAO {
             String loaiGhe = resultSet.getString("LoaiVe");
             String loaiDoiTuong = resultSet.getString("LoaiDoiTuong");
             LocalDate ngayKhoiHanh = resultSet.getDate("NgayKhoiHanh").toLocalDate();
-            danhSachVe.add(new Ve( maVe,  loaiDoiTuong,  ngayKhoiHanh,  ngayDatVe,  gaKhoiHanh,  gaKetThuc,  giaVe,  maKh, maGhe,  loaiGhe));
+            danhSachVe.add(new Ve(maVe,  loaiDoiTuong,  ngayKhoiHanh,  ngayDatVe,  gaKhoiHanh,  gaKetThuc,  giaVe,  maKh, maGhe,  loaiGhe));
         }
         return danhSachVe;
     }

@@ -13,6 +13,7 @@ public class KetNoiCoSoDuLieu {
     //DOI MAY TINH NHO XEM LAI DUONG DAN CUA MAY MINH!!!!!!
     private static String duongDan = "jdbc:sqlserver://localhost:1433;databaseName=TrainStationDatabase;user=sa;password=123;trustServerCertificate=true;"; // URL ket noi voi co so du lieu cua KHANG
 
+    private static String duongDan_Hinh = "jdbc:sqlserver://localhost:1433;databaseName=TrainStationDatabase;user=sa;password=123;trustServerCertificate=true;"; // URL ket noi voi co so du lieu cua Hinh
     private static String nguoiDung = "sa";  // Ten dang nhap vao SQL Server
     private static String matKhau = "123";   // Mat khau dang nhap
 
@@ -64,7 +65,7 @@ public class KetNoiCoSoDuLieu {
      * @param cauLenhSQL: Cau lenh SQL
      * @param thamSo: Cac tham so cho cau lenh SQL
      */
-    public static void CapNhat(String cauLenhSQL, Object...thamSo) {
+    public static void capNhat(String cauLenhSQL, Object...thamSo) {
         try {
             PreparedStatement cauLenhChuanBi = KetNoiCoSoDuLieu.layCauLenh(cauLenhSQL, thamSo);  // Chuan bi cau lenh
 
@@ -85,7 +86,7 @@ public class KetNoiCoSoDuLieu {
      * @param thamSo: Cac tham so cho cau lenh SQL
      * @return ResultSet: Ket qua cua truy van
      */
-    public static ResultSet TruyVan(String cauLenhSQL, Object...thamSo) {
+    public static ResultSet truyVan(String cauLenhSQL, Object...thamSo) {
         try {
             PreparedStatement cauLenhChuanBi = KetNoiCoSoDuLieu.layCauLenh(cauLenhSQL, thamSo);  // Chuan bi cau lenh
 
@@ -104,7 +105,7 @@ public class KetNoiCoSoDuLieu {
      */
     public static Object giaTri(String cauLenhSQL, Object...thamSo) {
         try {
-            ResultSet boKetQua = KetNoiCoSoDuLieu.TruyVan(cauLenhSQL, thamSo);  // Thuc hien truy van
+            ResultSet boKetQua = KetNoiCoSoDuLieu.truyVan(cauLenhSQL, thamSo);  // Thuc hien truy van
 
             if (boKetQua.next()) {
                 return boKetQua.getObject(0);  // Tra ve gia tri o cot dau tien
@@ -127,5 +128,17 @@ public class KetNoiCoSoDuLieu {
         }
 
         return connection;
+    }
+
+    public static Connection ketNoiDB_HinhDB() {
+        Connection connection = null;
+        try {
+            connection = DriverManager.getConnection(duongDan_Hinh, nguoiDung, matKhau);
+        } catch (SQLException e) {
+            //log.error("connect database unfinished!!!");
+            e.printStackTrace();
+        }
+
+        return  connection ;
     }
 }

@@ -39,7 +39,7 @@ public class Toa_DAO {
         try {
             ResultSet boKetQua = null;
             try {
-                boKetQua = KetNoiCoSoDuLieu.TruyVan(sql, args);
+                boKetQua = KetNoiCoSoDuLieu.truyVan(sql, args);
                 while (boKetQua.next()) {
                     Toa toa = new Toa();
                     toa.setMaToa(boKetQua.getString("MaToa"));

@@ -15,12 +15,12 @@ public class Ve {
     String gaKhoiHanh;
     String gaKetThuc;
     double giaVe;
-    KhachHang khachHang;
-    Ghe ghe;
+    String maGhe;
+    String maKhachHang;
     String loaiVe;
     Tau tau;
 
-    public Ve(String maVe, String loaiDoiTuong, LocalDate ngayKhoiHanh, LocalDate ngayDatVe, DaiNgo daiNgo, String gaKhoiHanh, String gaKetThuc, double giaVe, KhachHang khachHang, Ghe ghe, String loaiVe) {
+    public Ve(String maVe, String loaiDoiTuong, LocalDate ngayKhoiHanh, LocalDate ngayDatVe, String gaKhoiHanh, String gaKetThuc, double giaVe, String maKhachHang, String maGhe, String loaiVe) {
         this.maVe = maVe;
         this.loaiDoiTuong = loaiDoiTuong;
         this.ngayKhoiHanh = ngayKhoiHanh;
@@ -29,12 +29,12 @@ public class Ve {
         this.gaKhoiHanh = gaKhoiHanh;
         this.gaKetThuc = gaKetThuc;
         this.giaVe = giaVe;
-        this.khachHang = khachHang;
-        this.ghe = ghe;
+        this.maKhachHang = maKhachHang;
+        this.maGhe = maGhe;
         this.loaiVe = loaiVe;
     }
 
-    public Ve(String loaiDoiTuong, LocalDate ngayKhoiHanh, LocalDate ngayDatVe, DaiNgo daiNgo, String gaKhoiHanh, String gaKetThuc, double giaVe, KhachHang khachHang, Ghe ghe, String loaiVe) {
+    public Ve(String loaiDoiTuong, LocalDate ngayKhoiHanh, LocalDate ngayDatVe, String gaKhoiHanh, String gaKetThuc, double giaVe, String maKhachHang, String maGhe, String loaiVe) {
         this.maVe = setMaVe();
         this.loaiDoiTuong = loaiDoiTuong;
         this.ngayKhoiHanh = ngayKhoiHanh;
@@ -43,8 +43,8 @@ public class Ve {
         this.gaKhoiHanh = gaKhoiHanh;
         this.gaKetThuc = gaKetThuc;
         this.giaVe = giaVe;
-        this.khachHang = khachHang;
-        this.ghe = ghe;
+        this.maKhachHang = maKhachHang;
+        this.maGhe = maGhe;
         this.loaiVe = loaiVe;
     }
 
@@ -128,20 +128,20 @@ public class Ve {
         this.giaVe = giaVe;
     }
 
-    public KhachHang getKhachHang() {
-        return khachHang;
+    public String getMaKhachHang() {
+        return maKhachHang;
     }
 
-    public void setKhachHang(KhachHang khachHang) {
-        this.khachHang = khachHang;
+    public void setKhachHang(String maKhachHang) {
+        this.maKhachHang = maKhachHang;
     }
 
-    public Ghe getGhe() {
-        return ghe;
+    public String getGhe() {
+        return this.maGhe;
     }
 
-    public void setGhe(Ghe ghe) {
-        this.ghe = ghe;
+    public void setGhe(String maGhe) {
+        this.maGhe = maGhe;
     }
 
     public String getLoaiVe() {

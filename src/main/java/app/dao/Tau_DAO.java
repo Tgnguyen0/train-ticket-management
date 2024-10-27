@@ -37,7 +37,7 @@ public class Tau_DAO {
         try {
             ResultSet boKetQua = null;
             try {
-                boKetQua = KetNoiCoSoDuLieu.TruyVan(sql, args);
+                boKetQua = KetNoiCoSoDuLieu.truyVan(sql, args);
 
                 while (boKetQua.next()) {
                     Tau tau = new Tau();

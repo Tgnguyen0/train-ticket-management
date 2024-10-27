@@ -19,6 +19,7 @@ import java.util.Set;
 public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemListener, PropertyChangeListener {
     TrangDatVe trangDatVe;
     TrangCacTau trangCacTau;
+    int bienSoTang = 0;
 
     public HanhDong_TrangDatVe(TrangDatVe trangDatVe) {
         this.trangDatVe = trangDatVe;
@@ -101,12 +102,16 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
             GIOI_TINH gioiTinh = trangDatVe.nutLuaChonNam.isSelected() ? GIOI_TINH.NAM : GIOI_TINH.NU;
             DaiNgo daiNgo = DaiNgo.GIAMGIAKHONGPHANTRAM;
             String soHieuTau = this.trangDatVe.soHieuDaChon;
+            String maToa = dsChoDaDat.get(bienSoTang).getMaToa();
+            String soGhe = dsChoDaDat.get(bienSoTang).getSoGhe();
 
-            Ve ve = new Ve(loaiDoiTuong, ngayKhoiHanh, ngayTroVe, daiNgo, diemDi, diemDen, 100000, new KhachHang(), dsChoDaDat.get(0), dsChoDaDat.get(0).getLoaiGhe().toString());
+            Ve ve = new Ve(loaiDoiTuong, ngayKhoiHanh, ngayTroVe, diemDi, diemDen, 100000, (new KhachHang()).getMaKH(), dsChoDaDat.get(bienSoTang).getMaGhe(), dsChoDaDat.get(bienSoTang).getLoaiGhe().toString());
 
-            Object[] duLieu = {"1", ve.getMaVe(), hoTen, ve.getLoaiDoiTuong(), ve.getGiaVe(), ve.getGaKhoiHanh(), ve.getGaKetThuc(), ve.getNgayKhoiHanh().toString(), ve.getNgayDatVe(), soHieuTau, "10:00AM", ve.getLoaiVe(), ve.getGhe().getMaToa(), ve.getGhe().getSoGhe()};
+            Object[] duLieu = {String.valueOf(bienSoTang + 1), ve.getMaVe(), hoTen, ve.getLoaiDoiTuong(), ve.getGiaVe(), ve.getGaKhoiHanh(), ve.getGaKetThuc(), ve.getNgayKhoiHanh().toString(), ve.getNgayDatVe(), soHieuTau, "10:00AM", ve.getLoaiVe(), maToa, soGhe};
 
             this.trangDatVe.moHinhBang.addRow(duLieu);
+
+            bienSoTang++;
         }
     }
 

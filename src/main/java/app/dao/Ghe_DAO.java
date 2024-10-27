@@ -53,10 +53,10 @@ public class Ghe_DAO {
         try {
             ResultSet boKetQua = null;
             try {
-                boKetQua = KetNoiCoSoDuLieu.TruyVan(sql, args);
+                boKetQua = KetNoiCoSoDuLieu.truyVan(sql, args);
                 while (boKetQua.next()) {
                     Ghe ghe = new Ghe();
-                    ghe.setMaGhe(boKetQua.getInt("MaGhe"));
+                    ghe.setMaGhe(boKetQua.getString("MaGhe"));
                     ghe.setMaToa(boKetQua.getString("MaToa"));
 
                     switch (boKetQua.getString("LoaiGhe")) {

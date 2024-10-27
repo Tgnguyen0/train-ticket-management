@@ -32,7 +32,7 @@ public class Ga_DAO {
         try {
             ResultSet boKetQua = null;
             try {
-                boKetQua = KetNoiCoSoDuLieu.TruyVan(sql, args);
+                boKetQua = KetNoiCoSoDuLieu.truyVan(sql, args);
                 while (boKetQua.next()) {
                     NhaGa nhaGa = new NhaGa();
                     nhaGa.setMaGa(boKetQua.getString("MaGa"));

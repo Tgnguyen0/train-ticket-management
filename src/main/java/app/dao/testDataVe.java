@@ -33,7 +33,7 @@ public class testDataVe {
             String loaiGhe = resultSet.getString("LoaiVe");
             String loaiDoiTuong = resultSet.getString("LoaiDoiTuong");
             LocalDate ngayKhoiHanh = resultSet.getDate("NgayKhoiHanh").toLocalDate();
-            danhSachVe.add(new Ve( maVe,  loaiDoiTuong,  ngayKhoiHanh,  ngayDatVe,  gaKhoiHanh,  gaKetThuc,  giaVe,  maKh, maGhe,  loaiGhe));
+            danhSachVe.add(new Ve(maVe,  loaiDoiTuong,  ngayKhoiHanh,  ngayDatVe,  gaKhoiHanh,  gaKetThuc,  giaVe,  maKh, maGhe,  loaiGhe));
         }
 
         for (Ve ve: danhSachVe) {
