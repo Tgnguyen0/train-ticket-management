@@ -7,7 +7,7 @@ public class Tau {
     private String soHieu;
     private int soToa;
     private int soLuongToiDa;;
-    private Set<LichCapBenGa> danhSachLichCapBenTau;
+
 
     public Tau() {
     }
@@ -16,7 +16,6 @@ public class Tau {
         this.soHieu = soHieu;
         this.soToa = soToa;
         this.soLuongToiDa = soLuongToiDa;
-        this.danhSachLichCapBenTau = danhSachLichCapBenTau;
     }
 
     public String getSoHieu() {
@@ -43,13 +42,6 @@ public class Tau {
         this.soLuongToiDa = soLuongToiDa;
     }
 
-    public Set<LichCapBenGa> getDanhSachLichCapBenTau() {
-        return danhSachLichCapBenTau;
-    }
-
-    public void setDanhSachLichCapBenTau(Set<LichCapBenGa> danhSachLichCapBenTau) {
-        this.danhSachLichCapBenTau = danhSachLichCapBenTau;
-    }
 
     @Override
     public boolean equals(Object o) {

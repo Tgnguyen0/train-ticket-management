@@ -200,7 +200,7 @@ public class Ve_DAO {
 
     public  List<Ve> layToanBoVe() throws SQLException {
         List<Ve> danhSachVe = new ArrayList<>();
-        String sql = "SELECT * FROM Ve";
+        String sql = "select  * from Ve";
         Connection connection = KetNoiCoSoDuLieu.ketNoiDB_HinhDB();
         PreparedStatement statement = connection.prepareStatement(sql);
         ResultSet resultSet = statement.executeQuery();
@@ -218,5 +218,33 @@ public class Ve_DAO {
             danhSachVe.add(new Ve( maVe,  loaiDoiTuong,  ngayKhoiHanh,  ngayDatVe,  gaKhoiHanh,  gaKetThuc,  giaVe,  maKh, maGhe,  loaiGhe));
         }
         return danhSachVe;
+    }
+
+    public Ve layVe_DuaVaoMaVe(String maVeRequest)throws SQLException{
+        String sql = "SELECT * FROM Ve WHERE MaVe = ?";
+        Connection connection = KetNoiCoSoDuLieu.ketNoiDB_HinhDB();
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setString(1, maVeRequest); // Đặt tham số MaVe
+
+        ResultSet resultSet = statement.executeQuery();
+
+        if (resultSet.next()) { // Di chuyển con trỏ đến dòng kết quả đầu tiên
+            String maVe = resultSet.getString("MaVe");
+            LocalDate ngayDatVe = resultSet.getDate("NgayDatVe").toLocalDate();
+            double giaVe = resultSet.getDouble("GiaVe");
+            String maKh = resultSet.getString("MaKH");
+            String gaKhoiHanh = resultSet.getString("GaKhoiHanh");
+            String gaKetThuc = resultSet.getString("GaKetThuc");
+            String maGhe =  resultSet.getString("MaGhe");
+            String loaiGhe = resultSet.getString("LoaiVe");
+            String loaiDoiTuong = resultSet.getString("LoaiDoiTuong");
+            LocalDate ngayKhoiHanh = resultSet.getDate("NgayKhoiHanh").toLocalDate();
+
+            return new Ve(maVe, loaiDoiTuong, ngayKhoiHanh, ngayDatVe, gaKhoiHanh, gaKetThuc, giaVe, maKh, maGhe, loaiGhe);
+        } else {
+            System.out.println("Không tìm thấy vé với mã: " + maVeRequest);
+            return null; // Hoặc xử lý khác tùy theo yêu cầu
+        }
+
     }
 }

@@ -3,7 +3,7 @@ package app.thuc_the;
 import java.util.Objects;
 
 public class Ghe {
-    private int maGhe;
+    private String maGhe;
     private String maToa;
     private LOAI_GHE loaiGhe;
     private TRANG_THAI_GHE trangThai;
@@ -13,7 +13,7 @@ public class Ghe {
     public Ghe() {
     }
 
-    public Ghe(int maGhe, String maToa, LOAI_GHE loaiGhe, TRANG_THAI_GHE trangThai, String soGhe) {
+    public Ghe(String maGhe, String maToa, LOAI_GHE loaiGhe, TRANG_THAI_GHE trangThai, String soGhe) {
         this.maGhe = maGhe;
         this.maToa = maToa;
         this.loaiGhe = loaiGhe;
@@ -21,11 +21,11 @@ public class Ghe {
         this.soGhe = soGhe;
     }
 
-    public int getMaGhe() {
+    public String getMaGhe() {
         return maGhe;
     }
 
-    public void setMaGhe(int maGhe) {
+    public void setMaGhe(String maGhe) {
         this.maGhe = maGhe;
     }
 
