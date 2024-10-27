@@ -114,9 +114,7 @@ public class TrangSoDoGiuong2 extends JPanel {
         trangSoDoGiuong.setPreferredSize(new Dimension(850, 280));
         trangSoDoGiuong.setBackground(trang);
 
-        dsGiuong.get(0).setTrangThai(TRANG_THAI_GHE.Da_dat);
-        dsGiuong.get(7).setTrangThai(TRANG_THAI_GHE.Da_dat);
-        for (int i = 0 ; i < 7; i++) {
+        for (int i = 0; i < 7; i++) {
             JPanel trangChuaKhoang = new JPanel();
             trangChuaKhoang.setBackground(trang);
             trangChuaKhoang.setPreferredSize(new Dimension(110, 150));
@@ -133,32 +131,29 @@ public class TrangSoDoGiuong2 extends JPanel {
             benGiuongChan.setBackground(trang);
 
             JPanel benGiuongLe = new JPanel();
-            benGiuongLe.setPreferredSize(new Dimension(50, 110 ));
+            benGiuongLe.setPreferredSize(new Dimension(50, 110));
             benGiuongLe.setBackground(trang);
 
-            for (int j = 2 ; j >= 1; j--) {
-                JButton giuong = new JButton(String.valueOf(j + doTang * 2));
-                giuong.setPreferredSize(new Dimension(chieuDaiNut,chieuRongNut));
+            for (int j = 2; j >= 1; j--) {
+                JButton giuong = new JButton(String.valueOf(j - 1 + doTang * 2));
+                giuong.setPreferredSize(new Dimension(chieuDaiNut, chieuRongNut));
 
-                if (dsGiuong.get(j + doTang * 2 - 1).getTrangThai() == TRANG_THAI_GHE.Trong &&
-                        this.maToa.equals(dsGiuong.get(j - 1 + doTang * 2).getMaToa())) {
+                // Kiểm tra trạng thái ghế và đặt màu tương ứng
+                if (dsGiuong.get(j - 1 + doTang * 2).getTrangThai() == TRANG_THAI_GHE.Trong) {
                     giuong.setBackground(xanhBrandeis);
                 } else {
                     giuong.setBackground(doDo);
                 }
 
-                if (!giuongDao.layDSGheDat().isEmpty()) {
-                    for (int k = 0 ; k < dsGiuongDaDat.size() ; k++) {
-                        if (dsGiuongDaDat.get(k).getSoGhe().equals(String.valueOf(j + doTang * 2 - 1)) &&
-                                this.maToa.equals(dsGiuongDaDat.get(k).getMaToa())) {
-                            giuong.setBackground(doDo);
-                        }
+                // Kiểm tra nếu ghế này có trong danh sách đã đặt
+                for (Ghe gheDaDat : dsGiuongDaDat) {
+                    if (gheDaDat.getSoGhe().equals(String.valueOf(j - 1 + doTang * 2)) &&
+                            this.maToa.equals(gheDaDat.getMaToa())) {
+                        giuong.setBackground(doDo);
+                        break; // Nếu tìm thấy ghế đã đặt, ngừng kiểm tra
                     }
                 }
 
-                //giuong.setBackground(datMauNenTheoDSGhe(j, doTang));
-                //giuong.setBackground(datMauNenTheoGheDaDat(j, doTang));
-                giuong.setBackground(xanhBrandeis);
                 giuong.setForeground(trang);
                 giuong.setFocusPainted(false); // Bỏ viền khi click (focus)
                 giuong.setBorderPainted(false);
@@ -167,9 +162,7 @@ public class TrangSoDoGiuong2 extends JPanel {
 
                 if (j % 2 != 0) {
                     benGiuongLe.add(giuong);
-                }
-
-                if (j % 2 == 0) {
+                } else {
                     benGiuongChan.add(giuong);
                 }
             }

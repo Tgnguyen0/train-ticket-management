@@ -143,7 +143,7 @@ public class TrangSoDoGiuong4 extends JPanel {
         trangSoDoGiuong.setPreferredSize(new Dimension(850, 280));
         trangSoDoGiuong.setBackground(trang);
 
-        for (int i = 0 ; i < 7; i++) {
+        for (int i = 0; i < 7; i++) {
             JPanel trangChuaKhoang = new JPanel();
             trangChuaKhoang.setBackground(trang);
             trangChuaKhoang.setPreferredSize(new Dimension(110, 150));
@@ -160,32 +160,29 @@ public class TrangSoDoGiuong4 extends JPanel {
             benGiuongChan.setBackground(trang);
 
             JPanel benGiuongLe = new JPanel();
-            benGiuongLe.setPreferredSize(new Dimension(50, 110 ));
+            benGiuongLe.setPreferredSize(new Dimension(50, 110));
             benGiuongLe.setBackground(trang);
 
-            dsGiuong.get(0).setTrangThai(TRANG_THAI_GHE.Da_dat);
-            dsGiuong.get(7).setTrangThai(TRANG_THAI_GHE.Da_dat);
-            for (int j = 4 ; j >= 1; j--) {
+            for (int j = 4; j >= 1; j--) {
                 JButton giuong = new JButton(String.valueOf(j - 1 + doTang * 4));
-                giuong.setPreferredSize(new Dimension(chieuDaiNut,chieuRongNut));
+                giuong.setPreferredSize(new Dimension(chieuDaiNut, chieuRongNut));
 
-                if (dsGiuong.get(j - 1 + doTang * 4).getTrangThai() == TRANG_THAI_GHE.Trong
-                ) {
+                // Kiểm tra trạng thái ghế và đặt màu tương ứng
+                if (dsGiuong.get(j - 1 + doTang * 4).getTrangThai() == TRANG_THAI_GHE.Trong) {
                     giuong.setBackground(xanhBrandeis);
                 } else {
                     giuong.setBackground(doDo);
                 }
 
-                if (!giuongDao.layDSGheDat().isEmpty()) {
-                    for (int k = 0 ; k < dsGiuongDaDat.size() ; k++) {
-                        if (dsGiuongDaDat.get(k).getSoGhe().equals(String.valueOf(j - 1 + doTang * 4)) &&
-                                this.maToa.equals(dsGiuongDaDat.get(k).getMaToa())) {
-                            giuong.setBackground(doDo);
-                        }
+                // Kiểm tra nếu ghế này có trong danh sách đã đặt
+                for (Ghe gheDaDat : dsGiuongDaDat) {
+                    if (gheDaDat.getSoGhe().equals(String.valueOf(j - 1 + doTang * 4)) &&
+                            this.maToa.equals(gheDaDat.getMaToa())) {
+                        giuong.setBackground(doDo);
+                        break; // Nếu tìm thấy ghế đã đặt, ngừng kiểm tra
                     }
                 }
 
-                giuong.setBackground(xanhBrandeis);
                 giuong.setForeground(trang);
                 giuong.setFocusPainted(false); // Bỏ viền khi click (focus)
                 giuong.setBorderPainted(false);
@@ -194,9 +191,7 @@ public class TrangSoDoGiuong4 extends JPanel {
 
                 if (j % 2 != 0) {
                     benGiuongLe.add(giuong);
-                }
-
-                if (j % 2 == 0) {
+                } else {
                     benGiuongChan.add(giuong);
                 }
             }
