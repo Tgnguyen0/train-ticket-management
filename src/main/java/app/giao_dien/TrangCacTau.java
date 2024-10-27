@@ -1,16 +1,21 @@
 package app.giao_dien;
 
 import app.dao.Ghe_DAO;
+import app.dao.Toa_DAO;
 import app.dieu_khien.HanhDong_TrangCacTau;
-import app.dieu_khien.HanhDong_TrangCacToa;
 import app.phan_tu_tuy_chinh.NutAnh;
 import app.phong_chu_moi.PhongChuMoi;
+import app.thuc_the.Ghe;
+import app.thuc_the.Tau;
+import app.thuc_the.Toa;
+
+import java.awt.event.*;
+import java.util.List;
+import java.util.Set;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseListener;
 
 public class TrangCacTau extends JFrame {
     public JPanel trangChua;
@@ -34,10 +39,29 @@ public class TrangCacTau extends JFrame {
 
     private ActionListener hanhDong;
     private MouseListener thaoTacChuot;
+    private WindowListener hanhDongTrang;
+
+    public Toa_DAO toaDao;
     public Ghe_DAO gheDao;
 
+    public List<Tau> dsTau;
+    public List<Toa> dsToa1;
+    public List<Toa> dsToa2;
+    public List<Toa> dsToa3;
+    public List<Toa> dsToa4;
+    public String soHieuTauChon;
+
+    public boolean daDongChua = false;
+
     // Function tạo GUI chính
-    public TrangCacTau(Ghe_DAO gheDao) {
+    public TrangCacTau(List<Tau> dsTau, Ghe_DAO gheDao) {
+        this.toaDao = new Toa_DAO();
+
+        this.dsTau = dsTau;
+        this.dsToa1 = toaDao.ChonTheoSoHieuTatCa(this.dsTau.get(0).getSoHieu());
+        this.dsToa2 = toaDao.ChonTheoSoHieuTatCa(this.dsTau.get(1).getSoHieu());
+        this.dsToa3 = toaDao.ChonTheoSoHieuTatCa(this.dsTau.get(2).getSoHieu());
+        this.dsToa4 = toaDao.ChonTheoSoHieuTatCa(this.dsTau.get(3).getSoHieu());
         this.gheDao = gheDao;
 
         ImageIcon icon = new ImageIcon("assets/icon.png");
@@ -55,13 +79,20 @@ public class TrangCacTau extends JFrame {
         // Thêm ActionListener và MouseListener cho các nút
         this.hanhDong = new HanhDong_TrangCacTau(this);
         this.thaoTacChuot = new HanhDong_TrangCacTau(this);
+        this.hanhDongTrang = new HanhDong_TrangCacTau(this);
+
+        addWindowListener(hanhDongTrang);
 
         taoThanhDinhHuongToa();
         taoTrangChua();
     }
 
-    public void datGheDao(Ghe_DAO gheDao) {
-        this.gheDao = gheDao;
+    public boolean kiemDaDongChua() {
+        return daDongChua;
+    }
+
+    public void datDaDongChua(boolean daDong) {
+        this.daDongChua = daDong;
     }
 
     public void taoThanhDinhHuongToa() {
@@ -76,9 +107,9 @@ public class TrangCacTau extends JFrame {
         this.nutTau1 = new NutAnh("assets/tau.png",
                                  "assets/tau-dang-chon.png",
                                                   chieuDaiNut, chieuRongNut,
-                                                  viTriChu, "Tàu 1",40);
+                                                  viTriChu, "Số Hiệu: " + this.dsTau.get(0).getSoHieu(),40);
 
-        nutTau1.setActionCommand("Tau 1");
+        nutTau1.setActionCommand(this.dsTau.get(0).getSoHieu());
         nutTau1.setPreferredSize(new Dimension(chieuDaiNut, chieuRongNut));
         nutTau1.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, charSize));
         nutTau1.setForeground(trang);
@@ -96,9 +127,9 @@ public class TrangCacTau extends JFrame {
         this.nutTau2 = new NutAnh("assets/tau.png",
                 "assets/tau-dang-chon.png",
                 chieuDaiNut, chieuRongNut,
-                viTriChu, "Tàu 2",40);
+                viTriChu, "Số Hiệu: " + this.dsTau.get(1).getSoHieu(),40);
 
-        nutTau2.setActionCommand("Tau 2");
+        nutTau2.setActionCommand(this.dsTau.get(1).getSoHieu());
         nutTau2.setPreferredSize(new Dimension(chieuDaiNut, chieuRongNut));
         nutTau2.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, charSize));
         nutTau2.setForeground(trang);
@@ -148,15 +179,17 @@ public class TrangCacTau extends JFrame {
         this.trangChua.setPreferredSize(new Dimension(1200, 600));
         this.trangChua.setLayout(new CardLayout());
 
-        System.out.println(String.valueOf(gheDao.layDsGhe().size()));
-
-        this.trangCacToa1 = new TrangCacToa("Tàu 1", this.gheDao);
-        this.trangCacToa2 = new TrangCacToa("Tàu 2", this.gheDao);
+        this.trangCacToa1 = new TrangCacToa(1, this.dsTau.get(0).getSoHieu(), this.dsToa1, this.gheDao);
+        this.trangCacToa2 = new TrangCacToa(2, this.dsTau.get(1).getSoHieu(), this.dsToa2, this.gheDao);
 
         this.trangChua.add(trangCacToa1, "Cac toa cua tau 1");
         this.trangChua.add(trangCacToa2, "Cac toa cua tau 2");
 
         add(this.trangChua);
+    }
+
+    public String laySoHieuTauChon() {
+        return this.soHieuTauChon;
     }
 
     /*public static void main(String[] args) {

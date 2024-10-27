@@ -2,7 +2,6 @@ package app.dao;
 
 import app.ket_noi_co_so_du_lieu.KetNoiCoSoDuLieu;
 import app.thuc_the.GIOI_TINH;
-import app.thuc_the.Ga;
 import app.thuc_the.NhanVien;
 
 import java.sql.ResultSet;

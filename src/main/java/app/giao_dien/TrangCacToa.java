@@ -1,9 +1,12 @@
 package app.giao_dien;
 
 import app.dao.Ghe_DAO;
+import java.util.List;
 import app.dieu_khien.HanhDong_TrangCacToa;
 import app.phan_tu_tuy_chinh.NutAnh;
 import app.phong_chu_moi.PhongChuMoi;
+import app.thuc_the.Ghe;
+import app.thuc_the.Toa;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -13,6 +16,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.Set;
 
 public class TrangCacToa extends JPanel {
     public String soHieu;
@@ -62,11 +66,46 @@ public class TrangCacToa extends JPanel {
 
     private ActionListener hanhDong;
     private MouseListener thaoTacChuot;
-    public Ghe_DAO gheDao;
 
-    public TrangCacToa(String soHieu, Ghe_DAO gheDao) {
-        this.soHieu = soHieu;
+    public Ghe_DAO gheDao;
+    public List<Toa> dsToa;
+    public Set<Ghe> gheDaDat;
+
+    public List<Ghe> gheToa1;
+    public List<Ghe> gheToa2;
+    public List<Ghe> gheToa3;
+    public List<Ghe> gheToa4;
+    public List<Ghe> gheToa5;
+    public List<Ghe> gheToa6;
+    public List<Ghe> gheToa7;
+    public List<Ghe> gheToa8;
+    public List<Ghe> gheToa9;
+    public List<Ghe> gheToa10;
+    public List<Ghe> gheToa11;
+    public List<Ghe> gheToa12;
+    public int so;
+
+    public TrangCacToa(int so, String soHieu, List<Toa> dsToa, Ghe_DAO gheDao) {
+        this.so = so;
         this.gheDao = gheDao;
+        this.soHieu = soHieu;
+        this.dsToa = dsToa;
+
+        this.gheToa1 = gheDao.ChonTheoMaToaTatCa(dsToa.get(0).getMaToa());
+        this.gheToa2 = gheDao.ChonTheoMaToaTatCa(dsToa.get(1).getMaToa());
+        this.gheToa3 = gheDao.ChonTheoMaToaTatCa(dsToa.get(2).getMaToa());
+        this.gheToa4 = gheDao.ChonTheoMaToaTatCa(dsToa.get(3).getMaToa());
+
+        this.gheToa5 = gheDao.ChonTheoMaToaTatCa(dsToa.get(4).getMaToa());
+        this.gheToa6 = gheDao.ChonTheoMaToaTatCa(dsToa.get(5).getMaToa());
+        this.gheToa7 = gheDao.ChonTheoMaToaTatCa(dsToa.get(6).getMaToa());
+
+        this.gheToa8 = gheDao.ChonTheoMaToaTatCa(dsToa.get(7).getMaToa());
+        this.gheToa9 = gheDao.ChonTheoMaToaTatCa(dsToa.get(8).getMaToa());
+        this.gheToa10 = gheDao.ChonTheoMaToaTatCa(dsToa.get(9).getMaToa());
+
+        this.gheToa11 = gheDao.ChonTheoMaToaTatCa(dsToa.get(10).getMaToa());
+        this.gheToa12 = gheDao.ChonTheoMaToaTatCa(dsToa.get(11).getMaToa());
 
         setLayout(new BorderLayout());
         setPreferredSize(new Dimension(1200, 800));
@@ -244,44 +283,24 @@ public class TrangCacToa extends JPanel {
         this.trangChua.setLayout(new CardLayout());
 
         // Khởi tạo trang Trang Sơ đồ Ghế Mềm
-        this.trangSoDoGheMem1 = new TrangSoDoGheMem();
-        this.trangSoDoGheMem2 = new TrangSoDoGheMem();
-        this.trangSoDoGheMem3 = new TrangSoDoGheMem();
-        this.trangSoDoGheMem4 = new TrangSoDoGheMem();
-
-        // Thiết lập cho gheDaoTest của mỗi phần tử của TrangSoDoGheMem là cùng 1 danh sách
-        trangSoDoGheMem1.datGheDao(gheDao);
-        trangSoDoGheMem2.datGheDao(gheDao);
-        trangSoDoGheMem3.datGheDao(gheDao);
-        trangSoDoGheMem4.datGheDao(gheDao);
-
-        // Khởi tạo trang Trang Sơ đồ Giường 4
-        this.trangSoDoGiuong4So1 = new TrangSoDoGiuong4();
-        this.trangSoDoGiuong4So2 = new TrangSoDoGiuong4();
-        this.trangSoDoGiuong4So3 = new TrangSoDoGiuong4();
-
-        // Thiết lập cho gheDaoTest của mỗi phần tử của TrangSoDoGuong4 là cùng 1 danh sách
-        trangSoDoGiuong4So1.datGiuongDao(gheDao);
-        trangSoDoGiuong4So2.datGiuongDao(gheDao);
-        trangSoDoGiuong4So3.datGiuongDao(gheDao);
+        this.trangSoDoGheMem1 = new TrangSoDoGheMem(gheToa1, gheDao, dsToa.get(0).getTenToa(), dsToa.get(0).getMaToa());
+        this.trangSoDoGheMem2 = new TrangSoDoGheMem(gheToa2, gheDao, dsToa.get(1).getTenToa(), dsToa.get(1).getMaToa());
+        this.trangSoDoGheMem3 = new TrangSoDoGheMem(gheToa3, gheDao, dsToa.get(2).getTenToa(), dsToa.get(2).getMaToa());
+        this.trangSoDoGheMem4 = new TrangSoDoGheMem(gheToa4, gheDao, dsToa.get(3).getTenToa(), dsToa.get(3).getMaToa());
 
         // Khởi tạo trang Trang Sơ đồ Giường 6
-        this.trangSoDoGiuong6So1 = new TrangSoDoGiuong6();
-        this.trangSoDoGiuong6So2 = new TrangSoDoGiuong6();
-        this.trangSoDoGiuong6So3 = new TrangSoDoGiuong6();
+        this.trangSoDoGiuong6So1 = new TrangSoDoGiuong6(gheToa5, gheDao, dsToa.get(4).getTenToa(), dsToa.get(4).getMaToa());
+        this.trangSoDoGiuong6So2 = new TrangSoDoGiuong6(gheToa6, gheDao, dsToa.get(5).getTenToa(), dsToa.get(5).getMaToa());
+        this.trangSoDoGiuong6So3 = new TrangSoDoGiuong6(gheToa7, gheDao, dsToa.get(6).getTenToa(), dsToa.get(6).getMaToa());
 
-        // Thiết lập cho gheDaoTest của mỗi phần tử của TrangSoDoGiuong6 là cùng 1 danh sách
-        trangSoDoGiuong6So1.datGiuongDao(gheDao);
-        trangSoDoGiuong6So2.datGiuongDao(gheDao);
-        trangSoDoGiuong6So3.datGiuongDao(gheDao);
+        // Khởi tạo trang Trang Sơ đồ Giường 4
+        this.trangSoDoGiuong4So1 = new TrangSoDoGiuong4(gheToa8, gheDao, dsToa.get(7).getTenToa(), dsToa.get(7).getMaToa());
+        this.trangSoDoGiuong4So2 = new TrangSoDoGiuong4(gheToa9, gheDao, dsToa.get(8).getTenToa(), dsToa.get(8).getMaToa());
+        this.trangSoDoGiuong4So3 = new TrangSoDoGiuong4(gheToa10, gheDao, dsToa.get(9).getTenToa(), dsToa.get(9).getMaToa());
 
         // Khởi tạo trang Trang Sơ đồ Giường 2
-        this.trangSoDoGiuong2So1 = new TrangSoDoGiuong2();
-        this.trangSoDoGiuong2So2 = new TrangSoDoGiuong2();
-
-        // Thiết lập cho gheDaoTest của mỗi phần tử của TrangSoDoGiuong2 là cùng 1 danh sách
-        trangSoDoGiuong2So1.datGiuongDao(gheDao);
-        trangSoDoGiuong2So2.datGiuongDao(gheDao);
+        this.trangSoDoGiuong2So1 = new TrangSoDoGiuong2(gheToa11, gheDao, dsToa.get(10).getTenToa(), dsToa.get(10).getMaToa());
+        this.trangSoDoGiuong2So2 = new TrangSoDoGiuong2(gheToa12, gheDao, dsToa.get(11).getTenToa(), dsToa.get(11).getMaToa());
 
         // Thêm vào trangChua
         this.trangChua.add(trangSoDoGheMem1, "Trang Ghe Mem 1");

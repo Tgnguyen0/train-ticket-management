@@ -3,6 +3,8 @@ package app.giao_dien;
 import app.dao.Ghe_DAO;
 import app.dieu_khien.HanhDong_TrangSoDoGheMemDieuHoa;
 import app.phong_chu_moi.PhongChuMoi;
+import app.thuc_the.Ghe;
+import app.thuc_the.TRANG_THAI_GHE;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -10,18 +12,15 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import java.util.Set;
+import java.util.List;
 
 public class TrangSoDoGheMem extends JPanel {
     /**/
     public JPanel trangChua;
     public JComboBox<String> thanhCacToa;
 
-    /**/
-    int gheSo;
     int soGhe;
-    int soToa;
-    ArrayList<Integer> cacGheDaChon;
-    String[] muc = {"D1", "A4"};
 
     /* Khoi Tao Phong Chu Mau Sac */
     public int kichThuocChu = 13;
@@ -43,16 +42,20 @@ public class TrangSoDoGheMem extends JPanel {
 
     public Ghe_DAO gheDao;
 
-    public TrangSoDoGheMem() {
-        ImageIcon icon = new ImageIcon("assets/icon.png");
+    public Set<Ghe> gheDaDat;
+    public List<Ghe> dsGhe;
+    public String tenToa;
+    public String maToa;
+
+    public TrangSoDoGheMem(List<Ghe> dsGhe, Ghe_DAO gheDao, String tenToa, String maToa) {
+        this.dsGhe = dsGhe;
+        this.tenToa = tenToa;
+        this.gheDao = gheDao;
+        this.maToa = maToa;
 
         setSize(new Dimension(800, 300));
-        //setIconImage(icon.getImage());
         setBackground(trang);
-        //setLocationRelativeTo(null);
-        //setTitle("Sơ đồ ghế");
         setLayout(new BorderLayout());
-        //setResizable(false);
 
         this.hanhDong = new HanhDong_TrangSoDoGheMemDieuHoa(this);
         this.thaoTacChuot = new HanhDong_TrangSoDoGheMemDieuHoa(this);
@@ -62,17 +65,13 @@ public class TrangSoDoGheMem extends JPanel {
         taoTrangHuongDan();
     }
 
-    public void datGheDao(Ghe_DAO gheDao) {
-        this.gheDao = gheDao;
-    }
-
     public void taoTrangTieuDe() {
         JPanel trangTieuDe = new JPanel();
         trangTieuDe.setLayout(new FlowLayout(FlowLayout.CENTER));
         trangTieuDe.setPreferredSize(new Dimension(800, 40));
         trangTieuDe.setBackground(trang);
 
-        JLabel tieuDe = new JLabel("Sơ đồ toa ghế mềm", SwingConstants.CENTER);
+        JLabel tieuDe = new JLabel("Sơ đồ toa ghế mềm " + this.tenToa, SwingConstants.CENTER);
         tieuDe.setPreferredSize(new Dimension(800, 40));
         tieuDe.setForeground(xanhBrandeis);
         tieuDe.setBackground(trang);
@@ -105,8 +104,11 @@ public class TrangSoDoGheMem extends JPanel {
     }
 
     public void xepNutGhe(JPanel trangDung) {
-        soGhe = 50;
+        int soGhe = dsGhe.size();
+        List<Ghe> dsGheDaDat = new ArrayList<>(gheDao.layDSGheDat());
 
+        dsGhe.get(0).setTrangThai(TRANG_THAI_GHE.Da_dat);
+        dsGhe.get(7).setTrangThai(TRANG_THAI_GHE.Da_dat);
         for (int j = 1; j <= soGhe; j++) {
             JPanel chuaGheDoc = new JPanel();
             chuaGheDoc.setLayout(new GridLayout(2, 1, 5, 10));
@@ -122,8 +124,25 @@ public class TrangSoDoGheMem extends JPanel {
                     JButton ghe = new JButton(String.valueOf(4 * (j - 1) + i + 1)); // Tạo nút với tên ghế
                     ghe.setPreferredSize(new Dimension(chieuDaiNut, chieuRongNut)); // Thiết lập kích thước nút
                     ghe.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, 12));
-                    ghe.setBackground(xanhBrandeis); // Đặt màu nền
                     ghe.setForeground(trang); // Đặt màu chữ
+
+                    if (dsGhe.get(4 * (j - 1) + i).getTrangThai() == TRANG_THAI_GHE.Trong) {
+                        ghe.setBackground(xanhBrandeis);
+                    } else {
+                        ghe.setBackground(doDo);
+                    }
+
+                    if (!gheDao.layDSGheDat().isEmpty()) {
+                        for (int k = 0 ; k < dsGheDaDat.size() ; k++) {
+                            if (dsGheDaDat.get(k).getSoGhe().equals(String.valueOf(4 * (j - 1) + i + 1)) &&
+                            dsGheDaDat.get(k).getMaToa().equals(this.maToa)) {
+                                ghe.setBackground(doDo);
+                            }
+                        }
+                    }
+
+                    //ghe.setBackground(datMauNenTheoDSGhe(j, i));
+                    //ghe.setBackground(datMauNenTheoGheDaDat(j, i));
                     ghe.setFocusPainted(false); // Bỏ viền khi click (focus)
                     ghe.setBorderPainted(false);
                     ghe.addActionListener(this.hanhDong);
@@ -146,7 +165,24 @@ public class TrangSoDoGheMem extends JPanel {
                     JButton ghe = new JButton(String.valueOf(4 * (j - 1) + i + 1)); // Tạo nút với tên ghế
                     ghe.setPreferredSize(new Dimension(chieuDaiNut, chieuRongNut)); // Thiết lập kích thước nút
                     ghe.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, 12));
-                    ghe.setBackground(xanhBrandeis); // Đặt màu nền
+
+                    if (dsGhe.get(4 * (j - 1) + i).getTrangThai() == TRANG_THAI_GHE.Trong) {
+                        ghe.setBackground(xanhBrandeis);
+                    } else {
+                        ghe.setBackground(doDo);
+                    }
+
+                    if (!gheDao.layDSGheDat().isEmpty()) {
+                        for (int k = 0 ; k < dsGheDaDat.size() ; k++) {
+                            if (dsGheDaDat.get(k).getSoGhe().equals(String.valueOf(4 * (j - 1) + i + 1)) &&
+                             this.maToa.equals(dsGheDaDat.get(k).getMaToa())) {
+                                ghe.setBackground(doDo);
+                            }
+                        }
+                    }
+
+                    //ghe.setBackground(datMauNenTheoDSGhe(j, i));
+                    //ghe.setBackground(datMauNenTheoGheDaDat(j, i));
                     ghe.setForeground(trang); // Đặt màu chữ
                     ghe.setFocusPainted(false); // Bỏ viền khi click (focus)
                     ghe.setBorderPainted(false);
@@ -181,6 +217,29 @@ public class TrangSoDoGheMem extends JPanel {
         add(trangHuongDan, BorderLayout.SOUTH);
     }
 
+    /*private Color datMauNenTheoGheDaDat(int soGhe, int soGheTrongHangDoc) {
+        if (!gheDao.layDSGheDat().isEmpty()) {
+            List<Ghe> dsGheDaDat = new ArrayList<>(gheDao.layDSGheDat());
+
+            for (int k = 0 ; k < dsGheDaDat.size() ; k++) {
+                if (dsGheDaDat.get(k).getSoGhe().equals(String.valueOf(4 * (soGhe - 1) + soGheTrongHangDoc + 1)) &&
+                ) {
+                    return doDo;
+                }
+            }
+        }
+
+        return xanhBrandeis;
+    }
+
+    private Color datMauNenTheoDSGhe(int soGhe, int soGheTrongHangDoc) {
+        if (dsGhe.get(4 * (soGhe - 1) + soGheTrongHangDoc).getTrangThai() == TRANG_THAI_GHE.Trong) {
+            return xanhBrandeis; // Đặt màu nền
+        }
+
+        return doDo;
+    }*/
+
     private void themBieuTuongVaTieuDe(JPanel trangHienTai, String cau, Color mau) {
         JPanel trangChuaTieuDeVaBieuTuong = new JPanel();
         trangChuaTieuDeVaBieuTuong.setPreferredSize(new Dimension(250, chieuRongNut));
@@ -205,12 +264,5 @@ public class TrangSoDoGheMem extends JPanel {
         trangChuaTieuDeVaBieuTuong.add(tieuDe);
 
         trangHienTai.add(trangChuaTieuDeVaBieuTuong);
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            TrangSoDoGheMem trangSoDoGheMemDieuHoa = new TrangSoDoGheMem();
-            trangSoDoGheMemDieuHoa.setVisible(true);
-        });
     }
 }

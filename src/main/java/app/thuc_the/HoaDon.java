@@ -8,14 +8,24 @@ public class HoaDon {
     LocalDate ngayLapHoaDon;
     double thanhTien;
     KhachHang khachHang;
-    ChiTietHoaDon chiTietHoaDon;
+    NhanVien nhanVien;
+    int soLuong;
+    double tongTien;
+    String trangThai;
+    float daiNgo;
+    float thue;
 
-    public HoaDon(int soNgauNhien, LocalDate ngayLapHoaDon, KhachHang khachHang, ChiTietHoaDon chiTietHoaDon) {
-        this.maHoaDon = setMaHoaDon(soNgauNhien);
+    public HoaDon(String maHoaDon, LocalDate ngayLapHoaDon, double thanhTien, KhachHang khachHang, NhanVien nhanVien, int soLuong, double tongTien, String trangThai, float daiNgo, float thue) {
+        this.maHoaDon = maHoaDon;
         this.ngayLapHoaDon = ngayLapHoaDon;
+        this.thanhTien = thanhTien;
         this.khachHang = khachHang;
-        this.chiTietHoaDon = chiTietHoaDon;
-       // this.thanhTien = (chiTietHoaDon.tongTien * chiTietHoaDon.soLuong) - ((chiTietHoaDon.tongTien * chiTietHoaDon.soLuong)* chiTietHoaDon.thue) ;
+        this.nhanVien = nhanVien;
+        this.soLuong = soLuong;
+        this.tongTien = tongTien;
+        this.trangThai = trangThai;
+        this.daiNgo = daiNgo;
+        this.thue = thue;
     }
 
     public HoaDon() {
@@ -62,13 +72,7 @@ public class HoaDon {
         this.khachHang = khachHang;
     }
 
-    public ChiTietHoaDon getChiTietHoaDon() {
-        return chiTietHoaDon;
-    }
 
-    public void setChiTietHoaDon(ChiTietHoaDon chiTietHoaDon) {
-        this.chiTietHoaDon = chiTietHoaDon;
-    }
 
     @Override
     public boolean equals(Object o) {

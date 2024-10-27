@@ -1,6 +1,8 @@
 package app.dieu_khien;
 
 import app.giao_dien.TrangSoDoGiuong4;
+import app.thuc_the.Ghe;
+import app.thuc_the.TRANG_THAI_GHE;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,36 +17,53 @@ public class HanhDong_TrangSoDoGiuong4 implements ActionListener, MouseListener 
         this.trangSoDoGiuong4 = TrangSoDoGiuong4;
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
-        JButton nutGiuong = (JButton) e.getSource();
-        String ghe = nutGiuong.getText();
+        JButton nutGhe = (JButton) e.getSource();
+        int soGhe = Integer.parseInt(nutGhe.getText()) - 1; // -1 để chuyển từ ghế số sang chỉ số mảng
+        Ghe ghe = this.trangSoDoGiuong4.dsGiuong.get(soGhe);
 
-        // Nếu ghế đã chọn rồi, bỏ chọn (xóa khỏi Set và đổi màu lại)
-        if (this.trangSoDoGiuong4.gheDao.layDsGhe().contains(ghe)) {
-            this.trangSoDoGiuong4.gheDao.xoaGhe(ghe);
-            nutGiuong.setBackground(this.trangSoDoGiuong4.xanhBrandeis);
-        }
-        // Nếu ghế chưa chọn, thêm vào Set và đổi màu thành đỏ (giới hạn 10 ghế)
-        else {
-            if (this.trangSoDoGiuong4.gheDao.layDsGhe().size() < 10) {
-                this.trangSoDoGiuong4.gheDao.themGhe(ghe);
-                nutGiuong.setBackground(this.trangSoDoGiuong4.doDo);
-            } else {
-                JLabel thongBao = new JLabel("Bạn chỉ có thể chọn tối đa 10 ghế.");
-                thongBao.setFont(this.trangSoDoGiuong4.phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, 12));
-
-                JOptionPane hienThiLoi = new JOptionPane(thongBao, JOptionPane.ERROR_MESSAGE);
-                hienThiLoi.setForeground(this.trangSoDoGiuong4.xanhBrandeis);
-
-                JDialog hoiThoai = hienThiLoi.createDialog("Lỗi chọn ghế");
-                ImageIcon bieuTuongTau = new ImageIcon("assets/icon.png"); // Đường dẫn đến biểu tượng
-                hoiThoai.setIconImage(bieuTuongTau.getImage());
-                hoiThoai.setVisible(true);
+        // Nếu ghế đang trống, cho phép chọn hoặc bỏ chọn
+        if (ghe.getTrangThai() == TRANG_THAI_GHE.Trong) {
+            // Nếu ghế đã chọn rồi, bỏ chọn (xóa khỏi Set và đổi màu lại)
+            if (this.trangSoDoGiuong4.giuongDao.layDSGheDat().contains(ghe)) {
+                this.trangSoDoGiuong4.giuongDao.xoaGhe(ghe);
+                nutGhe.setBackground(this.trangSoDoGiuong4.xanhBrandeis);
             }
+            // Nếu ghế chưa chọn, thêm vào Set và đổi màu thành đỏ (giới hạn 10 ghế)
+            else {
+                if (this.trangSoDoGiuong4.giuongDao.layDSGheDat().size() < 10) {
+                    this.trangSoDoGiuong4.giuongDao.themGhe(ghe);
+                    nutGhe.setBackground(this.trangSoDoGiuong4.doDo);
+                } else {
+                    hienThiThongBao("Bạn chỉ có thể chọn tối đa 10 ghế.");
+                }
+            }
+        } else {
+            hienThiThongBao("Ghế đã đặt.");
         }
 
-        System.out.println("Ghe da chon (Giuong 4): " + this.trangSoDoGiuong4.gheDao.layDsGhe());
+        // In ra danh sách mã ghế đã chọn
+        System.out.println("Danh sách mã ghế đã chọn:");
+        for (Ghe g : this.trangSoDoGiuong4.giuongDao.layDSGheDat()) {
+            System.out.print(" Mã ghế: " + g.getMaGhe());
+        }
+        System.out.println(); // Để ngắt dòng sau danh sách mã ghế
+
         System.out.println(ghe);
+    }
+
+    // Phương thức hiển thị thông báo lỗi chung
+    private void hienThiThongBao(String noiDung) {
+        JLabel thongBao = new JLabel(noiDung);
+        thongBao.setFont(this.trangSoDoGiuong4.phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, 12));
+        JOptionPane hienThiLoi = new JOptionPane(thongBao, JOptionPane.ERROR_MESSAGE);
+        hienThiLoi.setForeground(this.trangSoDoGiuong4.xanhBrandeis);
+
+        JDialog hoiThoai = hienThiLoi.createDialog("Thông báo");
+        ImageIcon bieuTuongTau = new ImageIcon("assets/icon.png");
+        hoiThoai.setIconImage(bieuTuongTau.getImage());
+        hoiThoai.setVisible(true);
     }
 
     @Override

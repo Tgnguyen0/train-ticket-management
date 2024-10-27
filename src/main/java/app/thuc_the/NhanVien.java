@@ -17,7 +17,6 @@ public class NhanVien {
     private Set<HoaDon> danhSachHoaDon;
 
     public NhanVien(String maNV, String tenNV, LocalDate ngaySinh, String diaChi, String soDT, GIOI_TINH gioiTinh, String matKhau, String vaiTro) {
-        //this.maNV = setMaNV(soNgauNhien);
         this.maNV = maNV;
         this.tenNV = tenNV;
         this.ngaySinh = ngaySinh;

@@ -1,23 +1,36 @@
 package app.giao_dien;
 
+import app.dao.Ga_DAO;
 import app.dao.Ghe_DAO;
 import app.dao.Tau_DAO;
 import app.dao.Toa_DAO;
 import app.dieu_khien.HanhDong_TrangDatVe;
+import app.phan_tu_tuy_chinh.CustomCellRenderer;
 import app.phan_tu_tuy_chinh.CustomComboBoxRenderer;
+import app.phan_tu_tuy_chinh.CustomHeaderRenderer;
 import app.phong_chu_moi.PhongChuMoi;
+import app.thuc_the.Ghe;
+import app.thuc_the.NhaGa;
 import app.thuc_the.Tau;
+import app.thuc_the.Toa;
 import com.toedter.calendar.JDateChooser;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.MatteBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
+import javax.swing.table.TableColumnModel;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseListener;
+import java.beans.PropertyChangeListener;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class TrangDatVe extends JPanel {
     /* Khoi tao Cac thanh phan */
@@ -29,13 +42,14 @@ public class TrangDatVe extends JPanel {
     public JDateChooser thanhNhapNgayDi;
     public JDateChooser thanhNhapNgayTroVe;
     public JTextField thanhNhapGioDen;
-    public JComboBox<String> thanhCacLoaiGhe;
+    public JTextField thanhLoaiDoiTuong;
     public JButton nutGiamSoLuongTreEm;
     public JTextField thanhSoLuongTreEm;
     public JButton nutTangSoLuongTreEm;
     public JButton nutGiamSoLuongNguoiLon;
     public JTextField thanhSoLuongNguoiLon;
     public JButton nutTangSoLuongNguoiLon;
+    public JLabel tieuDeDeSoLuongVe;
     public JButton nutHienThiSoDoGhe;
     public JTextField thanhNhapHoTen;
     public JTextField thanhNhapDienThoai;
@@ -45,8 +59,12 @@ public class TrangDatVe extends JPanel {
     public JDateChooser thanhNhapNgaySinh;
     public JTextArea thanhNhapGhiChu;
     public JTextField thanhNhapTongTien;
-    public JButton nutThanhToan;
+    public JButton nutTaoVe;
+    public JButton nutInVe;
+    public JButton nutXacNhan;
     public JPanel trangDonDatVe;
+    public JPanel trangDSVeDangDat;
+    public DefaultTableModel moHinhBang;
 
     /* Khoi Tao Phong Chu Mau Sac */
     public int kichThuocChu = 12;
@@ -64,52 +82,65 @@ public class TrangDatVe extends JPanel {
     private ActionListener hanhDong;
     private MouseListener thaoTacChuot;
     private ItemListener mucDaChon;
+    private PropertyChangeListener thayDoi;
 
     public Tau_DAO tauDao;
-    public List<Tau> dsTau;
-
-    public Toa_DAO toaDao;
     public Ghe_DAO gheDao;
+    public Ga_DAO gaDao;
+
+    public List<Tau> dsTau;
+    public List<NhaGa> dsGa;
+    public String soHieuDaChon;
 
     public TrangDatVe() {
         this.tauDao = new Tau_DAO();
-        this.toaDao = new Toa_DAO();
-        dsTau = this.tauDao.chonTatCa();
-
-        for (int i = 0; i < 4 ; i++) {
-            System.out.println(dsTau.get(i).getSoHieu());
-        }
-
-
         this.gheDao = new Ghe_DAO();
+        this.gaDao = new Ga_DAO();
+
+        dsTau = this.tauDao.chonTatCa();
+        dsGa = this.gaDao.ChonTatCa();
 
         setPreferredSize(new Dimension(1200, 600));
         setLayout(new BorderLayout());
         setFont(this.phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, 13));
 
         trangDonDatVe = new JPanel();
-        trangDonDatVe.setPreferredSize(new Dimension(1200, 700));
+        trangDonDatVe.setPreferredSize(new Dimension(1200, 500));
         trangDonDatVe.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
         trangDonDatVe.setBackground(trang);
+
+        trangDSVeDangDat = new JPanel();
+        trangDSVeDangDat.setPreferredSize(new Dimension(1200, 270));
+        trangDSVeDangDat.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
+        trangDSVeDangDat.setBackground(trang);
 
         this.hanhDong = new HanhDong_TrangDatVe(this);
         this.thaoTacChuot = new HanhDong_TrangDatVe(this);
         this.mucDaChon = new HanhDong_TrangDatVe(this);
+        this.thayDoi = new HanhDong_TrangDatVe(this);
 
         taoTrangChuaNutDS();
         taoDonThongTinVe();
         taoTrangThongTinKhachHang();
+        taoTrangChuaDSVeDangDat();
 
         add(trangDonDatVe, BorderLayout.CENTER);
+        add(trangDSVeDangDat, BorderLayout.SOUTH);
     }
 
-    public Ghe_DAO layGheDao() {
-        return this.gheDao;
+    public List<Tau> layDSTau() {
+        return this.dsTau;
+    }
+
+    public Ghe_DAO layGheDao() { return this.gheDao; }
+
+    public void datGheDao(Ghe_DAO gheDao) {
+        this.gheDao = gheDao;
     }
 
     private void taoDonThongTinVe() {
         JPanel trangChuaDonDat = new JPanel();
-        trangChuaDonDat.setPreferredSize(new Dimension(580, 700));
+        trangChuaDonDat.setPreferredSize(new Dimension(580, 410));
         trangChuaDonDat.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
         trangChuaDonDat.setBackground(trang);
 
@@ -134,7 +165,7 @@ public class TrangDatVe extends JPanel {
 
         // Tạo đơn đặt vé
         JPanel donDatVe = new JPanel();
-        donDatVe.setPreferredSize(new Dimension(500, 560));
+        donDatVe.setPreferredSize(new Dimension(500, 360));
         donDatVe.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 15));
         donDatVe.setBackground(trang);
         donDatVe.setBorder(vienDam);
@@ -151,9 +182,11 @@ public class TrangDatVe extends JPanel {
         thanhCacDiemDi.setBackground(trang);
         thanhCacDiemDi.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, kichThuocChu));
         thanhCacDiemDi.setFocusable(false);
-        thanhCacDiemDi.addItem("Sài Gòn");
-        thanhCacDiemDi.addItem("Hà Nội");
-        thanhCacDiemDi.addItem("Đông Anh");
+
+        for (int i = 0 ; i < dsGa.size() ; i++) {
+            thanhCacDiemDi.addItem(dsGa.get(i).getTenGa());
+        }
+
         thanhCacDiemDi.addItemListener(mucDaChon);
         thanhCacDiemDi.setPreferredSize(new Dimension(chieuDaiNut, chieuRongNut));
         thanhCacDiemDi.setRenderer(new CustomComboBoxRenderer());
@@ -170,9 +203,11 @@ public class TrangDatVe extends JPanel {
         thanhCacDiemDen.setBackground(trang);
         thanhCacDiemDen.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, kichThuocChu));
         thanhCacDiemDen.setFocusable(false);
-        thanhCacDiemDen.addItem("Sài Gòn");
-        thanhCacDiemDen.addItem("Hà Nội");
-        thanhCacDiemDen.addItem("Đông Anh");
+
+        for (int i = dsGa.size() - 1 ; i >= 0 ; i--) {
+            thanhCacDiemDen.addItem(dsGa.get(i).getTenGa());
+        }
+
         thanhCacDiemDen.addItemListener(mucDaChon);
         thanhCacDiemDen.setPreferredSize(new Dimension(chieuDaiNut, chieuRongNut));
         thanhCacDiemDen.setRenderer(new CustomComboBoxRenderer());
@@ -221,6 +256,7 @@ public class TrangDatVe extends JPanel {
         thanhNhapNgayDi.setBackground(trang);
         thanhNhapNgayDi.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, kichThuocChu));
         thanhNhapNgayDi.setPreferredSize(new Dimension(chieuDaiNut, chieuRongNut + 1));
+        thanhNhapNgayDi.getDateEditor().addPropertyChangeListener(this.thayDoi);
         thanhNhapNgayDi.setFocusable(false);
         donDatVe.add(thanhNhapNgayDi);
 
@@ -235,6 +271,7 @@ public class TrangDatVe extends JPanel {
         thanhNhapNgayTroVe.setBackground(trang);
         thanhNhapNgayTroVe.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, kichThuocChu));
         thanhNhapNgayTroVe.setPreferredSize(new Dimension(chieuDaiNut, chieuRongNut + 1));
+        thanhNhapNgayTroVe.getDateEditor().addPropertyChangeListener(this.thayDoi);
         thanhNhapNgayTroVe.setFocusable(false);
         donDatVe.add(thanhNhapNgayTroVe);
 
@@ -251,7 +288,7 @@ public class TrangDatVe extends JPanel {
         thanhNhapGioDen.setPreferredSize(new Dimension(chieuDaiNut, chieuRongNut + 1));
         donDatVe.add(thanhNhapGioDen);
 
-        JLabel tieuDeLoaiGhe = new JLabel("Loại Ghế:");
+        /*JLabel tieuDeLoaiGhe = new JLabel("Loại Ghế:");
         tieuDeLoaiGhe.setForeground(xanhBrandeis);
         tieuDeLoaiGhe.setPreferredSize(new Dimension(chieuDaiNut, chieuRongNut));
         tieuDeLoaiGhe.setFont(phongTuyChinh.layPhongRobotoMonoReg(2, kichThuocChu));
@@ -355,7 +392,7 @@ public class TrangDatVe extends JPanel {
         nutTangSoLuongNguoiLon.setFocusPainted(false); // Bỏ viền khi click (focus)
         nutTangSoLuongNguoiLon.addActionListener(hanhDong);
         nutTangSoLuongNguoiLon.addMouseListener(thaoTacChuot);
-        dongSoLuongNguoiLon.add(nutTangSoLuongNguoiLon);
+        dongSoLuongNguoiLon.add(nutTangSoLuongNguoiLon);*/
 
         JLabel tieuDeViTriGhe = new JLabel("Vị trí ghế:");
         tieuDeViTriGhe.setForeground(xanhBrandeis);
@@ -366,7 +403,7 @@ public class TrangDatVe extends JPanel {
         nutHienThiSoDoGhe = new JButton("Sơ đồ ghế");
         nutHienThiSoDoGhe.setForeground(trang);
         nutHienThiSoDoGhe.setBackground(xanhBrandeis);
-        nutHienThiSoDoGhe.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, kichThuocChu));
+        nutHienThiSoDoGhe.setFont(phongTuyChinh.layPhongRobotoMonoReg(2, kichThuocChu));
         nutHienThiSoDoGhe.setPreferredSize(new Dimension(chieuDaiNut, chieuRongNut + 1));
         nutHienThiSoDoGhe.setFocusPainted(false); // Bỏ viền khi click (focus)
         nutHienThiSoDoGhe.setBorderPainted(false);
@@ -379,24 +416,38 @@ public class TrangDatVe extends JPanel {
 
     private void taoTrangThongTinKhachHang() {
         JPanel trangChuaDonTT = new JPanel();
-        trangChuaDonTT.setPreferredSize(new Dimension(580, 700));
+        trangChuaDonTT.setPreferredSize(new Dimension(580, 410));
         trangChuaDonTT.setBackground(trang);
         trangChuaDonTT.setLayout(new BorderLayout());
-
-        JPanel cachDongBac = new JPanel();
-        cachDongBac.setPreferredSize(new Dimension(580, 45));
-        cachDongBac.setBackground(trang);
-        trangChuaDonTT.add(cachDongBac, BorderLayout.NORTH);
 
         JPanel donThongTinKH = new JPanel();
         // donThongTinKH.setBackground(new Color(100, 255, 255));
         donThongTinKH.setBackground(trang);
-        donThongTinKH.setPreferredSize(new Dimension(580, 600));
+        donThongTinKH.setPreferredSize(new Dimension(580, 400));
         donThongTinKH.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
         trangChuaDonTT.add(donThongTinKH, BorderLayout.WEST);
 
+        // Tạo đường viền tùy chỉnh đường
+        MatteBorder duongVienTuyChinh = BorderFactory.createMatteBorder(2, 0, 0, 0, xanhBrandeis);
+
+        // Tạo đường viền có tiêu đề
+        TitledBorder duongVienChu = BorderFactory.createTitledBorder(
+                duongVienTuyChinh,
+                "Thông Tin Khách Hàng  ",
+                TitledBorder.TOP,
+                TitledBorder.TOP,
+                phongTuyChinh.layPhongRobotoMonoReg(Font.BOLD, 14),
+                xanhBrandeis);
+
+        JPanel trangChuaTieuDe = new JPanel();
+        trangChuaTieuDe.setPreferredSize(new Dimension(500, 40));
+        trangChuaTieuDe.setBackground(trang);
+        trangChuaTieuDe.setBorder(duongVienChu);
+        trangChuaTieuDe.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 5));
+        donThongTinKH.add(trangChuaTieuDe);
+
         JPanel phanThongTin = new JPanel();
-        phanThongTin.setPreferredSize(new Dimension(500, 450));
+        phanThongTin.setPreferredSize(new Dimension(500, 300));
         phanThongTin.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 15));
         phanThongTin.setBackground(trang);
         phanThongTin.setBorder(vienDam);
@@ -485,61 +536,192 @@ public class TrangDatVe extends JPanel {
         thanhNhapNgaySinh.setBackground(trang);
         thanhNhapNgaySinh.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, kichThuocChu));
         thanhNhapNgaySinh.setPreferredSize(new Dimension(chieuDaiNut, chieuRongNut + 1));
+        thanhNhapNgaySinh.getDateEditor().addPropertyChangeListener(this.thayDoi);
         thanhNhapNgaySinh.setFocusable(false);
         phanThongTin.add(thanhNhapNgaySinh);
 
-        JLabel tieuDeGhiChu = new JLabel("Ghi Chú:");
+        JLabel tieuDeLoaiGhe = new JLabel("Loại Đối Tượng:");
+        tieuDeLoaiGhe.setForeground(xanhBrandeis);
+        tieuDeLoaiGhe.setPreferredSize(new Dimension(chieuDaiNut, chieuRongNut));
+        tieuDeLoaiGhe.setFont(phongTuyChinh.layPhongRobotoMonoReg(2, kichThuocChu));
+        phanThongTin.add(tieuDeLoaiGhe);
+
+        thanhLoaiDoiTuong = new JTextField();
+        thanhLoaiDoiTuong.setForeground(xanhBrandeis);
+        thanhLoaiDoiTuong.setBackground(trang);
+        thanhLoaiDoiTuong.setEnabled(false);
+        thanhLoaiDoiTuong.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, kichThuocChu));
+        thanhLoaiDoiTuong.setFocusable(false);
+        thanhLoaiDoiTuong.addActionListener(this.hanhDong);
+        thanhLoaiDoiTuong.setPreferredSize(new Dimension(chieuDaiNut, chieuRongNut));
+        phanThongTin.add(thanhLoaiDoiTuong);
+
+        /*JLabel tieuDeGhiChu = new JLabel("Ghi Chú:");
         tieuDeGhiChu.setForeground(xanhBrandeis);
         tieuDeGhiChu.setPreferredSize(new Dimension(chieuDaiNut, chieuRongNut * 3));
         tieuDeGhiChu.setFont(phongTuyChinh.layPhongRobotoMonoReg(2, kichThuocChu));
         tieuDeGhiChu.setVerticalAlignment(SwingConstants.TOP);
         phanThongTin.add(tieuDeGhiChu);
 
-        thanhNhapGhiChu = new JTextArea(8, 20);
+        thanhNhapGhiChu = new JTextArea(8, 1);
         thanhNhapGhiChu.setForeground(xanhBrandeis);
         thanhNhapGhiChu.setBackground(trang);
         thanhNhapGhiChu.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, kichThuocChu));
         thanhNhapGhiChu.setLineWrap(true); // Cho chữ chỉ trong 1 vùng
         thanhNhapGhiChu.setWrapStyleWord(true); // Cho chữ chỉ trong giới hạn cái JTextArea
         thanhNhapGhiChu.setPreferredSize(new Dimension(chieuDaiNut, chieuRongNut * 3));
-        phanThongTin.add(thanhNhapGhiChu);
+        phanThongTin.add(thanhNhapGhiChu);*/
 
-        JPanel phanThanhToan = new JPanel();
-        phanThanhToan.setBackground(trang);
-        phanThanhToan.setPreferredSize(new Dimension(500, 100));
-        phanThanhToan.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
-        donThongTinKH.add(phanThanhToan);
+        JPanel phanXuLyVe = new JPanel();
+        phanXuLyVe.setBackground(trang);
+        phanXuLyVe.setPreferredSize(new Dimension(500, 50));
+        phanXuLyVe.setLayout(new FlowLayout(FlowLayout.CENTER, 30, 10));
+        donThongTinKH.add(phanXuLyVe);
 
-        JLabel tieuDeThanhToan = new JLabel("Tổng Tiền:");
+        /*JLabel tieuDeThanhToan = new JLabel("Tổng Tiền:");
         tieuDeThanhToan.setForeground(xanhBrandeis);
         tieuDeThanhToan.setPreferredSize(new Dimension(chieuDaiNut, chieuRongNut));
         tieuDeThanhToan.setFont(phongTuyChinh.layPhongRobotoMonoReg(2, kichThuocChu));
-        phanThanhToan.add(tieuDeThanhToan);
+        phanXuLyVe.add(tieuDeThanhToan);
 
         thanhNhapTongTien = new JTextField();
         thanhNhapTongTien.setForeground(xanhBrandeis);
         thanhNhapTongTien.setBackground(trang);
         thanhNhapTongTien.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, kichThuocChu));
         thanhNhapTongTien.setPreferredSize(new Dimension(chieuDaiNut, chieuRongNut + 1));
-        phanThanhToan.add(thanhNhapTongTien);
+        phanXuLyVe.add(thanhNhapTongTien);*/
 
-        JPanel cachDong = new JPanel();
-        cachDong.setBackground(trang);
-        cachDong.setPreferredSize(new Dimension(500, 20));
-        phanThanhToan.add(cachDong);
-
-        nutThanhToan = new JButton("Thanh Toán");
-        nutThanhToan.setPreferredSize(new Dimension(500, chieuRongNut));
-        nutThanhToan.setFont(phongTuyChinh.layPhongRobotoMonoReg(2, kichThuocChu));
-        nutThanhToan.setForeground(trang);
-        nutThanhToan.setBackground(xanhBrandeis);
-        nutThanhToan.addActionListener(hanhDong);
-        nutThanhToan.addMouseListener(thaoTacChuot);
-        nutThanhToan.setFocusPainted(false); // Bỏ viền khi click (focus)
+        nutXacNhan = new JButton("Xác Nhận");
+        nutXacNhan.setPreferredSize(new Dimension(100, chieuRongNut));
+        nutXacNhan.setFont(phongTuyChinh.layPhongRobotoMonoReg(2, kichThuocChu));
+        nutXacNhan.setForeground(trang);
+        nutXacNhan.setBackground(xanhBrandeis);
+        nutXacNhan.setFocusPainted(false); // Bỏ viền khi click (focus)
+        nutXacNhan.addActionListener(hanhDong);
+        nutXacNhan.addMouseListener(thaoTacChuot);
         // Bỏ fill màu mặc định của JButton (nếu cần)
-        phanThanhToan.add(nutThanhToan);
+        phanXuLyVe.add(nutXacNhan);
+
+        nutTaoVe = new JButton("Tạo Vé");
+        nutTaoVe.setPreferredSize(new Dimension(100, chieuRongNut));
+        nutTaoVe.setFont(phongTuyChinh.layPhongRobotoMonoReg(2, kichThuocChu));
+        nutTaoVe.setForeground(trang);
+        nutTaoVe.setBackground(xanhBrandeis);
+        nutTaoVe.setFocusPainted(false); // Bỏ viền khi click (focus)
+        nutTaoVe.addActionListener(hanhDong);
+        nutTaoVe.addMouseListener(thaoTacChuot);
+        // Bỏ fill màu mặc định của JButton (nếu cần)
+        phanXuLyVe.add(nutTaoVe);
+
+        nutInVe = new JButton("In Vé");
+        nutInVe.setPreferredSize(new Dimension(100, chieuRongNut));
+        nutInVe.setFont(phongTuyChinh.layPhongRobotoMonoReg(2, kichThuocChu));
+        nutInVe.setForeground(trang);
+        nutInVe.setBackground(xanhBrandeis);
+        nutInVe.setFocusPainted(false); // Bỏ viền khi click (focus)
+        nutInVe.addActionListener(hanhDong);
+        nutInVe.addMouseListener(thaoTacChuot);
+        // Bỏ fill màu mặc định của JButton (nếu cần)
+        phanXuLyVe.add(nutInVe);
 
         trangDonDatVe.add(trangChuaDonTT);
+    }
+
+    private void taoTrangChuaDSVeDangDat() {
+        JPanel trangChuaDSVe = new JPanel();
+        trangChuaDSVe.setBackground(trang);
+        trangChuaDSVe.setLayout(new BorderLayout());
+        trangChuaDSVe.setPreferredSize(new Dimension(1300, 500));
+
+        JLabel tieuDeDS = new JLabel("Danh Sách Vé đang đặt", SwingConstants.LEFT);
+        tieuDeDS.setPreferredSize(new Dimension(1300, 25));
+        tieuDeDS.setBackground(trang);
+        tieuDeDS.setForeground(xanhBrandeis);
+        tieuDeDS.setFont(phongTuyChinh.layPhongRobotoMonoReg(2, 15));
+        trangChuaDSVe.add(tieuDeDS, BorderLayout.NORTH);
+
+        Object[] tieuDeCot = {"STT", "Mã Vé", "Tên khách hàng",
+                              "Loại Vé", "Giá Vé", "Điểm đi",
+                              "Điểm đến", "Ngày Khởi Hành",
+                              "Ngày Trở Về", "Tàu", "Giờ đi",
+                              "Loại Ghế", "Toa", "Vị trí"};
+
+        Object[][] duLieu = {
+                {"1", "V220101001", "Nguyễn Văn Tèo", "Người Lớn", "900.000", "Sài Gòn", "Hà Nội", "2024-10-26", "2024-10-26", "VN7823", "05:00PM", "Ghế Giường 2", "VNTOA000046", "1"},
+                {"2", "V220101002", "Văn Toàn", "Người Lớn", "900.000", "Sài Gòn", "Đồng Văn", "2024-9-3", "2024-9-3", "VN9029", "12:00AM", "Ghế Giường 6", "VNTOA000027", "17"},
+        };
+
+        this.moHinhBang = new DefaultTableModel(duLieu, tieuDeCot);
+
+        JTable bangVeDangDat = new JTable(moHinhBang);
+        bangVeDangDat.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, kichThuocChu));
+        bangVeDangDat.setBackground(trang);
+        bangVeDangDat.setForeground(xanhBrandeis);
+        bangVeDangDat.setShowGrid(false);
+        bangVeDangDat.getTableHeader().setReorderingAllowed(false);
+        bangVeDangDat.setShowHorizontalLines(false);
+        bangVeDangDat.setShowVerticalLines(false);
+        bangVeDangDat.setDefaultRenderer(Object.class, new CustomCellRenderer());
+        //bangVeDangDat.setBorder(gachChanDam);
+        bangVeDangDat.setBackground(trang);
+        bangVeDangDat.setRowHeight(25);
+
+        TableColumnModel moHinhCotBang = bangVeDangDat.getColumnModel();
+        moHinhCotBang.getColumn(0).setPreferredWidth(40);   // STT
+        moHinhCotBang.getColumn(1).setPreferredWidth(100);  // Mã Vé
+        moHinhCotBang.getColumn(2).setPreferredWidth(150);  // Tên khách hàng
+        moHinhCotBang.getColumn(3).setPreferredWidth(100);  // Loại Vé
+        moHinhCotBang.getColumn(4).setPreferredWidth(100);  // Giá Vé
+        moHinhCotBang.getColumn(5).setPreferredWidth(100);  // Điểm đi
+        moHinhCotBang.getColumn(6).setPreferredWidth(100);  // Điểm đến
+        moHinhCotBang.getColumn(7).setPreferredWidth(120);  // Ngày Khởi Hành
+        moHinhCotBang.getColumn(8).setPreferredWidth(120);  // Ngày Trở Về
+        moHinhCotBang.getColumn(9).setPreferredWidth(80);  // Tàu
+        moHinhCotBang.getColumn(10).setPreferredWidth(80);  // Giờ đi
+        moHinhCotBang.getColumn(11).setPreferredWidth(100); // Loại Ghế
+        moHinhCotBang.getColumn(12).setPreferredWidth(100);  // Toa
+        moHinhCotBang.getColumn(13).setPreferredWidth(60);  // Vị trí
+
+        JTableHeader tieuDeBang = bangVeDangDat.getTableHeader();
+        tieuDeBang.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, kichThuocChu));
+        tieuDeBang.setBackground(trang);
+        tieuDeBang.setForeground(xanhBrandeis);
+
+        DefaultTableCellRenderer vienBang = new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                JLabel phanTu = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+
+                phanTu.setForeground(xanhBrandeis);
+                phanTu.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, kichThuocChu));
+                phanTu.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0)); // Tăng khoảng cách trên và dưới
+                phanTu.setHorizontalAlignment(SwingConstants.CENTER);
+
+                return phanTu;
+            }
+        };
+
+        tieuDeBang.setDefaultRenderer(vienBang);
+        bangVeDangDat.setDefaultRenderer(Object.class, new CustomCellRenderer());
+
+        JScrollPane trangChuaBang = new JScrollPane(bangVeDangDat);
+        trangChuaBang.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
+        trangChuaBang.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        trangChuaBang.setPreferredSize(new Dimension(1300, 500));
+        trangChuaBang.setForeground(xanhBrandeis);
+        trangChuaBang.getViewport().setBackground(trang);
+        trangChuaBang.getViewport().setBorder(null);
+        trangChuaBang.getVerticalScrollBar().setBorder(vienDam);
+        trangChuaBang.getHorizontalScrollBar().setBorder(null);
+        trangChuaDSVe.add(trangChuaBang, BorderLayout.CENTER);
+
+        JPanel cachDong = new JPanel();
+        cachDong.setPreferredSize(new Dimension(1300, 250));
+        cachDong.setBackground(trang);
+        trangChuaDSVe.add(cachDong, BorderLayout.SOUTH);
+
+        trangDSVeDangDat.add(trangChuaDSVe);
+
     }
 
     private void taoTrangChuaNutDS() {

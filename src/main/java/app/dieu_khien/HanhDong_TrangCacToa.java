@@ -2,6 +2,7 @@ package app.dieu_khien;
 
 import app.giao_dien.TrangCacTau;
 import app.giao_dien.TrangCacToa;
+import app.thuc_the.Ghe;
 
 import javax.swing.*;
 import java.awt.*;

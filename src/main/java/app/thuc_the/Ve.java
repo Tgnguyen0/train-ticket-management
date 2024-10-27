@@ -4,6 +4,9 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 public class Ve {
+
+    // ở đây không có thông tin tàu đâu nha cho nên khi xuất ra thì lưu ý, tìm tàu của cái mã ghế đó.
+    // sau đó thì setTau(tau) hoặc là có thể lấy tàu từ class ghế sau đ láy class toa và cuối cùng là tàu.
     String maVe;
     String loaiDoiTuong;
     LocalDate ngayKhoiHanh;
@@ -16,6 +19,20 @@ public class Ve {
     Ghe ghe;
     String loaiVe;
     Tau tau;
+
+    public Ve(String maVe, String loaiDoiTuong, LocalDate ngayKhoiHanh, LocalDate ngayDatVe, DaiNgo daiNgo, String gaKhoiHanh, String gaKetThuc, double giaVe, KhachHang khachHang, Ghe ghe, String loaiVe) {
+        this.maVe = maVe;
+        this.loaiDoiTuong = loaiDoiTuong;
+        this.ngayKhoiHanh = ngayKhoiHanh;
+        this.ngayDatVe = ngayDatVe;
+        this.daiNgo = daiNgo;
+        this.gaKhoiHanh = gaKhoiHanh;
+        this.gaKetThuc = gaKetThuc;
+        this.giaVe = giaVe;
+        this.khachHang = khachHang;
+        this.ghe = ghe;
+        this.loaiVe = loaiVe;
+    }
 
     public Ve(String loaiDoiTuong, LocalDate ngayKhoiHanh, LocalDate ngayDatVe, DaiNgo daiNgo, String gaKhoiHanh, String gaKetThuc, double giaVe, KhachHang khachHang, Ghe ghe, String loaiVe) {
         this.maVe = setMaVe();
