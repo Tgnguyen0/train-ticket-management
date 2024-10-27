@@ -5,22 +5,22 @@ import java.util.Objects;
 
 public class LichCapBenGa {
     String maLich;
-    Tau tau;
+    String maTau;
     LocalDate gioCapBen;
     LocalDate gioKhoiHanh;
     String moTa;
-    NhaGa nhaGa;
+    String maGa;
 
     public LichCapBenGa() {
     }
 
-    public LichCapBenGa(String maLich, Tau tau, LocalDate gioCapBen, LocalDate gioKhoiHanh, String moTa, NhaGa nhaGa) {
+    public LichCapBenGa(String maLich, String maTau, LocalDate gioCapBen, LocalDate gioKhoiHanh, String moTa, String maGa) {
         this.maLich = maLich;
-        this.tau = tau;
+        this.maTau = maTau;
         this.gioCapBen = gioCapBen;
         this.gioKhoiHanh = gioKhoiHanh;
         this.moTa = moTa;
-        this.nhaGa = nhaGa;
+        this.maGa = maGa;
     }
 
     public String getMaLich() {
@@ -29,14 +29,6 @@ public class LichCapBenGa {
 
     public void setMaLich(String maLich) {
         this.maLich = maLich;
-    }
-
-    public Tau getTau() {
-        return tau;
-    }
-
-    public void setTau(Tau tau) {
-        this.tau = tau;
     }
 
     public LocalDate getGioCapBen() {
@@ -63,12 +55,20 @@ public class LichCapBenGa {
         this.moTa = moTa;
     }
 
-    public NhaGa getGa() {
-        return nhaGa;
+    public String getMaTau() {
+        return maTau;
     }
 
-    public void setGa(NhaGa nhaGa) {
-        this.nhaGa = nhaGa;
+    public void setMaTau(String maTau) {
+        this.maTau = maTau;
+    }
+
+    public String getMaGa() {
+        return maGa;
+    }
+
+    public void setMaGa(String maGa) {
+        this.maGa = maGa;
     }
 
     @Override

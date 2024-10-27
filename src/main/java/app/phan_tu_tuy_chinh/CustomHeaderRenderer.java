@@ -22,6 +22,9 @@ public class CustomHeaderRenderer extends DefaultTableCellRenderer {
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
         Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
         c.setFont(c.getFont().deriveFont(3));
+        c.setBackground(Color.BLUE);  // Màu nền xanh dương
+        c.setForeground(Color.WHITE); // Màu chữ trắng
+        c.setFont(new Font("Arial", Font.BOLD, 12)); // Đặt font cho head
         return c;
     }
 }

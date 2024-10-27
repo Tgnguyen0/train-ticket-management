@@ -11,7 +11,6 @@ public class KhachHang implements Serializable {
     private String soDT;
     private String email;
     private GIOI_TINH gioiTinh;
-    private Set<HoaDon> danhSachHoaDon;
 
 
     /*
@@ -121,14 +120,6 @@ public class KhachHang implements Serializable {
 
     public void setMaKH(String maKH) {
         this.maKH = maKH;
-    }
-
-    public Set<HoaDon> getDanhSachHoaDon() {
-        return danhSachHoaDon;
-    }
-
-    public void setDanhSachHoaDon(Set<HoaDon> danhSachHoaDon) {
-        this.danhSachHoaDon = danhSachHoaDon;
     }
 
     @Override

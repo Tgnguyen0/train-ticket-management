@@ -395,5 +395,36 @@ public class KhachHang_DAO {
         }
         return ketQuaThucThi;
     }
+
+    public KhachHang layKhachHangMuaVeTheoMaKhachHang(String maKhRequest){
+        KhachHang khachHang = null;
+        try {
+            Connection connection = KetNoiCoSoDuLieu.ketNoiDB_HinhDB();
+            String sql = "SELECT top 1  kh.MaKH, kh.TenKH, kh.DiaChi, kh.SoDT, kh.Email,  kh.GioiTinh\n" +
+                    "FROM Ve v \n" +
+                    "JOIN KhachHang kh ON v.MaKH = kh.MaKH \n" +
+                    "WHERE v.MaKH = " + maKhRequest + "\n"+
+                    "order by v.NgayDatVe DESC";
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            String maKh = rs.getString(1);
+            String tenKh = rs.getString(2);
+            String diaChi = rs.getString(3);
+            String soDienThoai = rs.getString(4);
+            String email = rs.getString(5);
+            String gioiTinh = rs.getString(6);
+            if(gioiTinh.compareToIgnoreCase(GIOI_TINH.NAM.getValue())== 0){
+                return  new KhachHang( maKh,  tenKh,  diaChi,  soDienThoai,  email, GIOI_TINH.NAM);
+            }
+            else {
+                return  new KhachHang( maKh,  tenKh,  diaChi,  soDienThoai,  email, GIOI_TINH.NU);
+            }
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        return  khachHang;
+    }
 }
 
