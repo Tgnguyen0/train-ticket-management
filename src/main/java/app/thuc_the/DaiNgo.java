@@ -1,6 +1,7 @@
 package app.thuc_the;
 
 public enum DaiNgo {
+    KhongDaiNgo(0) ,
     GIAMGIAHAIMUOIPHANTRAM(0.20),
     GIAMGIANAMPHANTRAM(0.05),
     GIAMGIAMUOIPHANTRAM(0.10),

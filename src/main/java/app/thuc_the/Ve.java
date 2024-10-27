@@ -17,7 +17,6 @@ public class Ve {
     String maKhachHang;
     String  maGhe;
     String loaiVe;
-    String maTau;
 
     public Ve(String maVe, String loaiDoiTuong, LocalDate ngayKhoiHanh, LocalDate ngayDatVe,  String gaKhoiHanh, String gaKetThuc, double giaVe, String maKhachHang,String maGhe, String loaiVe) {
         this.maVe = maVe;
@@ -133,9 +132,6 @@ public class Ve {
         return loaiVe;
     }
 
-    public String getMaTau() {
-        return maTau;
-    }
 
     public void setMaGhe(String maGhe) {
         this.maGhe = maGhe;
@@ -143,9 +139,7 @@ public class Ve {
 
 
 
-    public void setMaTau(String maTau) {
-        this.maTau = maTau;
-    }
+
 
 
     public void setLoaiVe(String loaiVe) {
@@ -180,7 +174,6 @@ public class Ve {
                 ", khachHang=" + maKhachHang +
                 ", ghe=" + maGhe +
                 ", loaiVe='" + loaiVe + '\'' +
-                ", tau=" + maTau +
                 '}';
     }
 }
