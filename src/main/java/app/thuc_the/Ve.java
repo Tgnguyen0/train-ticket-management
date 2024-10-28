@@ -132,15 +132,15 @@ public class Ve {
         return maKhachHang;
     }
 
-    public void setKhachHang(String maKhachHang) {
+    public void setMaKhachHang(String maKhachHang) {
         this.maKhachHang = maKhachHang;
     }
 
-    public String getGhe() {
+    public String getMaGhe() {
         return this.maGhe;
     }
 
-    public void setGhe(String maGhe) {
+    public void setMaGhe(String maGhe) {
         this.maGhe = maGhe;
     }
 

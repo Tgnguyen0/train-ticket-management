@@ -22,7 +22,7 @@ import app.dieu_khien.*;
 
 public class TrangDinhHuong extends JFrame {
     /* Khởi tạo */
-    public JPanel trangChua;
+    public static JPanel trangChua;
     public JButton nutTrangChu;
     public JButton nutVe;
     public JButton nutHoaDon;
@@ -256,5 +256,9 @@ public class TrangDinhHuong extends JFrame {
             TrangDinhHuong trangDinhHuong = new TrangDinhHuong();
             trangDinhHuong.setVisible(true);
         });
+    }
+
+    public static JPanel getTrangChua() {
+        return trangChua;
     }
 }

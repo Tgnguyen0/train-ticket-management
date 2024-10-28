@@ -49,7 +49,7 @@ public class TrangDanhSachVeTau extends JFrame{
     public javax.swing.JLabel tieuDe_DiemDen;
     public javax.swing.JLabel tieuDe_DiemDi;
     public javax.swing.JLabel tieuDe_DoiTuong;
-    public javax.swing.JLabel tieuDe_LoaiGhe;
+    public javax.swing.JLabel tieuDe_LoaiVe;
     public javax.swing.JLabel tieuDe_MaGhe;
     public javax.swing.JLabel tieuDe_MaKhachHang;
     public javax.swing.JLabel tieuDe_MaVe;
@@ -129,7 +129,7 @@ public class TrangDanhSachVeTau extends JFrame{
         tieuDe_DiemDen = new javax.swing.JLabel();
         textFieldDiemDen = new javax.swing.JTextField();
         trangChua_LoaiVe = new javax.swing.JPanel();
-        tieuDe_LoaiGhe = new javax.swing.JLabel();
+        tieuDe_LoaiVe = new javax.swing.JLabel();
         textFieldLoaiVe = new javax.swing.JTextField();
         trangChua_DoiTuong = new javax.swing.JPanel();
         tieuDe_DoiTuong = new javax.swing.JLabel();
@@ -156,6 +156,7 @@ public class TrangDanhSachVeTau extends JFrame{
         buttonInVe = new javax.swing.JButton();
         trangChua_ButtonThongTinChiTiet = new javax.swing.JPanel();
         buttonThongTinChiTiet = new javax.swing.JButton();
+
 
 
         // config trang chứa tiêu đề
@@ -205,6 +206,7 @@ public class TrangDanhSachVeTau extends JFrame{
         thietLap_TrangGiaoDien();
 
 
+        caiDatVoHieuHoaChoCacThanh();
         // thiết kế background
         this.setBackground(new Color(255, 255, 255));
         //trangChua_DonGia.setBackground(new Color(255, 255, 255));
@@ -217,6 +219,10 @@ public class TrangDanhSachVeTau extends JFrame{
         this.ac = new HanhDong_TrangDanhSachVe(this);
         this.mouse = new HanhDong_TrangDanhSachVe(this);
         table.addMouseListener(mouse);
+        buttonLamMoi.addActionListener(ac);
+        buttonHuyVe.addActionListener(ac);
+        buttonInVe.addActionListener(ac);
+        timKiem.addActionListener(ac);
         this.setVisible(true);
     }
 
@@ -243,11 +249,11 @@ public class TrangDanhSachVeTau extends JFrame{
     public void thietLap_TrangChuaThanhTimKiem(){
         timKiemVe.setText("Tìm Kiếm vé ");
 
-        thanhTimKiem.setText("jTextField1");
+        thanhTimKiem.setText("Tìm kiếm theo mã vé");
 
-        timKiem.setText("jButton1");
-        timKiem.addActionListener(ac);
-
+        timKiem.setText("Tìm Kiếm");
+        timKiem.setBackground(xanhBrandeis);
+        timKiem.setForeground(trang);
         javax.swing.GroupLayout trangChua_ThanhTimKiemLayout = new javax.swing.GroupLayout(trangChua_ThanhTimKiem);
         trangChua_ThanhTimKiem.setLayout(trangChua_ThanhTimKiemLayout);
         trangChua_ThanhTimKiemLayout.setHorizontalGroup(
@@ -453,7 +459,7 @@ public class TrangDanhSachVeTau extends JFrame{
         trangChua_LoaiVe.setPreferredSize(new java.awt.Dimension(370, 50));
         trangChua_LoaiVe.setRequestFocusEnabled(false);
 
-        tieuDe_LoaiGhe.setText("Loại Ghế:");
+        tieuDe_LoaiVe.setText("Loại Ghế:");
 
         textFieldLoaiVe.setText("jTextField2");
 
@@ -463,7 +469,7 @@ public class TrangDanhSachVeTau extends JFrame{
                 trangChua_LoaiVeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(trangChua_LoaiVeLayout.createSequentialGroup()
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(tieuDe_LoaiGhe, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(tieuDe_LoaiVe, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(textFieldLoaiVe, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addContainerGap())
@@ -473,7 +479,7 @@ public class TrangDanhSachVeTau extends JFrame{
                         .addGroup(trangChua_LoaiVeLayout.createSequentialGroup()
                                 .addContainerGap()
                                 .addGroup(trangChua_LoaiVeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(tieuDe_LoaiGhe, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(tieuDe_LoaiVe, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(textFieldLoaiVe, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addContainerGap(13, Short.MAX_VALUE))
         );
@@ -615,7 +621,7 @@ public class TrangDanhSachVeTau extends JFrame{
        // trangChua_GiaVe.setBackground(new java.awt.Color(0, 153, 153));
         tieuDeGiaVe.setText("Giá vé:");
 
-        giaVe.setText("20000");
+        giaVe.setText("");
 
         javax.swing.GroupLayout trangChua_GiaVeLayout = new javax.swing.GroupLayout(trangChua_GiaVe);
         trangChua_GiaVe.setLayout(trangChua_GiaVeLayout);
@@ -637,7 +643,6 @@ public class TrangDanhSachVeTau extends JFrame{
                                 .addComponent(giaVe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addContainerGap())
         );
-
     }
     public void thietLap_TrangChuaThongTinGiaVe(){
         //trangChua_ThongTinGiaVe.setBackground(new java.awt.Color(255, 51, 51));
@@ -774,17 +779,17 @@ public class TrangDanhSachVeTau extends JFrame{
         buttonLamMoi.setText("Làm Mới");
         buttonLamMoi.setBackground(xanhBrandeis);
         buttonLamMoi.setForeground(Color.WHITE);
-        buttonLamMoi.addActionListener(ac);
+
 
         buttonHuyVe.setText("Hủy Vé");
         buttonHuyVe.setBackground(xanhBrandeis);
         buttonHuyVe.setForeground(Color.WHITE);
-        buttonHuyVe.addActionListener(ac);
+
 
         buttonInVe.setText("In Vé");
         buttonInVe.setBackground(xanhBrandeis);
         buttonInVe.setForeground(Color.WHITE);
-        buttonInVe.addActionListener(ac);
+
 
         javax.swing.GroupLayout trangChua_CacCongCuChinhSuaLayout = new javax.swing.GroupLayout(trangChua_CacCongCuChinhSua);
         trangChua_CacCongCuChinhSua.setLayout(trangChua_CacCongCuChinhSuaLayout);
@@ -919,15 +924,27 @@ public class TrangDanhSachVeTau extends JFrame{
         );
         pack();
     }
+    public void lamMoiCacThanh(){
+        this.textFieldMaVe.setText("");
+        this.textFieldMaKhachHang.setText("");
+        this.textFieldMaGhe.setText("");
+        this.textFieldDiemDi.setText("");
+        this.textFieldDiemDen.setText("");
+        this.textFieldLoaiVe.setText("");
+        this.textFieldDoiTuong.setText("");
+        this.ngayDatVe.setText("");
+        this.ngayKhoiHanh.setText("");
+        this.giaVe.setText("");
+    }
 
     public void dayDuLieuVaoBang(List<Ve> dsVe){
-
-
+        this.model.setRowCount(0);
+        this.lamMoiCacThanh();
         for (Ve ve: dsVe) {
             Object[] data = {ve.getMaVe()+"",ve.getGaKhoiHanh()+"",
                     ve.getGaKetThuc()+"", ve.getLoaiDoiTuong()+"", ve.getGiaVe()+"",
                     ve.getNgayDatVe()+"", ve.getNgayKhoiHanh()};
-            model.addRow(data);
+            this.model.addRow(data);
         }
     }
 
@@ -935,6 +952,22 @@ public class TrangDanhSachVeTau extends JFrame{
         new TrangDanhSachVeTau().setVisible(true);
     }
 
+    public void caiDatVoHieuHoaChoCacThanh(){
+        this.textFieldMaVe.setEnabled(false);
+        this.textFieldMaVe.setDisabledTextColor(Color.BLUE);
+        this.textFieldMaKhachHang.setEnabled(false);
+        this.textFieldMaKhachHang.setDisabledTextColor(Color.BLUE);
+        this.textFieldMaGhe.setEnabled(false);
+        this.textFieldMaGhe.setDisabledTextColor(Color.BLUE);
+        this.textFieldDiemDi.setEnabled(false);
+        this.textFieldDiemDi.setDisabledTextColor(Color.BLUE);
+        this.textFieldDiemDen.setEnabled(false);
+        this.textFieldDiemDen.setDisabledTextColor(Color.BLUE);
+        this.textFieldLoaiVe.setEnabled(false);
+        this.textFieldLoaiVe.setDisabledTextColor(Color.BLUE);
+        this.textFieldDoiTuong.setEnabled(false);
+        this.textFieldDoiTuong.setDisabledTextColor(Color.BLUE);
+    }
 
     public static void main(String[] args) {
         try {
