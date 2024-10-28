@@ -20,7 +20,6 @@ public class Ve_DAO {
     String TAI_TAT_CA_SQL = "SELECT * FROM KhachHang";
     String CHON_THEO_MA_SQL = "SELECT * FROM KhachHang WHERE MaKH=?";
 
-
     List<Ve> danhSachVe; // Tránh thông tin bị trùng
 
     // Khởi tạo danh sách Vé
@@ -164,7 +163,7 @@ public class Ve_DAO {
                     ve.setNgayDatVe(boKetQua.getDate("NgayDatVe").toLocalDate());
                     ve.setGiaVe(boKetQua.getDouble("GiaVe"));
                     //ve.setKhachHang(boKetQua.getString("MaKH"));
-//                    ve.setDaiNgo(daiNgo);
+//                  ve.setDaiNgo(daiNgo);
                     ve.setGaKetThuc(boKetQua.getString("GaKhoiHanh"));
                     ve.setGaKhoiHanh(boKetQua.getString("GaKetThuc"));
                     //ve.setGhe(boKetQua.getString("MaGhe"));

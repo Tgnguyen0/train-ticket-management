@@ -105,6 +105,8 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
             String maToa = dsChoDaDat.get(bienSoTang).getMaToa();
             String soGhe = dsChoDaDat.get(bienSoTang).getSoGhe();
 
+            System.out.println("Trang Dat ve" + soGhe);
+
             Ve ve = new Ve(loaiDoiTuong, ngayKhoiHanh, ngayTroVe, diemDi, diemDen, 100000, (new KhachHang()).getMaKH(), dsChoDaDat.get(bienSoTang).getMaGhe(), dsChoDaDat.get(bienSoTang).getLoaiGhe().toString());
 
             Object[] duLieu = {String.valueOf(bienSoTang + 1), ve.getMaVe(), hoTen, ve.getLoaiDoiTuong(), ve.getGiaVe(), ve.getGaKhoiHanh(), ve.getGaKetThuc(), ve.getNgayKhoiHanh().toString(), ve.getNgayDatVe(), soHieuTau, "10:00AM", ve.getLoaiVe(), maToa, soGhe};

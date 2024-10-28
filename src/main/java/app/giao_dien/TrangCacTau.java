@@ -21,9 +21,13 @@ public class TrangCacTau extends JFrame {
     public JPanel trangChua;
     public NutAnh nutTau1;
     public NutAnh nutTau2;
+    public NutAnh nutTau3;
+    public NutAnh nutTau4;
 
     public TrangCacToa trangCacToa1;
     public TrangCacToa trangCacToa2;
+    public TrangCacToa trangCacToa3;
+    public TrangCacToa trangCacToa4;
 
     /* Khởi tạo phông chữ màu sắc */
     public Color trang = new Color(255, 255, 255);
@@ -99,15 +103,21 @@ public class TrangCacTau extends JFrame {
         JPanel thanhDinhHuong = new JPanel();
         thanhDinhHuong.setPreferredSize(new Dimension(1200, chieuRongNut + 40));
         thanhDinhHuong.setBackground(trang);
-        thanhDinhHuong.setLayout(new FlowLayout(FlowLayout.CENTER, 400, 20));
+        thanhDinhHuong.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 20));
 
         // Tạo Nút dẫn đến trang chủ
         /* Tạo nút ảnh với việc truyền đừờng dẫn ảnh chính, ảnh đang chọn,
         chiều dài ảnh, chiều rộng ảnh,chiều dài của chữ và chữ và vị trí x của chữ */
-        this.nutTau1 = new NutAnh("assets/tau.png",
-                                 "assets/tau-dang-chon.png",
-                                                  chieuDaiNut, chieuRongNut,
-                                                  viTriChu, "Số Hiệu: " + this.dsTau.get(0).getSoHieu(),40);
+        this.nutTau1 = new NutAnh(
+                "assets/tau.png",             // Đường dẫn ảnh không được chọn
+                "assets/tau-dang-chon.png",                  // Đường dẫn ảnh khi được chọn
+                chieuDaiNut,                                 // Chiều dài của nút
+                chieuRongNut,                                // Chiều rộng của nút
+                viTriChu,                                    // Vị trí của chữ trên nút
+                "<html><br>Số Hiệu: " + this.dsTau.get(0).getSoHieu() +  // Thông tin số hiệu tàu
+                        "<br>Số Lượng: " + this.dsTau.get(0).getSoLuongToiDa() + "</html>", // Số lượng ghế tối đa
+                40                                           // Kích thước chữ (hoặc tham số tùy chỉnh khác)
+        );
 
         nutTau1.setActionCommand(this.dsTau.get(0).getSoHieu());
         nutTau1.setPreferredSize(new Dimension(chieuDaiNut, chieuRongNut));
@@ -124,10 +134,16 @@ public class TrangCacTau extends JFrame {
         // Tạo Nút đến trang bán hàng
         /* Tạo nút ảnh với việc truyền đừờng dẫn ảnh chính, ảnh đang chọn,
         chiều dài ảnh, chiều rộng ảnh,chiều dài của chữ và chữ và vị trí x của chữ */
-        this.nutTau2 = new NutAnh("assets/tau.png",
-                "assets/tau-dang-chon.png",
-                chieuDaiNut, chieuRongNut,
-                viTriChu, "Số Hiệu: " + this.dsTau.get(1).getSoHieu(),40);
+        this.nutTau2 = new NutAnh(
+                "assets/tau.png",             // Đường dẫn ảnh không được chọn
+                "assets/tau-dang-chon.png",                  // Đường dẫn ảnh khi được chọn
+                chieuDaiNut,                                 // Chiều dài của nút
+                chieuRongNut,                                // Chiều rộng của nút
+                viTriChu,                                    // Vị trí của chữ trên nút
+                "<html><br>Số Hiệu: " + this.dsTau.get(1).getSoHieu() +  // Thông tin số hiệu tàu
+                        "<br>Số Lượng: " + this.dsTau.get(1).getSoLuongToiDa() + "</html>", // Số lượng ghế tối đa
+                40                                           // Kích thước chữ (hoặc tham số tùy chỉnh khác)
+        );
 
         nutTau2.setActionCommand(this.dsTau.get(1).getSoHieu());
         nutTau2.setPreferredSize(new Dimension(chieuDaiNut, chieuRongNut));
@@ -141,34 +157,59 @@ public class TrangCacTau extends JFrame {
         nutTau2.addActionListener(this.hanhDong);
         thanhDinhHuong.add(nutTau2);
 
-        // Tạo Nút đến trang hóa đơn
-        //nutTau3 = new NutAnh(anhTau, chieuDaiNut, chieuRongNut);
-        /*this.nutTau3 = new NutAnh("assets/tau.png", "assets/tau-dang-chon.png", chieuDaiNut, chieuRongNut, "Tàu 3");
+        // Tạo Nút đến trang bán hàng
+        /* Tạo nút ảnh với việc truyền đừờng dẫn ảnh chính, ảnh đang chọn,
+        chiều dài ảnh, chiều rộng ảnh,chiều dài của chữ và chữ và vị trí x của chữ */
+        this.nutTau3 = new NutAnh(
+                "assets/tau.png",             // Đường dẫn ảnh không được chọn
+                "assets/tau-dang-chon.png",                  // Đường dẫn ảnh khi được chọn
+                chieuDaiNut,                                 // Chiều dài của nút
+                chieuRongNut,                                // Chiều rộng của nút
+                viTriChu,                                    // Vị trí của chữ trên nút
+                "<html><br>Số Hiệu: " + this.dsTau.get(2).getSoHieu() +  // Thông tin số hiệu tàu
+                        "<br>Số Lượng: " + this.dsTau.get(2).getSoLuongToiDa() + "</html>", // Số lượng ghế tối đa
+                40                                           // Kích thước chữ (hoặc tham số tùy chỉnh khác)
+        );
+
+        nutTau3.setActionCommand(this.dsTau.get(2).getSoHieu());
         nutTau3.setPreferredSize(new Dimension(chieuDaiNut, chieuRongNut));
         nutTau3.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, charSize));
-        nutTau3.setForeground(new Color(xanhBrandeis.getRGB()));
-        nutTau3.setBackground(new Color(trang.getRGB()));
-        nutTau3.setBorder(null);
+        nutTau3.setForeground(trang);
+        nutTau3.setBackground(trang);
         nutTau3.setFocusPainted(false); // Bỏ viền khi click (focus)
         nutTau3.setContentAreaFilled(false); // Bỏ fill màu mặc định của JButton (nếu cần)
-        //nutTau3.setEnabled(false);
+        nutTau3.setBorder(null);
         nutTau3.addMouseListener(this.thaoTacChuot);
         nutTau3.addActionListener(this.hanhDong);
+        //nutTau3.setEnabled(false);
         thanhDinhHuong.add(nutTau3);
 
-        // Tạo Nút đến trang khách hàng
-        //nutTau4 = new NutAnh(anhTau, chieuDaiNut, chieuRongNut);
-        this.nutTau4 = new NutAnh("assets/tau.png", "assets/tau-dang-chon.png", chieuDaiNut, chieuRongNut, "Tàu 4");
+        // Tạo Nút đến trang bán hàng
+        /* Tạo nút ảnh với việc truyền đừờng dẫn ảnh chính, ảnh đang chọn,
+        chiều dài ảnh, chiều rộng ảnh,chiều dài của chữ và chữ và vị trí x của chữ */
+        this.nutTau4 = new NutAnh(
+                "assets/tau.png",             // Đường dẫn ảnh không được chọn
+                "assets/tau-dang-chon.png",                  // Đường dẫn ảnh khi được chọn
+                chieuDaiNut,                                 // Chiều dài của nút
+                chieuRongNut,                                // Chiều rộng của nút
+                viTriChu,                                    // Vị trí của chữ trên nút
+                "<html><br>Số Hiệu: " + this.dsTau.get(3).getSoHieu() +  // Thông tin số hiệu tàu
+                        "<br>Số Lượng: " + this.dsTau.get(3).getSoLuongToiDa() + "</html>", // Số lượng ghế tối đa
+                40                                           // Kích thước chữ (hoặc tham số tùy chỉnh khác)
+        );
+
+        nutTau4.setActionCommand(this.dsTau.get(3).getSoHieu());
         nutTau4.setPreferredSize(new Dimension(chieuDaiNut, chieuRongNut));
         nutTau4.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, charSize));
-        nutTau4.setForeground(new Color(xanhBrandeis.getRGB()));
-        nutTau4.setBackground(new Color(trang.getRGB()));
-        nutTau4.setBorder(null);
+        nutTau4.setForeground(trang);
+        nutTau4.setBackground(trang);
         nutTau4.setFocusPainted(false); // Bỏ viền khi click (focus)
         nutTau4.setContentAreaFilled(false); // Bỏ fill màu mặc định của JButton (nếu cần)
+        nutTau4.setBorder(null);
         nutTau4.addMouseListener(this.thaoTacChuot);
         nutTau4.addActionListener(this.hanhDong);
-        thanhDinhHuong.add(nutTau4);*/
+        //nutTau4.setEnabled(false);
+        thanhDinhHuong.add(nutTau4);
 
         add(thanhDinhHuong, BorderLayout.NORTH);
     }
@@ -181,9 +222,13 @@ public class TrangCacTau extends JFrame {
 
         this.trangCacToa1 = new TrangCacToa(1, this.dsTau.get(0).getSoHieu(), this.dsToa1, this.gheDao);
         this.trangCacToa2 = new TrangCacToa(2, this.dsTau.get(1).getSoHieu(), this.dsToa2, this.gheDao);
+        this.trangCacToa3 = new TrangCacToa(1, this.dsTau.get(0).getSoHieu(), this.dsToa3, this.gheDao);
+        this.trangCacToa4 = new TrangCacToa(2, this.dsTau.get(1).getSoHieu(), this.dsToa4, this.gheDao);
 
         this.trangChua.add(trangCacToa1, "Cac toa cua tau 1");
         this.trangChua.add(trangCacToa2, "Cac toa cua tau 2");
+        this.trangChua.add(trangCacToa3, "Cac toa cua tau 3");
+        this.trangChua.add(trangCacToa4, "Cac toa cua tau 4");
 
         add(this.trangChua);
     }

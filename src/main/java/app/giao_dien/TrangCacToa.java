@@ -177,14 +177,21 @@ public class TrangCacToa extends JPanel {
         this.nutToa1.setActionCommand("1");
         thanhDinhHuong.add(nutToa1);
 
+        // Tạo Nút đến trang bán hàng
         /* Tạo nút ảnh với việc truyền đừờng dẫn ảnh chính, ảnh đang chọn,
         chiều dài ảnh, chiều rộng ảnh,chiều dài của chữ và chữ và vị trí x của chữ */
-        NutAnh nutTau = new NutAnh("assets/tau-nho.png",
-                                  "assets/tau-nho.png",
-                                                   chieuDaiNut, chieuRongNut,
-                                                   viTriChu, this.soHieu, 6);
+        NutAnh nutTau = new NutAnh(
+                "assets/tau-nho.png",         // Đường dẫn ảnh không được chọn
+                "assets/tau-nho.png",                        // Đường dẫn ảnh khi được chọn
+                chieuDaiNut,                                 // Chiều dài của nút
+                chieuRongNut,                                // Chiều rộng của nút
+                viTriChu,                                    // Vị trí của chữ trên nút
+                this.soHieu,                                 // Thông tin số hiệu tàu
+                6                                            // Kích thước chữ (hoặc tham số tùy chỉnh khác)
+        );
 
         nutTau.setPreferredSize(new Dimension(chieuDaiNut, chieuRongNut + 100));
+        nutTau.chinhKichThuocJlabel(chieuDaiNut + 1000, chieuRongNut + 1000);
         nutTau.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, charSize));
         nutTau.setForeground(xanhBrandeis);
         nutTau.setBackground(trang);
