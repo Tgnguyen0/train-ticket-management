@@ -45,13 +45,11 @@ public class HanhDong_TrangDanhSachVe implements ActionListener, MouseListener {
 
     }
 
-
     public  void quanLyDanhSachVeTrongBang() throws SQLException {
         List<Ve> dsVe = databaseVe.layToanBoVe();
         trangDanhSachVeTau.dayDuLieuVaoBang(dsVe);
         logger.info("lấy thành công");
     }
-
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -133,7 +131,7 @@ public class HanhDong_TrangDanhSachVe implements ActionListener, MouseListener {
             this.trangDanhSachVeTau.textFieldMaVe.setDisabledTextColor(Color.BLUE);
             this.trangDanhSachVeTau.textFieldMaVe.setEnabled(false);
 
-            this.trangDanhSachVeTau.textFieldMaKhachHang.setText(ve.getMaHang());
+            this.trangDanhSachVeTau.textFieldMaKhachHang.setText(ve.getMaKhachHang());
             this.trangDanhSachVeTau.textFieldMaKhachHang.setDisabledTextColor(Color.BLUE);
             this.trangDanhSachVeTau.textFieldMaKhachHang.setEnabled(false);
 

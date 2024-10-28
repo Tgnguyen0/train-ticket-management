@@ -7,23 +7,19 @@ public class Tau {
     private String soHieu;
     private int soToa;
     private int soLuongToiDa;;
-
+    //private int soLuongKhachHangDaDatVe;
+    private Set<Toa> danhSachToa;
+    private Set<LichCapBenGa> danhSachLichCapBenTau;
 
     public Tau() {
-    }
-
-    public Tau(String soHieu, int soToa, int soLuongToiDa, Set<LichCapBenGa> danhSachLichCapBenTau) {
-        this.soHieu = soHieu;
-        this.soToa = soToa;
-        this.soLuongToiDa = soLuongToiDa;
     }
 
     public String getSoHieu() {
         return soHieu;
     }
 
-    public String setSoHieu(String soHieu) {
-        return soHieu;
+    public void setSoHieu(String soHieu) {
+        this.soHieu = soHieu;
     }
 
     public int getSoToa() {
@@ -38,10 +34,33 @@ public class Tau {
         return soLuongToiDa;
     }
 
+    /*public int getSoLuongKhachHangDaDatVe() {
+        return soLuongKhachHangDaDatVe;
+    }
+
+    public void setSoLuongKhachHangDaDatVe(int soLuongKhachHangDaDatVe) {
+        this.soLuongKhachHangDaDatVe = soLuongKhachHangDaDatVe;
+    }*/
+
+    public Set<Toa> getDanhSachToa() {
+        return danhSachToa;
+    }
+
+    public void setDanhSachToa(Set<Toa> danhSachToa) {
+        this.danhSachToa = danhSachToa;
+    }
+
     public void setSoLuongToiDa(int soLuongToiDa) {
         this.soLuongToiDa = soLuongToiDa;
     }
 
+    public Set<LichCapBenGa> getDanhSachLichCapBenTau() {
+        return danhSachLichCapBenTau;
+    }
+
+    public void setDanhSachLichCapBenTau(Set<LichCapBenGa> danhSachLichCapBenTau) {
+        this.danhSachLichCapBenTau = danhSachLichCapBenTau;
+    }
 
     @Override
     public boolean equals(Object o) {

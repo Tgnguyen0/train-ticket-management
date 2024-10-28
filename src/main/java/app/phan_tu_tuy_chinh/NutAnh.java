@@ -101,4 +101,8 @@ public class NutAnh extends JButton {
     public void datTextLabel(String text) {
         this.label.setText(text);
     }
+
+    public void chinhKichThuocJlabel(int chieuDai, int chieuRong) {
+        this.label.setPreferredSize(new Dimension(chieuDai, chieuRong));
+    }
 }

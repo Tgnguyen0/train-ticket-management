@@ -60,7 +60,7 @@ public class KhachHang_DAO {
         int i;
         try {
             i = 1;
-            KetNoiCoSoDuLieu.CapNhat(
+            KetNoiCoSoDuLieu.capNhat(
                     NHAP_SQL,
                     kh.getMaKH(),
                     kh.getTenKH(),
@@ -81,7 +81,7 @@ public class KhachHang_DAO {
 
         try {
             i = 1;
-            KetNoiCoSoDuLieu.CapNhat(
+            KetNoiCoSoDuLieu.capNhat(
                     CAP_NHAT_SQL,
                     kh.getTenKH(),
                     kh.getDiaChi(),
@@ -111,7 +111,7 @@ public class KhachHang_DAO {
         try {
             ResultSet boKetQua = null;
             try {
-                boKetQua = KetNoiCoSoDuLieu.TruyVan(lenhSQL, thamSo);
+                boKetQua = KetNoiCoSoDuLieu.truyVan(lenhSQL, thamSo);
                 if (boKetQua == null) {
                     System.out.println("Không có kết quả trả về");
                 }

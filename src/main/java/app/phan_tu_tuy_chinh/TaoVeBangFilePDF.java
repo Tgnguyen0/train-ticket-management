@@ -1,4 +1,5 @@
 package app.phan_tu_tuy_chinh;
+import app.phong_chu_moi.PhongChuMoi;
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
 import com.lowagie.text.Element;
@@ -12,6 +13,8 @@ import java.awt.Color;
 import java.io.FileOutputStream;
 import java.io.IOException;
 public class TaoVeBangFilePDF {
+    private PhongChuMoi phongTuyChinh = new PhongChuMoi();
+
     public void generateTicketPDF(String fileName, String maVe, String tenKhachHang, String gaKhoiHanh,
                                   String gaKetThuc,String ngayDatVe , String ngayKhoiHanh, String loaiVe , String soGhe
                                     ,String loaiDoiTuong, String giaVe) {
@@ -22,9 +25,26 @@ public class TaoVeBangFilePDF {
 
             // Tiêu đề hóa đơn
             Font titleFont = new Font(Font.HELVETICA, 18, Font.BOLD, new Color(0, 102, 204));
-            Paragraph title = new Paragraph("VÉ TÀU", titleFont);
+
+            Paragraph tieuDeTongCongTy = new Paragraph("TỔNG CÔNG TY ĐƯỜNG SẮT VIỆT NAM", phongTuyChinh.layPhongHelvetica(13, Font.NORMAL, new Color(0, 102, 204)));
+            tieuDeTongCongTy.setAlignment(Element.ALIGN_CENTER);
+            document.add(tieuDeTongCongTy);
+
+            Paragraph tieuDeCongTyCon1 = new Paragraph("CÔNG TY TNHH MỘT THÀNH VIÊN", phongTuyChinh.layPhongHelvetica(13, Font.NORMAL, new Color(0, 102, 204)));
+            tieuDeCongTyCon1.setAlignment(Element.ALIGN_CENTER);
+            document.add(tieuDeCongTyCon1);
+
+            Paragraph tieuDeCongTyCon2 = new Paragraph("VẬN TẢI ĐƯỜNG SẮT SÀI GÒN", phongTuyChinh.layPhongHelvetica(13, Font.NORMAL, new Color(0, 102, 204)));
+            tieuDeCongTyCon2.setAlignment(Element.ALIGN_CENTER);
+            document.add(tieuDeCongTyCon2);
+
+            Paragraph title = new Paragraph("THẺ LÊN TÀU HỎA",phongTuyChinh.layPhongHelvetica(18, Font.NORMAL, new Color(0, 102, 204)));
             title.setAlignment(Element.ALIGN_CENTER);
             document.add(title);
+
+            Paragraph tieuDeTheTauAnhNgu = new Paragraph("BOARDING PASS", phongTuyChinh.layPhongHelvetica(15, Font.NORMAL, new Color(0, 102, 204)));
+            tieuDeTheTauAnhNgu.setAlignment(Element.ALIGN_CENTER);
+            document.add(tieuDeTheTauAnhNgu);
 
             // Thêm khoảng cách sau tiêu đề
             document.add(new Paragraph(" "));
