@@ -48,11 +48,18 @@
           <version>13.0</version>
           <scope>compile</scope>
       </dependency>
+    <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
-      <version>1.18.28</version> <!-- Phiên bản Lombok -->
+      <version>1.18.34</version>
       <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>1.7.36</version> <!-- Kiểm tra phiên bản mới nhất -->
     </dependency>
     <dependency>
       <groupId>ch.qos.logback</groupId>
