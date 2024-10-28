@@ -167,7 +167,6 @@ public class Ve {
                 ", loaiDoiTuong='" + loaiDoiTuong + '\'' +
                 ", ngayKhoiHanh=" + ngayKhoiHanh +
                 ", ngayDatVe=" + ngayDatVe +
-
                 ", gaKhoiHanh='" + gaKhoiHanh + '\'' +
                 ", gaKetThuc='" + gaKetThuc + '\'' +
                 ", giaVe=" + giaVe +

@@ -220,7 +220,8 @@ public class Ve_DAO {
         return danhSachVe;
     }
 
-    public Ve layVe_DuaVaoMaVe(String maVeRequest)throws SQLException{
+    public List<Ve> layVe_DuaVaoMaVe(String maVeRequest)throws SQLException{
+        List<Ve> danhSachVe = new ArrayList<>();
         String sql = "SELECT * FROM Ve WHERE MaVe = ?";
         Connection connection = KetNoiCoSoDuLieu.ketNoiDB_HinhDB();
         PreparedStatement statement = connection.prepareStatement(sql);
@@ -228,7 +229,7 @@ public class Ve_DAO {
 
         ResultSet resultSet = statement.executeQuery();
 
-        if (resultSet.next()) { // Di chuyển con trỏ đến dòng kết quả đầu tiên
+        while (resultSet.next()) { // Di chuyển con trỏ đến dòng kết quả đầu tiên
             String maVe = resultSet.getString("MaVe");
             LocalDate ngayDatVe = resultSet.getDate("NgayDatVe").toLocalDate();
             double giaVe = resultSet.getDouble("GiaVe");
@@ -240,11 +241,24 @@ public class Ve_DAO {
             String loaiDoiTuong = resultSet.getString("LoaiDoiTuong");
             LocalDate ngayKhoiHanh = resultSet.getDate("NgayKhoiHanh").toLocalDate();
 
-            return new Ve(maVe, loaiDoiTuong, ngayKhoiHanh, ngayDatVe, gaKhoiHanh, gaKetThuc, giaVe, maKh, maGhe, loaiGhe);
-        } else {
-            System.out.println("Không tìm thấy vé với mã: " + maVeRequest);
-            return null; // Hoặc xử lý khác tùy theo yêu cầu
+            danhSachVe.add(new Ve(maVe, loaiDoiTuong, ngayKhoiHanh, ngayDatVe, gaKhoiHanh, gaKetThuc, giaVe, maKh, maGhe, loaiGhe));
         }
+        return  danhSachVe;
+    }
 
+    public LocalDate getNgayKhoiHanh_DuaVaoMaVe(String maVeRequest)throws SQLException{
+        LocalDate ngayKhoiHanh = null;
+        String sql = "SELECT * FROM Ve WHERE MaVe = ?";
+        Connection connection = KetNoiCoSoDuLieu.ketNoiDB_HinhDB();
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setString(1, maVeRequest); // Đặt tham số MaVe
+
+        ResultSet resultSet = statement.executeQuery();
+
+        if (resultSet.next()) { // Di chuyển con trỏ đến dòng kết quả đầu tiên
+            String maVe = resultSet.getString("MaVe");
+            ngayKhoiHanh = resultSet.getDate("NgayKhoiHanh").toLocalDate();
+        }
+        return  ngayKhoiHanh;
     }
 }
