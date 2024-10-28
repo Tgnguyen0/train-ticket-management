@@ -1,6 +1,8 @@
 package app.dieu_khien;
 
+import app.dao.KhachHang_DAO;
 import app.giao_dien.*;
+import app.phan_tu_tuy_chinh.TaoVeBangFilePDF;
 import app.thuc_the.*;
 import com.toedter.calendar.JDateChooser;
 
@@ -20,6 +22,8 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
     TrangDatVe trangDatVe;
     TrangCacTau trangCacTau;
     int bienSoTang = 0;
+    Ve ve;
+    KhachHang khachHang;
 
     public HanhDong_TrangDatVe(TrangDatVe trangDatVe) {
         this.trangDatVe = trangDatVe;
@@ -107,13 +111,36 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
 
             System.out.println("Trang Dat ve" + soGhe);
 
-            Ve ve = new Ve(loaiDoiTuong, ngayKhoiHanh, ngayTroVe, diemDi, diemDen, 100000, (new KhachHang()).getMaKH(), dsChoDaDat.get(bienSoTang).getMaGhe(), dsChoDaDat.get(bienSoTang).getLoaiGhe().toString());
+            this.khachHang = new KhachHang("Nguyễn Nhật Tấn", "Ai bít", "0768558858", "nguyennhattan223344@gmail.com", GIOI_TINH.NAM);
 
-            Object[] duLieu = {String.valueOf(bienSoTang + 1), ve.getMaVe(), hoTen, ve.getLoaiDoiTuong(), ve.getGiaVe(), ve.getGaKhoiHanh(), ve.getGaKetThuc(), ve.getNgayKhoiHanh().toString(), ve.getNgayDatVe(), soHieuTau, "10:00AM", ve.getLoaiVe(), maToa, soGhe};
+            this.ve = new Ve(loaiDoiTuong, ngayKhoiHanh, ngayTroVe, diemDi, diemDen, 100000, (new KhachHang()).getMaKH(), dsChoDaDat.get(bienSoTang).getMaGhe(), dsChoDaDat.get(bienSoTang).getLoaiGhe().toString());
+
+            Object[] duLieu = {String.valueOf(bienSoTang + 1), ve.getMaVe(), hoTen, ve.getLoaiDoiTuong(), ve.getGiaVe(), ve.getGaKhoiHanh(), ve.getGaKetThuc(), ve.getNgayKhoiHanh().toString(), ve.getNgayDatVe(), soHieuTau, "10:00AM", ve.getLoaiVe().toString(), maToa, soGhe};
 
             this.trangDatVe.moHinhBang.addRow(duLieu);
 
             bienSoTang++;
+        }
+
+        if (e.getSource() == this.trangDatVe.nutInVe) {
+            if (this.ve.getMaVe() != null) {
+                String maVe = this.ve.getMaVe();
+                String tenKhachHang = this.khachHang.getTenKH();
+                String maGhe = this.ve.getMaGhe();
+                String diemDi = this.ve.getGaKhoiHanh();
+                String diemDen = this.ve.getGaKetThuc();
+                String loaiVe = this.ve.getLoaiVe();
+                String doiTuong = this.ve.getLoaiDoiTuong();
+                String ngayDatVe = this.ve.getNgayDatVe().toString();
+                String ngayKhoiHanh = this.ve.getNgayKhoiHanh().toString();
+                String giaVe = String.valueOf(this.ve.getGiaVe());
+
+                TaoVeBangFilePDF taoVeBangFilePDF = new TaoVeBangFilePDF();
+                taoVeBangFilePDF.generateTicketPDF("vé được tạo/VeTau.pdf", maVe, tenKhachHang, diemDi, diemDen, ngayDatVe,
+                        ngayKhoiHanh, loaiVe, maGhe,doiTuong, giaVe);
+            } else {
+                hienThiThongBao("Không có vé để in !", "Lỗi in vé");
+            }
         }
     }
 

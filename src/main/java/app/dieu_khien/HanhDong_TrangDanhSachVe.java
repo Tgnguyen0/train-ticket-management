@@ -45,13 +45,11 @@ public class HanhDong_TrangDanhSachVe implements ActionListener, MouseListener {
 
     }
 
-
     public  void quanLyDanhSachVeTrongBang() throws SQLException {
         List<Ve> dsVe = databaseVe.layToanBoVe();
         trangDanhSachVeTau.dayDuLieuVaoBang(dsVe);
         logger.info("lấy thành công");
     }
-
 
     @Override
     public void actionPerformed(ActionEvent e) {
