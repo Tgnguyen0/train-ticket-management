@@ -1,85 +1,114 @@
 package app.thuc_the;
 
+
 import java.time.LocalDate;
-import java.util.Objects;
 
 public class HoaDon {
-    String maHoaDon;
-    LocalDate ngayLapHoaDon;
-    double thanhTien;
-    KhachHang khachHang;
-    ChiTietHoaDon chiTietHoaDon;
-
-    public HoaDon(int soNgauNhien, LocalDate ngayLapHoaDon, KhachHang khachHang, ChiTietHoaDon chiTietHoaDon) {
-        this.maHoaDon = setMaHoaDon(soNgauNhien);
-        this.ngayLapHoaDon = ngayLapHoaDon;
-        this.khachHang = khachHang;
-        this.chiTietHoaDon = chiTietHoaDon;
-       // this.thanhTien = (chiTietHoaDon.tongTien * chiTietHoaDon.soLuong) - ((chiTietHoaDon.tongTien * chiTietHoaDon.soLuong)* chiTietHoaDon.thue) ;
-    }
+    public String maHD;
+    public LocalDate ngayLap;;
+    public String maNV;
+    public float thanhTien;
+    public String maKH;
+    public int soLuong;
+    public float tongTien;
+    public String trangThai;
+    public float daiNgo;
+    public float thue;
 
     public HoaDon() {
     }
 
-    public String getMaHoaDon() {
-        return maHoaDon;
+    public HoaDon(String maHD, LocalDate ngayLap, String maNV, float thanhTien, String maKH, int soLuong, float tongTien, String trangThai, float daiNgo, float thue) {
+        this.maHD = maHD;
+        this.ngayLap = ngayLap;
+        this.maNV = maNV;
+        this.thanhTien = thanhTien;
+        this.maKH = maKH;
+        this.soLuong = soLuong;
+        this.tongTien = tongTien;
+        this.trangThai = trangThai;
+        this.daiNgo = daiNgo;
+        this.thue = thue;
     }
 
-    public String setMaHoaDon(int soNgauNhien) {
-        String maHoaDon;
-        String ngayTrongThang = String.valueOf(LocalDate.now().getDayOfMonth());
-        String thang = String.valueOf(LocalDate.now().getMonthValue());
-        String nam = String.valueOf(LocalDate.now().getYear());
-
-        nam = nam.substring(nam.length() - 2);
-
-        maHoaDon = nam + thang + ngayTrongThang + String.valueOf(soNgauNhien);
-
-        return maHoaDon;
+    public String getMaHD() {
+        return maHD;
     }
 
-    public LocalDate getNgayLapHoaDon() {
-        return ngayLapHoaDon;
+    public void setMaHD(String maHD) {
+        this.maHD = maHD;
     }
 
-    public void setNgayLapHoaDon(LocalDate ngayLapHoaDon) {
-        this.ngayLapHoaDon = ngayLapHoaDon;
+    public LocalDate getNgayLap() {
+        return ngayLap;
     }
 
-    public double getThanhTien() {
+    public void setNgayLap(LocalDate ngayLap) {
+        this.ngayLap = ngayLap;
+    }
+
+    public String getMaNV() {
+        return maNV;
+    }
+
+    public void setMaNV(String maNV) {
+        this.maNV = maNV;
+    }
+
+    public float getThanhTien() {
         return thanhTien;
     }
 
-    public void setThanhTien(double thanhTien) {
+    public void setThanhTien(float thanhTien) {
         this.thanhTien = thanhTien;
     }
 
-    public KhachHang getKhachHang() {
-        return khachHang;
+    public String getMaKH() {
+        return maKH;
     }
 
-    public void setKhachHang(KhachHang khachHang) {
-        this.khachHang = khachHang;
+    public void setMaKH(String maKH) {
+        this.maKH = maKH;
     }
 
-    public ChiTietHoaDon getChiTietHoaDon() {
-        return chiTietHoaDon;
+    public int getSoLuong() {
+        return soLuong;
     }
 
-    public void setChiTietHoaDon(ChiTietHoaDon chiTietHoaDon) {
-        this.chiTietHoaDon = chiTietHoaDon;
+    public void setSoLuong(int soLuong) {
+        this.soLuong = soLuong;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof HoaDon hoaDon)) return false;
-        return Objects.equals(getMaHoaDon(), hoaDon.getMaHoaDon());
+    public float getTongTien() {
+        return tongTien;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(getMaHoaDon());
+    public void setTongTien(float tongTien) {
+        this.tongTien = tongTien;
+    }
+
+    public String getTrangThai() {
+        return trangThai;
+    }
+
+    public void setTrangThai(String trangThai) {
+        this.trangThai = trangThai;
+    }
+
+    public float getDaiNgo() {
+        return daiNgo;
+    }
+
+    public void setDaiNgo(float daiNgo) {
+        this.daiNgo = daiNgo;
+    }
+
+    public float getThue() {
+        return thue;
+    }
+
+    public void setThue(float thue) {
+        this.thue = thue;
     }
 }
 

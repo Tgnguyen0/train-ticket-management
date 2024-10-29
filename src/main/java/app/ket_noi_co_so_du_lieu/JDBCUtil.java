@@ -10,7 +10,7 @@ public class JDBCUtil {
 
         try {
             // Đăng ký MySQL Driver với DriverManager
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
 
             // Các thông số
             String url = "jdbc:sqlserver://localhost:1433;databaseName=TrainStationDatabase;user=sa;password=123;trustServerCertificate=true;";
