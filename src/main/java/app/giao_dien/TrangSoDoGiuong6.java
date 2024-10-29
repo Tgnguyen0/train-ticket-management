@@ -3,12 +3,17 @@ package app.giao_dien;
 import app.dao.Ghe_DAO;
 import app.dieu_khien.HanhDong_TrangSoDoGiuong6;
 import app.phong_chu_moi.PhongChuMoi;
+import app.thuc_the.Ghe;
+import app.thuc_the.TRANG_THAI_GHE;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 public class TrangSoDoGiuong6 extends JPanel {
     JPanel trangChuaTieuDeVaSoDo;
@@ -35,9 +40,17 @@ public class TrangSoDoGiuong6 extends JPanel {
     private ActionListener hanhDong;
     private MouseListener thaoTacChuot;
 
-    public Ghe_DAO gheDao;
+    public Ghe_DAO giuongDao;
+    public List<Ghe> dsGiuong;
+    public String tenToa;
+    public String maToa;
 
-    public TrangSoDoGiuong6() {
+    public TrangSoDoGiuong6(List<Ghe> dsGiuong, Ghe_DAO giuongDao, String tenToa, String maToa) {
+        this.dsGiuong = dsGiuong;
+        this.tenToa = tenToa;
+        this.giuongDao = giuongDao;
+        this.maToa = maToa;
+
         ImageIcon icon = new ImageIcon("assets/icon.png");
 
         setSize(new Dimension(1000, 420));
@@ -65,17 +78,13 @@ public class TrangSoDoGiuong6 extends JPanel {
         add(trangChuaTieuDeVaSoDo, BorderLayout.CENTER);
     }
 
-    public void datGiuongDao(Ghe_DAO giuongDao) {
-        this.gheDao = giuongDao;
-    }
-
     public void taoTrangTieuDe() {
         JPanel trangTieuDe = new JPanel();
         trangTieuDe.setLayout(new FlowLayout(FlowLayout.CENTER));
         trangTieuDe.setPreferredSize(new Dimension(1000, 40));
         trangTieuDe.setBackground(trang);
 
-        JLabel tieuDe = new JLabel("Sơ đồ toa giường 3 tầng", SwingConstants.CENTER);
+        JLabel tieuDe = new JLabel("Sơ đồ toa giường 3 tầng " + this.tenToa, SwingConstants.CENTER);
         tieuDe.setPreferredSize(new Dimension(900, 40));
         tieuDe.setForeground(xanhBrandeis);
         tieuDe.setBackground(trang);
@@ -134,6 +143,7 @@ public class TrangSoDoGiuong6 extends JPanel {
 
     public JPanel taoTrangSoDoGhe() {
         int doTang = 0;
+        List<Ghe> dsGiuongDaDat = new ArrayList<>(giuongDao.layDSGheDat());
 
         JPanel trangSoDoGiuong = new JPanel();
         trangSoDoGiuong.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
@@ -160,9 +170,27 @@ public class TrangSoDoGiuong6 extends JPanel {
             benGiuongLe.setPreferredSize(new Dimension(50, 180));
             benGiuongLe.setBackground(trang);
 
+            dsGiuong.get(0).setTrangThai(TRANG_THAI_GHE.Da_dat);
+            dsGiuong.get(7).setTrangThai(TRANG_THAI_GHE.Da_dat);
             for (int j = 6 ; j >= 1; j--) {
                 JButton giuong = new JButton(String.valueOf(j + doTang * 6));
                 giuong.setPreferredSize(new Dimension(chieuDaiNut,chieuRongNut));
+
+                /*if (dsGiuong.get(j + doTang * 6).getTrangThai() == TRANG_THAI_GHE.Trong) {
+                    giuong.setBackground(xanhBrandeis);
+                } else {
+                    giuong.setBackground(doDo);
+                }
+
+                if (!giuongDao.layDSGheDat().isEmpty()) {
+                    for (int k = 0 ; k < dsGiuongDaDat.size() ; k++) {
+                        if (dsGiuongDaDat.get(k).getSoGhe().equals(String.valueOf(j + doTang * 6)) &&
+                                this.maToa.equals(dsGiuongDaDat.get(k).getMaToa())) {
+                            giuong.setBackground(doDo);
+                        }
+                    }
+                }*/
+
                 giuong.setBackground(xanhBrandeis);
                 giuong.setForeground(trang);
                 giuong.setFocusPainted(false); // Bỏ viền khi click (focus)
@@ -226,12 +254,5 @@ public class TrangSoDoGiuong6 extends JPanel {
         trangChuaTieuDeVaBieuTuong.add(tieuDe);
 
         trangHienTai.add(trangChuaTieuDeVaBieuTuong);
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() ->{
-            TrangSoDoGiuong6 trangMoi = new TrangSoDoGiuong6();
-            trangMoi.setVisible(true);
-        });
     }
 }

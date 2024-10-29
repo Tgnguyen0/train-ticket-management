@@ -256,7 +256,6 @@ public class TrangDinhHuong extends JFrame {
             TrangDinhHuong trangDinhHuong = new TrangDinhHuong();
             trangDinhHuong.setVisible(true);
         });
-
     }
 
     public static JPanel getTrangChua() {

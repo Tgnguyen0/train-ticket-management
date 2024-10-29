@@ -33,7 +33,7 @@ public class NhanVien_DAO {
         try {
             ResultSet boKetQua = null;
             try {
-                boKetQua = KetNoiCoSoDuLieu.TruyVan(sql, args);
+                boKetQua = KetNoiCoSoDuLieu.truyVan(sql, args);
                 while (boKetQua.next()) {
                     NhanVien nv = new NhanVien();
                     nv.setMaNV(boKetQua.getString("MaNV"));

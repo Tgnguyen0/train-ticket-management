@@ -1,9 +1,10 @@
 package app.phong_chu_moi;
 
+import java.awt.*;
 import java.awt.Font;
-import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.util.ArrayList;
+import com.lowagie.text.FontFactory;
 
 public class PhongChuMoi {
     private ArrayList<Font> phongRobotoMonoReg;
@@ -40,6 +41,12 @@ public class PhongChuMoi {
         if (style >= 0 && style < phongRobotoMonoReg.size()) {
             phong = phongRobotoMonoReg.get(style).deriveFont(style, size);
         }
+
+        return phong;
+    }
+
+    public com.lowagie.text.Font layPhongHelvetica(float size, int style, Color color) {
+        com.lowagie.text.Font phong = new com.lowagie.text.Font(com.lowagie.text.Font.HELVETICA, size, style, color);
 
         return phong;
     }

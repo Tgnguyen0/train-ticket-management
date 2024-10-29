@@ -7,8 +7,7 @@ public class Ghe {
     private String maToa;
     private LOAI_GHE loaiGhe;
     private TRANG_THAI_GHE trangThai;
-
-    String soGhe;
+    private String soGhe;
 
     public Ghe() {
     }
@@ -29,6 +28,14 @@ public class Ghe {
         this.maGhe = maGhe;
     }
 
+    public String getMaToa() {
+        return this.maToa;
+    }
+
+    public void setMaToa(String maToa) {
+        this.maToa = maToa;
+    }
+
     public LOAI_GHE getLoaiGhe() {
         return loaiGhe;
     }
@@ -45,21 +52,9 @@ public class Ghe {
         this.trangThai = trangThai;
     }
 
-    public String getMaToa() {
-        return maToa;
-    }
+    public String getSoGhe() { return this.soGhe; }
 
-    public void setMaToa(String maToa) {
-        this.maToa = maToa;
-    }
-
-    public String getSoGhe() {
-        return soGhe;
-    }
-
-    public void setSoGhe(String soGhe) {
-        this.soGhe = soGhe;
-    }
+    public void setSoGhe(String soGhe) { this.soGhe = soGhe; }
 
     @Override
     public boolean equals(Object o) {

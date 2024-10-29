@@ -12,6 +12,7 @@ import java.util.List;
 public class Toa_DAO {
     String CHON_TAT_SQL = "SELECT * FROM Toa";
     String CHON_THEO_MA_SQL = "select * from Toa where MaToa =?";
+    String CHON_THEO_SO_HIEU_SQL = "select * from Toa where SoHieu =?";
 
     public List<Toa> dsToa;
 
@@ -19,9 +20,14 @@ public class Toa_DAO {
         dsToa = new ArrayList<Toa>();
     }
 
-    public Toa ChonTheoMa(String manv) {
-        List<Toa> list = this.ChonSql(CHON_THEO_MA_SQL, manv);
+    public Toa ChonTheoMa(String maToa) {
+        List<Toa> list = this.ChonSql(CHON_THEO_MA_SQL, maToa);
         return list.size() > 0 ? list.get(0) : null;
+    }
+
+    public List<Toa> ChonTheoSoHieuTatCa(String soHieu) {
+        List<Toa> list = this.ChonSql(CHON_THEO_SO_HIEU_SQL, soHieu);
+        return list;
     }
 
     public List<Toa> ChonTatCa() {
@@ -33,7 +39,7 @@ public class Toa_DAO {
         try {
             ResultSet boKetQua = null;
             try {
-                boKetQua = KetNoiCoSoDuLieu.TruyVan(sql, args);
+                boKetQua = KetNoiCoSoDuLieu.truyVan(sql, args);
                 while (boKetQua.next()) {
                     Toa toa = new Toa();
                     toa.setMaToa(boKetQua.getString("MaToa"));

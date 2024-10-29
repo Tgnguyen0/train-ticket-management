@@ -20,7 +20,6 @@ public class Ve_DAO {
     String TAI_TAT_CA_SQL = "SELECT * FROM KhachHang";
     String CHON_THEO_MA_SQL = "SELECT * FROM KhachHang WHERE MaKH=?";
 
-
     List<Ve> danhSachVe; // Tránh thông tin bị trùng
 
     // Khởi tạo danh sách Vé
@@ -108,7 +107,7 @@ public class Ve_DAO {
 
         try {
             i = 1;
-            KetNoiCoSoDuLieu.CapNhat(
+            KetNoiCoSoDuLieu.capNhat(
                     CAP_NHAT_SQL,
                     ve.getNgayDatVe(),
                     ve.getGiaVe(),
@@ -143,7 +142,7 @@ public class Ve_DAO {
         try {
             ResultSet boKetQua = null;
             try {
-                boKetQua = KetNoiCoSoDuLieu.TruyVan(lenhSQL, thamSo);
+                boKetQua = KetNoiCoSoDuLieu.truyVan(lenhSQL, thamSo);
                 while (boKetQua.next()) {
                     DaiNgo daiNgo = DaiNgo.GIAMGIAKHONGPHANTRAM;
                     Ve ve = new Ve();
@@ -164,7 +163,7 @@ public class Ve_DAO {
                     ve.setNgayDatVe(boKetQua.getDate("NgayDatVe").toLocalDate());
                     ve.setGiaVe(boKetQua.getDouble("GiaVe"));
                     //ve.setKhachHang(boKetQua.getString("MaKH"));
-//                    ve.setDaiNgo(daiNgo);
+//                  ve.setDaiNgo(daiNgo);
                     ve.setGaKetThuc(boKetQua.getString("GaKhoiHanh"));
                     ve.setGaKhoiHanh(boKetQua.getString("GaKetThuc"));
                     //ve.setGhe(boKetQua.getString("MaGhe"));
@@ -197,7 +196,6 @@ public class Ve_DAO {
         }
     }
 
-
     public  List<Ve> layToanBoVe() throws SQLException {
         List<Ve> danhSachVe = new ArrayList<>();
         String sql = "select  * from Ve";
@@ -215,12 +213,13 @@ public class Ve_DAO {
             String loaiGhe = resultSet.getString("LoaiVe");
             String loaiDoiTuong = resultSet.getString("LoaiDoiTuong");
             LocalDate ngayKhoiHanh = resultSet.getDate("NgayKhoiHanh").toLocalDate();
-            danhSachVe.add(new Ve( maVe,  loaiDoiTuong,  ngayKhoiHanh,  ngayDatVe,  gaKhoiHanh,  gaKetThuc,  giaVe,  maKh, maGhe,  loaiGhe));
+            danhSachVe.add(new Ve(maVe,  loaiDoiTuong,  ngayKhoiHanh,  ngayDatVe,  gaKhoiHanh,  gaKetThuc,  giaVe,  maKh, maGhe,  loaiGhe));
         }
         return danhSachVe;
     }
 
-    public Ve layVe_DuaVaoMaVe(String maVeRequest)throws SQLException{
+    public List<Ve> layVe_DuaVaoMaVe(String maVeRequest)throws SQLException{
+        List<Ve> danhSachVe = new ArrayList<>();
         String sql = "SELECT * FROM Ve WHERE MaVe = ?";
         Connection connection = KetNoiCoSoDuLieu.ketNoiDB_HinhDB();
         PreparedStatement statement = connection.prepareStatement(sql);
@@ -228,7 +227,7 @@ public class Ve_DAO {
 
         ResultSet resultSet = statement.executeQuery();
 
-        if (resultSet.next()) { // Di chuyển con trỏ đến dòng kết quả đầu tiên
+        while (resultSet.next()) { // Di chuyển con trỏ đến dòng kết quả đầu tiên
             String maVe = resultSet.getString("MaVe");
             LocalDate ngayDatVe = resultSet.getDate("NgayDatVe").toLocalDate();
             double giaVe = resultSet.getDouble("GiaVe");
@@ -240,11 +239,24 @@ public class Ve_DAO {
             String loaiDoiTuong = resultSet.getString("LoaiDoiTuong");
             LocalDate ngayKhoiHanh = resultSet.getDate("NgayKhoiHanh").toLocalDate();
 
-            return new Ve(maVe, loaiDoiTuong, ngayKhoiHanh, ngayDatVe, gaKhoiHanh, gaKetThuc, giaVe, maKh, maGhe, loaiGhe);
-        } else {
-            System.out.println("Không tìm thấy vé với mã: " + maVeRequest);
-            return null; // Hoặc xử lý khác tùy theo yêu cầu
+            danhSachVe.add(new Ve(maVe, loaiDoiTuong, ngayKhoiHanh, ngayDatVe, gaKhoiHanh, gaKetThuc, giaVe, maKh, maGhe, loaiGhe));
         }
+        return  danhSachVe;
+    }
 
+    public LocalDate getNgayKhoiHanh_DuaVaoMaVe(String maVeRequest)throws SQLException{
+        LocalDate ngayKhoiHanh = null;
+        String sql = "SELECT * FROM Ve WHERE MaVe = ?";
+        Connection connection = KetNoiCoSoDuLieu.ketNoiDB_HinhDB();
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setString(1, maVeRequest); // Đặt tham số MaVe
+
+        ResultSet resultSet = statement.executeQuery();
+
+        if (resultSet.next()) { // Di chuyển con trỏ đến dòng kết quả đầu tiên
+            String maVe = resultSet.getString("MaVe");
+            ngayKhoiHanh = resultSet.getDate("NgayKhoiHanh").toLocalDate();
+        }
+        return  ngayKhoiHanh;
     }
 }

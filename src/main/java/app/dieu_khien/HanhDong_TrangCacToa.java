@@ -2,6 +2,7 @@ package app.dieu_khien;
 
 import app.giao_dien.TrangCacTau;
 import app.giao_dien.TrangCacToa;
+import app.thuc_the.Ghe;
 
 import javax.swing.*;
 import java.awt.*;
@@ -36,16 +37,16 @@ public class HanhDong_TrangCacToa implements ActionListener, MouseListener {
                 cardLayout.show(this.trangCacToa.trangChua, "Trang Ghe Mem 3");
                 break;
             case "4":
-                cardLayout.show(this.trangCacToa.trangChua, "Trang Giuong 6 So 1");
+                cardLayout.show(this.trangCacToa.trangChua, "Trang Ghe Mem 4");
                 break;
             case "5":
-                cardLayout.show(this.trangCacToa.trangChua, "Trang Giuong 6 So 2");
+                cardLayout.show(this.trangCacToa.trangChua, "Trang Giuong 6 So 1");
                 break;
             case "6":
-                cardLayout.show(this.trangCacToa.trangChua, "Trang Giuong 6 So 3");
+                cardLayout.show(this.trangCacToa.trangChua, "Trang Giuong 6 So 2");
                 break;
             case "7":
-                cardLayout.show(this.trangCacToa.trangChua, "Trang Giuong 6 So 4");
+                cardLayout.show(this.trangCacToa.trangChua, "Trang Giuong 6 So 3");
                 break;
             case "8":
                 cardLayout.show(this.trangCacToa.trangChua, "Trang Giuong 4 So 1");
@@ -57,10 +58,10 @@ public class HanhDong_TrangCacToa implements ActionListener, MouseListener {
                 cardLayout.show(this.trangCacToa.trangChua, "Trang Giuong 4 So 3");
                 break;
             case "11":
-                cardLayout.show(this.trangCacToa.trangChua, "Trang Giuong 4 So 4");
+                cardLayout.show(this.trangCacToa.trangChua, "Trang Giuong 2 So 1");
                 break;
             case "12":
-                cardLayout.show(this.trangCacToa.trangChua, "Trang Giuong 2");
+                cardLayout.show(this.trangCacToa.trangChua, "Trang Giuong 2 So 2");
                 break;
         }
 

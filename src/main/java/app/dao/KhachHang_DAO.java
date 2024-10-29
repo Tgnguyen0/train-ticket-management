@@ -60,7 +60,7 @@ public class KhachHang_DAO {
         int i;
         try {
             i = 1;
-            KetNoiCoSoDuLieu.CapNhat(
+            KetNoiCoSoDuLieu.capNhat(
                     NHAP_SQL,
                     kh.getMaKH(),
                     kh.getTenKH(),
@@ -81,7 +81,7 @@ public class KhachHang_DAO {
 
         try {
             i = 1;
-            KetNoiCoSoDuLieu.CapNhat(
+            KetNoiCoSoDuLieu.capNhat(
                     CAP_NHAT_SQL,
                     kh.getTenKH(),
                     kh.getDiaChi(),
@@ -111,7 +111,7 @@ public class KhachHang_DAO {
         try {
             ResultSet boKetQua = null;
             try {
-                boKetQua = KetNoiCoSoDuLieu.TruyVan(lenhSQL, thamSo);
+                boKetQua = KetNoiCoSoDuLieu.truyVan(lenhSQL, thamSo);
                 if (boKetQua == null) {
                     System.out.println("Không có kết quả trả về");
                 }
@@ -400,31 +400,34 @@ public class KhachHang_DAO {
         KhachHang khachHang = null;
         try {
             Connection connection = KetNoiCoSoDuLieu.ketNoiDB_HinhDB();
-            String sql = "SELECT top 1  kh.MaKH, kh.TenKH, kh.DiaChi, kh.SoDT, kh.Email,  kh.GioiTinh\n" +
-                    "FROM Ve v \n" +
-                    "JOIN KhachHang kh ON v.MaKH = kh.MaKH \n" +
-                    "WHERE v.MaKH = " + maKhRequest + "\n"+
-                    "order by v.NgayDatVe DESC";
+            String sql = "SELECT top 1 * FROM KhachHang kh WHERE kh.MaKH = ?";
             PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, maKhRequest); // Tránh SQL Injection
             ResultSet rs = st.executeQuery();
-            String maKh = rs.getString(1);
-            String tenKh = rs.getString(2);
-            String diaChi = rs.getString(3);
-            String soDienThoai = rs.getString(4);
-            String email = rs.getString(5);
-            String gioiTinh = rs.getString(6);
-            if(gioiTinh.compareToIgnoreCase(GIOI_TINH.NAM.getValue())== 0){
-                return  new KhachHang( maKh,  tenKh,  diaChi,  soDienThoai,  email, GIOI_TINH.NAM);
+
+            if (rs.next()) { // Di chuyển đến hàng đầu tiên
+                String maKh = rs.getString(1);
+                String tenKh = rs.getString(2);
+                String diaChi = rs.getString(3);
+                String soDienThoai = rs.getString(4);
+                String email = rs.getString(5);
+                String gioiTinh = rs.getString(6);
+
+                if (gioiTinh.equalsIgnoreCase(GIOI_TINH.NAM.getValue())) {
+                    khachHang = new KhachHang(maKh, tenKh, diaChi, soDienThoai, email, GIOI_TINH.NAM);
+                } else {
+                    khachHang = new KhachHang(maKh, tenKh, diaChi, soDienThoai, email, GIOI_TINH.NU);
+                }
             }
-            else {
-                return  new KhachHang( maKh,  tenKh,  diaChi,  soDienThoai,  email, GIOI_TINH.NU);
-            }
-        }
-        catch (SQLException e){
+
+            rs.close(); // Đóng ResultSet
+            st.close(); // Đóng PreparedStatement
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return  khachHang;
+        return khachHang;
+
     }
 
     public static KhachHang layCuoiDanhSach () {
