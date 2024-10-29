@@ -1,8 +1,5 @@
 package app.giao_dien;
 
-import app.Dao.KhachHang_DAO;
-import app.ket_noi_co_so_du_lieu.KetNoiCoSoDuLieu;
-import app.thuc_the.DanhSachKhachHang;
 import app.thuc_the.KhachHang;
 
 import javax.swing.*;

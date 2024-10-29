@@ -1,7 +1,5 @@
 package app.thuc_the;
 
-import app.Dao.KhachHang_DAO;
-
 import java.util.List;
 
 public class DanhSachKhachHang {
