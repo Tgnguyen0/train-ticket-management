@@ -2,8 +2,11 @@ package app.dao;
 
 import app.ket_noi_co_so_du_lieu.KetNoiCoSoDuLieu;
 import app.thuc_the.GIOI_TINH;
+import app.thuc_the.KhachHang;
 import app.thuc_the.NhanVien;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -68,5 +71,32 @@ public class NhanVien_DAO {
         }else{
 
         }
+    }
+
+    public static boolean login(String username, String password) {
+        try {
+            // Bước 1: tạo kết nối đến CSDL
+            Connection connection = KetNoiCoSoDuLieu.ketNoiDB_KhangVersion();
+
+            // Bước 2: tạo ra đối tượng statement
+            String sql = "SELECT * FROM NhanVien WHERE TenDangNhap = ? AND MatKhau = ?";
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, username);
+            st.setString(2, password);
+
+            // Bước 3: thực thi câu lệnh truy vấn
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                st.close();
+                connection.close();
+                return true;
+            }
+
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return false;
+
     }
 }
