@@ -19,11 +19,12 @@ import java.util.List;
 import java.util.Set;
 
 public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemListener, PropertyChangeListener {
-    TrangDatVe trangDatVe;
-    TrangCacTau trangCacTau;
-    int bienSoTang = 0;
-    Ve ve;
-    KhachHang khachHang;
+    public TrangDatVe trangDatVe;
+    public TrangCacTau trangCacTau;
+    public int bienSoTang = 0;
+    public Ve ve;
+    public KhachHang khachHang;
+    public List<Ve> dsVeDaDat;
 
     public HanhDong_TrangDatVe(TrangDatVe trangDatVe) {
         this.trangDatVe = trangDatVe;
@@ -119,12 +120,14 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
 
             this.trangDatVe.moHinhBang.addRow(duLieu);
 
+            dsVeDaDat.add(ve);
+
             bienSoTang++;
         }
 
         if (e.getSource() == this.trangDatVe.nutInVe) {
             if (this.ve.getMaVe() != null) {
-                String maVe = this.ve.getMaVe();
+                /*String maVe = this.ve.getMaVe();
                 String tenKhachHang = this.khachHang.getTenKH();
                 String maGhe = this.ve.getMaGhe();
                 String diemDi = this.ve.getGaKhoiHanh();
@@ -137,7 +140,39 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
 
                 TaoVeBangFilePDF taoVeBangFilePDF = new TaoVeBangFilePDF();
                 taoVeBangFilePDF.generateTicketPDF("vé được tạo/VeTau.pdf", maVe, tenKhachHang, diemDi, diemDen, ngayDatVe,
-                        ngayKhoiHanh, loaiVe, maGhe,doiTuong, giaVe);
+                        ngayKhoiHanh, loaiVe, maGhe,doiTuong, giaVe);*/
+                /*List<Ve> dsVe = new ArrayList<>();*/
+
+                List<Ve> dsVe = new ArrayList<Ve>();/* khởi tạo danh sách các đối tượng vé */;
+                dsVe.add(new Ve());
+                dsVe.add(new Ve());
+                dsVe.add(new Ve());
+                dsVe.add(new Ve());
+                dsVe.add(new Ve());
+                dsVe.add(new Ve());
+                dsVe.add(new Ve());
+                dsVe.add(new Ve());
+                dsVe.add(new Ve());
+
+                for (int i = 0; i < dsVe.size(); i++) {
+                    Ve ve = dsVe.get(i);
+
+                    // Thiết lập các thuộc tính
+                    // Mã vé giả lập
+                    ve.setLoaiDoiTuong("Người lớn");                 // Loại đối tượng
+                    ve.setNgayKhoiHanh(LocalDate.now().plusDays(5)); // Ngày khởi hành sau 5 ngày từ hiện tại
+                    ve.setNgayDatVe(LocalDate.now());                // Ngày đặt vé là hôm nay
+                    ve.setGaKhoiHanh("Hà Nội");                      // Ga khởi hành
+                    ve.setGaKetThuc("Hồ Chí Minh");                  // Ga kết thúc
+                    ve.setGiaVe(100000 + (i * 50000));               // Giá vé tăng dần
+                    ve.setMaKhachHang("KH" + (100 + i));             // Mã khách hàng giả lập
+                    ve.setMaGhe("G" + (i + 1));                      // Mã ghế
+                    ve.setLoaiVe("Thường");                          // Loại vé
+                }
+
+                TrangInVe trangInVe = new TrangInVe(dsVe);
+                trangInVe.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                trangInVe.setVisible(true);
             } else {
                 hienThiThongBao("Không có vé để in !", "Lỗi in vé");
             }
