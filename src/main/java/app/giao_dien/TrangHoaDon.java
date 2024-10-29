@@ -57,18 +57,13 @@ public class TrangHoaDon extends JPanel {
     private ActionListener hanhDong;
     private ItemListener mucDaChon;
     public NhanVien_DAO nhanVien_dao;
+    public HoaDon_DAO hoaDon_dao= new HoaDon_DAO();
 
     public TrangHoaDon() {
         initComponents();
         setPreferredSize(new java.awt.Dimension(1200, 600));
         HoaDon_DAO hoaDon_dao= new HoaDon_DAO();
         hienThiDanhSachHoaDon( hoaDon_dao.layDanhSachHoaDon());
-        tableDanhSach.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                layDuLieuVaoTFNhanVien();
-            }
-        });
     }
     private void initComponents() {
         List<HoaDon> listHD= new ArrayList<HoaDon>();
@@ -329,34 +324,37 @@ public class TrangHoaDon extends JPanel {
 
         trangChua_Button.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 112, 255), 2));
 
+        // Set các thông số cho các button Chi tiết
         buttonChiTiet.setBackground(new java.awt.Color(0, 112, 255));
         buttonChiTiet.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         buttonChiTiet.setForeground(new java.awt.Color(255, 255, 255));
         buttonChiTiet.setText("Chi Tiết");
-        buttonChiTiet.addMouseListener(thaoTacChuot);
-        buttonChiTiet.addActionListener(hanhDong);
-//        buttonChiTiet.addActionListener(new java.awt.event.ActionListener() {
-//            public void actionPerformed(java.awt.event.ActionEvent evt) {
-//                buttonChiTietActionPerformed(evt);
-//            }
-//        });
 
+        // Set các thông số cho các button In Hóa Đơn
         buttonInHoaDon.setBackground(new java.awt.Color(0, 112, 255));
         buttonInHoaDon.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         buttonInHoaDon.setForeground(new java.awt.Color(255, 255, 255));
         buttonInHoaDon.setText("In Hóa Đơn");
 
-
+        // Set các thông số cho các button Tìm Kiếm
         buttonTimKiem.setBackground(new java.awt.Color(0, 112, 255));
         buttonTimKiem.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         buttonTimKiem.setForeground(new java.awt.Color(255, 255, 255));
         buttonTimKiem.setText("Tìm Kiếm");
 
-
+        // Set các thông số cho các button Làm Mới
         buttonLamMoi.setBackground(new java.awt.Color(0, 112, 255));
         buttonLamMoi.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         buttonLamMoi.setForeground(new java.awt.Color(255, 255, 255));
         buttonLamMoi.setText("Làm Mới");
+
+        // Set các sự kiện hoạt động cho các button và Jtable
+        buttonTimKiem.addActionListener(hanhDong);
+        buttonChiTiet.addActionListener(hanhDong);
+        buttonChiTiet.addMouseListener(thaoTacChuot);
+        buttonInHoaDon.addActionListener(hanhDong);
+        buttonLamMoi.addActionListener(hanhDong);
+        tableDanhSach.addMouseListener(thaoTacChuot);
 
 
         javax.swing.GroupLayout trangChua_ButtonLayout = new javax.swing.GroupLayout(trangChua_Button);
@@ -570,5 +568,13 @@ public class TrangHoaDon extends JPanel {
             System.out.println("Không có hàng nào được chọn.");
         }
     }
-
+    public void lamMoiDuLieu()
+    {
+        tfTimKiem.setText("");
+        tfMaNhanVien.setText("");
+        tfTenNhanVien.setText("");
+        tfMaNhanVien.setEditable(false);
+        tfTenNhanVien.setEditable(false);
+        hienThiDanhSachHoaDon(hoaDon_dao.layDanhSachHoaDon());
+    }
 }

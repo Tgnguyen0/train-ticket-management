@@ -45,26 +45,42 @@ public class HoaDon_DAO {
         }
 
         return danhSachHoaDon;
-    }}
+    }
+    // Tìm Kiếm khách hàng
+    public List<HoaDon> TimKiemHoaDon(String maHD, String maKH) {
+        List<HoaDon> danhSachHoaDon = new ArrayList<>();
+        String sql = "SELECT * FROM HoaDon WHERE MaHD LIKE ? OR MaKH LIKE ?";
 
+        try (Connection conn = JDBCUtil.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, "%" + maHD + "%"); // Tìm kiếm theo mã hóa đơn
+            ps.setString(2, "%" + maKH + "%"); // Tìm kiếm theo mã khách hàng
 
-// Tìm Kiếm khách hàng
-//    public HoaDon TimKiemHoaDon(String maHD, String tenKH, String sdt) {
-//        for (int i = 0; i < dshd.size(); i++) {
-//            boolean dungHd = true;
-//
-//            // Kiểm tra điều kiện để chọn hoá đơn cần tìm kiếm
-//            dungHd = maHD.equals(dshd.get(i).getMaHD()) &&
-//                    tenKH.equals(dshd.get(i).getKhachHang().getTenKH()) &&
-//                    sdt.equals(dshd.get(i).getKhachHang().getSoDT());
-//
-//            if (dungHd) {
-//                return dshd.get(i);
-//            }
-//        }
-//
-//        return null;
-//    }
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                HoaDon hoaDon = new HoaDon();
+                // Giả sử bạn có các phương thức set tương ứng để gán giá trị cho các thuộc tính
+                hoaDon.setMaHD(rs.getString("MaHD"));
+                hoaDon.setMaKH(rs.getString("MaKH"));
+                hoaDon.setNgayLap(rs.getDate("NgayLap").toLocalDate());
+                hoaDon.setMaNV(rs.getString("MaNV"));
+                hoaDon.setThanhTien(rs.getFloat("ThanhTien"));
+                hoaDon.setSoLuong(rs.getInt("SoLuong"));
+                hoaDon.setTongTien(rs.getFloat("TongTien"));
+                hoaDon.setTrangThai(rs.getString("TrangThai"));
+                hoaDon.setDaiNgo(rs.getFloat("DaiNgo"));
+                // Thêm các thuộc tính khác nếu cần
+                danhSachHoaDon.add(hoaDon);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return danhSachHoaDon;
+    }
+
+}
+
 
 // Cập Nhật thông tin cho khách hàng
 //    public boolean CapNhatThongTinHoaDon(HoaDon hd) {
