@@ -23,22 +23,19 @@ public class TaoVeBangFilePDF {
             PdfWriter.getInstance(document, new FileOutputStream(fileName));
             document.open();
 
-            // Tiêu đề hóa đơn
-            Font titleFont = new Font(Font.HELVETICA, 18, Font.BOLD, new Color(0, 102, 204));
-
-            Paragraph tieuDeTongCongTy = new Paragraph("TỔNG CÔNG TY ĐƯỜNG SẮT VIỆT NAM", phongTuyChinh.layPhongHelvetica(13, Font.NORMAL, new Color(0, 102, 204)));
+            Paragraph tieuDeTongCongTy = new Paragraph("TỔNG CÔNG TY ĐƯỜNG SẮT VIỆT NAM", phongTuyChinh.layPhongHelvetica(12, Font.NORMAL, new Color(0, 102, 204)));
             tieuDeTongCongTy.setAlignment(Element.ALIGN_CENTER);
             document.add(tieuDeTongCongTy);
 
-            Paragraph tieuDeCongTyCon1 = new Paragraph("CÔNG TY TNHH MỘT THÀNH VIÊN", phongTuyChinh.layPhongHelvetica(13, Font.NORMAL, new Color(0, 102, 204)));
+            Paragraph tieuDeCongTyCon1 = new Paragraph("CÔNG TY TNHH MỘT THÀNH VIÊN", phongTuyChinh.layPhongHelvetica(12, Font.NORMAL, new Color(0, 102, 204)));
             tieuDeCongTyCon1.setAlignment(Element.ALIGN_CENTER);
             document.add(tieuDeCongTyCon1);
 
-            Paragraph tieuDeCongTyCon2 = new Paragraph("VẬN TẢI ĐƯỜNG SẮT SÀI GÒN", phongTuyChinh.layPhongHelvetica(13, Font.NORMAL, new Color(0, 102, 204)));
+            Paragraph tieuDeCongTyCon2 = new Paragraph("VẬN TẢI ĐƯỜNG SẮT SÀI GÒN", phongTuyChinh.layPhongHelvetica(12, Font.NORMAL, new Color(0, 102, 204)));
             tieuDeCongTyCon2.setAlignment(Element.ALIGN_CENTER);
             document.add(tieuDeCongTyCon2);
 
-            Paragraph title = new Paragraph("THẺ LÊN TÀU HỎA",phongTuyChinh.layPhongHelvetica(18, Font.NORMAL, new Color(0, 102, 204)));
+            Paragraph title = new Paragraph("THẺ LÊN TÀU HỎA", phongTuyChinh.layPhongHelvetica(20, Font.NORMAL, new Color(0, 102, 204)));
             title.setAlignment(Element.ALIGN_CENTER);
             document.add(title);
 
@@ -56,7 +53,7 @@ public class TaoVeBangFilePDF {
             table.setSpacingAfter(10);
 
             // Font cho nội dung bảng
-            Font font = new Font(Font.HELVETICA, 12, Font.NORMAL);
+            Font font = phongTuyChinh.layPhongHelvetica(12, Font.NORMAL, null);
 
             // Dòng mã vé
             table.addCell(createCell("Mã vé:", font));
