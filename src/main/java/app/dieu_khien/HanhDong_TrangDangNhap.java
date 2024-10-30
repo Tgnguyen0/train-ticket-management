@@ -5,12 +5,22 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
+import app.dao.NhanVien_DAO;
 import app.giao_dien.TrangDinhHuong;
 import app.giao_dien.TrangDangNhap;
+import app.giao_dien.TrangNhanVien;
+import app.thuc_the.GIOI_TINH;
+
+import javax.swing.*;
 
 public class HanhDong_TrangDangNhap implements ActionListener, MouseListener {
     TrangDangNhap trangDangNhap;
+
 
     public HanhDong_TrangDangNhap(TrangDangNhap trangDangNhap) {
         this.trangDangNhap = trangDangNhap;
@@ -24,14 +34,30 @@ public class HanhDong_TrangDangNhap implements ActionListener, MouseListener {
         if (source == this.trangDangNhap.nutDangNhap) {
             String username = this.trangDangNhap.truongTen.getText();
             String password = new String(this.trangDangNhap.truongMatKhau.getPassword());
-
-            if (username.equals("Admin") && password.equals("123")) {
-                this.trangDangNhap.matKhauDung = true;
+            if(NhanVien_DAO.login(username, password)) {
                 this.trangDangNhap.setVisible(false);
-                TrangDinhHuong page = new TrangDinhHuong();
-                page.setVisible(true);
+                TrangDinhHuong trangDinhHuong = new TrangDinhHuong();
+                if(NhanVien_DAO.getVaiTro(username).equals("manager")) {
+                    trangDinhHuong.trangNhanVien.label_nhanVien.setText("QUẢN LÝ");
+                }
+                trangDinhHuong.trangNhanVien.lable_hienMaNV.setText(NhanVien_DAO.layThongTinNV(username).getMaNV());
+                trangDinhHuong.trangNhanVien.textField_hoTen.setText(NhanVien_DAO.layThongTinNV(username).getTenNV());
+                trangDinhHuong.trangNhanVien.dateChooser_ngaySinh.setDate(Date.from(NhanVien_DAO.layThongTinNV(username).getNgaySinh().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+                trangDinhHuong.trangNhanVien.textArea_diaChi.setText(NhanVien_DAO.layThongTinNV(username).getDiaChi());
+                trangDinhHuong.trangNhanVien.textField_sdt.setText(NhanVien_DAO.layThongTinNV(username).getSoDT());
+                GIOI_TINH gt = GIOI_TINH.NAM;
+                if(!NhanVien_DAO.layThongTinNV(username).getGioiTinh().equals("Nam")) {
+                    gt = GIOI_TINH.NU;
+                }
+                trangDinhHuong.trangNhanVien.comboBox_gt.setSelectedItem(gt);
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                LocalDateTime now = LocalDateTime.now();
+                String formattedDateTime = now.format(formatter);
+                trangDinhHuong.trangNhanVien.label_hienGioVaoTruc.setText(formattedDateTime);
+                trangDinhHuong.setVisible(true);
+                TrangDangNhap.tenDangNhap = username;
             } else {
-                this.trangDangNhap.matKhauDung = false;
+                JOptionPane.showMessageDialog(this.trangDangNhap, "Sai tên đăng nhập hoặc mật khẩu", "Lỗi", JOptionPane.ERROR_MESSAGE);
             }
         }
 
@@ -40,6 +66,7 @@ public class HanhDong_TrangDangNhap implements ActionListener, MouseListener {
         }
 
     }
+
 
     @Override
     public void mouseClicked(MouseEvent e) {

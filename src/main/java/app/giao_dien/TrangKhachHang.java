@@ -41,7 +41,7 @@ public class TrangKhachHang extends JPanel {
     public JTextField textField_email;
     public JTextField textField_timEmail;
     public ArrayList<KhachHang> dsKH;
-    public ArrayList<KhachHang> dsHangCho;
+    public static ArrayList<KhachHang> dsHangCho;
 
     /**
      * Create the panel.

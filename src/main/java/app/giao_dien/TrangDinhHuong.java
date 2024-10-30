@@ -38,6 +38,7 @@ public class TrangDinhHuong extends JFrame {
     public TrangGioiThieu trangGioiThieu;
     public TrangKhachHang trangKhachHang;
     public TrangChuaThongKeNhanVienTheoNam trangChuaThongKeTheoNam;
+    public TrangNhanVien trangNhanVien;
 
     /* Khởi tạo phông chữ màu sắc */
     public Color trang = new Color(255, 255, 255);
@@ -76,12 +77,44 @@ public class TrangDinhHuong extends JFrame {
         setResizable(true);
         setLayout(new BorderLayout());
 
+
+        // SET GIAO DIỆN TRỰC TIẾP KHÔNG QUA MAIN
+        try {
+            for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    UIManager.setLookAndFeel(info.getClassName());
+
+                    // Cấu hình thuộc tính Nimbus
+                    UIManager.put("control", new javax.swing.plaf.ColorUIResource(255, 255, 255)); // Màu nền
+                    UIManager.put("nimbusBase", new javax.swing.plaf.ColorUIResource(255, 255, 255)); // Màu cơ bản
+                    UIManager.put("nimbusBorder", new javax.swing.plaf.ColorUIResource(0, 112, 255)); // Màu viền
+                    UIManager.put("nimbusLightBackground", new javax.swing.plaf.ColorUIResource(255, 255, 255)); // Màu nền sáng
+                    UIManager.put("nimbusFocus", new javax.swing.plaf.ColorUIResource(0, 112, 255)); // Màu focus
+                    UIManager.put("textForeground", new Color(0, 112, 255)); // Màu chữ
+                    UIManager.put("ComboBox.foreground", new Color(0, 112, 255)); // Màu chữ cho JComboBox
+                    UIManager.put("ComboBox.background", new Color(255, 255, 255));
+                    UIManager.put("JCalendar.border", new Color(255, 255, 255));
+
+                    // Đặt màu nền và màu chữ khi chọn cho JTextField
+                    UIManager.put("TextField.selectionBackground", new Color(0, 112, 255)); // Màu nền khi chọn
+                    UIManager.put("TextField.selectionForeground", new Color(255, 255, 255)); // Màu chữ khi chọncho JComboBox
+
+                    break;
+                }
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+
         // Thêm ActionListener và MouseListener cho các nút
         this.hanhDong = new HanhDong_TrangDinhHuong(this);
         this.thaoTacChuot = new HanhDong_TrangDinhHuong(this);
 
         taoThanhDinhHuong();
         taoTrangChua();
+
+
     }
 
     public void taoThanhDinhHuong() {
@@ -171,6 +204,19 @@ public class TrangDinhHuong extends JFrame {
         nutGioiThieu.addActionListener(this.hanhDong);
         thanhDinhHuong.add(nutGioiThieu);
 
+        //Tạo nut đến trang nhân viên
+        nutVe = new BongCuaChu("Nhân Viên");
+        nutVe.setPreferredSize(new Dimension(chieuDaiNut, chieuRongNut));
+        nutVe.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, charSize));
+        nutVe.setForeground(new Color(xanhBrandeis.getRGB()));
+        nutVe.setBackground(new Color(trang.getRGB()));
+        nutVe.setBorder(this.vienDam);
+        nutVe.setFocusPainted(false); // Bỏ viền khi click (focus)
+        nutVe.setContentAreaFilled(false); // Bỏ fill màu mặc định của JButton (nếu cần)
+        nutVe.addMouseListener(this.thaoTacChuot);
+        nutVe.addActionListener(this.hanhDong);
+        thanhDinhHuong.add(nutVe);
+
         // Tạo Trang người dùng
         JPanel thanhNguoiDung = new JPanel();
         thanhNguoiDung.setPreferredSize(new Dimension(550, chieuRongNut));
@@ -209,6 +255,7 @@ public class TrangDinhHuong extends JFrame {
         this.trangGioiThieu = new TrangGioiThieu(); // Khởi tạo trang Giới Thiệu
         this.trangKhachHang = new TrangKhachHang(); // Khởi tạo trang Trang Khách Hàng
         this.trangChuaThongKeTheoNam = new TrangChuaThongKeNhanVienTheoNam();
+        this.trangNhanVien = new TrangNhanVien(); // Khởi tạo trang Trang Nhân Viên
 
         // kiểm tra trang thống kê
         TrangChuaThongKeNhanVienTheoThang trangChuaThongKeNhanVienTheoThang = new TrangChuaThongKeNhanVienTheoThang(this);
@@ -219,8 +266,13 @@ public class TrangDinhHuong extends JFrame {
         this.trangChua.add(trangGioiThieu,"Trang Gioi Thieu");
         this.trangChua.add(trangKhachHang, "Trang Khach Hang");
         this.trangChua.add(trangChuaThongKeNhanVienTheoThang, "Trang Thong Ke");
+        this.trangChua.add(trangNhanVien, "Trang Nhan Vien");
 
         add(this.trangChua);
+
+
+
+
     }
 
     public static void main(String[] args) {
