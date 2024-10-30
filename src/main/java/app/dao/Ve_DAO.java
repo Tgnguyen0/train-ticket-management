@@ -10,8 +10,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class Ve_DAO {
     // Các câu lệnh SQL
@@ -19,6 +22,25 @@ public class Ve_DAO {
     String CAP_NHAT_SQL = "UPDATE TenKH=?, DiaChi=?, SoDT=?, Email=?, GioiTinh=? WHERE MaKH=?";
     String TAI_TAT_CA_SQL = "SELECT * FROM KhachHang";
     String CHON_THEO_MA_SQL = "SELECT * FROM KhachHang WHERE MaKH=?";
+
+    public Map<String, Map<String, Integer>> giaVeCoBan = Map.of(
+            "Ghế Mềm", Map.of(
+                    "Trẻ em", 400,
+                    "Người lớn", 450
+            ),
+            "Giường Toa 4", Map.of(
+                    "Trẻ em", 550,
+                    "Người lớn", 600
+            ),
+            "Giường Toa 6", Map.of(
+                    "Trẻ em", 460,
+                    "Người lớn", 520
+            ),
+            "Giường Toa 2 VIP", Map.of(
+                    "Trẻ em", 750,
+                    "Người lớn", 800
+            )
+    );
 
     List<Ve> danhSachVe; // Tránh thông tin bị trùng
 
@@ -160,7 +182,11 @@ public class Ve_DAO {
                     }
 
                     ve.setMaVeTuCSDL(boKetQua.getString("MaVe"));
-                    ve.setNgayDatVe(boKetQua.getDate("NgayDatVe").toLocalDate());
+
+                    ve.setNgayDatVe(boKetQua.getTimestamp("NgayDatVe")
+                            .toInstant()
+                            .atZone(ZoneId.systemDefault())
+                            .toLocalDateTime());
                     ve.setGiaVe(boKetQua.getDouble("GiaVe"));
                     //ve.setKhachHang(boKetQua.getString("MaKH"));
 //                  ve.setDaiNgo(daiNgo);
@@ -169,7 +195,11 @@ public class Ve_DAO {
                     //ve.setGhe(boKetQua.getString("MaGhe"));
                     ve.setLoaiVe(boKetQua.getString("LoaiVe"));
                     ve.setLoaiDoiTuong(boKetQua.getString("LoaiDoiTuong"));
-                    ve.setNgayKhoiHanh(boKetQua.getDate("NgayKhoiHanh").toLocalDate());
+                    ve.setNgayKhoiHanh((boKetQua.getTimestamp("NgayKhoiHanh")
+                            .toInstant()
+                            .atZone(ZoneId.systemDefault())
+                            .toLocalDateTime()));
+
                     list.add(ve);
                 }
             } finally {
@@ -196,29 +226,36 @@ public class Ve_DAO {
         }
     }
 
-    public  List<Ve> layToanBoVe() throws SQLException {
+    public List<Ve> layToanBoVe() throws SQLException {
         List<Ve> danhSachVe = new ArrayList<>();
-        String sql = "select  * from Ve";
+        String sql = "SELECT * FROM Ve";
         Connection connection = KetNoiCoSoDuLieu.ketNoiDB_HinhDB();
         PreparedStatement statement = connection.prepareStatement(sql);
         ResultSet resultSet = statement.executeQuery();
-        while (resultSet.next()){
+        while (resultSet.next()) {
             String maVe = resultSet.getString("MaVe");
-            LocalDate ngayDatVe = resultSet.getDate("NgayDatVe").toLocalDate();
+            LocalDateTime ngayDatVe = resultSet.getTimestamp("NgayDatVe")
+                    .toInstant()
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalDateTime(); // Chuyển đổi thành LocalDateTime
             double giaVe = resultSet.getDouble("GiaVe");
             String maKh = resultSet.getString("MaKH");
             String gaKhoiHanh = resultSet.getString("GaKhoiHanh");
             String gaKetThuc = resultSet.getString("GaKetThuc");
-            String maGhe =  resultSet.getString("MaGhe");
+            String maGhe = resultSet.getString("MaGhe");
             String loaiGhe = resultSet.getString("LoaiVe");
             String loaiDoiTuong = resultSet.getString("LoaiDoiTuong");
-            LocalDate ngayKhoiHanh = resultSet.getDate("NgayKhoiHanh").toLocalDate();
-            danhSachVe.add(new Ve(maVe,  loaiDoiTuong,  ngayKhoiHanh,  ngayDatVe,  gaKhoiHanh,  gaKetThuc,  giaVe,  maKh, maGhe,  loaiGhe));
+            LocalDateTime ngayKhoiHanh = resultSet.getTimestamp("NgayKhoiHanh")
+                    .toInstant()
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalDateTime(); // Chuyển đổi thành LocalDateTime
+
+            danhSachVe.add(new Ve(maVe, loaiDoiTuong, ngayKhoiHanh, ngayDatVe, gaKhoiHanh, gaKetThuc, giaVe, maKh, maGhe, loaiGhe));
         }
         return danhSachVe;
     }
 
-    public List<Ve> layVe_DuaVaoMaVe(String maVeRequest)throws SQLException{
+    public List<Ve> layVe_DuaVaoMaVe(String maVeRequest) throws SQLException {
         List<Ve> danhSachVe = new ArrayList<>();
         String sql = "SELECT * FROM Ve WHERE MaVe = ?";
         Connection connection = KetNoiCoSoDuLieu.ketNoiDB_HinhDB();
@@ -229,23 +266,29 @@ public class Ve_DAO {
 
         while (resultSet.next()) { // Di chuyển con trỏ đến dòng kết quả đầu tiên
             String maVe = resultSet.getString("MaVe");
-            LocalDate ngayDatVe = resultSet.getDate("NgayDatVe").toLocalDate();
+            LocalDateTime ngayDatVe = resultSet.getTimestamp("NgayDatVe")
+                    .toInstant()
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalDateTime(); // Chuyển đổi thành LocalDateTime
             double giaVe = resultSet.getDouble("GiaVe");
             String maKh = resultSet.getString("MaKH");
             String gaKhoiHanh = resultSet.getString("GaKhoiHanh");
             String gaKetThuc = resultSet.getString("GaKetThuc");
-            String maGhe =  resultSet.getString("MaGhe");
+            String maGhe = resultSet.getString("MaGhe");
             String loaiGhe = resultSet.getString("LoaiVe");
             String loaiDoiTuong = resultSet.getString("LoaiDoiTuong");
-            LocalDate ngayKhoiHanh = resultSet.getDate("NgayKhoiHanh").toLocalDate();
+            LocalDateTime ngayKhoiHanh = resultSet.getTimestamp("NgayKhoiHanh")
+                    .toInstant()
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalDateTime(); // Chuyển đổi thành LocalDateTime
 
             danhSachVe.add(new Ve(maVe, loaiDoiTuong, ngayKhoiHanh, ngayDatVe, gaKhoiHanh, gaKetThuc, giaVe, maKh, maGhe, loaiGhe));
         }
-        return  danhSachVe;
+        return danhSachVe;
     }
 
-    public LocalDate getNgayKhoiHanh_DuaVaoMaVe(String maVeRequest)throws SQLException{
-        LocalDate ngayKhoiHanh = null;
+    public LocalDateTime getNgayKhoiHanh_DuaVaoMaVe(String maVeRequest) throws SQLException {
+        LocalDateTime ngayKhoiHanh = null;
         String sql = "SELECT * FROM Ve WHERE MaVe = ?";
         Connection connection = KetNoiCoSoDuLieu.ketNoiDB_HinhDB();
         PreparedStatement statement = connection.prepareStatement(sql);
@@ -255,8 +298,11 @@ public class Ve_DAO {
 
         if (resultSet.next()) { // Di chuyển con trỏ đến dòng kết quả đầu tiên
             String maVe = resultSet.getString("MaVe");
-            ngayKhoiHanh = resultSet.getDate("NgayKhoiHanh").toLocalDate();
+            ngayKhoiHanh = resultSet.getTimestamp("NgayKhoiHanh")
+                    .toInstant()
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalDateTime(); // Chuyển đổi thành LocalDateTime
         }
-        return  ngayKhoiHanh;
+        return ngayKhoiHanh;
     }
 }

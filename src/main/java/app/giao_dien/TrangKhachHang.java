@@ -43,7 +43,6 @@ public class TrangKhachHang extends JPanel {
     public ArrayList<KhachHang> dsKH;
     public ArrayList<KhachHang> dsHangCho;
 
-
     /**
      * Create the panel.
      */

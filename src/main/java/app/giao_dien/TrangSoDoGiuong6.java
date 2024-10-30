@@ -32,6 +32,7 @@ public class TrangSoDoGiuong6 extends JPanel {
     public Color xanhNhat = new Color(66, 186, 255);
     public Color xanhBrandeis = new Color(0, 112, 255);
     public Color doDo = new Color(220, 53, 69);
+    public Color camNhuomDen = new Color(253, 126, 20);
     public Border vienNhat = BorderFactory.createLineBorder(xanhNhat);
     public Border vienDam = BorderFactory.createLineBorder(xanhBrandeis);
     public Border gachChanNhat = BorderFactory.createMatteBorder(0, 0, 1, 0, xanhNhat);
@@ -176,7 +177,7 @@ public class TrangSoDoGiuong6 extends JPanel {
                 JButton giuong = new JButton(String.valueOf(j + doTang * 6));
                 giuong.setPreferredSize(new Dimension(chieuDaiNut,chieuRongNut));
 
-                /*if (dsGiuong.get(j + doTang * 6).getTrangThai() == TRANG_THAI_GHE.Trong) {
+                /*if (dsGiuong.get(j - 1 + doTang * 6).getTrangThai() == TRANG_THAI_GHE.Trong) {
                     giuong.setBackground(xanhBrandeis);
                 } else {
                     giuong.setBackground(doDo);
@@ -184,9 +185,9 @@ public class TrangSoDoGiuong6 extends JPanel {
 
                 if (!giuongDao.layDSGheDat().isEmpty()) {
                     for (int k = 0 ; k < dsGiuongDaDat.size() ; k++) {
-                        if (dsGiuongDaDat.get(k).getSoGhe().equals(String.valueOf(j + doTang * 6)) &&
+                        if (dsGiuongDaDat.get(k).getSoGhe().equals(String.valueOf(j - 1 + doTang * 6)) &&
                                 this.maToa.equals(dsGiuongDaDat.get(k).getMaToa())) {
-                            giuong.setBackground(doDo);
+                            giuong.setBackground(camNhuomDen);
                         }
                     }
                 }*/
@@ -226,6 +227,7 @@ public class TrangSoDoGiuong6 extends JPanel {
 
         themBieuTuongVaTieuDe(trangHuongDan, "Giường Trống", xanhBrandeis);
         themBieuTuongVaTieuDe(trangHuongDan, "Giường đã mua", doDo);
+        themBieuTuongVaTieuDe(trangHuongDan, "Ghế chọn", camNhuomDen);
 
         add(trangHuongDan, BorderLayout.SOUTH);
     }
