@@ -21,6 +21,7 @@ import java.awt.event.MouseListener;
 import java.sql.SQLException;
 import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 @Slf4j
@@ -82,19 +83,25 @@ public class HanhDong_TrangDanhSachVe implements ActionListener, MouseListener {
             String maVe = this.trangDanhSachVeTau.textFieldMaVe.getText();
 
             try {
-                LocalDate ngayKhoiHanh = this.databaseVe.getNgayKhoiHanh_DuaVaoMaVe(maVe);
-                logger.info(ngayKhoiHanh+"");
-                logger.info(LocalDate.now()+"");
-                Duration duration = Duration.between(LocalDate.now().atStartOfDay(),ngayKhoiHanh.atStartOfDay());
-                if(duration.toHours() >= 24){
+                LocalDateTime ngayKhoiHanh = this.databaseVe.getNgayKhoiHanh_DuaVaoMaVe(maVe);
+                logger.info(ngayKhoiHanh.toString());
+                logger.info(LocalDate.now().toString());
+
+                // Chuyển đổi `LocalDateTime` thành `LocalDate` và sử dụng `atStartOfDay()`
+                LocalDate today = LocalDate.now();
+                LocalDateTime startOfToday = today.atStartOfDay();
+
+                Duration duration = Duration.between(startOfToday, ngayKhoiHanh);
+
+                if (duration.toHours() >= 24) {
                     JOptionPane.showMessageDialog(null, "Hủy Vé Thành Công!");
-                }
-                else {
+                } else {
                     JOptionPane.showMessageDialog(null, "Hủy Vé Không Thành Công!");
                 }
             } catch (SQLException ex) {
                 throw new RuntimeException(ex);
             }
+
         }
         else if(e.getSource() == this.trangDanhSachVeTau.buttonInVe){
             String maVe = this.trangDanhSachVeTau.textFieldMaVe.getText();

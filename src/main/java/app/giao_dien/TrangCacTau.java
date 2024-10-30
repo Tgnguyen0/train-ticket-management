@@ -6,6 +6,7 @@ import app.dieu_khien.HanhDong_TrangCacTau;
 import app.phan_tu_tuy_chinh.NutAnh;
 import app.phong_chu_moi.PhongChuMoi;
 import app.thuc_the.Ghe;
+import app.thuc_the.LichCapBenGa;
 import app.thuc_the.Tau;
 import app.thuc_the.Toa;
 
@@ -53,12 +54,17 @@ public class TrangCacTau extends JFrame {
     public List<Toa> dsToa2;
     public List<Toa> dsToa3;
     public List<Toa> dsToa4;
+    public List<LichCapBenGa> dsLichTau;
     public String soHieuTauChon;
 
     public boolean daDongChua = false;
+    public boolean coQuaGaTau1 = false;
+    public boolean coQuaGaTau2 = false;
+    public boolean coQuaGaTau3 = false;
+    public boolean coQuaGaTau4 = false;
 
     // Function tạo GUI chính
-    public TrangCacTau(List<Tau> dsTau, Ghe_DAO gheDao) {
+    public TrangCacTau(List<Tau> dsTau, Ghe_DAO gheDao, List<LichCapBenGa> dsLichTau) {
         this.toaDao = new Toa_DAO();
 
         this.dsTau = dsTau;
@@ -67,6 +73,8 @@ public class TrangCacTau extends JFrame {
         this.dsToa3 = toaDao.ChonTheoSoHieuTatCa(this.dsTau.get(2).getSoHieu());
         this.dsToa4 = toaDao.ChonTheoSoHieuTatCa(this.dsTau.get(3).getSoHieu());
         this.gheDao = gheDao;
+
+        this.dsLichTau = dsLichTau;
 
         ImageIcon icon = new ImageIcon("assets/icon.png");
         setTitle("Sơ đồ chung");
@@ -105,6 +113,24 @@ public class TrangCacTau extends JFrame {
         thanhDinhHuong.setBackground(trang);
         thanhDinhHuong.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 20));
 
+        for (int i = 0 ; i < this.dsLichTau.size() ; i++) {
+            if (dsLichTau.get(i).getMaTau().equals("VN5234")) {
+                coQuaGaTau1 = true;
+            }
+
+            if (dsLichTau.get(i).getMaTau().equals("VN5947")) {
+                coQuaGaTau2 = true;
+            }
+
+            if (dsLichTau.get(i).getMaTau().equals("VN7283")) {
+                coQuaGaTau3 = true;
+            }
+
+            if (dsLichTau.get(i).getMaTau().equals("VN9029")) {
+                coQuaGaTau4 = true;
+            }
+        }
+
         // Tạo Nút dẫn đến trang chủ
         /* Tạo nút ảnh với việc truyền đừờng dẫn ảnh chính, ảnh đang chọn,
         chiều dài ảnh, chiều rộng ảnh,chiều dài của chữ và chữ và vị trí x của chữ */
@@ -127,6 +153,7 @@ public class TrangCacTau extends JFrame {
         nutTau1.setFocusPainted(false); // Bỏ viền khi click (focus)
         nutTau1.setContentAreaFilled(false); // Bỏ fill màu mặc định của JButton (nếu cần)
         nutTau1.setBorder(null);
+        nutTau1.setEnabled(coQuaGaTau1);
         nutTau1.addMouseListener(this.thaoTacChuot);
         nutTau1.addActionListener(this.hanhDong);
         thanhDinhHuong.add(nutTau1);
@@ -153,6 +180,7 @@ public class TrangCacTau extends JFrame {
         nutTau2.setFocusPainted(false); // Bỏ viền khi click (focus)
         nutTau2.setContentAreaFilled(false); // Bỏ fill màu mặc định của JButton (nếu cần)
         nutTau2.setBorder(null);
+        nutTau2.setEnabled(coQuaGaTau2);
         nutTau2.addMouseListener(this.thaoTacChuot);
         nutTau2.addActionListener(this.hanhDong);
         thanhDinhHuong.add(nutTau2);
@@ -179,6 +207,7 @@ public class TrangCacTau extends JFrame {
         nutTau3.setFocusPainted(false); // Bỏ viền khi click (focus)
         nutTau3.setContentAreaFilled(false); // Bỏ fill màu mặc định của JButton (nếu cần)
         nutTau3.setBorder(null);
+        nutTau3.setEnabled(coQuaGaTau3);
         nutTau3.addMouseListener(this.thaoTacChuot);
         nutTau3.addActionListener(this.hanhDong);
         //nutTau3.setEnabled(false);
@@ -206,6 +235,7 @@ public class TrangCacTau extends JFrame {
         nutTau4.setFocusPainted(false); // Bỏ viền khi click (focus)
         nutTau4.setContentAreaFilled(false); // Bỏ fill màu mặc định của JButton (nếu cần)
         nutTau4.setBorder(null);
+        nutTau4.setEnabled(coQuaGaTau4);
         nutTau4.addMouseListener(this.thaoTacChuot);
         nutTau4.addActionListener(this.hanhDong);
         //nutTau4.setEnabled(false);

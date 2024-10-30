@@ -1,6 +1,7 @@
 package app.dieu_khien;
 
 import app.dao.KhachHang_DAO;
+import app.giao_dien.TrangDatVe;
 import app.giao_dien.TrangDinhHuong;
 import app.giao_dien.TrangKhachHang;
 import app.thuc_the.GIOI_TINH;
@@ -20,11 +21,9 @@ import java.util.ArrayList;
 public class HanhDong_TrangKhachHang implements ActionListener, MouseListener {
     private TrangKhachHang trangKhachHang;
 
-
     public HanhDong_TrangKhachHang(TrangKhachHang trangKhachHang) {
         this.trangKhachHang = trangKhachHang;
     }
-
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -64,8 +63,29 @@ public class HanhDong_TrangKhachHang implements ActionListener, MouseListener {
            this.lamMoiDanhSach();
            this.trangKhachHang.hide();
 
+           ((TrangDatVe) TrangDinhHuong.getTrangChua().getComponent(1)).datDSKhDatVe(this.trangKhachHang.dsHangCho);
+
            CardLayout cardLayout = (CardLayout) TrangDinhHuong.getTrangChua().getLayout();
            cardLayout.show(TrangDinhHuong.getTrangChua(), "Trang Dat Ve");
+
+            String hoTen = ((TrangDatVe) TrangDinhHuong.getTrangChua().getComponent(1)).dsKHDatVe.get(0).getTenKH();
+            ((TrangDatVe) TrangDinhHuong.getTrangChua().getComponent(1)).thanhNhapHoTen.setText(hoTen);
+
+            String sdt = ((TrangDatVe) TrangDinhHuong.getTrangChua().getComponent(1)).dsKHDatVe.get(0).getSoDT();
+            ((TrangDatVe) TrangDinhHuong.getTrangChua().getComponent(1)).thanhNhapDienThoai.setText(sdt);
+
+            String email = ((TrangDatVe) TrangDinhHuong.getTrangChua().getComponent(1)).dsKHDatVe.get(0).getEmail();
+            ((TrangDatVe) TrangDinhHuong.getTrangChua().getComponent(1)).thanhNhapThuDienTu.setText(email);
+
+            GIOI_TINH gioiTinh = ((TrangDatVe) TrangDinhHuong.getTrangChua().getComponent(1)).dsKHDatVe.get(0).getGioiTinh();
+
+            if (gioiTinh.getValue().equals("Nam")) {
+                ((TrangDatVe) TrangDinhHuong.getTrangChua().getComponent(1)).nutLuaChonNam.setSelected(true);
+                ((TrangDatVe) TrangDinhHuong.getTrangChua().getComponent(1)).nutLuaChonNu.setSelected(false);
+            } else {
+                ((TrangDatVe) TrangDinhHuong.getTrangChua().getComponent(1)).nutLuaChonNam.setSelected(false);
+                ((TrangDatVe) TrangDinhHuong.getTrangChua().getComponent(1)).nutLuaChonNu.setSelected(true);
+            }
 
            return true;
         }

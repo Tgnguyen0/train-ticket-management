@@ -1,6 +1,7 @@
 package app.thuc_the;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class Ve {
@@ -9,8 +10,8 @@ public class Ve {
     // sau đó thì setTau(tau) hoặc là có thể lấy tàu từ class ghế sau đ láy class toa và cuối cùng là tàu.
     String maVe;
     String loaiDoiTuong;
-    LocalDate ngayKhoiHanh;
-    LocalDate ngayDatVe;
+    LocalDateTime ngayKhoiHanh;
+    LocalDateTime ngayDatVe;
     DaiNgo daiNgo;
     String gaKhoiHanh;
     String gaKetThuc;
@@ -20,7 +21,7 @@ public class Ve {
     String loaiVe;
     Tau tau;
 
-    public Ve(String maVe, String loaiDoiTuong, LocalDate ngayKhoiHanh, LocalDate ngayDatVe, String gaKhoiHanh, String gaKetThuc, double giaVe, String maKhachHang, String maGhe, String loaiVe) {
+    public Ve(String maVe, String loaiDoiTuong, LocalDateTime ngayKhoiHanh, LocalDateTime ngayDatVe, String gaKhoiHanh, String gaKetThuc, double giaVe, String maKhachHang, String maGhe, String loaiVe) {
         this.maVe = maVe;
         this.loaiDoiTuong = loaiDoiTuong;
         this.ngayKhoiHanh = ngayKhoiHanh;
@@ -34,7 +35,7 @@ public class Ve {
         this.loaiVe = loaiVe;
     }
 
-    public Ve(String loaiDoiTuong, LocalDate ngayKhoiHanh, LocalDate ngayDatVe, String gaKhoiHanh, String gaKetThuc, double giaVe, String maKhachHang, String maGhe, String loaiVe) {
+    public Ve(String loaiDoiTuong, LocalDateTime ngayKhoiHanh, LocalDateTime ngayDatVe, String gaKhoiHanh, String gaKetThuc, double giaVe, String maKhachHang, String maGhe, String loaiVe) {
         this.maVe = setMaVe();
         this.loaiDoiTuong = loaiDoiTuong;
         this.ngayKhoiHanh = ngayKhoiHanh;
@@ -57,9 +58,9 @@ public class Ve {
 
     public String setMaVe() {
         String maVe;
-        String ngayTrongThang = String.valueOf(LocalDate.now().getDayOfMonth());
-        String thang = String.valueOf(LocalDate.now().getMonthValue());
-        String nam = String.valueOf(LocalDate.now().getYear());
+        String ngayTrongThang = String.valueOf(LocalDateTime.now().getDayOfMonth());
+        String thang = String.valueOf(LocalDateTime.now().getMonthValue());
+        String nam = String.valueOf(LocalDateTime.now().getYear());
 
         nam = nam.substring(nam.length() - 2);
 
@@ -80,19 +81,19 @@ public class Ve {
         this.loaiDoiTuong = loaiDoiTuong;
     }
 
-    public LocalDate getNgayKhoiHanh() {
+    public LocalDateTime getNgayKhoiHanh() {
         return ngayKhoiHanh;
     }
 
-    public void setNgayKhoiHanh(LocalDate ngayKhoiHanh) {
+    public void setNgayKhoiHanh(LocalDateTime ngayKhoiHanh) {
         this.ngayKhoiHanh = ngayKhoiHanh;
     }
 
-    public LocalDate getNgayDatVe() {
+    public LocalDateTime getNgayDatVe() {
         return ngayDatVe;
     }
 
-    public void setNgayDatVe(LocalDate ngayDatVe) {
+    public void setNgayDatVe(LocalDateTime ngayDatVe) {
         this.ngayDatVe = ngayDatVe;
     }
 

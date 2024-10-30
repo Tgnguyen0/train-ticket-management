@@ -38,7 +38,7 @@ public class HanhDong_TrangSoDoGheMemDieuHoa implements ActionListener, MouseLis
                     System.out.println(ghe.getSoGhe());
                     System.out.println(ghe.getMaToa());
                     this.trangSoDoGheMemDieuHoa.gheDao.themGhe(ghe);
-                    nutGhe.setBackground(this.trangSoDoGheMemDieuHoa.doDo);
+                    nutGhe.setBackground(this.trangSoDoGheMemDieuHoa.camNhuomDen);
                 } else {
                     hienThiThongBao("Bạn chỉ có thể chọn tối đa 10 ghế.");
                 }
