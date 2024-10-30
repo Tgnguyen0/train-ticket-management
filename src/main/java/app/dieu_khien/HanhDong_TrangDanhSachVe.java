@@ -133,6 +133,9 @@ public class HanhDong_TrangDanhSachVe implements ActionListener, MouseListener {
             String ngayDatVe = this.trangDanhSachVeTau.ngayDatVe.getText();
             String ngayKhoiHanh = this.trangDanhSachVeTau.ngayKhoiHanh.getText();
             String giaVe = this.trangDanhSachVeTau.giaVe.getText();
+            /*
+                lấy tên toa
+             */
 
             new TrangThongTinChiTietVeTau(maVe, loaiVe, diemDi, diemDen, ngayKhoiHanh,
                     "", tenKhachHang,"", "", "", ngayDatVe, doiTuong).setVisible(true);
