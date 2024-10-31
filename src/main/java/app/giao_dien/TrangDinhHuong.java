@@ -205,17 +205,17 @@ public class TrangDinhHuong extends JFrame {
         thanhDinhHuong.add(nutGioiThieu);
 
         //Tạo nut đến trang nhân viên
-        nutVe = new BongCuaChu("Nhân Viên");
-        nutVe.setPreferredSize(new Dimension(chieuDaiNut, chieuRongNut));
-        nutVe.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, charSize));
-        nutVe.setForeground(new Color(xanhBrandeis.getRGB()));
-        nutVe.setBackground(new Color(trang.getRGB()));
-        nutVe.setBorder(this.vienDam);
-        nutVe.setFocusPainted(false); // Bỏ viền khi click (focus)
-        nutVe.setContentAreaFilled(false); // Bỏ fill màu mặc định của JButton (nếu cần)
-        nutVe.addMouseListener(this.thaoTacChuot);
-        nutVe.addActionListener(this.hanhDong);
-        thanhDinhHuong.add(nutVe);
+        nutNhanVien = new BongCuaChu("Nhân Viên");
+        nutNhanVien.setPreferredSize(new Dimension(chieuDaiNut, chieuRongNut));
+        nutNhanVien.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, charSize));
+        nutNhanVien.setForeground(new Color(xanhBrandeis.getRGB()));
+        nutNhanVien.setBackground(new Color(trang.getRGB()));
+        nutNhanVien.setBorder(this.vienDam);
+        nutNhanVien.setFocusPainted(false); // Bỏ viền khi click (focus)
+        nutNhanVien.setContentAreaFilled(false); // Bỏ fill màu mặc định của JButton (nếu cần)
+        nutNhanVien.addMouseListener(this.thaoTacChuot);
+        nutNhanVien.addActionListener(this.hanhDong);
+        thanhDinhHuong.add(nutNhanVien);
 
         // Tạo Trang người dùng
         JPanel thanhNguoiDung = new JPanel();
