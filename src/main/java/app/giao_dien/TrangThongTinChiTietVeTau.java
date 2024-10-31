@@ -24,6 +24,7 @@ public class TrangThongTinChiTietVeTau extends JFrame {
     public javax.swing.JLabel labelSoHieu;
     public javax.swing.JLabel labelTenKhachHang;
     public javax.swing.JLabel labelToa;
+    public javax.swing.JLabel labelGiaVe;
     public javax.swing.JTextField textFieldDiemDen;
     public javax.swing.JTextField textFieldDiemDi;
     public javax.swing.JTextField textFieldGhe;
@@ -36,6 +37,7 @@ public class TrangThongTinChiTietVeTau extends JFrame {
     public javax.swing.JTextField textFieldSoHieu;
     public javax.swing.JTextField textFieldTenKhachHang;
     public javax.swing.JTextField textFieldToa;
+    public javax.swing.JTextField textFieldGiaVe;
     public javax.swing.JPanel trangChuaCacButton;
     public javax.swing.JPanel trangChuaDiemDen;
     public javax.swing.JPanel trangChuaDiemDi;
@@ -50,13 +52,13 @@ public class TrangThongTinChiTietVeTau extends JFrame {
     public javax.swing.JPanel trangChuaTenToa;
     public javax.swing.JPanel trangChuaThongTinVeChiTiet;
     public javax.swing.JPanel trangChuaViTriGhe;
-
+    public javax.swing.JPanel trangChuaGiaVe;
     public ActionListener ac;
     public MouseListener mouse;
 
     public TrangThongTinChiTietVeTau(String maVe, String loaiVe, String diemDi, String diemDen, String ngayKhoiHanh,
                                      String ngayTroVe, String tenKhachHang, String soHieu, String tenToa,
-                                     String viTriGhe, String ngayDatVe, String doiTuong){
+                                     String viTriGhe, String ngayDatVe, String doiTuong, String giaVe){
         this.setSize(724, 331); // Đặt kích thước cụ thể cho cửa sổ
         setResizable(false);
         setLocationRelativeTo(null);
@@ -103,7 +105,9 @@ public class TrangThongTinChiTietVeTau extends JFrame {
         buttonXacNhan = new javax.swing.JButton();
         buttonInVe = new javax.swing.JButton();
         buttonViTriGhe = new javax.swing.JButton();
-
+        labelGiaVe = new JLabel();
+        textFieldGiaVe = new JTextField();
+        trangChuaGiaVe = new JPanel();
         /*
             trình tự các thiết lập trang chứa giao diện
          */
@@ -132,6 +136,8 @@ public class TrangThongTinChiTietVeTau extends JFrame {
 
         trangChua_TrangChuaLoaiDoiTuong();
 
+        thietLap_TrangChuaGiaVe();
+
         thietLap_TrangChuaCacButton();
 
         thietLap_TrangChuaThongTinChiTietVe();
@@ -151,6 +157,7 @@ public class TrangThongTinChiTietVeTau extends JFrame {
         this.textFieldGhe.setText(viTriGhe);
         this.textFieldNgayDatVe.setText(ngayDatVe);
         this.textFieldLoaiDoiTuong.setText(doiTuong);
+        this.textFieldGiaVe.setText(giaVe);
 
         /*
             cài đặt vô hiệu hóa các jtextField
@@ -495,6 +502,35 @@ public class TrangThongTinChiTietVeTau extends JFrame {
                                 .addContainerGap())
         );
     }
+    public void thietLap_TrangChuaGiaVe(){
+        labelGiaVe.setText("Giá Vé:");
+
+        textFieldGiaVe.setText("");
+
+        javax.swing.GroupLayout trangChuaGiaVeLayout = new javax.swing.GroupLayout(trangChuaGiaVe);
+        trangChuaGiaVe.setLayout(trangChuaGiaVeLayout);
+        trangChuaGiaVeLayout.setHorizontalGroup(
+                trangChuaGiaVeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(trangChuaGiaVeLayout.createSequentialGroup()
+                                .addGroup(trangChuaGiaVeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(trangChuaGiaVeLayout.createSequentialGroup()
+                                                .addContainerGap()
+                                                .addComponent(labelGiaVe, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(trangChuaGiaVeLayout.createSequentialGroup()
+                                                .addGap(67, 67, 67)
+                                                .addComponent(textFieldGiaVe, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        trangChuaGiaVeLayout.setVerticalGroup(
+                trangChuaGiaVeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(trangChuaGiaVeLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(labelGiaVe)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(textFieldGiaVe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+    }
 
     public void thietLap_TrangChuaCacButton(){
         buttonCapNhat.setText("Cập Nhật");
@@ -560,7 +596,10 @@ public class TrangThongTinChiTietVeTau extends JFrame {
                                         .addComponent(trangChuaViTriGhe, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(trangChuaNgayDatVe, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(trangChuaLoaiDoiTuong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addComponent(trangChuaCacButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, trangChuaThongTinVeChiTietLayout.createSequentialGroup()
+                                .addComponent(trangChuaGiaVe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(trangChuaCacButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         trangChuaThongTinVeChiTietLayout.setVerticalGroup(
                 trangChuaThongTinVeChiTietLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -591,7 +630,9 @@ public class TrangThongTinChiTietVeTau extends JFrame {
                                         .addComponent(trangChuaLoaiDoiTuong, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(trangChuaNgayTroVe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(trangChuaCacButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGroup(trangChuaThongTinVeChiTietLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(trangChuaCacButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(trangChuaGiaVe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -619,20 +660,22 @@ public class TrangThongTinChiTietVeTau extends JFrame {
         this.textFieldGhe.setEditable(false);
         this.textFieldNgayDatVe.setEditable(false);
         this.textFieldLoaiDoiTuong.setEditable(false);
+        this.textFieldGiaVe.setEditable(false);
+        this.buttonViTriGhe.setEnabled(false);
     }
 
     public void choPhepCapNhat(){
-        this.textFieldLoaiVe.setEditable(true);
+        //this.textFieldLoaiVe.setEditable(true);
 //        this.textFieldDiemDi.setEditable(true);
 //        this.textFieldDiemDen.setEditable(true);
 //        this.textFieldNgayKhoiHanh.setEditable(true);
-//        this.textFieldNgayTroVe.setEditable(true);
-        this.textFieldTenKhachHang.setEditable(true);
+//        this.textFieldNgayTroVe.setEditable(true);this.textFieldTenKhachHang.setEditable(true);
 //        this.textFieldSoHieu.setEditable(true);
 //        this.textFieldToa.setEditable(true);
 //        this.textFieldGhe.setEditable(true);
 //        this.textFieldNgayDatVe.setEditable(true);
-        this.textFieldLoaiDoiTuong.setEditable(true);
+        //this.textFieldLoaiDoiTuong.setEditable(true);
+        this.buttonViTriGhe.setEnabled(true);
     }
     public void addActionForButton(){
         this.buttonCapNhat.addActionListener(ac);
@@ -662,8 +705,8 @@ public class TrangThongTinChiTietVeTau extends JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TrangThongTinChiTietVeTau("", "", "", "", "", "",
-                "", "", "", "", "", "").setVisible(true);
+//                new TrangThongTinChiTietVeTau("", "", "", "", "", "",
+//                "", "", "", "", "", "").setVisible(true);
             }
         });
     }

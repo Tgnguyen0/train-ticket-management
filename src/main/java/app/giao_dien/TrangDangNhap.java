@@ -32,13 +32,13 @@ public class TrangDangNhap extends JFrame {
     public JLabel nhanQuenMatKhau;
     public PhongChuMoi phongTuyChinh = new PhongChuMoi();
     public boolean matKhauDung = false;
-
+    public static String tenDangNhap;
     public Color trang = new Color(255, 255, 255);
     public Color xanhBrandeis = new Color(0, 112, 255);
     public Color xanhNhat = new Color(66, 186, 255);
     public Border duongVien = BorderFactory.createMatteBorder(0, 0, 1, 0, new Color(xanhBrandeis.getRGB()));
     public Border duongVienPhai = BorderFactory.createMatteBorder(0, 0, 0, 5, new Color(xanhBrandeis.getRGB()));
-
+    public static String username;
     /*
      * chứa các toàn bộ tham số hanhDongtion controller để xử lý actionlistener và
      * mouselistener
@@ -189,6 +189,7 @@ public class TrangDangNhap extends JFrame {
         giua.add(nhanQuenMatKhau);
 
         add(giua, BorderLayout.CENTER);
+
     }
 
     public static void main(String[] args) {

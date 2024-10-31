@@ -30,6 +30,7 @@ public class TrangSoDoGheMem extends JPanel {
     public Color trang = new Color(255, 255, 255);
     public Color xanhNhat = new Color(66, 186, 255);
     public Color xanhBrandeis = new Color(0, 112, 255);
+    public Color camNhuomDen = new Color(253, 126, 20);
     public Color doDo = new Color(220, 53, 69);
     public Border vienNhat = BorderFactory.createLineBorder(xanhNhat);
     public Border vienDam = BorderFactory.createLineBorder(xanhBrandeis);
@@ -136,7 +137,7 @@ public class TrangSoDoGheMem extends JPanel {
                         for (int k = 0 ; k < dsGheDaDat.size() ; k++) {
                             if (dsGheDaDat.get(k).getSoGhe().equals(String.valueOf(4 * (j - 1) + i + 1)) &&
                             dsGheDaDat.get(k).getMaToa().equals(this.maToa)) {
-                                ghe.setBackground(doDo);
+                                ghe.setBackground(camNhuomDen);
                             }
                         }
                     }
@@ -176,7 +177,7 @@ public class TrangSoDoGheMem extends JPanel {
                         for (int k = 0 ; k < dsGheDaDat.size() ; k++) {
                             if (dsGheDaDat.get(k).getSoGhe().equals(String.valueOf(4 * (j - 1) + i + 1)) &&
                              this.maToa.equals(dsGheDaDat.get(k).getMaToa())) {
-                                ghe.setBackground(doDo);
+                                ghe.setBackground(camNhuomDen);
                             }
                         }
                     }
@@ -211,8 +212,9 @@ public class TrangSoDoGheMem extends JPanel {
         trangHuongDan.setPreferredSize(new Dimension(800, 140));
         trangHuongDan.setBackground(trang);
 
-        themBieuTuongVaTieuDe(trangHuongDan, "Ghế Trống", xanhBrandeis);
+        themBieuTuongVaTieuDe(trangHuongDan, "Ghế trống", xanhBrandeis);
         themBieuTuongVaTieuDe(trangHuongDan, "Ghế đã mua", doDo);
+        themBieuTuongVaTieuDe(trangHuongDan, "Ghế chọn", camNhuomDen);
 
         add(trangHuongDan, BorderLayout.SOUTH);
     }

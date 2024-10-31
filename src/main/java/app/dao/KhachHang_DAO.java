@@ -18,30 +18,32 @@ public class KhachHang_DAO {
     String CHON_TAT_SQL = "use TrainStationDatabase SELECT * FROM KhachHang";
     String CHON_THEO_MA_SQL = "SELECT * FROM KhachHang WHERE MaKH=?";
 
-    List<KhachHang> dskh; // Tránh thông tin bị trùng
+    List<KhachHang> dskhDatVe; // Tránh thông tin bị trùng
 
     // Khởi tạo danh sách khách hàng
     public KhachHang_DAO() {
-        dskh = new ArrayList<KhachHang>();
+        dskhDatVe = new ArrayList<KhachHang>();
     }
+
+    public boolean themDSKH(List<KhachHang> dskh) { return dskhDatVe.addAll(dskh); }
 
     // Thêm khách hàng
     public boolean ThemKhachHang(KhachHang kh) {
-        return dskh.add(kh);
+        return dskhDatVe.add(kh);
     }
 
     // Tìm Kiếm khách hàng
     public KhachHang TimKiemKhachHang(String tenKH, String diaChi, String sdt) {
-        for (int i = 0; i < dskh.size(); i++) {
+        for (int i = 0; i < dskhDatVe.size(); i++) {
             boolean dungKh = true;
 
             // Kiểm tra điều kiện để chọn khách hàng cần tìm kiếm
-            dungKh = tenKH.equals(dskh.get(i).getDiaChi()) &&
-                    diaChi.equals(dskh.get(i).getTenKH()) &&
-                    sdt.equals(dskh.get(i).getSoDT());
+            dungKh = tenKH.equals(dskhDatVe.get(i).getDiaChi()) &&
+                    diaChi.equals(dskhDatVe.get(i).getTenKH()) &&
+                    sdt.equals(dskhDatVe.get(i).getSoDT());
 
             if (dungKh) {
-                return dskh.get(i);
+                return dskhDatVe.get(i);
             }
         }
 
@@ -457,6 +459,7 @@ public class KhachHang_DAO {
 
         return kh;
     }
+
     public static KhachHang timTheoMaKH_KhangVersion(String maKH){
         KhachHang kh = new KhachHang();
         try {
