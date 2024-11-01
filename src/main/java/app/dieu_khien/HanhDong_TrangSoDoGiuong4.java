@@ -34,7 +34,7 @@ public class HanhDong_TrangSoDoGiuong4 implements ActionListener, MouseListener 
             else {
                 if (this.trangSoDoGiuong4.giuongDao.layDSGheDat().size() < 10) {
                     this.trangSoDoGiuong4.giuongDao.themGhe(ghe);
-                    nutGhe.setBackground(this.trangSoDoGiuong4.doDo);
+                    nutGhe.setBackground(this.trangSoDoGiuong4.camNhuomDen);
                 } else {
                     hienThiThongBao("Bạn chỉ có thể chọn tối đa 10 ghế.");
                 }

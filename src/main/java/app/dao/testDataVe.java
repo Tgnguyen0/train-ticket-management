@@ -10,6 +10,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +26,10 @@ public class testDataVe {
         ResultSet resultSet = statement.executeQuery();
         while (resultSet.next()){
             String maVe = resultSet.getString("MaVe");
-            LocalDate ngayDatVe = resultSet.getDate("NgayDatVe").toLocalDate();
+            LocalDateTime ngayDatVe = resultSet.getTimestamp("NgayDatVe")
+                    .toInstant()
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalDateTime();
             double giaVe = resultSet.getDouble("GiaVe");
             String maKh = resultSet.getString("MaKH");
             String gaKhoiHanh = resultSet.getString("GaKhoiHanh");
@@ -32,7 +37,10 @@ public class testDataVe {
             String maGhe =  resultSet.getString("MaGhe");
             String loaiGhe = resultSet.getString("LoaiVe");
             String loaiDoiTuong = resultSet.getString("LoaiDoiTuong");
-            LocalDate ngayKhoiHanh = resultSet.getDate("NgayKhoiHanh").toLocalDate();
+            LocalDateTime ngayKhoiHanh = resultSet.getTimestamp("NgayDatVe")
+                    .toInstant()
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalDateTime();
             danhSachVe.add(new Ve(maVe,  loaiDoiTuong,  ngayKhoiHanh,  ngayDatVe,  gaKhoiHanh,  gaKetThuc,  giaVe,  maKh, maGhe,  loaiGhe));
         }
 

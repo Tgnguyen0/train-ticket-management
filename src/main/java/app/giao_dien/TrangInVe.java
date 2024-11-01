@@ -11,6 +11,7 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -147,8 +148,8 @@ public class TrangInVe extends JFrame {
                 // Thiết lập các thuộc tính
                 // Mã vé giả lập
                 ve.setLoaiDoiTuong("Người lớn");                 // Loại đối tượng
-                ve.setNgayKhoiHanh(LocalDate.now().plusDays(5)); // Ngày khởi hành sau 5 ngày từ hiện tại
-                ve.setNgayDatVe(LocalDate.now());                // Ngày đặt vé là hôm nay
+                ve.setNgayKhoiHanh(LocalDateTime.now().plusDays(5)); // Ngày khởi hành sau 5 ngày từ hiện tại
+                ve.setNgayDatVe(LocalDateTime.now());                // Ngày đặt vé là hôm nay
                 ve.setGaKhoiHanh("Hà Nội");                      // Ga khởi hành
                 ve.setGaKetThuc("Hồ Chí Minh");                  // Ga kết thúc
                 ve.setGiaVe(100000 + (i * 50000));               // Giá vé tăng dần

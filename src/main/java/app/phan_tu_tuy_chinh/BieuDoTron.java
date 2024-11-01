@@ -1,14 +1,14 @@
-package app.giao_dien;
+package app.phan_tu_tuy_chinh;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class PieChartPanel extends JPanel {
+public class BieuDoTron extends JPanel {
     // Mảng chứa các giá trị phần trăm cho các phần của biểu đồ
     private double[] values;
     private Color[] colors;
 
-    public PieChartPanel(double[] values, Color[] colors) {
+    public BieuDoTron(double[] values, Color[] colors) {
         this.values = values;
         this.colors = colors;
     }
@@ -26,15 +26,25 @@ public class PieChartPanel extends JPanel {
             total += value;
         }
 
-        double curValue = 0.0;
-        int startAngle = -270; // Bắt đầu từ phía trên (góc -90 độ)
+        // Kiểm tra nếu tổng là 0 để tránh chia cho 0
+        if (total == 0) {
+            return;
+        }
+
+        double[] normalizedValues = new double[values.length];
         for (int i = 0; i < values.length; i++) {
-            int arcAngle = (int) (values[i] * 360 / total);
+            normalizedValues[i] = values[i] / total;
+        }
+
+        double curValue = 0.0;
+        int startAngle = 90; // Bắt đầu từ phía trên
+
+        for (int i = 0; i < normalizedValues.length; i++) {
+            int arcAngle = (int) Math.round(normalizedValues[i] * 360);
 
             g.setColor(colors[i]);
             g.fillArc(area.x, area.y, area.width, area.height, startAngle, arcAngle);
-            startAngle += arcAngle; // Cập nhật góc bắt đầu cho phần tiếp theo
+            startAngle += arcAngle;
         }
-
     }
 }
