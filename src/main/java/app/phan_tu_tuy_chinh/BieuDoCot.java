@@ -1,16 +1,16 @@
-package app.giao_dien;
+package app.phan_tu_tuy_chinh;
 
 import lombok.extern.slf4j.Slf4j;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.CategoryAxis;
+import org.jfree.chart.axis.CategoryLabelPositions;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.renderer.category.BarRenderer;
 import org.jfree.data.category.DefaultCategoryDataset;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,8 +19,8 @@ import java.util.Map;
 
 @Slf4j
 
-public class BarChartExample extends JPanel {
-    public BarChartExample(Map<Integer, Double> danhSachDoanhThu) {
+public class BieuDoCot extends JPanel {
+    public BieuDoCot(Map<String, Double> danhSachDoanhThu) {
         // Tạo dataset
         DefaultCategoryDataset dataset = createDataset(danhSachDoanhThu);
 
@@ -40,6 +40,15 @@ public class BarChartExample extends JPanel {
         CategoryPlot plot = chart.getCategoryPlot();
         NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
         rangeAxis.setNumberFormatOverride(new DecimalFormat("#,###"));
+        CategoryAxis domainAxis = plot.getDomainAxis();
+        for (String key : danhSachDoanhThu.keySet()) {
+            if (key.length() > 7) { // Kiểm tra nếu tên dài hơn 15 ký tự
+                domainAxis.setCategoryLabelPositions(CategoryLabelPositions.UP_45);
+                break; // Chỉ cần một lần để xác định trạng thái
+            } else {
+                domainAxis.setCategoryLabelPositions(CategoryLabelPositions.STANDARD);
+            }
+        }
 
         BarRenderer renderer = new BarRenderer();
         renderer.setSeriesPaint(0, Color.BLUE); // Màu cho chuỗi đầu tiên
@@ -57,14 +66,14 @@ public class BarChartExample extends JPanel {
         this.add(panel, BorderLayout.CENTER);
     }
 
-    private DefaultCategoryDataset createDataset(Map<Integer, Double> danhSachDoanhThu) {
+    private DefaultCategoryDataset createDataset(Map<String, Double> danhSachDoanhThu) {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
-        for (Integer i : danhSachDoanhThu.keySet()) {
+        for (String i : danhSachDoanhThu.keySet()) {
             Double doanhThu = danhSachDoanhThu.get(i); // Lấy giá trị từ bản đồ
             // Kiểm tra nếu giá trị không null
             if (doanhThu != null) {
-                dataset.addValue(doanhThu, "doanh thu", i.toString());
+                dataset.addValue(doanhThu, "doanh thu", i);
             }
         }
         return dataset;

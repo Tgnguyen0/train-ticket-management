@@ -139,8 +139,8 @@ public class HoaDon_DAO {
         return tongSoLuong;
     }
 
-    public static Map<Integer, Double> layDoanhThuCacNam(int namXuatPhat, int namKetThuc){
-        Map<Integer, Double> doanhThuTheoNam = new HashMap<>();
+    public static Map<String, Double> layDoanhThuCacNam(int namXuatPhat, int namKetThuc){
+        Map<String, Double> doanhThuTheoNam = new HashMap<>();
 
         String sql = "SELECT YEAR(NgayLap) AS nam, SUM(ThanhTien) AS tongDoanhThu " +
                 "FROM HoaDon " +
@@ -157,7 +157,7 @@ public class HoaDon_DAO {
                 while (rs.next()) {
                     int nam = rs.getInt("nam");
                     double tongDoanhThu = rs.getDouble("tongDoanhThu");
-                    doanhThuTheoNam.put(nam, tongDoanhThu);
+                    doanhThuTheoNam.put(nam+"", tongDoanhThu);
                 }
             }
         } catch (Exception e) {
@@ -185,5 +185,58 @@ public class HoaDon_DAO {
         }
 
         return tongSoLuong;
+    }
+
+    public static Map<String, Double> layDoanhThuCuaTungNhanVienTheo_Nam(int nam){
+        Map<String, Double> danhSachDoanhThu = new HashMap<>();
+        String sql = "SELECT SUM(hd.ThanhTien) AS DoanhThu, nv.TenNV " +
+                "FROM HoaDon hd " +
+                "JOIN NhanVien nv ON hd.MaNV = nv.MaNV " +
+                "WHERE YEAR(hd.NgayLap) = ? " +
+                "GROUP BY hd.MaNV, nv.TenNV";
+
+        try (Connection conn = KetNoiCoSoDuLieu.ketNoiDB_HinhDB();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, nam); // Set the year in the query
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    String tenNV = rs.getString("TenNV");
+                    double doanhThu = rs.getDouble("DoanhThu");
+                    danhSachDoanhThu.put(tenNV, doanhThu);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return  danhSachDoanhThu;
+    }
+
+    public static Map<String, Double> layDoanhThuCuaNhanVienUuTuTheo_Nam(int nam){
+        Map<String, Double> danhSachDoanhThu = new HashMap<>();
+        String sql = "SELECT Top 3 SUM(hd.ThanhTien) AS DoanhThu, nv.TenNV " +
+                "FROM HoaDon hd " +
+                "JOIN NhanVien nv ON hd.MaNV = nv.MaNV " +
+                "WHERE YEAR(hd.NgayLap) = ? " +
+                "GROUP BY hd.MaNV, nv.TenNV" +
+                " order by sum(hd.ThanhTien)  DESC";
+
+        try (Connection conn = KetNoiCoSoDuLieu.ketNoiDB_HinhDB();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, nam); // Set the year in the query
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    String tenNV = rs.getString("TenNV");
+                    double doanhThu = rs.getDouble("DoanhThu");
+                    danhSachDoanhThu.put(tenNV, doanhThu);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return  danhSachDoanhThu;
     }
 }
