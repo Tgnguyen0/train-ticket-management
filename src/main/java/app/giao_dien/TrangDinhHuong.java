@@ -258,16 +258,16 @@ public class TrangDinhHuong extends JFrame {
         //this.trangChuaThongKeTheoNam = new TrangChuaThongKeNhanVienTheoNam();
         this.trangNhanVien = new TrangNhanVien(); // Khởi tạo trang Trang Nhân Viên
         this.trangChuaThongKeNhanVienTheoThang = new TrangChuaThongKeNhanVienTheoThang(this);
-        this.trangChuaThongKeDoanhThuNhaGa = new TrangChuaThongKeDoanhThuNhaGa();
-        this.trangChuaThongKeNhanVienTheoNam = new TrangChuaThongKeNhanVienTheoNam();
+        this.trangChuaThongKeDoanhThuNhaGa = new TrangChuaThongKeDoanhThuNhaGa(this);
+        this.trangChuaThongKeNhanVienTheoNam = new TrangChuaThongKeNhanVienTheoNam( this);
         // kiểm tra trang thống kê
         this.trangChua.add(trangChu, "Trang Chu");
         this.trangChua.add(trangDatVe, "Trang Dat Ve");
         this.trangChua.add(trangHoaDon,"Trang Hoa Don");
         this.trangChua.add(trangGioiThieu,"Trang Gioi Thieu");
         this.trangChua.add(trangKhachHang, "Trang Khach Hang");
-        this.trangChua.add(trangChuaThongKeNhanVienTheoThang, "Trang Thong Ke");
-        this.trangChua.add(trangChuaThongKeDoanhThuNhaGa, "ThongKeDoanhThuNhaGa");
+        this.trangChua.add(trangChuaThongKeDoanhThuNhaGa, "Trang Thong Ke");
+        this.trangChua.add(trangChuaThongKeNhanVienTheoThang, "ThongKeDoanhThuTheoThang");
         this.trangChua.add(trangChuaThongKeNhanVienTheoNam, "ThongKeDoanhThuTheoNam");
         this.trangChua.add(trangNhanVien, "Trang Nhan Vien");
 

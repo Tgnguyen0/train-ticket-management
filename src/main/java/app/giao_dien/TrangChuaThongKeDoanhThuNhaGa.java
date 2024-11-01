@@ -75,7 +75,9 @@ public class TrangChuaThongKeDoanhThuNhaGa extends JPanel {
     public JButton buttonThongKeDoanhThuThangCuaNhanVien;
     public JButton buttonThongKeDoanhThuNamCuaNhanVien;
     public JPanel trangChuaButtonChuyenTrang;
-    public TrangChuaThongKeDoanhThuNhaGa(){
+    public TrangDinhHuong trangDinhHuong;
+    public TrangChuaThongKeDoanhThuNhaGa(TrangDinhHuong mainFrame){
+        this.trangDinhHuong = mainFrame;
         trangChuaThongKeDoanhThuThang = new JPanel();
         trangChuaCacThongTinThongKeThang = new  JPanel();
         trangChuaCacNutThongKeThang = new  JPanel();
@@ -438,7 +440,7 @@ public class TrangChuaThongKeDoanhThuNhaGa extends JPanel {
     public void thietLap_TrangChuaButtonChuyenTrang(){
         buttonThongKeDoanhThuThangCuaNhanVien.setText("Thống Kê Doanh Thu Tháng Của Nhân Viên");
 
-        buttonThongKeDoanhThuNamCuaNhanVien.setText("Thống Kê Doanh Thu Nam Của Nhân Viên");
+        buttonThongKeDoanhThuNamCuaNhanVien.setText("Thống Kê Doanh Thu Năm Của Nhân Viên");
 
         javax.swing.GroupLayout trangChuaButtonChuyenTrangLayout = new javax.swing.GroupLayout(trangChuaButtonChuyenTrang);
         trangChuaButtonChuyenTrang.setLayout(trangChuaButtonChuyenTrangLayout);
@@ -663,6 +665,7 @@ public class TrangChuaThongKeDoanhThuNhaGa extends JPanel {
     public void thietLap_TrangChuaThongKeDoanhThuNam(){
         javax.swing.GroupLayout trangChuaThongKeDoanhThuNamLayout = new javax.swing.GroupLayout(trangChuaThongKeDoanhThuNam);
         trangChuaThongKeDoanhThuNam.setLayout(trangChuaThongKeDoanhThuNamLayout);
+
         trangChuaThongKeDoanhThuNamLayout.setHorizontalGroup(
                 trangChuaThongKeDoanhThuNamLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(trangChuaThongKeDoanhThuNamLayout.createSequentialGroup()
@@ -670,8 +673,10 @@ public class TrangChuaThongKeDoanhThuNhaGa extends JPanel {
                                 .addComponent(trangChuaCacThongTinThongKeNam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(trangChuaBieuDoCot, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(55) // Thêm khoảng cách 10px bên phải của trangChuaBieuDoCot
                                 .addContainerGap())
         );
+
         trangChuaThongKeDoanhThuNamLayout.setVerticalGroup(
                 trangChuaThongKeDoanhThuNamLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(trangChuaThongKeDoanhThuNamLayout.createSequentialGroup()
@@ -683,6 +688,7 @@ public class TrangChuaThongKeDoanhThuNhaGa extends JPanel {
                                 .addComponent(trangChuaCacThongTinThongKeNam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(37, 37, 37))
         );
+
     }
     public void thietLap_TrangChuaThongKeDoanhThuNhaGa(){
 //        this.setPreferredSize(new java.awt.Dimension(1200, 600));
@@ -690,11 +696,11 @@ public class TrangChuaThongKeDoanhThuNhaGa extends JPanel {
         this.setLayout(layout);
 
         layout.setHorizontalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER) // Center horizontally
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                         .addGroup(layout.createSequentialGroup()
-                                .addGap(0, 100, Short.MAX_VALUE) // Khoảng cách từ cạnh trái để căn giữa
+                                .addGap(0, 100, Short.MAX_VALUE)
                                 .addComponent(trangChuaThongKeDoanhThuThang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 100, Short.MAX_VALUE)) // Khoảng cách từ cạnh phải để căn giữa
+                                .addGap(0, 100, Short.MAX_VALUE))
                         .addGroup(layout.createSequentialGroup()
                                 .addGap(0, 100, Short.MAX_VALUE)
                                 .addComponent(trangChuaThongKeDoanhThuNam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -703,13 +709,12 @@ public class TrangChuaThongKeDoanhThuNhaGa extends JPanel {
 
         layout.setVerticalGroup(
                 layout.createSequentialGroup()
-                        .addGap(20) // Khoảng cách từ cạnh trên để căn giữa theo chiều dọc
+                        .addGap(20) // Khoảng cách từ cạnh trên
                         .addComponent(trangChuaThongKeDoanhThuThang, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(50) // Khoảng cách giữa hai JPanel
                         .addComponent(trangChuaThongKeDoanhThuNam, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(20) // Khoảng cách từ cạnh dưới để căn giữa theo chiều dọc
+                        .addGap(20) // Khoảng cách từ cạnh dưới
         );
-
 //        pack();
     }
     public void dayDanhSachCacNamLenTrangGiaoDien(){
@@ -726,7 +731,9 @@ public class TrangChuaThongKeDoanhThuNhaGa extends JPanel {
         danhSachNamKetThuc.setSelectedIndex(modelNamKetThuc.getSize()-1);
         danhSachNam.setSelectedIndex(modelNam_TrongThongKeThang.getSize()-1);
     }
+
     public void taoBieuDoTronCuaDoanhThang(){
+        trangChuaBieuDoTron.removeAll();
         int thang =  Integer.parseInt((String) this.danhSachThang.getSelectedItem());
         int nam = Integer.parseInt((String) this.danhSachNam.getSelectedItem());
 
@@ -749,7 +756,10 @@ public class TrangChuaThongKeDoanhThuNhaGa extends JPanel {
                 trangChuaBieuDoTronLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                         .addComponent(chartPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
+        trangChuaBieuDoTron.revalidate();
+        trangChuaBieuDoTron.repaint();
     }
+
     public void tinhDoanhThuNhaGaTrongThang(){
         int thang =  Integer.parseInt((String) this.danhSachThang.getSelectedItem());
         int nam = Integer.parseInt((String) this.danhSachNam.getSelectedItem());
@@ -764,6 +774,7 @@ public class TrangChuaThongKeDoanhThuNhaGa extends JPanel {
         modelTable_DoanhThuThang.addRow(value);
     }
     public void taoBieuDoCotDoanhThuCacNam(){
+        this.trangChuaBieuDoCot.removeAll();
         int namXuatPhat = Integer.parseInt((String) this.danhSachNamXuatPhat.getSelectedItem());
         int namKetThuc =  Integer.parseInt((String) this.danhSachNamKetThuc.getSelectedItem());
 
@@ -782,6 +793,8 @@ public class TrangChuaThongKeDoanhThuNhaGa extends JPanel {
                 trangChuaBieuDoCotLayout.createParallelGroup(GroupLayout.Alignment.CENTER)
                         .addComponent(barChartExample, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
+        this.trangChuaBieuDoCot.revalidate();
+        this.trangChuaBieuDoCot.repaint();
     }
     public void tinhDoanhThuNhaGaTrongCacNam(){
         int namXuatPhat = Integer.parseInt((String) this.danhSachNamXuatPhat.getSelectedItem());
@@ -790,6 +803,7 @@ public class TrangChuaThongKeDoanhThuNhaGa extends JPanel {
         Map<String, Double> danhSachDoanhThu = HoaDon_DAO.layDoanhThuCacNam(namXuatPhat, namKetThuc);
         DecimalFormat df = new DecimalFormat("#,###.##");
 
+        this.modelTable_DoanhThuNam.setRowCount(0);
         for (String i : danhSachDoanhThu.keySet()) {
             Double doanhThu = danhSachDoanhThu.get(i); // Lấy giá trị từ bản đồ
             // Kiểm tra nếu giá trị không null

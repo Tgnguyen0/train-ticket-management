@@ -239,4 +239,55 @@ public class HoaDon_DAO {
         }
         return  danhSachDoanhThu;
     }
+    public static Map<String, Double> layDoanhThuCuaNhanVienUuTuTheo_Thang_Nam(int nam, int thang){
+        Map<String, Double> danhSachDoanhThu = new HashMap<>();
+        String sql = "SELECT Top 1 SUM(hd.ThanhTien) AS DoanhThu, nv.TenNV " +
+                "FROM HoaDon hd " +
+                "JOIN NhanVien nv ON hd.MaNV = nv.MaNV " +
+                "WHERE YEAR(hd.NgayLap) = ? and MONTH(hd.NgayLap) = ? " +
+                "GROUP BY hd.MaNV, nv.TenNV" +
+                " order by sum(hd.ThanhTien)  DESC";
+
+        try (Connection conn = KetNoiCoSoDuLieu.ketNoiDB_HinhDB();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, nam); // Set the year in the query
+            stmt.setInt(2, thang);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    String tenNV = rs.getString("TenNV");
+                    double doanhThu = rs.getDouble("DoanhThu");
+                    danhSachDoanhThu.put(tenNV, doanhThu);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return  danhSachDoanhThu;
+    }
+    public static Map<String, Double> layDoanhThuCuaTungNhanVienTheo_Thang_Nam(int nam, int thang){
+        Map<String, Double> danhSachDoanhThu = new HashMap<>();
+        String sql = "SELECT SUM(hd.ThanhTien) AS DoanhThu, nv.TenNV " +
+                "FROM HoaDon hd " +
+                "JOIN NhanVien nv ON hd.MaNV = nv.MaNV " +
+                "WHERE YEAR(hd.NgayLap) = ? and MONTH(hd.NgayLap) = ? " +
+                "GROUP BY hd.MaNV, nv.TenNV";
+
+        try (Connection conn = KetNoiCoSoDuLieu.ketNoiDB_HinhDB();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, nam); // Set the year in the query
+            stmt.setInt(2, thang);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    String tenNV = rs.getString("TenNV");
+                    double doanhThu = rs.getDouble("DoanhThu");
+                    danhSachDoanhThu.put(tenNV, doanhThu);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return  danhSachDoanhThu;
+    }
 }
