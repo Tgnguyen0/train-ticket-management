@@ -68,11 +68,33 @@ public class TrangCacTau extends JFrame {
         this.toaDao = new Toa_DAO();
 
         this.dsTau = dsTau;
+        this.dsLichTau = dsLichTau;
+
+        /*for (int i = 0 ; i < this.dsLichTau.size() ; i++) {
+            System.out.println(this.dsLichTau.get(i).getMaTau());
+        }*/
+
         this.dsToa1 = toaDao.ChonTheoSoHieuTatCa(this.dsTau.get(0).getSoHieu());
         this.dsToa2 = toaDao.ChonTheoSoHieuTatCa(this.dsTau.get(1).getSoHieu());
         this.dsToa3 = toaDao.ChonTheoSoHieuTatCa(this.dsTau.get(2).getSoHieu());
         this.dsToa4 = toaDao.ChonTheoSoHieuTatCa(this.dsTau.get(3).getSoHieu());
         this.gheDao = gheDao;
+
+        /*for (int i = 0 ; i < this.dsToa1.size() ; i++) {
+            System.out.println("Tau 1" + this.dsToa1.get(i).getMaToa());
+        }
+
+        for (int i = 0 ; i < this.dsToa2.size() ; i++) {
+            System.out.println("Tau 2" + this.dsToa2.get(i).getMaToa());
+        }
+
+        for (int i = 0 ; i < this.dsToa3.size() ; i++) {
+            System.out.println("Tau 3" + this.dsToa3.get(i).getMaToa());
+        }
+
+        for (int i = 0 ; i < this.dsToa4.size() ; i++) {
+            System.out.println("Tau 4" + this.dsToa4.get(i).getMaToa());
+        }*/
 
         this.dsLichTau = dsLichTau;
 
@@ -131,12 +153,18 @@ public class TrangCacTau extends JFrame {
             }
         }
 
+        /*System.out.println("Tau VN5234 co qua: " + (coQuaGaTau1 ? "True" : "False"));
+        System.out.println("Tau VN5947 co qua: " + (coQuaGaTau2 ? "True" : "False"));
+        System.out.println("Tau VN7283 co qua: " + (coQuaGaTau3 ? "True" : "False"));
+        System.out.println("Tau VN9029 co qua: " + (coQuaGaTau4 ? "True" : "False"));*/
+
         // Tạo Nút dẫn đến trang chủ
         /* Tạo nút ảnh với việc truyền đừờng dẫn ảnh chính, ảnh đang chọn,
         chiều dài ảnh, chiều rộng ảnh,chiều dài của chữ và chữ và vị trí x của chữ */
         this.nutTau1 = new NutAnh(
                 "assets/tau.png",             // Đường dẫn ảnh không được chọn
                 "assets/tau-dang-chon.png",                  // Đường dẫn ảnh khi được chọn
+                "assets/tau-vo-hieu.png",                    // Đường dẫn ảnh khi bị vô hiệu
                 chieuDaiNut,                                 // Chiều dài của nút
                 chieuRongNut,                                // Chiều rộng của nút
                 viTriChu,                                    // Vị trí của chữ trên nút
@@ -154,6 +182,11 @@ public class TrangCacTau extends JFrame {
         nutTau1.setContentAreaFilled(false); // Bỏ fill màu mặc định của JButton (nếu cần)
         nutTau1.setBorder(null);
         nutTau1.setEnabled(coQuaGaTau1);
+
+        if (!nutTau1.isEnabled()) {
+            nutTau1.datAnhVoHieu();
+        }
+
         nutTau1.addMouseListener(this.thaoTacChuot);
         nutTau1.addActionListener(this.hanhDong);
         thanhDinhHuong.add(nutTau1);
@@ -164,6 +197,7 @@ public class TrangCacTau extends JFrame {
         this.nutTau2 = new NutAnh(
                 "assets/tau.png",             // Đường dẫn ảnh không được chọn
                 "assets/tau-dang-chon.png",                  // Đường dẫn ảnh khi được chọn
+                "assets/tau-vo-hieu.png",                    // Đường dẫn ảnh khi bị vô hiệu
                 chieuDaiNut,                                 // Chiều dài của nút
                 chieuRongNut,                                // Chiều rộng của nút
                 viTriChu,                                    // Vị trí của chữ trên nút
@@ -181,6 +215,11 @@ public class TrangCacTau extends JFrame {
         nutTau2.setContentAreaFilled(false); // Bỏ fill màu mặc định của JButton (nếu cần)
         nutTau2.setBorder(null);
         nutTau2.setEnabled(coQuaGaTau2);
+
+        if (!nutTau2.isEnabled()) {
+            nutTau2.datAnhVoHieu();
+        }
+
         nutTau2.addMouseListener(this.thaoTacChuot);
         nutTau2.addActionListener(this.hanhDong);
         thanhDinhHuong.add(nutTau2);
@@ -191,6 +230,7 @@ public class TrangCacTau extends JFrame {
         this.nutTau3 = new NutAnh(
                 "assets/tau.png",             // Đường dẫn ảnh không được chọn
                 "assets/tau-dang-chon.png",                  // Đường dẫn ảnh khi được chọn
+                "assets/tau-vo-hieu.png",                    // Đường dẫn ảnh khi bị vô hiệu
                 chieuDaiNut,                                 // Chiều dài của nút
                 chieuRongNut,                                // Chiều rộng của nút
                 viTriChu,                                    // Vị trí của chữ trên nút
@@ -208,6 +248,11 @@ public class TrangCacTau extends JFrame {
         nutTau3.setContentAreaFilled(false); // Bỏ fill màu mặc định của JButton (nếu cần)
         nutTau3.setBorder(null);
         nutTau3.setEnabled(coQuaGaTau3);
+
+        if (!nutTau3.isEnabled()) {
+            nutTau3.datAnhVoHieu();
+        }
+
         nutTau3.addMouseListener(this.thaoTacChuot);
         nutTau3.addActionListener(this.hanhDong);
         //nutTau3.setEnabled(false);
@@ -219,6 +264,7 @@ public class TrangCacTau extends JFrame {
         this.nutTau4 = new NutAnh(
                 "assets/tau.png",             // Đường dẫn ảnh không được chọn
                 "assets/tau-dang-chon.png",                  // Đường dẫn ảnh khi được chọn
+                "assets/tau-vo-hieu.png",                    // Đường dẫn ảnh khi bị vô hiệu
                 chieuDaiNut,                                 // Chiều dài của nút
                 chieuRongNut,                                // Chiều rộng của nút
                 viTriChu,                                    // Vị trí của chữ trên nút
@@ -236,6 +282,11 @@ public class TrangCacTau extends JFrame {
         nutTau4.setContentAreaFilled(false); // Bỏ fill màu mặc định của JButton (nếu cần)
         nutTau4.setBorder(null);
         nutTau4.setEnabled(coQuaGaTau4);
+
+        if (!nutTau4.isEnabled()) {
+            nutTau4.datAnhVoHieu();
+        }
+
         nutTau4.addMouseListener(this.thaoTacChuot);
         nutTau4.addActionListener(this.hanhDong);
         //nutTau4.setEnabled(false);
@@ -250,15 +301,15 @@ public class TrangCacTau extends JFrame {
         this.trangChua.setPreferredSize(new Dimension(1200, 600));
         this.trangChua.setLayout(new CardLayout());
 
-        this.trangCacToa1 = new TrangCacToa(1, this.dsTau.get(0).getSoHieu(), this.dsToa1, this.gheDao);
-        this.trangCacToa2 = new TrangCacToa(2, this.dsTau.get(1).getSoHieu(), this.dsToa2, this.gheDao);
-        this.trangCacToa3 = new TrangCacToa(1, this.dsTau.get(0).getSoHieu(), this.dsToa3, this.gheDao);
-        this.trangCacToa4 = new TrangCacToa(2, this.dsTau.get(1).getSoHieu(), this.dsToa4, this.gheDao);
+        if (coQuaGaTau1) this.trangCacToa1 = new TrangCacToa(1, this.dsTau.get(0).getSoHieu(), this.dsToa1, this.gheDao);
+        if (coQuaGaTau2) this.trangCacToa2 = new TrangCacToa(2, this.dsTau.get(1).getSoHieu(), this.dsToa2, this.gheDao);
+        if (coQuaGaTau3) this.trangCacToa3 = new TrangCacToa(3, this.dsTau.get(2).getSoHieu(), this.dsToa3, this.gheDao);
+        if (coQuaGaTau4) this.trangCacToa4 = new TrangCacToa(4, this.dsTau.get(3).getSoHieu(), this.dsToa4, this.gheDao);
 
-        this.trangChua.add(trangCacToa1, "Cac toa cua tau 1");
-        this.trangChua.add(trangCacToa2, "Cac toa cua tau 2");
-        this.trangChua.add(trangCacToa3, "Cac toa cua tau 3");
-        this.trangChua.add(trangCacToa4, "Cac toa cua tau 4");
+        if (coQuaGaTau1) this.trangChua.add(trangCacToa1, "Cac toa cua tau 1");
+        if (coQuaGaTau2) this.trangChua.add(trangCacToa2, "Cac toa cua tau 2");
+        if (coQuaGaTau3) this.trangChua.add(trangCacToa3, "Cac toa cua tau 3");
+        if (coQuaGaTau4) this.trangChua.add(trangCacToa4, "Cac toa cua tau 4");
 
         add(this.trangChua);
     }

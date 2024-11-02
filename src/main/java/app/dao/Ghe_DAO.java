@@ -13,7 +13,8 @@ import java.util.List;
 import java.util.Set;
 
 public class Ghe_DAO {
-    Set<Ghe> gheDat;
+    HashSet<Ghe> gheDat;
+    Ghe gheDaChon;
     String CHON_TAT_SQL = "SELECT * FROM Ghe";
     String CHON_THEO_MA_GHE_SQL = "select * from Ghe where MaGhe =?";
     String CHON_THEO_MA_TOA_SQL = "select * from Ghe where MaToa =?";
@@ -30,8 +31,16 @@ public class Ghe_DAO {
         return gheDat.contains(ghe) ? gheDat.remove(ghe) : false;
     }
 
-    public Set<Ghe> layDSGheDat() {
+    public HashSet<Ghe> layDSGheDat() {
         return this.gheDat;
+    }
+
+    public void datGheChon(Ghe gheDaChon) {
+        this.gheDaChon = gheDaChon;
+    }
+
+    public Ghe traGheChon() {
+        return this.gheDaChon;
     }
 
     public Ghe ChonTheoMa(String maGhe) {

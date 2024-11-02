@@ -1,6 +1,11 @@
 package app.dieu_khien;
 
 import app.giao_dien.TrangInVe;
+import app.phan_tu_tuy_chinh.TaoVeBangFilePDF;
+import app.thuc_the.Ghe;
+import app.thuc_the.KhachHang;
+import app.thuc_the.Toa;
+import app.thuc_the.Ve;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,20 +22,38 @@ public class HanhDong_TrangInVe implements ActionListener, MouseListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.trangInVe.nutXacNhanIn) {
-            /*String maVe = this.ve.getMaVe();
-            String tenKhachHang = this.khachHang.getTenKH();
-            String maGhe = this.ve.getMaGhe();
-            String diemDi = this.ve.getGaKhoiHanh();
-            String diemDen = this.ve.getGaKetThuc();
-            String loaiVe = this.ve.getLoaiVe();
-            String doiTuong = this.ve.getLoaiDoiTuong();
-            String ngayDatVe = this.ve.getNgayDatVe().toString();
-            String ngayKhoiHanh = this.ve.getNgayKhoiHanh().toString();
-            String giaVe = String.valueOf(this.ve.getGiaVe());
+            for (Ve ve : this.trangInVe.dsVe) {
+                String maVe = ve.getMaVe();
 
-            TaoVeBangFilePDF taoVeBangFilePDF = new TaoVeBangFilePDF();
-            taoVeBangFilePDF.generateTicketPDF("vé được tạo/VeTau.pdf", maVe, tenKhachHang, diemDi, diemDen, ngayDatVe,
-                    ngayKhoiHanh, loaiVe, maGhe,doiTuong, giaVe);*/
+                Ghe ghe = null;
+                for (int j = 0 ; j < this.trangInVe.dsGhe.size() ; j++) {
+                    if (this.trangInVe.dsGhe.get(j).getMaGhe().equals(ve.getMaGhe())) {
+                        ghe = this.trangInVe.dsGhe.get(j);
+                    }
+                }
+
+                KhachHang kh = null;
+                for (int j = 0 ; j < this.trangInVe.dsKH.size() ; j++) {
+                    if (this.trangInVe.dsKH.get(j).getMaKH().equals(ve.getMaKhachHang())) {
+                        kh = this.trangInVe.dsKH.get(j);
+                    }
+                }
+
+                Toa toa = this.trangInVe.toaDao.ChonTheoMa(ghe.getMaToa());
+                String soHieu = toa.getSoHieu();
+
+                String diemDi = ve.getGaKhoiHanh();
+                String diemDen = ve.getGaKetThuc();
+                String loaiVe = ve.getLoaiVe();
+                String doiTuong = ve.getLoaiDoiTuong();
+                String ngayDatVe = ve.getNgayDatVe().toString();
+                String ngayKhoiHanh = ve.getNgayKhoiHanh().toString();
+                String giaVe = String.valueOf(ve.getGiaVe());
+
+                TaoVeBangFilePDF taoVeBangFilePDF = new TaoVeBangFilePDF();
+                taoVeBangFilePDF.generateTicketPDF("vé được tạo/VeTau.pdf", maVe, kh.getTenKH(), diemDi, diemDen, ngayDatVe,
+                        ngayKhoiHanh, loaiVe, ghe.getMaGhe(), doiTuong, giaVe);
+            }
         }
     }
 

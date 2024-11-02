@@ -1,52 +1,66 @@
 package app.dao;
 
+import app.ket_noi_co_so_du_lieu.KetNoiCoSoDuLieu;
 import app.thuc_the.HoaDon;
+import app.thuc_the.Tau;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class HoaDon_DAO {
-    ArrayList<HoaDon> dshd;
+    String CHON_TAT_SQL = "SELECT * FROM HoaDon";
+    String CHON_THEO_MAHD_SQL = "SELECT * FROM HoaDon WHERE MaHD =?";
+    String CHON_THEO_MAKH_SQL = "SELECT * FROM HoaDon WHERE MaKH =?";
 
-    // Khởi tạo danh sách khách hàng
-    public HoaDon_DAO() {
-        dshd = new ArrayList<HoaDon>();
+    public List<HoaDon> ChonTheoMaHD(String maHD) {
+        List<HoaDon> ds = this.chonSql(CHON_THEO_MAHD_SQL, maHD);
+        return ds;
     }
 
-    // Thêm khách hàng
-    public boolean ThemHoaDon(HoaDon hd) {
-        return dshd.add(hd);
+    public HoaDon ChonTheoMaKH(String maKH) {
+        List<HoaDon> ds = this.chonSql(CHON_THEO_MAKH_SQL, maKH);
+        return ds.size() > 0 ? ds.get(0) : null;
     }
 
-    // Tìm Kiếm khách hàng
-    /*
-    public HoaDon TimKiemHoaDon(String maHD, String tenKH, String sdt) {
-        for (int i = 0 ; i < dshd.size() ; i++) {
-            boolean dungHd = true;
+    public List<HoaDon> chonTatCa() {
+        return this.chonSql(CHON_TAT_SQL);
+    }
 
-            // Kiểm tra điều kiện để chọn hoá đơn cần tìm kiếm
-            dungHd = maHD.equals(dshd.get(i).getMaHoaDon()) &&
-                    tenKH.equals(dshd.get(i).getKhachHang().getTenKH()) &&
-                    sdt.equals(dshd.get(i).getKhachHang().getSoDT());
+    protected List<HoaDon> chonSql(String sql, Object... args) {
+        List<HoaDon> ds = new ArrayList<>();
 
-            if (dungHd) {
-                return dshd.get(i);
+        try {
+            ResultSet boKetQua = null;
+            try {
+                boKetQua = KetNoiCoSoDuLieu.truyVan(sql, args);
+
+                while (boKetQua.next()) {
+                    HoaDon hd = new HoaDon();
+
+                    hd.setMaHDTuCSDL(boKetQua.getString("MaHD"));
+                    hd.setNgayLapHoaDon(boKetQua.getDate("NgayLap").toLocalDate());
+                    hd.setMaNhanVien(boKetQua.getString("MaNV"));
+                    hd.setThanhTien(boKetQua.getDouble("ThanhTien"));
+                    hd.setMaKhachHang(boKetQua.getString("MaKH"));
+                    hd.setSoLuong(boKetQua.getInt("SoLuong"));
+                    hd.setTongTien(boKetQua.getDouble("TongTien"));
+                    hd.setTrangThai(boKetQua.getString("TrangThai"));
+                    hd.setThue(boKetQua.getFloat("Thue"));
+
+                    ds.add(hd);
+                }
+
+            } finally {
+                boKetQua.getStatement().getConnection().close();
             }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            throw new RuntimeException(ex);
         }
 
-        return null;
+        return ds;
     }
-    */
-    // Cập Nhật thông tin cho khách hàng
-    /*
-    public boolean CapNhatThongTinHoaDon(HoaDon hd) {
-        HoaDon hdCanCapNhat = TimKiemHoaDon(hd.getMaHoaDon(), hd.getKhachHang().getTenKH(), hd.getKhachHang().getSoDT());
 
-        return false;
-    }
-    */
-    // Lưu vào hóa đơn vào cơ sở dữ liệu
-    public void luuKHVaoCSDL(HoaDon kh) {
-
-    }
 }

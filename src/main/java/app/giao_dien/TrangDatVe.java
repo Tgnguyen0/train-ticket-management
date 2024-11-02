@@ -22,8 +22,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseListener;
 import java.beans.PropertyChangeListener;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 public class TrangDatVe extends JPanel {
@@ -35,6 +38,7 @@ public class TrangDatVe extends JPanel {
     public JRadioButton nutLuaChonKhuHoi;
     public JDateChooser thanhNhapNgayDi;
     public JDateChooser thanhNhapNgayTroVe;
+    public JLabel tieuDeNgayDatVe;
     public JLabel thanhNhapGioDen;
     public JTextField thanhLoaiDoiTuong;
     public JButton nutGiamSoLuongTreEm;
@@ -288,6 +292,24 @@ public class TrangDatVe extends JPanel {
         thanhNhapNgayTroVe.setFocusable(false);
         donDatVe.add(thanhNhapNgayTroVe);
 
+        /*JLabel tieuDeNgayDatVe = new JLabel("Ngày đặt vé:");
+        tieuDeNgayDatVe.setForeground(xanhBrandeis);
+        tieuDeNgayDatVe.setPreferredSize(new Dimension(chieuDaiNut, chieuRongNut));
+        tieuDeNgayDatVe.setFont(phongTuyChinh.layPhongRobotoMonoReg(2, kichThuocChu));
+        donDatVe.add(tieuDeNgayDatVe);
+
+        tieuDeNgayDatVe = new JLabel(
+                LocalDateTime.now().getYear() + "-" +
+                        LocalDateTime.now().getMonth().getValue() + "-" +
+                            LocalDateTime.now().getDayOfMonth()
+        );
+        tieuDeNgayDatVe.setForeground(xanhBrandeis);
+        tieuDeNgayDatVe.setBackground(trang);
+        tieuDeNgayDatVe.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, kichThuocChu));
+        tieuDeNgayDatVe.setPreferredSize(new Dimension(chieuDaiNut, chieuRongNut + 1));
+        tieuDeNgayDatVe.setFocusable(false);
+        donDatVe.add(tieuDeNgayDatVe);*/
+
         JLabel tieuDeViTriGhe = new JLabel("Vị trí ghế:");
         tieuDeViTriGhe.setForeground(xanhBrandeis);
         tieuDeViTriGhe.setPreferredSize(new Dimension(chieuDaiNut, chieuRongNut));
@@ -314,7 +336,7 @@ public class TrangDatVe extends JPanel {
         thanhNhapGioDen = new JLabel();
         thanhNhapGioDen.setForeground(xanhBrandeis);
         thanhNhapGioDen.setBackground(trang);
-        thanhNhapGioDen.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, kichThuocChu));
+        thanhNhapGioDen.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, kichThuocChu + 2));
         thanhNhapGioDen.setPreferredSize(new Dimension(chieuDaiNut, chieuRongNut + 1));
         donDatVe.add(thanhNhapGioDen);
 
@@ -656,24 +678,24 @@ public class TrangDatVe extends JPanel {
         JPanel trangChuaDSVe = new JPanel();
         trangChuaDSVe.setBackground(trang);
         trangChuaDSVe.setLayout(new BorderLayout());
-        trangChuaDSVe.setPreferredSize(new Dimension(1300, 500));
+        trangChuaDSVe.setPreferredSize(new Dimension(1350, 500));
 
         JLabel tieuDeDS = new JLabel("Danh Sách Vé đang đặt", SwingConstants.LEFT);
-        tieuDeDS.setPreferredSize(new Dimension(1300, 25));
+        tieuDeDS.setPreferredSize(new Dimension(1350, 25));
         tieuDeDS.setBackground(trang);
         tieuDeDS.setForeground(xanhBrandeis);
         tieuDeDS.setFont(phongTuyChinh.layPhongRobotoMonoReg(2, 15));
         trangChuaDSVe.add(tieuDeDS, BorderLayout.NORTH);
 
-        Object[] tieuDeCot = {"STT", "Mã vé", "Tên khách hàng",
+        Object[] tieuDeCot = {"STT", "Mã vé", "Tên khách hàng", "Loại vé",
                               "Loại đối tượng", "Giá Vé", "Điểm đi",
                               "Điểm đến", "Ngày đặt vé","Ngày khởi hành",
                               "Ngày trở về", "Tàu", "Giờ đi",
                               "Loại ghế", "Toa", "Vị trí"};
 
         Object[][] duLieu = {
-                {"1", "V220101001", "Nguyễn Văn Tèo", "Người Lớn", "900.000", "Sài Gòn", "Hà Nội", "2024-10-25", "2024-10-26", "2024-10-26", "VN7823", "05:00PM", "Ghế Giường 2", "VNTOA000046", "1"},
-                {"2", "V220101002", "Văn Toàn", "Người Lớn", "900.000", "Sài Gòn", "Đồng Văn", "2024-10-25", "2024-9-3", "2024-9-3", "VN9029", "12:00AM", "Ghế Giường 6", "VNTOA000027", "17"},
+                {"1", "V220101001", "Nguyễn Văn Tèo", "Khu Hoi", "Người Lớn", "900000", "Sài Gòn", "Hà Nội", "2024-10-25", "2024-10-26", "2024-10-26", "VN7823", "05:00PM", "Ghế Giường 2", "VNTOA000046", "1"},
+                {"2", "V220101002", "Văn Toàn", "Khu Hoi", "Người Lớn", "900000", "Sài Gòn", "Đồng Văn", "2024-10-25", "2024-9-3", "2024-9-3", "VN9029", "12:00AM", "Ghế Giường 6", "VNTOA000027", "17"},
         };
 
         this.moHinhBang = new DefaultTableModel(duLieu, tieuDeCot);
@@ -695,18 +717,19 @@ public class TrangDatVe extends JPanel {
         moHinhCotBang.getColumn(0).setPreferredWidth(40);   // STT
         moHinhCotBang.getColumn(1).setPreferredWidth(100);  // Mã Vé
         moHinhCotBang.getColumn(2).setPreferredWidth(150);  // Tên khách hàng
-        moHinhCotBang.getColumn(3).setPreferredWidth(120);  // Loại Đối tượng
-        moHinhCotBang.getColumn(4).setPreferredWidth(100);  // Giá Vé
-        moHinhCotBang.getColumn(5).setPreferredWidth(100);  // Điểm đi
-        moHinhCotBang.getColumn(6).setPreferredWidth(100);  // Điểm đến
-        moHinhCotBang.getColumn(7).setPreferredWidth(120);  // Ngày Khởi Hành
+        moHinhCotBang.getColumn(3).setPreferredWidth(100);  // Loại Vé
+        moHinhCotBang.getColumn(4).setPreferredWidth(120);  // Loại Đối tượng
+        moHinhCotBang.getColumn(5).setPreferredWidth(100);  // Giá Vé
+        moHinhCotBang.getColumn(6).setPreferredWidth(100);  // Điểm đi
+        moHinhCotBang.getColumn(7).setPreferredWidth(100);  // Điểm đến
         moHinhCotBang.getColumn(8).setPreferredWidth(120);  // Ngày Khởi Hành
-        moHinhCotBang.getColumn(9).setPreferredWidth(120);  // Ngày Trở Về
-        moHinhCotBang.getColumn(10).setPreferredWidth(60);  // Tàu
-        moHinhCotBang.getColumn(11).setPreferredWidth(80);  // Giờ đi
-        moHinhCotBang.getColumn(12).setPreferredWidth(100); // Loại Ghế
-        moHinhCotBang.getColumn(13).setPreferredWidth(100);  // Toa
-        moHinhCotBang.getColumn(14).setPreferredWidth(60);  // Vị trí
+        moHinhCotBang.getColumn(9).setPreferredWidth(120);  // Ngày Khởi Hành
+        moHinhCotBang.getColumn(10).setPreferredWidth(120);  // Ngày Trở Về
+        moHinhCotBang.getColumn(11).setPreferredWidth(60);  // Tàu
+        moHinhCotBang.getColumn(12).setPreferredWidth(80);  // Giờ đi
+        moHinhCotBang.getColumn(13).setPreferredWidth(100); // Loại Ghế
+        moHinhCotBang.getColumn(14).setPreferredWidth(100);  // Toa
+        moHinhCotBang.getColumn(15).setPreferredWidth(60);  // Vị trí
 
         JTableHeader tieuDeBang = bangVeDangDat.getTableHeader();
         tieuDeBang.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, kichThuocChu));
@@ -733,7 +756,7 @@ public class TrangDatVe extends JPanel {
         JScrollPane trangChuaBang = new JScrollPane(bangVeDangDat);
         trangChuaBang.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
         trangChuaBang.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        trangChuaBang.setPreferredSize(new Dimension(1300, 500));
+        trangChuaBang.setPreferredSize(new Dimension(1350, 500));
         trangChuaBang.setForeground(xanhBrandeis);
         trangChuaBang.getViewport().setBackground(trang);
         trangChuaBang.getViewport().setBorder(null);
@@ -742,7 +765,7 @@ public class TrangDatVe extends JPanel {
         trangChuaDSVe.add(trangChuaBang, BorderLayout.CENTER);
 
         JPanel cachDong = new JPanel();
-        cachDong.setPreferredSize(new Dimension(1300, 250));
+        cachDong.setPreferredSize(new Dimension(1350, 250));
         cachDong.setBackground(trang);
         trangChuaDSVe.add(cachDong, BorderLayout.SOUTH);
 

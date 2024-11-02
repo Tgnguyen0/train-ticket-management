@@ -13,12 +13,9 @@ public class Toa_DAO {
     String CHON_TAT_SQL = "SELECT * FROM Toa";
     String CHON_THEO_MA_SQL = "select * from Toa where MaToa =?";
     String CHON_THEO_SO_HIEU_SQL = "select * from Toa where SoHieu =?";
+    public List<Toa> dsToaDaChon;
 
-    public List<Toa> dsToa;
-
-    public void Toa_DAO() {
-        dsToa = new ArrayList<Toa>();
-    }
+    public void Toa_DAO() { dsToaDaChon = new ArrayList<Toa>();}
 
     public Toa ChonTheoMa(String maToa) {
         List<Toa> list = this.ChonSql(CHON_THEO_MA_SQL, maToa);
@@ -45,7 +42,7 @@ public class Toa_DAO {
                     toa.setMaToa(boKetQua.getString("MaToa"));
                     toa.setTenToa(boKetQua.getString("TenToa"));
                     toa.setSoLuongGhe(boKetQua.getInt("SoLuongGhe"));
-                    //toa.setTau();
+                    toa.setSoHieu(boKetQua.getString("SoHieu"));
                     list.add(toa);
                 }
             } finally {

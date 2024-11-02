@@ -1,20 +1,20 @@
 package app.thuc_the;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class LichCapBenGa {
     String maLich;
     String maTau;
-    LocalDate gioCapBen;
-    LocalDate gioKhoiHanh;
+    LocalDateTime gioCapBen;
+    LocalDateTime gioKhoiHanh;
     String moTa;
     String maGa;
 
     public LichCapBenGa() {
     }
 
-    public LichCapBenGa(String maLich, String maTau, LocalDate gioCapBen, LocalDate gioKhoiHanh, String moTa, String maGa) {
+    public LichCapBenGa(String maLich, String maTau, LocalDateTime gioCapBen, LocalDateTime gioKhoiHanh, String moTa, String maGa) {
         this.maLich = maLich;
         this.maTau = maTau;
         this.gioCapBen = gioCapBen;
@@ -31,19 +31,19 @@ public class LichCapBenGa {
         this.maLich = maLich;
     }
 
-    public LocalDate getGioCapBen() {
+    public LocalDateTime getGioCapBen() {
         return gioCapBen;
     }
 
-    public void setGioCapBen(LocalDate gioCapBen) {
+    public void setGioCapBen(LocalDateTime gioCapBen) {
         this.gioCapBen = gioCapBen;
     }
 
-    public LocalDate getGioKhoiHanh() {
+    public LocalDateTime getGioKhoiHanh() {
         return gioKhoiHanh;
     }
 
-    public void setGioKhoiHanh(LocalDate gioKhoiHanh) {
+    public void setGioKhoiHanh(LocalDateTime gioKhoiHanh) {
         this.gioKhoiHanh = gioKhoiHanh;
     }
 
