@@ -26,7 +26,6 @@ public class Ve {
         this.loaiDoiTuong = loaiDoiTuong;
         this.ngayKhoiHanh = ngayKhoiHanh;
         this.ngayDatVe = ngayDatVe;
-        this.daiNgo = daiNgo;
         this.gaKhoiHanh = gaKhoiHanh;
         this.gaKetThuc = gaKetThuc;
         this.giaVe = giaVe;

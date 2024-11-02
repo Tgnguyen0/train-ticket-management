@@ -1,157 +1,152 @@
 package app.dieu_khien;
+
+import app.dao.HoaDon_DAO;
 import app.giao_dien.*;
+import app.phan_tu_tuy_chinh.TaoHoaDonFilePDF;
+import app.thuc_the.HoaDon;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.*;
-    public class HanhDong_TrangHoaDon implements ActionListener, MouseListener, ItemListener {
+import java.util.ArrayList;
+import java.util.List;
+
+public class HanhDong_TrangHoaDon implements ActionListener, MouseListener, ItemListener {
     TrangHoaDon trangHoaDon ;
+    HoaDon_DAO hoaDon_dao = new HoaDon_DAO();
 
-        public HanhDong_TrangHoaDon(TrangHoaDon trangHoaDon) {
-            this.trangHoaDon = trangHoaDon;
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            Object source = e.getSource();
-
-            /*if (source == this.trangHoaDon.buttonChiTiet) {
-                JFrame chiTietlHoaDon = new JFrame();
-                chiTietlHoaDon.setSize(600, 500);
-                chiTietlHoaDon.getContentPane().setBackground(new Color(0, 112, 255)); // Đặt màu nền xanh dương
-
-                // Tạo tiêu đề
-                JLabel detailTitle = new JLabel("Chi tiết hóa đơn", SwingConstants.CENTER);
-                detailTitle.setFont(new Font("Serif", Font.BOLD, 28)); // Font lớn hơn
-                detailTitle.setForeground(Color.WHITE); // Màu chữ trắng
-                detailTitle.setBounds(150, 10, 300, 30);
-
-                // Các thành phần khác như mã hóa đơn, ngày mua, tên khách hàng, trạng thái
-                JLabel lblMaHoaDon = new JLabel("Mã hóa đơn:");
-                lblMaHoaDon.setForeground(Color.WHITE); // Màu chữ trắng
-                lblMaHoaDon.setBounds(50, 60, 100, 25);
-                JTextField txtMaHoaDon = new JTextField();
-                txtMaHoaDon.setBounds(150, 60, 150, 25);
-
-                JLabel lblNgayMua = new JLabel("Ngày mua:");
-                lblNgayMua.setForeground(Color.WHITE); // Màu chữ trắng
-                lblNgayMua.setBounds(350, 60, 100, 25);
-                JTextField txtNgayMua = new JTextField();
-                txtNgayMua.setBounds(450, 60, 100, 25);
-
-                JLabel lblTenKhachHang = new JLabel("Tên khách hàng:");
-                lblTenKhachHang.setForeground(Color.WHITE); // Màu chữ trắng
-                lblTenKhachHang.setBounds(50, 100, 100, 25);
-                JTextField txtTenKhachHang = new JTextField();
-                txtTenKhachHang.setBounds(150, 100, 150, 25);
-
-                JLabel lblTrangThai = new JLabel("Trạng thái:");
-                lblTrangThai.setForeground(Color.WHITE); // Màu chữ trắng
-                lblTrangThai.setBounds(350, 100, 100, 25);
-                JTextField txtTrangThai = new JTextField();
-                txtTrangThai.setBounds(450, 100, 100, 25);
-
-                // Bảng hiển thị thông tin hóa đơn
-                String[] columnNames = {"STT", "Loại ghế", "Loại vé", "Điểm đi", "Điểm đến", "Đơn giá", "Số lượng", "Thành tiền"};
-                Object[][] data = {
-                        {"1", "Giường toa 4", "Người lớn", "Gò Vấp", "Hà Nội", "480,000", "2", "960,000"},
-                        {"2", "Giường toa 4", "Trẻ em", "Gò Vấp", "Hà Nội", "430,000", "2", "860,000"}
-                };
-
-                DefaultTableModel model= new DefaultTableModel(data, columnNames){
-                    @Override
-                    public boolean isCellEditable(int row, int column) {
-                        return false;
-                    }
-                };
-                JTable detailTable = new JTable(model);
-                detailTable.setForeground(Color.black); // Màu chữ trắng
-                JScrollPane detailscrollPane = new JScrollPane(detailTable);
-                detailscrollPane.setBounds(20, 150, 550, 100);
-                detailTable.setFillsViewportHeight(true); // Đảm bảo bảng lấp đầy khu vực hiển thị
-
-                chiTietlHoaDon.add(detailscrollPane);
-
-                // Thông tin tổng cộng, khuyến mãi, thuế, tổng tiền
-                JLabel lblTongCong = new JLabel("Tổng cộng:");
-                lblTongCong.setForeground(Color.WHITE);
-                lblTongCong.setBounds(50, 270, 150, 25);
-                JTextField txtTongCong = new JTextField();
-                txtTongCong.setBounds(300, 270, 150, 25);
-
-                JLabel lblKhuyenMai = new JLabel("Khuyến mãi (giảm giá) %:");
-                lblKhuyenMai.setForeground(Color.WHITE);
-                lblKhuyenMai.setBounds(50, 310, 150, 25);
-                JTextField txtKhuyenMai = new JTextField();
-                txtKhuyenMai.setBounds(300, 310, 150, 25);
-
-                JLabel lblThue = new JLabel("Thuế (VAT) %:");
-                lblThue.setForeground(Color.WHITE);
-                lblThue.setBounds(50, 350, 150, 25);
-                JTextField txtThue = new JTextField();
-                txtThue.setBounds(300, 350, 150, 25);
-
-                JLabel lblTongTien = new JLabel("Tổng tiền (VND):");
-                lblTongTien.setForeground(Color.WHITE);
-                lblTongTien.setFont(new Font("Serif", Font.BOLD, 20));
-                lblTongTien.setBounds(50, 400, 150, 25);
-                JTextField txtTongTien = new JTextField();
-                txtTongTien.setBounds(300, 400, 150, 25);
-
-                // Thêm tất cả các thành phần vào frame
-                chiTietlHoaDon.add(detailTitle);
-                chiTietlHoaDon.add(lblMaHoaDon);
-                chiTietlHoaDon.add(txtMaHoaDon);
-                chiTietlHoaDon.add(lblNgayMua);
-                chiTietlHoaDon.add(txtNgayMua);
-                chiTietlHoaDon.add(lblTenKhachHang);
-                chiTietlHoaDon.add(txtTenKhachHang);
-                chiTietlHoaDon.add(lblTrangThai);
-                chiTietlHoaDon.add(txtTrangThai);
-                chiTietlHoaDon.add(lblTongCong);
-                chiTietlHoaDon.add(txtTongCong);
-                chiTietlHoaDon.add(lblKhuyenMai);
-                chiTietlHoaDon.add(txtKhuyenMai);
-                chiTietlHoaDon.add(lblThue);
-                chiTietlHoaDon.add(txtThue);
-                chiTietlHoaDon.add(lblTongTien);
-                chiTietlHoaDon.add(txtTongTien);
-
-                // Cài đặt layout và hiển thị frame
-                chiTietlHoaDon.setLayout(null);
-                chiTietlHoaDon.setLocationRelativeTo(null); // Đặt JFrame ở giữa màn hình
-                chiTietlHoaDon.setVisible(true);
-            }*/
-        }
-
-        @Override
-        public void itemStateChanged(ItemEvent e) {
-
-        }
-
-        @Override
-        public void mouseClicked(MouseEvent e) {
-
-        }
-
-        @Override
-        public void mousePressed(MouseEvent e) {
-
-        }
-
-        @Override
-        public void mouseReleased(MouseEvent e) {
-
-        }
-
-        @Override
-        public void mouseEntered(MouseEvent e) {
-
-        }
-
-        @Override
-        public void mouseExited(MouseEvent e) {
-
-        }
+    public HanhDong_TrangHoaDon(TrangHoaDon trangHoaDon) {
+        this.trangHoaDon = trangHoaDon;
     }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        Object source = e.getSource();
+
+        if (source == this.trangHoaDon.buttonChiTiet) {
+            int selectedRow = trangHoaDon.tableDanhSach.getSelectedRow();
+
+            // Kiểm tra nếu có hàng nào được chọn
+            if (selectedRow != -1) {
+                // Lấy mã hóa đơn và tên khách hàng từ hàng được chọn
+                String maHD = (String) trangHoaDon.tableDanhSach.getValueAt(selectedRow, 1); // Giả sử mã hóa đơn ở cột 1
+                String tenKH = (String) trangHoaDon.tableDanhSach.getValueAt(selectedRow, 2); // Giả sử tên khách hàng ở cột 2
+
+                // Gọi phương thức TimKiemHoaDon với mã hóa đơn và tên khách hàng
+                List<HoaDon> ketQua = hoaDon_dao.ChonTheoMaHD(maHD);
+
+                // Kiểm tra nếu tìm thấy kết quả
+                if (!ketQua.isEmpty()) {
+                    // Lấy hóa đơn đầu tiên từ kết quả tìm kiếm (giả sử kết quả duy nhất)
+                    HoaDon hoaDon = ketQua.get(0);
+
+                    // Mở trang chi tiết hóa đơn với dữ liệu chính xác
+                    TrangXemThuHoaDon xemThuHoaDon = new TrangXemThuHoaDon(hoaDon);
+                    xemThuHoaDon.setVisible(true);
+                } else {
+                    JOptionPane.showMessageDialog(trangHoaDon, "Hóa đơn không tồn tại hoặc đã bị xóa!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(trangHoaDon, "Bạn chưa chọn hóa đơn!");
+            }
+    }else if (source == this.trangHoaDon.buttonTimKiem) {
+            String maHD = this.trangHoaDon.tfTimKiem.getText().trim();
+            String maKH = this.trangHoaDon.tfTimKiem.getText().trim();
+            // Kiểm tra xem có nhập mã hóa đơn hoặc mã khách hàng không
+            if (maHD.isEmpty() && maKH.isEmpty()) {
+                UIManager.put("OptionPane.messageFont", new Font("Arial", Font.BOLD, 16)); // Đặt font chữ lớn hơn
+
+                JOptionPane.showMessageDialog(this.trangHoaDon, "Vui lòng nhập Mã Hóa Đơn hoặc Mã Khách Hàng để tìm kiếm", "Thông báo", JOptionPane.WARNING_MESSAGE);
+                return; // Kết thúc nếu không có dữ liệu
+            }
+
+            List<HoaDon> ketQuaTimKiem = hoaDon_dao.ChonTheoMaHD(maHD);
+
+            // Kiểm tra xem có tìm thấy hóa đơn nào không
+            if (ketQuaTimKiem.isEmpty()) {
+                JOptionPane.showMessageDialog(this.trangHoaDon, "Mã Hóa Đơn không tồn tại, Vui lòng nhập Lại", "Thông báo", JOptionPane.ERROR_MESSAGE);
+                trangHoaDon.tfTimKiem.setText("");
+            } else {
+                // Cập nhật JTable với kết quả tìm kiếm
+                DefaultTableModel model = (DefaultTableModel) this.trangHoaDon.tableDanhSach.getModel();
+                model.setRowCount(0); // Xóa dữ liệu cũ
+
+                int stt = 1;
+                for (HoaDon o : ketQuaTimKiem) {
+                    model.addRow(new Object[]{
+                            stt++,
+                            o.getMaHoaDon(),
+                            o.getMaKhachHang(),
+                            o.getThanhTien(),
+                            o.getNgayLapHoaDon(),
+                            o.getSoLuong(),
+                            o.getTongTien(),
+                            o.getTrangThai(),
+                            o.getMaNhanVien()
+                    });
+                }
+            }
+        } else if (source == trangHoaDon.buttonLamMoi) {
+            trangHoaDon.lamMoiDuLieu();
+            UIManager.put("OptionPane.messageFont", new Font("Arial", Font.BOLD, 16)); // Đặt font chữ lớn hơn
+            JOptionPane.showMessageDialog(this.trangHoaDon, "Làm mới dữ liệu thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+        } else if (source == trangHoaDon.buttonInHoaDon) {
+            int selectedRow = trangHoaDon.tableDanhSach.getSelectedRow();
+
+            // Nếu không click chọn hóa đơn
+            if (selectedRow == -1) {
+                JOptionPane.showMessageDialog(trangHoaDon, "Vui lòng chọn hóa đơn để in.", "Thông báo", JOptionPane.WARNING_MESSAGE);
+            } else {
+                // Nếu có hàng được chọn, hiển thị thông báo xác nhận
+                int xacNhan = JOptionPane.showConfirmDialog(trangHoaDon, "Bạn có chắc chắn muốn in hóa đơn này không?", "Xác nhận in hóa đơn", JOptionPane.YES_NO_OPTION);
+                //Trường hợp có
+                if (xacNhan == JOptionPane.YES_OPTION) {
+                    printSelectedInvoice(selectedRow);
+                    JOptionPane.showMessageDialog(trangHoaDon, "In hóa đơn thành công! File hóa đơn đã được lưu.", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                    trangHoaDon.lamMoiDuLieu();
+                } else {
+                    JOptionPane.showMessageDialog(trangHoaDon, "In hóa đơn thất bại!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                }
+            }
+        }
+
+
+    }
+
+    public void printSelectedInvoice(int selectedRow) {
+        List<HoaDon> danhSachHoaDon = hoaDon_dao.chonTatCa();
+            HoaDon hoaDon = danhSachHoaDon.get(selectedRow);
+            TaoHoaDonFilePDF.createInvoicePdf(hoaDon); // Gọi phương thức tạo PDF
+    }
+
+    @Override
+    public void itemStateChanged(ItemEvent e) {
+
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        trangHoaDon.layDuLieuVaoTFNhanVien();
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+
+    }
+}

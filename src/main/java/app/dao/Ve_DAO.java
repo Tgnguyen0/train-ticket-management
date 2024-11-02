@@ -50,16 +50,24 @@ public class Ve_DAO {
             )
     );
 
-    List<Ve> danhSachVe; // Tránh thông tin bị trùng
+    List<Ve> dsVeDat; // Tránh thông tin bị trùng
 
     // Khởi tạo danh sách Vé
     public Ve_DAO() {
-        danhSachVe = new ArrayList<Ve>();
+        this.dsVeDat = new ArrayList<Ve>();
     }
 
     // Thêm khách hàng
     public boolean ThemVe(Ve ve) {
-        return danhSachVe.add(ve);
+        return dsVeDat.add(ve);
+    }
+
+    public boolean themDSVe(List<Ve> dsVe) {
+        return dsVeDat.addAll(dsVe);
+    }
+
+    public List<Ve> layDSVeDat() {
+        return this.dsVeDat;
     }
 
     // Tìm Kiếm khách hàng

@@ -183,6 +183,7 @@ public class TrangCacToa extends JPanel {
         NutAnh nutTau = new NutAnh(
                 "assets/tau-nho.png",         // Đường dẫn ảnh không được chọn
                 "assets/tau-nho.png",                        // Đường dẫn ảnh khi được chọn
+                "assets/toa-tau-het-ve.png",
                 chieuDaiNut,                                 // Chiều dài của nút
                 chieuRongNut,                                // Chiều rộng của nút
                 viTriChu,                                    // Vị trí của chữ trên nút
@@ -209,9 +210,15 @@ public class TrangCacToa extends JPanel {
     public NutAnh taoNutToa(int position) {
         /* Tạo nút ảnh với việc truyền đừờng dẫn ảnh chính, ảnh đang chọn,
         chiều dài ảnh, chiều rộng ảnh,chiều dài của chữ và chữ và vị trí x của chữ*/
-        NutAnh nutToa = new NutAnh("assets/toa-tau-con-ve.png",
-                                  "assets/toa-dang-chon.png", chieuDaiNut,
-                                                   chieuRongNut, viTriChu, String.valueOf(position), 10);
+        NutAnh nutToa = new NutAnh(
+                "assets/toa-tau-con-ve.png",
+                "assets/toa-dang-chon.png",
+                "assets/toa-tau-het-ve.png",
+                chieuDaiNut,
+                chieuRongNut,
+                viTriChu,
+                String.valueOf(position), 10
+        );
 
         nutToa.setPreferredSize(new Dimension(chieuDaiNut, chieuRongNut + 100));
         nutToa.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, charSize));

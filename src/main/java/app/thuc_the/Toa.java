@@ -7,18 +7,17 @@ public class Toa {
     private String maToa;
     private String tenToa;
     private int soLuongGhe;
-    private String maTau;
-
+    private String soHieu;
 
     public Toa() {
     }
 
     public String getMaTau() {
-        return maTau;
+        return soHieu;
     }
 
-    public void setMaTau(String maTau) {
-        this.maTau = maTau;
+    public void setMaTau(String soHieu) {
+        this.soHieu = soHieu;
     }
 
     public String getMaToa() {
@@ -45,6 +44,11 @@ public class Toa {
         this.soLuongGhe = soLuongGhe;
     }
 
+    public void setSoHieu(String soHieu) {
+        this.soHieu = soHieu;
+    }
+
+    public String getSoHieu() { return this.soHieu; }
 
     @Override
     public boolean equals(Object o) {
