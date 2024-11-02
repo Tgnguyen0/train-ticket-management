@@ -1,5 +1,7 @@
 package app.thuc_the;
 
+import app.dao.KhachHang_DAO;
+
 import java.util.List;
 
 public class DanhSachKhachHang {
@@ -13,6 +15,4 @@ public class DanhSachKhachHang {
         }
         return dskh;
     }
-
-
 }

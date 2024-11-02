@@ -3,35 +3,37 @@ package app.thuc_the;
 import java.util.Objects;
 
 public class Ghe {
-    private int maGhe;
-    private Toa toa;
+    private String maGhe;
+    private String maToa;
     private LOAI_GHE loaiGhe;
     private TRANG_THAI_GHE trangThai;
+    private String soGhe;
 
     public Ghe() {
     }
 
-    public Ghe(int maGhe, Toa toa_maToa, LOAI_GHE loaiGhe, TRANG_THAI_GHE trangThai) {
+    public Ghe(String maGhe, String maToa, LOAI_GHE loaiGhe, TRANG_THAI_GHE trangThai, String soGhe) {
         this.maGhe = maGhe;
-        this.toa = toa_maToa;
+        this.maToa = maToa;
         this.loaiGhe = loaiGhe;
         this.trangThai = trangThai;
+        this.soGhe = soGhe;
     }
 
-    public int getMaGhe() {
+    public String getMaGhe() {
         return maGhe;
     }
 
-    public void setMaGhe(int maGhe) {
+    public void setMaGhe(String maGhe) {
         this.maGhe = maGhe;
     }
 
-    public Toa getToa_maToa() {
-        return toa;
+    public String getMaToa() {
+        return this.maToa;
     }
 
-    public void setToa_maToa(Toa toa_maToa) {
-        this.toa = toa_maToa;
+    public void setMaToa(String maToa) {
+        this.maToa = maToa;
     }
 
     public LOAI_GHE getLoaiGhe() {
@@ -49,6 +51,10 @@ public class Ghe {
     public void setTrangThai(TRANG_THAI_GHE trangThai) {
         this.trangThai = trangThai;
     }
+
+    public String getSoGhe() { return this.soGhe; }
+
+    public void setSoGhe(String soGhe) { this.soGhe = soGhe; }
 
     @Override
     public boolean equals(Object o) {

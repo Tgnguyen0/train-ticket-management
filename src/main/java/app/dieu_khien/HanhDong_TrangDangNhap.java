@@ -6,8 +6,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import app.dao.NhanVien_DAO;
 import app.giao_dien.TrangDinhHuong;
 import app.giao_dien.TrangDangNhap;
+
+import javax.swing.*;
 
 public class HanhDong_TrangDangNhap implements ActionListener, MouseListener {
     TrangDangNhap trangDangNhap;
@@ -24,14 +27,12 @@ public class HanhDong_TrangDangNhap implements ActionListener, MouseListener {
         if (source == this.trangDangNhap.nutDangNhap) {
             String username = this.trangDangNhap.truongTen.getText();
             String password = new String(this.trangDangNhap.truongMatKhau.getPassword());
-
-            if (username.equals("Admin") && password.equals("123")) {
-                this.trangDangNhap.matKhauDung = true;
+            if(NhanVien_DAO.login(username, password)) {
                 this.trangDangNhap.setVisible(false);
-                TrangDinhHuong page = new TrangDinhHuong();
-                page.setVisible(true);
+                TrangDinhHuong trangDinhHuong = new TrangDinhHuong();
+                trangDinhHuong.setVisible(true);
             } else {
-                this.trangDangNhap.matKhauDung = false;
+                JOptionPane.showMessageDialog(this.trangDangNhap, "Sai tên đăng nhập hoặc mật khẩu", "Lỗi", JOptionPane.ERROR_MESSAGE);
             }
         }
 

@@ -1,14 +1,12 @@
 package app.giao_dien;
 
-import app.Dao.HoaDon_DAO;
-import app.Dao.NhanVien_DAO;
+import app.dao.HoaDon_DAO;
+import app.dao.NhanVien_DAO;
 import app.dieu_khien.HanhDong_TrangHoaDon;
 import app.thuc_the.HoaDon;
-import app.thuc_the.NhanVien;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -132,7 +130,7 @@ public class TrangHoaDon extends JPanel {
         LbTimKiem.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         LbTimKiem.setText("Tìm kiếm hóa đơn:");
 
-        lbtieuchi.setText("theo mã hóa đơn hoặc tên khách hàng");
+        lbtieuchi.setText("theo Mã hóa đơn hoặc Mã khách hàng");
 
         javax.swing.GroupLayout trangChua_LbTimKiemLayout = new javax.swing.GroupLayout(trangChua_LbTimKiem);
         trangChua_LbTimKiem.setLayout(trangChua_LbTimKiemLayout);
@@ -214,13 +212,13 @@ public class TrangHoaDon extends JPanel {
         );
 
         thongTin1.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
-        thongTin1.setText("+ Thanh Toán: Hỗ trợ thanh toán hóa đơn cho khách hàng.");
+        thongTin1.setText("+ LÀM MỚI: Hỗ trợ làm mới lại dữ liệu sau khi tìm kiếm thành công.");
 
         thongTin2.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
-        thongTin2.setText("+ Chi Tiết: Hỗ trợ xem thêm các thông tin chi tiết của Hóa Đơn.");
+        thongTin2.setText("+ CHI TIẾT: Hỗ trợ xem thêm các thông tin chi tiết của Hóa Đơn.");
 
         thongTin3.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
-        thongTin3.setText("+ In Hóa Đơn: Hỗ trợ In ra hóa đơn vật lí gửi khách hàng.");
+        thongTin3.setText("+ IN HÓA ĐƠN: Hỗ trợ In ra hóa đơn vật lí gửi khách hàng.");
 
         javax.swing.GroupLayout trangChua_chiTietThongTinLayout = new javax.swing.GroupLayout(trangChua_chiTietThongTin);
         trangChua_chiTietThongTin.setLayout(trangChua_chiTietThongTinLayout);
@@ -386,14 +384,12 @@ public class TrangHoaDon extends JPanel {
                                 .addContainerGap(22, Short.MAX_VALUE))
         );
 
+        // Thông tin nhân viên  phụ trách
         lbMaNhanVien.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         lbMaNhanVien.setText("Mã Nhân Viên:");
 
-
-
         lbNhanVienPhuTrach.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         lbNhanVienPhuTrach.setText("Nhân viên phụ trách:");
-
 
         javax.swing.GroupLayout trangChua_ThongTinNhanVienLayout = new javax.swing.GroupLayout(trangChua_ThongTinNhanVien);
         trangChua_ThongTinNhanVien.setLayout(trangChua_ThongTinNhanVienLayout);
@@ -440,11 +436,11 @@ public class TrangHoaDon extends JPanel {
 
         luuY3.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
         luuY3.setForeground(new java.awt.Color(255, 255, 255));
-        luuY3.setText("3. Thanh toán sau khi đã kiểm tra hóa đơn.");
+        luuY3.setText("3. Hõ trợ khách hàng in lại hóa đơn nếu lỡ mất");
 
         luuY4.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
         luuY4.setForeground(new java.awt.Color(255, 255, 255));
-        luuY4.setText("4. Sau khi thanh toán Thành Công sẽ được chuyển vào danh sách đã thanh toán.");
+        luuY4.setText("4. Hỗ trợ khách hàng tìm kiếm hóa đơn theo mã hóa đơn hoặc mã khách hàng.");
 
         javax.swing.GroupLayout trangChua_LuuYLayout = new javax.swing.GroupLayout(trangChua_LuuY);
         trangChua_LuuY.setLayout(trangChua_LuuYLayout);
@@ -452,7 +448,7 @@ public class TrangHoaDon extends JPanel {
                 trangChua_LuuYLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, trangChua_LuuYLayout.createSequentialGroup()
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(TieuDeLuuY, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(TieuDeLuuY, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(128, 128, 128))
                         .addGroup(trangChua_LuuYLayout.createSequentialGroup()
                                 .addContainerGap()
