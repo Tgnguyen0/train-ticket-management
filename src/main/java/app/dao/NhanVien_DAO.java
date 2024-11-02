@@ -16,8 +16,8 @@ import java.util.Locale;
 
 public class NhanVien_DAO {
     String CHON_TAT_SQL = "SELECT * FROM NhaGa";
-    String CHON_THEO_MA_SQL = "select * from NhanVien where MaGa =?";
-
+    String CHON_THEO_MA_SQL = "select * from NhanVien where MaNV =?";
+    String query = "SELECT * FROM NhanVien WHERE maNV = ?";
     public List<NhanVien> dsnv;
 
     public NhanVien_DAO() {

@@ -319,7 +319,7 @@ public class TrangChuaThongKeDoanhThuNhaGa extends JPanel {
                 trangChuaDoanhThuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(trangChuaDoanhThuLayout.createSequentialGroup()
                                 .addGap(18, 18, 18)
-                                .addComponent(scrollPaneTrangChuaDoanhThuThang, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(scrollPaneTrangChuaDoanhThuThang, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }

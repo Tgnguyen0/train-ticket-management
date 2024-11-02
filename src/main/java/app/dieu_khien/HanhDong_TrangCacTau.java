@@ -8,7 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class HanhDong_TrangCacTau implements ActionListener, MouseListener, WindowListener {
+public class HanhDong_TrangCacTau implements ActionListener, MouseListener {
     TrangCacTau trangSoDoChung;
 
     public HanhDong_TrangCacTau(TrangCacTau trangSoDoChung) {
@@ -36,6 +36,7 @@ public class HanhDong_TrangCacTau implements ActionListener, MouseListener, Wind
         }
 
         if (e.getSource() == this.trangSoDoChung.nutTau1) {
+            System.out.println("nut Tau 1");
             this.trangSoDoChung.soHieuTauChon = this.trangSoDoChung.nutTau1.getActionCommand();
         }
 
@@ -43,11 +44,11 @@ public class HanhDong_TrangCacTau implements ActionListener, MouseListener, Wind
             this.trangSoDoChung.soHieuTauChon = this.trangSoDoChung.nutTau2.getActionCommand();
         }
 
-        if (e.getSource() == this.trangSoDoChung.nutTau1) {
+        if (e.getSource() == this.trangSoDoChung.nutTau3) {
             this.trangSoDoChung.soHieuTauChon = this.trangSoDoChung.nutTau3.getActionCommand();
         }
 
-        if (e.getSource() == this.trangSoDoChung.nutTau2) {
+        if (e.getSource() == this.trangSoDoChung.nutTau4) {
             this.trangSoDoChung.soHieuTauChon = this.trangSoDoChung.nutTau4.getActionCommand();
         }
     }
@@ -59,33 +60,93 @@ public class HanhDong_TrangCacTau implements ActionListener, MouseListener, Wind
         if (source == this.trangSoDoChung.nutTau1) {
             // Đặt ảnh cho nút tau1 và đặt lại ảnh gốc cho các nút còn lại
             this.trangSoDoChung.nutTau1.datAnhDangChon();
-            this.trangSoDoChung.nutTau2.datAnhMacDinh();
-            this.trangSoDoChung.nutTau3.datAnhMacDinh();
-            this.trangSoDoChung.nutTau4.datAnhMacDinh();
+
+            if (!this.trangSoDoChung.nutTau2.isEnabled()) {
+                this.trangSoDoChung.nutTau2.datAnhVoHieu();
+            } else {
+                this.trangSoDoChung.nutTau2.datAnhMacDinh();
+            }
+
+            if (!this.trangSoDoChung.nutTau3.isEnabled()) {
+                this.trangSoDoChung.nutTau3.datAnhVoHieu();
+            } else {
+                this.trangSoDoChung.nutTau3.datAnhMacDinh();
+            }
+
+            if (!this.trangSoDoChung.nutTau4.isEnabled()) {
+                this.trangSoDoChung.nutTau4.datAnhVoHieu();
+            } else {
+                this.trangSoDoChung.nutTau4.datAnhMacDinh();
+            }
         }
 
         if (source == this.trangSoDoChung.nutTau2) {
             // Đặt ảnh cho nút tau2 và đặt lại ảnh gốc cho các nút còn lại
             this.trangSoDoChung.nutTau2.datAnhDangChon();
-            this.trangSoDoChung.nutTau1.datAnhMacDinh();
-            this.trangSoDoChung.nutTau3.datAnhMacDinh();
-            this.trangSoDoChung.nutTau4.datAnhMacDinh();
+
+            if (!this.trangSoDoChung.nutTau1.isEnabled()) {
+                this.trangSoDoChung.nutTau1.datAnhVoHieu();
+            } else {
+                this.trangSoDoChung.nutTau1.datAnhMacDinh();
+            }
+
+            if (!this.trangSoDoChung.nutTau3.isEnabled()) {
+                this.trangSoDoChung.nutTau3.datAnhVoHieu();
+            } else {
+                this.trangSoDoChung.nutTau3.datAnhMacDinh();
+            }
+
+            if (!this.trangSoDoChung.nutTau4.isEnabled()) {
+                this.trangSoDoChung.nutTau4.datAnhVoHieu();
+            } else {
+                this.trangSoDoChung.nutTau4.datAnhMacDinh();
+            }
         }
 
         if (source == this.trangSoDoChung.nutTau3) {
             // Đặt ảnh cho nút tau3 và đặt lại ảnh gốc cho các nút còn lại
             this.trangSoDoChung.nutTau3.datAnhDangChon();
-            this.trangSoDoChung.nutTau1.datAnhMacDinh();
-            this.trangSoDoChung.nutTau2.datAnhMacDinh();
-            this.trangSoDoChung.nutTau4.datAnhMacDinh();
+
+            if (!this.trangSoDoChung.nutTau1.isEnabled()) {
+                this.trangSoDoChung.nutTau1.datAnhVoHieu();
+            } else {
+                this.trangSoDoChung.nutTau1.datAnhMacDinh();
+            }
+
+            if (!this.trangSoDoChung.nutTau2.isEnabled()) {
+                this.trangSoDoChung.nutTau2.datAnhVoHieu();
+            } else {
+                this.trangSoDoChung.nutTau2.datAnhMacDinh();
+            }
+
+            if (!this.trangSoDoChung.nutTau4.isEnabled()) {
+                this.trangSoDoChung.nutTau4.datAnhVoHieu();
+            } else {
+                this.trangSoDoChung.nutTau4.datAnhMacDinh();
+            }
         }
 
         if (source == this.trangSoDoChung.nutTau4) {
             // Đặt ảnh cho nút tau4 và đặt lại ảnh gốc cho các nút còn lại
             this.trangSoDoChung.nutTau4.datAnhDangChon();
-            this.trangSoDoChung.nutTau1.datAnhMacDinh();
-            this.trangSoDoChung.nutTau2.datAnhMacDinh();
-            this.trangSoDoChung.nutTau3.datAnhMacDinh();
+
+            if (!this.trangSoDoChung.nutTau1.isEnabled()) {
+                this.trangSoDoChung.nutTau1.datAnhVoHieu();
+            } else {
+                this.trangSoDoChung.nutTau1.datAnhMacDinh();
+            }
+
+            if (!this.trangSoDoChung.nutTau2.isEnabled()) {
+                this.trangSoDoChung.nutTau2.datAnhVoHieu();
+            } else {
+                this.trangSoDoChung.nutTau2.datAnhMacDinh();
+            }
+
+            if (!this.trangSoDoChung.nutTau3.isEnabled()) {
+                this.trangSoDoChung.nutTau3.datAnhVoHieu();
+            } else {
+                this.trangSoDoChung.nutTau3.datAnhMacDinh();
+            }
         }
     }
 
@@ -107,43 +168,5 @@ public class HanhDong_TrangCacTau implements ActionListener, MouseListener, Wind
     @Override
     public void mouseExited(MouseEvent e) {
         // Không sử dụng
-    }
-
-    @Override
-    public void windowOpened(WindowEvent e) {
-
-    }
-
-    @Override
-    public void windowClosing(WindowEvent e) {
-
-    }
-
-    @Override
-    public void windowClosed(WindowEvent e) {
-        if (e.getSource() instanceof TrangCacTau) {
-            TrangCacTau trangCacTau = (TrangCacTau) e.getSource();
-            trangCacTau.datDaDongChua(true); // Phương thức này sẽ đặt trạng thái "đã đóng"
-        }
-    }
-
-    @Override
-    public void windowIconified(WindowEvent e) {
-
-    }
-
-    @Override
-    public void windowDeiconified(WindowEvent e) {
-
-    }
-
-    @Override
-    public void windowActivated(WindowEvent e) {
-
-    }
-
-    @Override
-    public void windowDeactivated(WindowEvent e) {
-
     }
 }

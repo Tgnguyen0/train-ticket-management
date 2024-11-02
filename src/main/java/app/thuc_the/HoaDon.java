@@ -2,6 +2,7 @@ package app.thuc_the;
 
 import java.time.LocalDate;
 import java.util.Objects;
+import java.util.Random;
 
 public class HoaDon {
     String maHoaDon;
@@ -28,6 +29,19 @@ public class HoaDon {
         this.thue = thue;
     }
 
+    public HoaDon(LocalDate ngayLapHoaDon, double thanhTien, String maKhachHang, String maNhanVien, int soLuong, double tongTien, String trangThai, DaiNgo daiNgo, float thue) {
+        this.maHoaDon = setMaHoaDon();
+        this.ngayLapHoaDon = ngayLapHoaDon;
+        this.thanhTien = thanhTien;
+        this.maKhachHang = maKhachHang;
+        this.maNhanVien = maNhanVien;
+        this.soLuong = soLuong;
+        this.tongTien = tongTien;
+        this.trangThai = trangThai;
+        this.daiNgo = daiNgo;
+        this.thue = thue;
+    }
+
     public HoaDon() {
     }
 
@@ -35,13 +49,19 @@ public class HoaDon {
         return maHoaDon;
     }
 
-    public String setMaHoaDon(int soNgauNhien) {
+    public void setMaHDTuCSDL(String maHoaDon) {
+        this.maHoaDon = maHoaDon;
+    }
+
+    public String setMaHoaDon() {
         String maHoaDon;
         String ngayTrongThang = String.valueOf(LocalDate.now().getDayOfMonth());
         String thang = String.valueOf(LocalDate.now().getMonthValue());
         String nam = String.valueOf(LocalDate.now().getYear());
 
         nam = nam.substring(nam.length() - 2);
+
+        int soNgauNhien = new Random().nextInt(900) + 100;
 
         maHoaDon = nam + thang + ngayTrongThang + String.valueOf(soNgauNhien);
 
@@ -62,10 +82,6 @@ public class HoaDon {
 
     public void setThanhTien(double thanhTien) {
         this.thanhTien = thanhTien;
-    }
-
-    public void setMaHoaDon(String maHoaDon) {
-        this.maHoaDon = maHoaDon;
     }
 
     public String getMaKhachHang() {

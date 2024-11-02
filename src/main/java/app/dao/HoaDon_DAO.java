@@ -1,5 +1,10 @@
 package app.dao;
 
+import app.ket_noi_co_so_du_lieu.KetNoiCoSoDuLieu;
+import app.thuc_the.HoaDon;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import app.giao_dien.TrangChuaThongKeDoanhThuNhaGa;
 import app.ket_noi_co_so_du_lieu.KetNoiCoSoDuLieu;
 import app.thuc_the.HoaDon;
@@ -15,48 +20,64 @@ import java.util.List;
 import java.util.Map;
 
 public class HoaDon_DAO {
+    String CHON_TAT_SQL = "SELECT * FROM HoaDon";
+    String CHON_THEO_MAHD_SQL = "SELECT * FROM HoaDon WHERE MaHD =?";
+    String CHON_THEO_MAKH_SQL = "SELECT * FROM HoaDon WHERE MaKH =?";
+
     ArrayList<HoaDon> dshd;
-    Logger logger  = LoggerFactory.getLogger(TrangChuaThongKeDoanhThuNhaGa.class);
-    // Khởi tạo danh sách khách hàng
+    Logger logger = LoggerFactory.getLogger(TrangChuaThongKeDoanhThuNhaGa.class);
+
     public HoaDon_DAO() {
         dshd = new ArrayList<HoaDon>();
     }
 
-    // Thêm khách hàng
-    public boolean ThemHoaDon(HoaDon hd) {
-        return dshd.add(hd);
+    public List<HoaDon> ChonTheoMaHD(String maHD) {
+        List<HoaDon> ds = this.chonSql(CHON_THEO_MAHD_SQL, maHD);
+        return ds;
     }
 
-    // Tìm Kiếm khách hàng
-    /*
-    public HoaDon TimKiemHoaDon(String maHD, String tenKH, String sdt) {
-        for (int i = 0 ; i < dshd.size() ; i++) {
-            boolean dungHd = true;
+    public HoaDon ChonTheoMaKH(String maKH){
+        List<HoaDon> ds = this.chonSql(CHON_THEO_MAKH_SQL, maKH);
+        return ds.size() > 0 ? ds.get(0) : null;
+    }
 
-            // Kiểm tra điều kiện để chọn hoá đơn cần tìm kiếm
-            dungHd = maHD.equals(dshd.get(i).getMaHoaDon()) &&
-                    tenKH.equals(dshd.get(i).getKhachHang().getTenKH()) &&
-                    sdt.equals(dshd.get(i).getKhachHang().getSoDT());
+    public List<HoaDon> chonTatCa() {
+        return this.chonSql(CHON_TAT_SQL);
+    }
 
-            if (dungHd) {
-                return dshd.get(i);
+    public List<HoaDon> chonSql(String sql, Object...args){
+        List<HoaDon> ds = new ArrayList<>();
+
+        try {
+            ResultSet boKetQua = null;
+            try {
+                boKetQua = KetNoiCoSoDuLieu.truyVan(sql, args);
+
+                while (boKetQua.next()) {
+                    HoaDon hd = new HoaDon();
+
+                    hd.setMaHDTuCSDL(boKetQua.getString("MaHD"));
+                    hd.setNgayLapHoaDon(boKetQua.getDate("NgayLap").toLocalDate());
+                    hd.setMaNhanVien(boKetQua.getString("MaNV"));
+                    hd.setThanhTien(boKetQua.getDouble("ThanhTien"));
+                    hd.setMaKhachHang(boKetQua.getString("MaKH"));
+                    hd.setSoLuong(boKetQua.getInt("SoLuong"));
+                    hd.setTongTien(boKetQua.getDouble("TongTien"));
+                    hd.setTrangThai(boKetQua.getString("TrangThai"));
+                    hd.setThue(boKetQua.getFloat("Thue"));
+
+                    ds.add(hd);
+                }
+
+            } finally {
+                boKetQua.getStatement().getConnection().close();
             }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            throw new RuntimeException(ex);
         }
 
-        return null;
-    }
-    */
-    // Cập Nhật thông tin cho khách hàng
-    /*
-    public boolean CapNhatThongTinHoaDon(HoaDon hd) {
-        HoaDon hdCanCapNhat = TimKiemHoaDon(hd.getMaHoaDon(), hd.getKhachHang().getTenKH(), hd.getKhachHang().getSoDT());
-
-        return false;
-    }
-    */
-    // Lưu vào hóa đơn vào cơ sở dữ liệu
-    public void luuKHVaoCSDL(HoaDon kh) {
-
+        return ds;
     }
 
     public static ArrayList<String> layToanBoNamTuHoaDon(){
@@ -97,6 +118,7 @@ public class HoaDon_DAO {
 
         return tongDoanhThu;
     }
+
     public static double tongDoanhThuCuaThang_Nam(int nam, int thang){
         double tongDoanhThu = 0.0;
         String query = "SELECT SUM(ThanhTien) AS Total FROM HoaDon WHERE YEAR(NgayLap) = ? and MONTH(NgayLap) = ?";
@@ -291,3 +313,4 @@ public class HoaDon_DAO {
         return  danhSachDoanhThu;
     }
 }
+
