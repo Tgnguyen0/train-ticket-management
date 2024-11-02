@@ -2,7 +2,6 @@ package app.dao;
 
 import app.ket_noi_co_so_du_lieu.KetNoiCoSoDuLieu;
 import app.thuc_the.HoaDon;
-import app.thuc_the.Tau;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
