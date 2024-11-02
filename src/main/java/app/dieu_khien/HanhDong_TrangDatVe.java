@@ -58,34 +58,40 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
         }
 
         if (source == this.trangDatVe.nutHienThiSoDoGhe) {
-            LocalDateTime ngayKhoiHanh = trangDatVe.thanhNhapNgayDi.getDate()
-                    .toInstant()
-                    .atZone(ZoneId.systemDefault())
-                    .toLocalDateTime();
+            if (trangDatVe.thanhNhapNgayDi.getDate() != null) {
+                LocalDateTime ngayKhoiHanh = trangDatVe.thanhNhapNgayDi.getDate()
+                        .toInstant()
+                        .atZone(ZoneId.systemDefault())
+                        .toLocalDateTime();
 
-            this.maGa = this.trangDatVe.gaDao.ChonTheoTen( (String) this.trangDatVe.thanhCacDiemDi.getSelectedItem()).getMaGa();
+                this.maGa = this.trangDatVe.gaDao.ChonTheoTen( (String) this.trangDatVe.thanhCacDiemDi.getSelectedItem()).getMaGa();
 
-            List<LichCapBenGa> dsLich = this.trangDatVe.lichDao.ChonTheoNgayKHVaGa(ngayKhoiHanh, maGa);
+                List<LichCapBenGa> dsLich = this.trangDatVe.lichDao.ChonTheoNgayKHVaGa(ngayKhoiHanh, maGa);
 
-            for (int i = 0 ; i < dsLich.size() ; i++) {
-                System.out.println(dsLich.get(i).getMaTau());
+                for (int i = 0 ; i < dsLich.size() ; i++) {
+                    System.out.println(dsLich.get(i).getMaTau());
+                }
+
+                this.trangCacTau = new TrangCacTau(this.trangDatVe.layDSTau(), this.trangDatVe.layGheDao(), dsLich);
+                trangCacTau.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                trangCacTau.setVisible(true);
+            } else {
+                hienThiThongBao("Chưa chọn ngày khởi hành", "Lỗi chọn ngày");
             }
-
-            this.trangCacTau = new TrangCacTau(this.trangDatVe.layDSTau(), this.trangDatVe.layGheDao(), dsLich);
-            trangCacTau.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            trangCacTau.setVisible(true);
         }
 
         if (this.trangCacTau.laySoHieuTauChon() != null) {
             this.trangDatVe.soHieuDaChon = this.trangCacTau.laySoHieuTauChon();
 
+            LocalDateTime ngayKhoiHanh = this.trangDatVe.thanhNhapNgayDi.getDate()       // Lấy ngày khởi hành
+                    .toInstant()
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalDateTime();
+
             // Lấy lịch tàu đó
             LichCapBenGa lich = this.trangDatVe.lichDao.ChonTheoSoHieuNgayKHVaGa(
                     this.trangDatVe.soHieuDaChon,
-                    this.trangDatVe.thanhNhapNgayDi.getDate()       // Lấy ngày khởi hành
-                            .toInstant()
-                            .atZone(ZoneId.systemDefault())
-                            .toLocalDateTime(),
+                    ngayKhoiHanh,
                     this.maGa
             );
 
@@ -234,16 +240,7 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
             String loaiGheDaChon = (String) e.getItem();
 
             if (this.trangDatVe.thanhCacDiemDen.getSelectedItem().equals(this.trangDatVe.thanhCacDiemDi.getSelectedItem())) {
-                JLabel thongBao = new JLabel("Điểm đi và điểm đến không được trùng");
-                thongBao.setFont(this.trangDatVe.phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, 12));
-
-                JOptionPane hienThiLoi = new JOptionPane(thongBao, JOptionPane.ERROR_MESSAGE);
-                hienThiLoi.setForeground(this.trangDatVe.xanhBrandeis);
-
-                JDialog hoiThoai = hienThiLoi.createDialog("Lỗi chọn địa điểm");
-                ImageIcon bieuTuongTau = new ImageIcon("assets/icon.png"); // Đường dẫn đến biểu tượng
-                hoiThoai.setIconImage(bieuTuongTau.getImage());
-                hoiThoai.setVisible(true);
+                hienThiThongBao("Điểm đi và điểm đến không được trùng", "Lỗi chọn địa điểm");
             }
         }
     }
@@ -304,7 +301,7 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
         LocalDate ngayDi = layNgay(this.trangDatVe.thanhNhapNgayDi);
         LocalDate ngayHienTai = LocalDate.now();
 
-        if (!ngayDi.isAfter(ngayHienTai)) {
+        if (!ngayDi.isAfter(ngayHienTai) && !ngayDi.equals(ngayHienTai)) {
             if (!isErrorDialogVisible) {
                 hienThiThongBao("Ngày đi phải sau Ngày hiện tại.", "Lỗi chọn ngày đi");
                 isErrorDialogVisible = true;
