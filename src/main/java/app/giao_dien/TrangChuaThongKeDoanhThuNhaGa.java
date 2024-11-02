@@ -4,6 +4,8 @@ import app.dao.HoaDon_DAO;
 import app.dieu_khien.HanhDong_TrangThongKeDoanhThuNhaGa;
 import app.phan_tu_tuy_chinh.BieuDoCot;
 import app.phan_tu_tuy_chinh.BieuDoTron;
+import app.phan_tu_tuy_chinh.CustomCellRenderer;
+import app.phan_tu_tuy_chinh.CustomHeaderRenderer;
 import app.phong_chu_moi.PhongChuMoi;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
@@ -11,6 +13,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
@@ -76,6 +79,8 @@ public class TrangChuaThongKeDoanhThuNhaGa extends JPanel {
     public JButton buttonThongKeDoanhThuNamCuaNhanVien;
     public JPanel trangChuaButtonChuyenTrang;
     public TrangDinhHuong trangDinhHuong;
+    public Color xanhBrandeis = new Color(0, 112, 255);
+    public  Color trang = new Color(255, 255, 255);
     public TrangChuaThongKeDoanhThuNhaGa(TrangDinhHuong mainFrame){
         this.trangDinhHuong = mainFrame;
         trangChuaThongKeDoanhThuThang = new JPanel();
@@ -120,8 +125,16 @@ public class TrangChuaThongKeDoanhThuNhaGa extends JPanel {
         trangChuaBieuDoCot = new  JPanel();
         modelNam_TrongThongKeThang = new DefaultComboBoxModel<>();
         modelThang_TrongThongKeThang = new DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11" ,"12"});
-        modelTable_DoanhThuThang = new DefaultTableModel(new String[]{"Tháng", "Năm", "Số Vé", "Doanh Thu"}, 0);
-        modelTable_DoanhThuNam = new DefaultTableModel( new String [] {"Năm", "Số Vé", "Doanh Thu"}, 0);
+        modelTable_DoanhThuThang = new DefaultTableModel(new String[]{"Tháng", "Năm", "Số Vé", "Doanh Thu"}, 0){
+        @Override
+        public boolean isCellEditable(int data, int columnName) {
+            return false;
+        }};
+        modelTable_DoanhThuNam = new DefaultTableModel( new String [] {"Năm", "Số Vé", "Doanh Thu"}, 0){
+            @Override
+            public boolean isCellEditable(int data, int columnName) {
+                return false;
+            }};
         modelNamXuatPhat = new DefaultComboBoxModel<>();
         modelNamKetThuc = new DefaultComboBoxModel<>();
         //setDefaultCloseOperation( WindowConstants.EXIT_ON_CLOSE);
@@ -140,7 +153,7 @@ public class TrangChuaThongKeDoanhThuNhaGa extends JPanel {
         thietLap_TrangChuaDoanhThu();
 
         thietLap_TrangChuaCacThongTinThang();
-        thietLap_TrangChuaBieuDoTron();
+
         thietLap_TrangChuaThongTinChuYBieuDoTron();
         thietLap_TrangChuaButtonChuyenTrang();
         thietLap_TrangChuaDoanhThuThang();
@@ -234,6 +247,10 @@ public class TrangChuaThongKeDoanhThuNhaGa extends JPanel {
     }
     public void thietLap_TrangChuaNutThongKeThang(){
         buttonThongKeThang.setText("Thống Kê");
+        buttonThongKeThang.setForeground(this.trang);
+        buttonThongKeThang.setBackground(this.xanhBrandeis);
+        buttonThongKeThang.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.BOLD, 14));
+
         javax.swing.GroupLayout trangChuaNutThongKeThangLayout = new javax.swing.GroupLayout(trangChuaNutThongKeThang);
         trangChuaNutThongKeThang.setLayout(trangChuaNutThongKeThangLayout);
         trangChuaNutThongKeThangLayout.setHorizontalGroup(
@@ -279,7 +296,15 @@ public class TrangChuaThongKeDoanhThuNhaGa extends JPanel {
     }
     public void thietLap_TrangChuaDoanhThu(){
         tableDoanhThuThang.setModel(modelTable_DoanhThuThang);
+        tableDoanhThuThang.getTableHeader().setReorderingAllowed(false);
+        tableDoanhThuThang.setRowHeight(20);
+        tableDoanhThuThang.setFont((new PhongChuMoi()).layPhongRobotoMonoReg(Font.PLAIN, 12));
+        JTableHeader header = tableDoanhThuThang.getTableHeader();
+        header.setPreferredSize(new Dimension(header.getWidth(), 30));
+        header.setDefaultRenderer(new CustomHeaderRenderer());
+        tableDoanhThuThang.setDefaultRenderer(Object.class, new CustomCellRenderer());
         scrollPaneTrangChuaDoanhThuThang.setViewportView(tableDoanhThuThang);
+        scrollPaneTrangChuaDoanhThuThang.setBorder(BorderFactory.createLineBorder(this.xanhBrandeis));
 
         javax.swing.GroupLayout trangChuaDoanhThuLayout = new javax.swing.GroupLayout(trangChuaDoanhThu);
         trangChuaDoanhThu.setLayout(trangChuaDoanhThuLayout);
@@ -315,52 +340,6 @@ public class TrangChuaThongKeDoanhThuNhaGa extends JPanel {
                                 .addContainerGap())
         );
     }
-    public void thietLap_TrangChuaBieuDoTron(){
-//        doanhThuThang_Nam = new double[]{70, 30};
-//        colors = new Color[]{Color.GRAY, Color.BLUE};
-//
-//        // Tạo PieChartPanel
-//        chartPanel = new BieuDoTron(doanhThuThang_Nam, colors);
-        //chartPanel.setPreferredSize(new Dimension(200, 200));
-
-        // Thiết lập GroupLayout cho trangChuaBieuDoTron
-//        javax.swing.GroupLayout trangChuaBieuDoTronLayout = new javax.swing.GroupLayout(trangChuaBieuDoTron);
-//        trangChuaBieuDoTron.setLayout(trangChuaBieuDoTronLayout);
-//
-//        // Đặt biểu đồ ở vị trí trung tâm
-//        trangChuaBieuDoTronLayout.setHorizontalGroup(
-//                trangChuaBieuDoTronLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-//                        .addComponent(chartPanel)
-//        );
-//        trangChuaBieuDoTronLayout.setVerticalGroup(
-//                trangChuaBieuDoTronLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-//                        .addComponent(chartPanel)
-//        );
-//        javax.swing.GroupLayout trangChuaBieuDoTronLayout = new javax.swing.GroupLayout(trangChuaBieuDoTron);
-//        trangChuaBieuDoTron.setLayout(trangChuaBieuDoTronLayout);
-//        trangChuaBieuDoTronLayout.setHorizontalGroup(
-//                trangChuaBieuDoTronLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-//                        .addGap(0, 403, Short.MAX_VALUE)
-//        );
-//        trangChuaBieuDoTronLayout.setVerticalGroup(
-//                trangChuaBieuDoTronLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-//                        .addGap(0, 262, Short.MAX_VALUE)
-//        );
-
-//         Khởi tạo layout cho trangChuaBieuDoTron
-//        javax.swing.GroupLayout trangChuaBieuDoTronLayout = new javax.swing.GroupLayout(trangChuaBieuDoTron);
-//        trangChuaBieuDoTron.setLayout(trangChuaBieuDoTronLayout);
-//
-//        // Đặt biểu đồ ở vị trí trung tâm của trangChuaBieuDoTron
-//        trangChuaBieuDoTronLayout.setHorizontalGroup(
-//                trangChuaBieuDoTronLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-//                        .addComponent(chartPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-//        );
-//        trangChuaBieuDoTronLayout.setVerticalGroup(
-//                trangChuaBieuDoTronLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-//                        .addComponent(chartPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-//        );
-    }
     public void thietLap_TrangChuaThongTinChuYBieuDoTron(){
         labelNote.setText("Chú Thích:");
         labelNote.setPreferredSize(new Dimension(300, 20));
@@ -380,6 +359,7 @@ public class TrangChuaThongKeDoanhThuNhaGa extends JPanel {
         );
 
         labelDoanhThuNam.setText("Tổng Doanh Thu Của Năm");
+        labelDoanhThuNam.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.BOLD, 13));
         labelDoanhThuNam.setPreferredSize(new Dimension(300, 20));
 
         colorDoanhThuNam.setBackground(Color.GRAY);
@@ -397,6 +377,7 @@ public class TrangChuaThongKeDoanhThuNhaGa extends JPanel {
         );
 
         labelDoanhThuThangCuaNam.setText("Tổng Doanh Thu Của Tháng Trong Năm");
+        labelDoanhThuThangCuaNam.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.BOLD, 13));
 
         javax.swing.GroupLayout trangChuaThongTinChuYBieuDoTronLayout = new javax.swing.GroupLayout(trangChuaThongTinChuYBieuDoTron);
         trangChuaThongTinChuYBieuDoTron.setLayout(trangChuaThongTinChuYBieuDoTronLayout);
@@ -439,8 +420,14 @@ public class TrangChuaThongKeDoanhThuNhaGa extends JPanel {
     }
     public void thietLap_TrangChuaButtonChuyenTrang(){
         buttonThongKeDoanhThuThangCuaNhanVien.setText("Thống Kê Doanh Thu Tháng Của Nhân Viên");
+        buttonThongKeDoanhThuThangCuaNhanVien.setForeground(this.trang);
+        buttonThongKeDoanhThuThangCuaNhanVien.setBackground(this.xanhBrandeis);
+        buttonThongKeDoanhThuThangCuaNhanVien.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.BOLD, 14));
 
         buttonThongKeDoanhThuNamCuaNhanVien.setText("Thống Kê Doanh Thu Năm Của Nhân Viên");
+        buttonThongKeDoanhThuNamCuaNhanVien.setForeground(this.trang);
+        buttonThongKeDoanhThuNamCuaNhanVien.setBackground(this.xanhBrandeis);
+        buttonThongKeDoanhThuNamCuaNhanVien.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.BOLD, 14));
 
         javax.swing.GroupLayout trangChuaButtonChuyenTrangLayout = new javax.swing.GroupLayout(trangChuaButtonChuyenTrang);
         trangChuaButtonChuyenTrang.setLayout(trangChuaButtonChuyenTrangLayout);
@@ -520,7 +507,7 @@ public class TrangChuaThongKeDoanhThuNhaGa extends JPanel {
                 trangChuaNutChonNamXuatPhatLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(trangChuaNutChonNamXuatPhatLayout.createSequentialGroup()
                                 .addGap(18, 18, 18)
-                                .addComponent(labelNamXuatPhat, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(labelNamXuatPhat,80, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addContainerGap(18, Short.MAX_VALUE))
                         .addGroup(trangChuaNutChonNamXuatPhatLayout.createSequentialGroup()
                                 .addGap(10, 10, 10)
@@ -547,7 +534,7 @@ public class TrangChuaThongKeDoanhThuNhaGa extends JPanel {
                 trangChuaNutChonNamKetThucLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(trangChuaNutChonNamKetThucLayout.createSequentialGroup()
                                 .addGap(18, 18, 18)
-                                .addComponent(labelNamKetThuc, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(labelNamKetThuc, 80, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addContainerGap(18, Short.MAX_VALUE))
                         .addGroup(trangChuaNutChonNamKetThucLayout.createSequentialGroup()
                                 .addGap(10, 10, 10)
@@ -566,6 +553,9 @@ public class TrangChuaThongKeDoanhThuNhaGa extends JPanel {
     }
     public void thietLap_TrangChuaNutChonThongKeNam(){
         buttonThongKeNam.setText("Thống Kê");
+        buttonThongKeNam.setForeground(this.trang);
+        buttonThongKeNam.setBackground(this.xanhBrandeis);
+        buttonThongKeNam.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.BOLD, 14));
 
         javax.swing.GroupLayout trangChuaNutChonThongKeNamLayout = new javax.swing.GroupLayout(trangChuaNutChonThongKeNam);
         trangChuaNutChonThongKeNam.setLayout(trangChuaNutChonThongKeNamLayout);
@@ -613,7 +603,15 @@ public class TrangChuaThongKeDoanhThuNhaGa extends JPanel {
     }
     public void thietLap_TrangChuaDoanhThuCacNam(){
         tableDanhSachDoanhThuCacNam.setModel(modelTable_DoanhThuNam);
+        tableDanhSachDoanhThuCacNam.getTableHeader().setReorderingAllowed(false);
+        tableDanhSachDoanhThuCacNam.setRowHeight(20);
+        tableDanhSachDoanhThuCacNam.setFont((new PhongChuMoi()).layPhongRobotoMonoReg(Font.PLAIN, 12));
+        JTableHeader header = tableDanhSachDoanhThuCacNam.getTableHeader();
+        header.setPreferredSize(new Dimension(header.getWidth(), 30));
+        header.setDefaultRenderer(new CustomHeaderRenderer());
+        tableDanhSachDoanhThuCacNam.setDefaultRenderer(Object.class, new CustomCellRenderer());
         scrollPaneDanhSachDoanhThuCacNam.setViewportView(tableDanhSachDoanhThuCacNam);
+        scrollPaneDanhSachDoanhThuCacNam.setBorder(BorderFactory.createLineBorder(this.xanhBrandeis));
 
         javax.swing.GroupLayout trangChuaDoanhThuCacNamLayout = new javax.swing.GroupLayout(trangChuaDoanhThuCacNam);
         trangChuaDoanhThuCacNam.setLayout(trangChuaDoanhThuCacNamLayout);
