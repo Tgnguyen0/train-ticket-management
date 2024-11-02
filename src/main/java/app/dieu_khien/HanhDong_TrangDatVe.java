@@ -22,11 +22,9 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
     public TrangDatVe trangDatVe;
     public TrangCacTau trangCacTau;
     public int bienSoTang = 0;
-    public KhachHang khachHang;
     public List<Ve> dsVeDaDat;
     public List<Ghe> dsGhe;
     public String maGa;
-    public int themBen;
 
     public HanhDong_TrangDatVe(TrangDatVe trangDatVe) {
         this.trangDatVe = trangDatVe;
@@ -37,7 +35,7 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
     public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
 
-        if (source == this.trangDatVe.nutLuaChonMotChieu) {
+        /*if (source == this.trangDatVe.nutLuaChonMotChieu) {
             this.trangDatVe.nutLuaChonKhuHoi.setSelected(false);
             //this.trangDatVe.thanhNhapNgayTroVe.setEnabled(false);
         }
@@ -45,11 +43,7 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
         if (source == this.trangDatVe.nutLuaChonKhuHoi) {
             this.trangDatVe.nutLuaChonMotChieu.setSelected(false);
             //this.trangDatVe.thanhNhapNgayTroVe.setEnabled(true);
-        }
-
-        if (source == this.trangDatVe.nutLuaChonMotChieu) {
-            this.trangDatVe.nutLuaChonKhuHoi.setSelected(false);
-        }
+        }*/
 
         if (source == this.trangDatVe.nutLuaChonNam) {
             this.trangDatVe.nutLuaChonNu.setSelected(false);
@@ -130,17 +124,17 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
 
             String diemDi = (String) trangDatVe.thanhCacDiemDi.getSelectedItem(); // Lấy ga xuất phát
             String diemDen = (String) trangDatVe.thanhCacDiemDen.getSelectedItem(); // Lấy ga đích
-            String loaiVe = trangDatVe.nutLuaChonKhuHoi.isSelected() ? "Khu Hoi" : "Mot Chieu"; // Lấy loại vé
+            //String loaiVe = trangDatVe.nutLuaChonKhuHoi.isSelected() ? "Khu Hoi" : "Mot Chieu"; // Lấy loại vé
 
             LocalDateTime ngayKhoiHanh = trangDatVe.thanhNhapNgayDi.getDate()       // Lấy ngày khởi hành
                     .toInstant()
                     .atZone(ZoneId.systemDefault())
                     .toLocalDateTime();
 
-            LocalDateTime ngayTroVe = trangDatVe.thanhNhapNgayTroVe.getDate()      // Lấy ngày trở về
+            /*LocalDateTime ngayTroVe = trangDatVe.thanhNhapNgayTroVe.getDate()      // Lấy ngày trở về
                     .toInstant()
                     .atZone(ZoneId.systemDefault())
-                    .toLocalDateTime();
+                    .toLocalDateTime();*/
 
             this.dsGhe = new ArrayList<>(this.trangDatVe.gheDao.layDSGheDat()); // lấy danh sách chỗ đã đặt
             Ghe daDat = this.trangDatVe.gheDao.traGheChon(); // lấy ghế đã đặt
@@ -167,13 +161,13 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
             Ve veDat = new Ve(
                     loaiDoiTuong,                                                 // Loại đối tượng
                     lich.getGioKhoiHanh(),                                        // Ngày khởi hành
-                    LocalDateTime.now(),                                                    // Ngày trở về
+                    LocalDateTime.now(),                                          // Ngày đặt vé
                     diemDi,                                                       // Ga xuất phát
                     diemDen,                                                      // Ga đích
                     giaVe,                                                        // Giá vé
                     this.trangDatVe.dsKHDatVe.get(bienSoTang).getMaKH(),          // Mã khách hàng
                     daDat.getMaGhe(),                                             // Mã ghế
-                    daDat.getLoaiGhe().toString()                                 // Loại vé (Loại ghế)
+                    daDat.getLoaiGhe().toString()                                 // Loại ghế
             );
 
             /*System.out.println(
@@ -190,27 +184,23 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
 
             // Dòng dữ liệu
             Object[] duLieu = {
-                    String.valueOf(bienSoTang + 1),                            // Thứ tự
+                    String.valueOf(bienSoTang + 1),                               // Thứ tự
                     veDat.getMaVe(),                                                // Mã vé
-                    hoTen,                                                       // Họ tên khách hàng
-                    veDat.getLoaiVe(),
+                    hoTen,                                                          // Họ tên khách hàng
                     veDat.getLoaiDoiTuong(),                                        // Loại đối tượng
                     (int) veDat.getGiaVe(),                                         // Giá vé
                     veDat.getGaKhoiHanh(),                                          // Ga xuất phát
                     veDat.getGaKetThuc(),                                           // Ga đích
-                    LocalDate.now(),                                             // Ngày đặt vé
+                    LocalDate.now(),                                                // Ngày đặt vé
                     veDat.getNgayKhoiHanh().getYear() + "-" +                       // Ngày khởi hành
                         veDat.getNgayKhoiHanh().getMonth().getValue() + "-" +
                             veDat.getNgayKhoiHanh().getDayOfMonth(),
-                    veDat.getNgayDatVe().getYear() + "-" +                          // Ngày Trở về
-                            veDat.getNgayDatVe().getMonth().getValue() + "-" +
-                            veDat.getNgayDatVe().getDayOfMonth(),
-                    soHieuTau,                                                   // Số hiệu tàu
+                    soHieuTau,                                                      // Số hiệu tàu
                     veDat.getNgayKhoiHanh().toLocalTime().getHour() + ":" +         // Giờ xuất phát
                             veDat.getNgayKhoiHanh().toLocalTime().getMinute(),
-                    daDat.getLoaiGhe().toString(),                               // Loại ghế
-                    maToa,                                                       // Mã toa
-                    soGhe                                                        // Số ghế
+                    daDat.getLoaiGhe().toString(),                                 // Loại ghế
+                    maToa,                                                         // Mã toa
+                    soGhe                                                          // Số ghế
             };
 
             // Thêm vào bảng
@@ -224,16 +214,7 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
         }
 
         if (e.getSource() == this.trangDatVe.nutThanhToan) {
-            List<Ghe> dsChoDaDat = new ArrayList<>(this.trangDatVe.gheDao.layDSGheDat());
-
-            for (int i = 0 ; i < dsChoDaDat.size() ; i++) {
-                System.out.println("Ghế " + i);
-                System.out.println(dsChoDaDat.get(i).getMaToa());
-                System.out.println(dsChoDaDat.get(i).getMaGhe());
-                System.out.println(dsChoDaDat.get(i).getSoGhe());
-                System.out.println(dsChoDaDat.get(i).getLoaiGhe());
-                System.out.println(dsChoDaDat.get(i).getTrangThai());
-            }
+            this.trangDatVe.veDao.themDSVe(this.dsVeDaDat);
         }
 
         if (e.getSource() == this.trangDatVe.nutInVe) {
@@ -303,19 +284,19 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
         // Kiểm tra thay đổi thực sự của ngày
         if (evt.getOldValue() != evt.getNewValue()) {
             LocalDate ngayDi = layNgay(this.trangDatVe.thanhNhapNgayDi); // Lấy ngày đi tại thời điểm thay đổi
-            LocalDate ngayTroVe = layNgay(this.trangDatVe.thanhNhapNgayTroVe); // Lấy ngày trở về tại thời điểm thay đổi
+            //LocalDate ngayTroVe = layNgay(this.trangDatVe.thanhNhapNgayTroVe); // Lấy ngày trở về tại thời điểm thay đổi
 
             // Check for departure date validation
-            if (source == this.trangDatVe.thanhNhapNgayDi.getDateEditor() &&
-                    this.trangDatVe.nutLuaChonKhuHoi.isSelected()) {
+            if (source == this.trangDatVe.thanhNhapNgayDi.getDateEditor() /*&&
+                    this.trangDatVe.nutLuaChonKhuHoi.isSelected()*/) {
                 kiemTraNgayDi();
             }
 
             // Check for return date validation
-            if (source == this.trangDatVe.thanhNhapNgayTroVe.getDateEditor() &&
+            /*if (source == this.trangDatVe.thanhNhapNgayTroVe.getDateEditor() &&
                     this.trangDatVe.nutLuaChonKhuHoi.isSelected()) {
                 kiemTraNgayTroVe();
-            }
+            }*/
         }
     }
 
@@ -333,7 +314,7 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
         }
     }
 
-    private void kiemTraNgayTroVe() {
+    /*private void kiemTraNgayTroVe() {
         LocalDate ngayDi = layNgay(this.trangDatVe.thanhNhapNgayDi);
         LocalDate ngayTroVe = layNgay(this.trangDatVe.thanhNhapNgayTroVe);
 
@@ -345,7 +326,7 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
         } else {
             isErrorDialogVisible = false;
         }
-    }
+    }*/
 
     private void hienThiThongBao(String chuThich, String tieuDe) {
         JLabel thongBao = new JLabel(chuThich);

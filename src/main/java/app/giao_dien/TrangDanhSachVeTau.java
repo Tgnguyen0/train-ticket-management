@@ -227,7 +227,7 @@ public class TrangDanhSachVeTau extends JFrame{
         this.setVisible(true);
     }
 
-    public void thietLap_TrangChuaTieuDe(){
+    public void thietLap_TrangChuaTieuDe() {
         tieuDe.setText("                                                            Danh Sach Bán Vé Tàu");
 
         javax.swing.GroupLayout trangChua_TieuDeLayout = new javax.swing.GroupLayout(trangChua_TieuDe);

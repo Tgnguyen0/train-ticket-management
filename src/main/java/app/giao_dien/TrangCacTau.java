@@ -44,7 +44,6 @@ public class TrangCacTau extends JFrame {
 
     private ActionListener hanhDong;
     private MouseListener thaoTacChuot;
-    private WindowListener hanhDongTrang;
 
     public Toa_DAO toaDao;
     public Ghe_DAO gheDao;
@@ -57,7 +56,6 @@ public class TrangCacTau extends JFrame {
     public List<LichCapBenGa> dsLichTau;
     public String soHieuTauChon;
 
-    public boolean daDongChua = false;
     public boolean coQuaGaTau1 = false;
     public boolean coQuaGaTau2 = false;
     public boolean coQuaGaTau3 = false;
@@ -66,19 +64,18 @@ public class TrangCacTau extends JFrame {
     // Function tạo GUI chính
     public TrangCacTau(List<Tau> dsTau, Ghe_DAO gheDao, List<LichCapBenGa> dsLichTau) {
         this.toaDao = new Toa_DAO();
+        this.gheDao = gheDao;
 
         this.dsTau = dsTau;
         this.dsLichTau = dsLichTau;
-
-        /*for (int i = 0 ; i < this.dsLichTau.size() ; i++) {
-            System.out.println(this.dsLichTau.get(i).getMaTau());
-        }*/
-
         this.dsToa1 = toaDao.ChonTheoSoHieuTatCa(this.dsTau.get(0).getSoHieu());
         this.dsToa2 = toaDao.ChonTheoSoHieuTatCa(this.dsTau.get(1).getSoHieu());
         this.dsToa3 = toaDao.ChonTheoSoHieuTatCa(this.dsTau.get(2).getSoHieu());
         this.dsToa4 = toaDao.ChonTheoSoHieuTatCa(this.dsTau.get(3).getSoHieu());
-        this.gheDao = gheDao;
+
+        /*for (int i = 0 ; i < this.dsLichTau.size() ; i++) {
+            System.out.println(this.dsLichTau.get(i).getMaTau());
+        }*/
 
         /*for (int i = 0 ; i < this.dsToa1.size() ; i++) {
             System.out.println("Tau 1" + this.dsToa1.get(i).getMaToa());
@@ -96,8 +93,6 @@ public class TrangCacTau extends JFrame {
             System.out.println("Tau 4" + this.dsToa4.get(i).getMaToa());
         }*/
 
-        this.dsLichTau = dsLichTau;
-
         ImageIcon icon = new ImageIcon("assets/icon.png");
         setTitle("Sơ đồ chung");
         //setSize(new Dimension(1200, 800));
@@ -113,20 +108,9 @@ public class TrangCacTau extends JFrame {
         // Thêm ActionListener và MouseListener cho các nút
         this.hanhDong = new HanhDong_TrangCacTau(this);
         this.thaoTacChuot = new HanhDong_TrangCacTau(this);
-        this.hanhDongTrang = new HanhDong_TrangCacTau(this);
-
-        addWindowListener(hanhDongTrang);
 
         taoThanhDinhHuongToa();
         taoTrangChua();
-    }
-
-    public boolean kiemDaDongChua() {
-        return daDongChua;
-    }
-
-    public void datDaDongChua(boolean daDong) {
-        this.daDongChua = daDong;
     }
 
     public void taoThanhDinhHuongToa() {
@@ -135,21 +119,22 @@ public class TrangCacTau extends JFrame {
         thanhDinhHuong.setBackground(trang);
         thanhDinhHuong.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 20));
 
-        for (int i = 0 ; i < this.dsLichTau.size() ; i++) {
-            if (dsLichTau.get(i).getMaTau().equals("VN5234")) {
-                coQuaGaTau1 = true;
-            }
+        for (int i = 0; i < this.dsLichTau.size(); i++) {
+            String maTau = dsLichTau.get(i).getMaTau();
 
-            if (dsLichTau.get(i).getMaTau().equals("VN5947")) {
-                coQuaGaTau2 = true;
-            }
-
-            if (dsLichTau.get(i).getMaTau().equals("VN7283")) {
-                coQuaGaTau3 = true;
-            }
-
-            if (dsLichTau.get(i).getMaTau().equals("VN9029")) {
-                coQuaGaTau4 = true;
+            switch (maTau) {
+                case "VN5234":
+                    coQuaGaTau1 = true;
+                    break;
+                case "VN5947":
+                    coQuaGaTau2 = true;
+                    break;
+                case "VN7283":
+                    coQuaGaTau3 = true;
+                    break;
+                case "VN9029":
+                    coQuaGaTau4 = true;
+                    break;
             }
         }
 

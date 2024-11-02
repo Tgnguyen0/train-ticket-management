@@ -13,11 +13,11 @@ public class Toa {
     }
 
     public String getMaTau() {
-        return maTau;
+        return soHieu;
     }
 
-    public void setMaTau(String maTau) {
-        this.maTau = maTau;
+    public void setMaTau(String soHieu) {
+        this.soHieu = soHieu;
     }
 
     public String getMaToa() {

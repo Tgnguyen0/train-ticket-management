@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 @Slf4j
 public class HanhDong_TrangDanhSachVe implements ActionListener, MouseListener {
+    public Ve veChiTiet;
 
     String Message_Not_Found = "Không Thể Tìm Thấy Đúng Mã Vé Đã Cung Cấp";
     Logger logger = LoggerFactory.getLogger(TrangDanhSachVeTau.class);
@@ -140,17 +141,29 @@ public class HanhDong_TrangDanhSachVe implements ActionListener, MouseListener {
             String ngayDatVe = this.trangDanhSachVeTau.ngayDatVe.getText();
             String ngayKhoiHanh = this.trangDanhSachVeTau.ngayKhoiHanh.getText();
             String giaVe = this.trangDanhSachVeTau.giaVe.getText();
+
             /*
                 lấy vị trí ghế ngồi
              */
-            Ghe ghe = Ghe_DAO.layGheTheoMaGhe(maGhe);
+            // Nhớ thay bằng cái maGhe đã định sẵn
+            Ghe ghe = Ghe_DAO.layGheTheoMaGhe("0049");
             /*
                 lấy tên toa và lấy số hiệu
              */
             Toa toa = Toa_DAO.layToaTheoMaToa(ghe.getMaToa());
 
-            new TrangThongTinChiTietVeTau(maVe, loaiVe, diemDi, diemDen, ngayKhoiHanh,
-                    "", tenKhachHang,toa.getMaTau(), toa.getTenToa(), ghe.getSoGhe(), ngayDatVe, doiTuong, giaVe).setVisible(true);
+            List<Ve> danhSachVe = new ArrayList<>();
+
+            try {
+                // Lấy ngày khởi hành để tìm lịch tàu
+                danhSachVe = databaseVe.layVe_DuaVaoMaVe(maVe);
+                Ve ve = danhSachVe.get(0);
+
+                new TrangThongTinChiTietVeTau(maVe, loaiVe, diemDi, diemDen, ve.getNgayKhoiHanh(),
+                        "", tenKhachHang,toa.getMaTau(), toa.getTenToa(), ghe, ve.getNgayDatVe(), doiTuong, giaVe).setVisible(true);
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
         }
     }
 
@@ -164,6 +177,7 @@ public class HanhDong_TrangDanhSachVe implements ActionListener, MouseListener {
         try {
             danhSachVe = databaseVe.layVe_DuaVaoMaVe(maVe);
             Ve ve = danhSachVe.get(0);
+
             this.trangDanhSachVeTau.textFieldMaVe.setText(ve.getMaVe());
             this.trangDanhSachVeTau.textFieldMaVe.setDisabledTextColor(Color.BLUE);
             this.trangDanhSachVeTau.textFieldMaVe.setEnabled(false);

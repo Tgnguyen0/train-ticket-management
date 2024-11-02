@@ -8,7 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class HanhDong_TrangCacTau implements ActionListener, MouseListener, WindowListener {
+public class HanhDong_TrangCacTau implements ActionListener, MouseListener {
     TrangCacTau trangSoDoChung;
 
     public HanhDong_TrangCacTau(TrangCacTau trangSoDoChung) {
@@ -168,43 +168,5 @@ public class HanhDong_TrangCacTau implements ActionListener, MouseListener, Wind
     @Override
     public void mouseExited(MouseEvent e) {
         // Không sử dụng
-    }
-
-    @Override
-    public void windowOpened(WindowEvent e) {
-
-    }
-
-    @Override
-    public void windowClosing(WindowEvent e) {
-
-    }
-
-    @Override
-    public void windowClosed(WindowEvent e) {
-        if (e.getSource() instanceof TrangCacTau) {
-            TrangCacTau trangCacTau = (TrangCacTau) e.getSource();
-            trangCacTau.datDaDongChua(true); // Phương thức này sẽ đặt trạng thái "đã đóng"
-        }
-    }
-
-    @Override
-    public void windowIconified(WindowEvent e) {
-
-    }
-
-    @Override
-    public void windowDeiconified(WindowEvent e) {
-
-    }
-
-    @Override
-    public void windowActivated(WindowEvent e) {
-
-    }
-
-    @Override
-    public void windowDeactivated(WindowEvent e) {
-
     }
 }
