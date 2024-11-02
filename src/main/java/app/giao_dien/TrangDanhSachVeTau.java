@@ -223,6 +223,7 @@ public class TrangDanhSachVeTau extends JFrame{
         buttonHuyVe.addActionListener(ac);
         buttonInVe.addActionListener(ac);
         timKiem.addActionListener(ac);
+        buttonThongTinChiTiet.addActionListener(ac);
         this.setVisible(true);
     }
 
@@ -821,10 +822,38 @@ public class TrangDanhSachVeTau extends JFrame{
         );
     }
     public void thietLap_trangChuaButtonThongTinChiTiet(){
-        buttonThongTinChiTiet.setText("Xem Chi Tiết Thông Tin");
+        buttonThongTinChiTiet = new JButton() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                Graphics2D g2d = (Graphics2D) g.create();
+                g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+                // Xoay chữ 90 độ
+                g2d.rotate(Math.toRadians(90), getWidth() / 2, getHeight() / 2);
+
+                // Đặt font và màu chữ
+                g2d.setFont(new Font("Arial", Font.BOLD, 14));
+                g2d.setColor(Color.WHITE);
+
+                // Vẽ chữ căn giữa
+                String text = "Xem Chi Tiết Thông Tin";
+                FontMetrics fm = g2d.getFontMetrics();
+                int x = (getWidth() - fm.stringWidth(text)) / 2;
+                int y = (getHeight() + fm.getAscent() - fm.getDescent()) / 2;
+                g2d.drawString(text, x, y);
+
+                g2d.dispose();
+            }
+        };
+        buttonThongTinChiTiet.setText("");
         buttonThongTinChiTiet.setBackground(xanhBrandeis);
         buttonThongTinChiTiet.setForeground(Color.WHITE);
-        buttonThongTinChiTiet.addActionListener(ac);
+//        buttonThongTinChiTiet.setText("Xem Chi Tiết Thông Tin");
+//        buttonThongTinChiTiet.setHorizontalAlignment(SwingConstants.CENTER); // Căn giữa chữ theo chiều ngang
+//        buttonThongTinChiTiet.setVerticalAlignment(SwingConstants.CENTER);   // Căn giữa chữ theo chiều dọc
+
+
         javax.swing.GroupLayout trangChua_ButtonThongTinChiTietLayout = new javax.swing.GroupLayout(trangChua_ButtonThongTinChiTiet);
         trangChua_ButtonThongTinChiTiet.setLayout(trangChua_ButtonThongTinChiTietLayout);
         trangChua_ButtonThongTinChiTietLayout.setHorizontalGroup(
@@ -948,9 +977,7 @@ public class TrangDanhSachVeTau extends JFrame{
         }
     }
 
-    public static   void moGiaoDienDanhSach(){
-        new TrangDanhSachVeTau().setVisible(true);
-    }
+
 
     public void caiDatVoHieuHoaChoCacThanh(){
         this.textFieldMaVe.setEnabled(false);
@@ -968,7 +995,9 @@ public class TrangDanhSachVeTau extends JFrame{
         this.textFieldDoiTuong.setEnabled(false);
         this.textFieldDoiTuong.setDisabledTextColor(Color.BLUE);
     }
-
+    public static   void moGiaoDienDanhSach(){
+        new TrangDanhSachVeTau().setVisible(true);
+    }
     public static void main(String[] args) {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {

@@ -37,9 +37,10 @@ public class TrangDinhHuong extends JFrame {
     public TrangHoaDon trangHoaDon;
     public TrangGioiThieu trangGioiThieu;
     public TrangKhachHang trangKhachHang;
-    public TrangChuaThongKeNhanVienTheoNam trangChuaThongKeTheoNam;
     public TrangNhanVien trangNhanVien;
-
+    public TrangChuaThongKeNhanVienTheoThang trangChuaThongKeNhanVienTheoThang;
+    public TrangChuaThongKeDoanhThuNhaGa trangChuaThongKeDoanhThuNhaGa;
+    public TrangChuaThongKeNhanVienTheoNam trangChuaThongKeNhanVienTheoNam;
     /* Khởi tạo phông chữ màu sắc */
     public Color trang = new Color(255, 255, 255);
     public Color xanhBrandeis = new Color(0, 112, 255);
@@ -204,17 +205,17 @@ public class TrangDinhHuong extends JFrame {
         thanhDinhHuong.add(nutGioiThieu);
 
         //Tạo nut đến trang nhân viên
-        nutVe = new BongCuaChu("Nhân Viên");
-        nutVe.setPreferredSize(new Dimension(chieuDaiNut, chieuRongNut));
-        nutVe.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, charSize));
-        nutVe.setForeground(new Color(xanhBrandeis.getRGB()));
-        nutVe.setBackground(new Color(trang.getRGB()));
-        nutVe.setBorder(this.vienDam);
-        nutVe.setFocusPainted(false); // Bỏ viền khi click (focus)
-        nutVe.setContentAreaFilled(false); // Bỏ fill màu mặc định của JButton (nếu cần)
-        nutVe.addMouseListener(this.thaoTacChuot);
-        nutVe.addActionListener(this.hanhDong);
-        thanhDinhHuong.add(nutVe);
+        nutNhanVien = new BongCuaChu("Nhân Viên");
+        nutNhanVien.setPreferredSize(new Dimension(chieuDaiNut, chieuRongNut));
+        nutNhanVien.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, charSize));
+        nutNhanVien.setForeground(new Color(xanhBrandeis.getRGB()));
+        nutNhanVien.setBackground(new Color(trang.getRGB()));
+        nutNhanVien.setBorder(this.vienDam);
+        nutNhanVien.setFocusPainted(false); // Bỏ viền khi click (focus)
+        nutNhanVien.setContentAreaFilled(false); // Bỏ fill màu mặc định của JButton (nếu cần)
+        nutNhanVien.addMouseListener(this.thaoTacChuot);
+        nutNhanVien.addActionListener(this.hanhDong);
+        thanhDinhHuong.add(nutNhanVien);
 
         // Tạo Trang người dùng
         JPanel thanhNguoiDung = new JPanel();
@@ -253,18 +254,20 @@ public class TrangDinhHuong extends JFrame {
         this.trangHoaDon = new TrangHoaDon(); // Khởi tạo trang Trang Hóa Đơn
         this.trangGioiThieu = new TrangGioiThieu(); // Khởi tạo trang Giới Thiệu
         this.trangKhachHang = new TrangKhachHang(); // Khởi tạo trang Trang Khách Hàng
-        this.trangChuaThongKeTheoNam = new TrangChuaThongKeNhanVienTheoNam();
+        //this.trangChuaThongKeTheoNam = new TrangChuaThongKeNhanVienTheoNam();
         this.trangNhanVien = new TrangNhanVien(); // Khởi tạo trang Trang Nhân Viên
-
+        this.trangChuaThongKeNhanVienTheoThang = new TrangChuaThongKeNhanVienTheoThang(this);
+        this.trangChuaThongKeDoanhThuNhaGa = new TrangChuaThongKeDoanhThuNhaGa(this);
+        this.trangChuaThongKeNhanVienTheoNam = new TrangChuaThongKeNhanVienTheoNam( this);
         // kiểm tra trang thống kê
-        TrangChuaThongKeNhanVienTheoThang trangChuaThongKeNhanVienTheoThang = new TrangChuaThongKeNhanVienTheoThang(this);
-
         this.trangChua.add(trangChu, "Trang Chu");
         this.trangChua.add(trangDatVe, "Trang Dat Ve");
         this.trangChua.add(trangHoaDon,"Trang Hoa Don");
         this.trangChua.add(trangGioiThieu,"Trang Gioi Thieu");
         this.trangChua.add(trangKhachHang, "Trang Khach Hang");
-        this.trangChua.add(trangChuaThongKeNhanVienTheoThang, "Trang Thong Ke");
+        this.trangChua.add(trangChuaThongKeDoanhThuNhaGa, "Trang Thong Ke");
+        this.trangChua.add(trangChuaThongKeNhanVienTheoThang, "ThongKeDoanhThuTheoThang");
+        this.trangChua.add(trangChuaThongKeNhanVienTheoNam, "ThongKeDoanhThuTheoNam");
         this.trangChua.add(trangNhanVien, "Trang Nhan Vien");
 
         add(this.trangChua);

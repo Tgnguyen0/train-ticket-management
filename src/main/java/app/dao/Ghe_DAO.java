@@ -5,6 +5,8 @@ import app.thuc_the.Ghe;
 import app.thuc_the.LOAI_GHE;
 import app.thuc_the.TRANG_THAI_GHE;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -118,5 +120,110 @@ public class Ghe_DAO {
         }else{
 
         }
+    }
+
+    public static Ghe layGheTheoMaGhe(String maGheRequest){
+        String sql =  "SELECT * FROM Ghe WHERE MaGhe = ?";
+        Ghe ghe = new Ghe();
+        try{
+
+            Connection connect = KetNoiCoSoDuLieu.ketNoiDB_HinhDB();
+            PreparedStatement preparedStatement =  connect.prepareStatement(sql);
+
+            // Thiết lập giá trị cho câu truy vấn
+            preparedStatement.setString(1, maGheRequest);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    // Lấy thông tin từ hàng tìm được
+                    ghe.setMaGhe(resultSet.getString("MaGhe"));
+                    ghe.setMaToa(resultSet.getString("MaToa"));
+                    String loaiGhe = resultSet.getString("LoaiGhe");
+                    switch (loaiGhe) {
+                        case "Ghế Mềm":
+                            ghe.setLoaiGhe(LOAI_GHE.GHẾ_MỀM);
+                            break;
+                        case "Giường Toa 6":
+                            ghe.setLoaiGhe(LOAI_GHE.GIƯỜNG_TOA_6);
+                            break;
+                        case "Giường Toa 4":
+                            ghe.setLoaiGhe(LOAI_GHE.GIƯỜNG_TOA_4);
+                            break;
+                        case "Giường Toa 2 VIP":
+                            ghe.setLoaiGhe(LOAI_GHE.GIƯỜNG_TOA_2_VIP);
+                            break;
+                    }
+                    String trangThai = resultSet.getString("TrangThaiGhe");
+                    switch (trangThai) {
+                        case "Trống":
+                            ghe.setTrangThai(TRANG_THAI_GHE.Trong);
+                            break;
+                        case "Đã Đặt":
+                            ghe.setTrangThai(TRANG_THAI_GHE.Da_dat);
+                            break;
+                    }// Giả sử có các cột tên TenGhe và TrangThai
+                    ghe.setSoGhe(resultSet.getString("SoGhe"));
+                    return ghe;
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Lỗi khi truy vấn cơ sở dữ liệu");
+        }
+        return ghe;
+    }
+
+    public static Ghe layGheTheoMaToa_SoGhe(String maToaRequest, String soGheRequest){
+        String sql =  "SELECT * FROM Ghe WHERE MaToa = ? and SoGhe = ?";
+        Ghe ghe = new Ghe();
+        try{
+
+            Connection connect = KetNoiCoSoDuLieu.ketNoiDB_HinhDB();
+            PreparedStatement preparedStatement =  connect.prepareStatement(sql);
+
+            // Thiết lập giá trị cho câu truy vấn
+            preparedStatement.setString(1, maToaRequest);
+            preparedStatement.setString(2, soGheRequest);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    // Lấy thông tin từ hàng tìm được
+                    ghe.setMaGhe(resultSet.getString("MaGhe"));
+                    ghe.setMaToa(resultSet.getString("MaToa"));
+                    String loaiGhe = resultSet.getString("LoaiGhe");
+                    switch (loaiGhe) {
+                        case "Ghế Mềm":
+                            ghe.setLoaiGhe(LOAI_GHE.GHẾ_MỀM);
+                            break;
+                        case "Giường Toa 6":
+                            ghe.setLoaiGhe(LOAI_GHE.GIƯỜNG_TOA_6);
+                            break;
+                        case "Giường Toa 4":
+                            ghe.setLoaiGhe(LOAI_GHE.GIƯỜNG_TOA_4);
+                            break;
+                        case "Giường Toa 2 VIP":
+                            ghe.setLoaiGhe(LOAI_GHE.GIƯỜNG_TOA_2_VIP);
+                            break;
+                    }
+                    String trangThai = resultSet.getString("TrangThaiGhe");
+                    switch (trangThai) {
+                        case "Trống":
+                            ghe.setTrangThai(TRANG_THAI_GHE.Trong);
+                            break;
+                        case "Đã Đặt":
+                            ghe.setTrangThai(TRANG_THAI_GHE.Da_dat);
+                            break;
+                    }// Giả sử có các cột tên TenGhe và TrangThai
+                    ghe.setSoGhe(resultSet.getString("SoGhe"));
+                    return ghe;
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Lỗi khi truy vấn cơ sở dữ liệu");
+        }
+        return ghe;
     }
 }

@@ -47,8 +47,17 @@ public class Ve {
         this.maGhe = maGhe;
         this.loaiVe = loaiVe;
     }
-
+    
     public Ve() {
+    }
+
+
+    public Ve(String maVe, LocalDateTime ngayKhoiHanh, LocalDateTime ngayDatVe, double giaVe, String maGhe) {
+        this.maVe  = maVe;
+        this.ngayKhoiHanh = ngayKhoiHanh;
+        this.ngayDatVe = ngayDatVe;
+        this.giaVe = giaVe;
+        this.maGhe = maGhe;
     }
 
     public String getMaVe() {
@@ -158,6 +167,21 @@ public class Ve {
 
     public Tau getTau() {
         return this.tau;
+    }
+
+    @Override
+    public String toString() {
+        return "Ve{" +
+                "maVe='" + maVe + '\'' +
+                ", ngayKhoiHanh=" + ngayKhoiHanh +
+                ", ngayDatVe=" + ngayDatVe +
+                ", gaKhoiHanh='" + gaKhoiHanh + '\'' +
+                ", gaKetThuc='" + gaKetThuc + '\'' +
+                ", giaVe=" + giaVe +
+                ", maGhe='" + maGhe + '\'' +
+                ", maKhachHang='" + maKhachHang + '\'' +
+                ", loaiVe='" + loaiVe + '\'' +
+                '}';
     }
 
     @Override

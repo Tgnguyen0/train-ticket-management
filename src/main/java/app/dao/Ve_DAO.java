@@ -1,10 +1,15 @@
 package app.dao;
 
+import app.giao_dien.TrangThongTinChiTietVeTau;
 import app.ket_noi_co_so_du_lieu.KetNoiCoSoDuLieu;
 import app.thuc_the.DaiNgo;
 import app.thuc_the.KhachHang;
 import app.thuc_the.Ve;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import javax.swing.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,10 +17,12 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 public class Ve_DAO {
     // Các câu lệnh SQL
     String NHAP_SQL = "INSERT INTO KhachHang (MaKH, TenKH, DiaChi, SoDT, Email, GioiTinh) values (?, ?, ?, ?, ?, ?)";
@@ -23,6 +30,7 @@ public class Ve_DAO {
     String TAI_TAT_CA_SQL = "SELECT * FROM KhachHang";
     String CHON_THEO_MA_SQL = "SELECT * FROM KhachHang WHERE MaKH=?";
 
+    Logger logger = LoggerFactory.getLogger(TrangThongTinChiTietVeTau.class);
     public Map<String, Map<String, Integer>> giaVeCoBan = Map.of(
             "Ghế Mềm", Map.of(
                     "Trẻ em", 400,
@@ -304,5 +312,39 @@ public class Ve_DAO {
                     .toLocalDateTime(); // Chuyển đổi thành LocalDateTime
         }
         return ngayKhoiHanh;
+    }
+
+    public void capNhatVeTau(Ve ve){
+        String sql = "UPDATE Ve SET  ngayKhoiHanh = ?, NgayDatVe = ?, "
+                + "GiaVe = ?, MaGhe = ? "
+                + "WHERE MaVe = ?";
+        logger.info("bắt đầu cập nhật vé ");
+        try (
+                Connection connection = KetNoiCoSoDuLieu.ketNoiDB_HinhDB();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            logger.info(ve.getNgayKhoiHanh().toString());
+            // Định dạng thời gian cho SQL
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+            // Thiết lập giá trị cho câu truy vấn
+            preparedStatement.setString(1, ve.getNgayKhoiHanh().format(formatter));
+            preparedStatement.setString(2, ve.getNgayDatVe().format(formatter));
+            preparedStatement.setDouble(3, ve.getGiaVe());
+            preparedStatement.setString(4, ve.getMaGhe());
+            // Giả sử SoHieu là mã của đối tượng Tau
+            preparedStatement.setString(5, ve.getMaVe());
+
+            // Thực hiện câu lệnh cập nhật
+            int rowsAffected = preparedStatement.executeUpdate();
+            if (rowsAffected > 0) {
+                JOptionPane.showMessageDialog(null, "Cập Nhật Thành Công!");
+            } else {
+                JOptionPane.showMessageDialog(null, "Cập Nhật Thất Bại!");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Lỗi khi cập nhật vé trong cơ sở dữ liệu");
+        }
     }
 }
