@@ -31,6 +31,7 @@ public class TrangSoDoGiuong2 extends JPanel {
     public Color trang = new Color(255, 255, 255);
     public Color xanhNhat = new Color(66, 186, 255);
     public Color xanhBrandeis = new Color(0, 112, 255);
+    public Color camNhuomDen = new Color(253, 126, 20);
     public Color doDo = new Color(220, 53, 69);
     public Border vienNhat = BorderFactory.createLineBorder(xanhNhat);
     public Border vienDam = BorderFactory.createLineBorder(xanhBrandeis);
@@ -135,7 +136,7 @@ public class TrangSoDoGiuong2 extends JPanel {
             benGiuongLe.setBackground(trang);
 
             for (int j = 2; j >= 1; j--) {
-                JButton giuong = new JButton(String.valueOf(j - 1 + doTang * 2));
+                JButton giuong = new JButton(String.valueOf(j + doTang * 2));
                 giuong.setPreferredSize(new Dimension(chieuDaiNut, chieuRongNut));
 
                 // Kiểm tra trạng thái ghế và đặt màu tương ứng
@@ -149,7 +150,7 @@ public class TrangSoDoGiuong2 extends JPanel {
                 for (Ghe gheDaDat : dsGiuongDaDat) {
                     if (gheDaDat.getSoGhe().equals(String.valueOf(j - 1 + doTang * 2)) &&
                             this.maToa.equals(gheDaDat.getMaToa())) {
-                        giuong.setBackground(doDo);
+                        giuong.setBackground(camNhuomDen);
                         break; // Nếu tìm thấy ghế đã đặt, ngừng kiểm tra
                     }
                 }
@@ -186,6 +187,8 @@ public class TrangSoDoGiuong2 extends JPanel {
 
         themBieuTuongVaTieuDe(trangHuongDan, "Giường Trống", xanhBrandeis);
         themBieuTuongVaTieuDe(trangHuongDan, "Giường đã mua", doDo);
+        themBieuTuongVaTieuDe(trangHuongDan, "Ghế chọn", camNhuomDen);
+
 
         add(trangHuongDan, BorderLayout.SOUTH);
     }

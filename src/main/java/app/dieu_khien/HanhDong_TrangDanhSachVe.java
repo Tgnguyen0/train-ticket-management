@@ -1,12 +1,13 @@
 package app.dieu_khien;
 
-import app.dao.KhachHang_DAO;
-import app.dao.Ve_DAO;
-import app.dao.testDataVe;
+import app.dao.*;
 import app.giao_dien.TrangDanhSachVeTau;
 import app.giao_dien.TrangDinhHuong;
+import app.giao_dien.TrangThongTinChiTietVeTau;
 import app.phan_tu_tuy_chinh.TaoVeBangFilePDF;
+import app.thuc_the.Ghe;
 import app.thuc_the.KhachHang;
+import app.thuc_the.Toa;
 import app.thuc_the.Ve;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
@@ -21,6 +22,7 @@ import java.awt.event.MouseListener;
 import java.sql.SQLException;
 import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 @Slf4j
@@ -82,19 +84,25 @@ public class HanhDong_TrangDanhSachVe implements ActionListener, MouseListener {
             String maVe = this.trangDanhSachVeTau.textFieldMaVe.getText();
 
             try {
-                LocalDate ngayKhoiHanh = this.databaseVe.getNgayKhoiHanh_DuaVaoMaVe(maVe);
-                logger.info(ngayKhoiHanh+"");
-                logger.info(LocalDate.now()+"");
-                Duration duration = Duration.between(LocalDate.now().atStartOfDay(),ngayKhoiHanh.atStartOfDay());
-                if(duration.toHours() >= 24){
+                LocalDateTime ngayKhoiHanh = this.databaseVe.getNgayKhoiHanh_DuaVaoMaVe(maVe);
+                logger.info(ngayKhoiHanh.toString());
+                logger.info(LocalDate.now().toString());
+
+                // Chuyển đổi `LocalDateTime` thành `LocalDate` và sử dụng `atStartOfDay()`
+                LocalDate today = LocalDate.now();
+                LocalDateTime startOfToday = today.atStartOfDay();
+
+                Duration duration = Duration.between(startOfToday, ngayKhoiHanh);
+
+                if (duration.toHours() >= 24) {
                     JOptionPane.showMessageDialog(null, "Hủy Vé Thành Công!");
-                }
-                else {
+                } else {
                     JOptionPane.showMessageDialog(null, "Hủy Vé Không Thành Công!");
                 }
             } catch (SQLException ex) {
                 throw new RuntimeException(ex);
             }
+
         }
         else if(e.getSource() == this.trangDanhSachVeTau.buttonInVe){
             String maVe = this.trangDanhSachVeTau.textFieldMaVe.getText();
@@ -110,10 +118,39 @@ public class HanhDong_TrangDanhSachVe implements ActionListener, MouseListener {
             String ngayDatVe = this.trangDanhSachVeTau.ngayDatVe.getText();
             String ngayKhoiHanh = this.trangDanhSachVeTau.ngayKhoiHanh.getText();
             String giaVe = this.trangDanhSachVeTau.giaVe.getText();
+            if(JOptionPane.showConfirmDialog(null, "Xác Nhận In Vé ") == JOptionPane.YES_OPTION){
+                TaoVeBangFilePDF taoVeBangFilePDF = new TaoVeBangFilePDF();
+                taoVeBangFilePDF.generateTicketPDF("D:\\VeTau.pdf", maVe, tenKhachHang, diemDi, diemDen, ngayDatVe,
+                        ngayKhoiHanh, loaiVe, maGhe,doiTuong, giaVe);
+                JOptionPane.showMessageDialog(null, "In Vé Thành Công");
+            }
+        }
+        else if(e.getSource() == this.trangDanhSachVeTau.buttonThongTinChiTiet){
+            logger.info("Đã chọn nút thông tin chi tiết ");
+            String maVe = this.trangDanhSachVeTau.textFieldMaVe.getText();
+            String maKhachHang = this.trangDanhSachVeTau.textFieldMaKhachHang.getText();
+            KhachHang_DAO khachHangDao = new KhachHang_DAO();
+            KhachHang khachHang = khachHangDao.layKhachHangMuaVeTheoMaKhachHang(maKhachHang);
+            String tenKhachHang = khachHang.getTenKH();
+            String maGhe = this.trangDanhSachVeTau.textFieldMaGhe.getText();
+            String diemDi = this.trangDanhSachVeTau.textFieldDiemDi.getText();
+            String diemDen = this.trangDanhSachVeTau.textFieldDiemDen.getText();
+            String loaiVe = this.trangDanhSachVeTau.textFieldLoaiVe.getText();
+            String doiTuong = this.trangDanhSachVeTau.textFieldDoiTuong.getText();
+            String ngayDatVe = this.trangDanhSachVeTau.ngayDatVe.getText();
+            String ngayKhoiHanh = this.trangDanhSachVeTau.ngayKhoiHanh.getText();
+            String giaVe = this.trangDanhSachVeTau.giaVe.getText();
+            /*
+                lấy vị trí ghế ngồi
+             */
+            Ghe ghe = Ghe_DAO.layGheTheoMaGhe(maGhe);
+            /*
+                lấy tên toa và lấy số hiệu
+             */
+            Toa toa = Toa_DAO.layToaTheoMaToa(ghe.getMaToa());
 
-            TaoVeBangFilePDF taoVeBangFilePDF = new TaoVeBangFilePDF();
-            taoVeBangFilePDF.generateTicketPDF("D:\\VeTau.pdf", maVe, tenKhachHang, diemDi, diemDen, ngayDatVe,
-                    ngayKhoiHanh, loaiVe, maGhe,doiTuong, giaVe);
+            new TrangThongTinChiTietVeTau(maVe, loaiVe, diemDi, diemDen, ngayKhoiHanh,
+                    "", tenKhachHang,toa.getMaTau(), toa.getTenToa(), ghe.getSoGhe(), ngayDatVe, doiTuong, giaVe).setVisible(true);
         }
     }
 
@@ -167,7 +204,6 @@ public class HanhDong_TrangDanhSachVe implements ActionListener, MouseListener {
             throw new RuntimeException(ex);
         }
 
-//        this.trangDanhSachVeTau.thanh
     }
 
     @Override

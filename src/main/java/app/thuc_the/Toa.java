@@ -13,6 +13,14 @@ public class Toa {
     public Toa() {
     }
 
+    public String getMaTau() {
+        return maTau;
+    }
+
+    public void setMaTau(String maTau) {
+        this.maTau = maTau;
+    }
+
     public String getMaToa() {
         return maToa;
     }

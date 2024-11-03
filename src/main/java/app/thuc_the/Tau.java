@@ -34,14 +34,6 @@ public class Tau {
         return soLuongToiDa;
     }
 
-    /*public int getSoLuongKhachHangDaDatVe() {
-        return soLuongKhachHangDaDatVe;
-    }
-
-    public void setSoLuongKhachHangDaDatVe(int soLuongKhachHangDaDatVe) {
-        this.soLuongKhachHangDaDatVe = soLuongKhachHangDaDatVe;
-    }*/
-
     public Set<Toa> getDanhSachToa() {
         return danhSachToa;
     }

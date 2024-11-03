@@ -6,7 +6,10 @@ import app.dieu_khien.HanhDong_TrangHoaDon;
 import app.thuc_the.HoaDon;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
+import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -269,7 +272,7 @@ public class TrangHoaDon extends JPanel {
                 new Object [][] {
                 },
                 new String [] {
-                        "STT", "Mã Hóa Đơn", "Mã Khách hàng","Thành tiền", "Ngày Lập", "Số lượng", "Tổng Tiền", "Trạng Thái","Mã Nhân Viên"
+                        "STT", "Mã Hóa Đơn", "Mã Khách Hàng","Thành Tiền", "Ngày Lập", "Số Lượng", "Tổng Tiền", "Trạng Thái","Mã Nhân Viên"
                 }
         ) {
             Class[] types = new Class [] {
@@ -278,15 +281,26 @@ public class TrangHoaDon extends JPanel {
             boolean[] canEdit = new boolean [] {
                     false, false, false, false, false, false, false, false
             };
-
-            //            public Class getColumnClass(int columnIndex) {
-//                return types [columnIndex];
-//            }
-//
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
+            // Hàm không cho phép chỉnh sửa dữ liệu trên Jtable
+                public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
+
+        // Thiết lập Màu cho JtableHeader gồm màu sắc và font chữ
+        JTableHeader header = tableDanhSach.getTableHeader();
+        header.setDefaultRenderer(new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                label.setBackground(new Color(0, 125, 255)); // Đặt màu nền mong muốn
+                label.setForeground(Color.WHITE); // Đặt màu chữ
+                label.setFont(new Font("Arial", Font.BOLD, 14)); // Đặt font và kích thước chữ
+                label.setOpaque(true); // Đảm bảo nền được tô màu
+                return label;
+            }
+        });
+
         // Ẩn cột mã nhân viên
         tableDanhSach.getColumnModel().getColumn(8).setMinWidth(0);
         tableDanhSach.getColumnModel().getColumn(8).setMaxWidth(0);

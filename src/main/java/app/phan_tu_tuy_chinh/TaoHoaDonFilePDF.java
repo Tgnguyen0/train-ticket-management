@@ -1,5 +1,6 @@
 package app.phan_tu_tuy_chinh;
 
+import app.dao.NhanVien_DAO;
 import app.phong_chu_moi.PhongChuMoi;
 import app.thuc_the.HoaDon;
 import com.itextpdf.text.*;
@@ -9,8 +10,10 @@ import com.itextpdf.text.pdf.draw.VerticalPositionMark;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 public class TaoHoaDonFilePDF {
     private PhongChuMoi phongTuyChinh = new PhongChuMoi();
@@ -62,15 +65,19 @@ public class TaoHoaDonFilePDF {
             // Thông tin hóa đơn căn lề trái
             Paragraph invoiceInfo = new Paragraph();
             invoiceInfo.setAlignment(Element.ALIGN_LEFT);
-            invoiceInfo.add(new Paragraph("Mã Hóa Đơn: " + hoaDon.getMaHD() + "       Ngày Lập: " + hoaDon.getNgayLap().toString(), fontNormal));
+            // Định dạng số thành tiền tệ
+            NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
+            invoiceInfo.add((new Paragraph("_________________________________________________________________", fontNormal)));
+            invoiceInfo.add(new Paragraph("THÔNG TIN HOA ĐƠN", fontNormal));
+
+            invoiceInfo.add(new Paragraph("Mã Hóa Đơn: " + hoaDon.getMaHD() + "                Ngày Lập: " + hoaDon.getNgayLap().toString(), fontNormal));
             invoiceInfo.add(new Paragraph("Mã Khách Hàng: " + hoaDon.getMaKH(), fontNormal));
             invoiceInfo.add(new Paragraph("Số lượng: " + hoaDon.getSoLuong(), fontNormal));
-            invoiceInfo.add(new Paragraph("Thành Tiền: " + hoaDon.getThanhTien(), fontNormal));
+            invoiceInfo.add(new Paragraph("Tổng Tiền: " + currencyFormat.format(hoaDon.getTongTien()), fontNormal));
             invoiceInfo.add(new Paragraph("Đãi Ngộ: " + hoaDon.getDaiNgo(), fontNormal));
             invoiceInfo.add(new Paragraph("Thuế: " + hoaDon.getThue(), fontNormal));
-            invoiceInfo.add(new Paragraph("Tổng Tiền: " + hoaDon.getTongTien(), fontNormal));
+            invoiceInfo.add(new Paragraph("THÀNH TIỀN: " + currencyFormat.format(hoaDon.getThanhTien()), fontNormal));
             invoiceInfo.add(new Paragraph("Trạng Thái: " + hoaDon.getTrangThai(), fontNormal));
-            invoiceInfo.add(new Paragraph("Mã Nhân Viên: " + hoaDon.getMaNV(), fontNormal));
             document.add(invoiceInfo);
 
             // Thêm khoảng trắng
@@ -81,8 +88,12 @@ public class TaoHoaDonFilePDF {
             // Người phụ trách căn lề trái
             Paragraph signatures = new Paragraph();
             signatures.setAlignment(Element.ALIGN_LEFT);
-            signatures.add(new Paragraph("Người Phụ Trách: " + hoaDon.getMaNV(), fontItalic));
+            NhanVien_DAO nvDAO= new NhanVien_DAO();
+            String tenNV = nvDAO.layTenNhanVien(hoaDon.getMaNV());
+            signatures.add(new Paragraph("Người Phụ Trách: " + tenNV, fontItalic));
+            signatures.add(new Paragraph("Mã Nhân Viên: " + hoaDon.getMaNV(), fontItalic));
             signatures.add(new Paragraph(" ", fontItalic)); // Khoảng trống cho chỗ ký tên
+
             document.add(signatures);
 
             // Thêm khoảng trắng
@@ -92,13 +103,18 @@ public class TaoHoaDonFilePDF {
             String currentDate = new SimpleDateFormat("dd 'tháng' MM 'năm' yyyy").format(new Date());
             Paragraph dateParagraph = new Paragraph("Ngày " + currentDate, fontItalic);
             dateParagraph.setAlignment(Element.ALIGN_RIGHT);
+            document.add(new Paragraph(" "));
             document.add(dateParagraph);
 
             // Kết hợp xác nhận công ty và khách hàng trên một dòng
             Phrase signaturePhrase = new Phrase();
-            signaturePhrase.add(new Chunk("Xác nhận Công Ty", fontItalic));
-            signaturePhrase.add(new Chunk(new Chunk(new VerticalPositionMark())));
             signaturePhrase.add(new Chunk("Xác nhận Khách Hàng", fontItalic));
+            document.add(new Paragraph(" "));
+
+            signaturePhrase.add(new Chunk(new Chunk(new VerticalPositionMark())));
+            signaturePhrase.add(new Chunk("Xác nhận Công Ty", fontItalic));
+            document.add(new Paragraph(" "));
+
 
             // Thêm phrase vào tài liệu
             document.add(signaturePhrase);

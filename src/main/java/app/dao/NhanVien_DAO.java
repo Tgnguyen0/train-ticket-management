@@ -10,14 +10,137 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class NhanVien_DAO {
     String CHON_TAT_SQL = "SELECT * FROM NhaGa";
     String CHON_THEO_MA_SQL = "select * from NhanVien where MaGa =?";
 
     public List<NhanVien> dsnv;
+
+    public NhanVien_DAO() {
+    }
+
+    public static String getVaiTro(String username) {
+        try {
+            // Bước 1: tạo kết nối đến CSDL
+            Connection connection = KetNoiCoSoDuLieu.ketNoiDB_KhangVersion();
+
+            // Bước 2: tạo ra đối tượng statement
+            String sql = "SELECT VaiTro FROM NhanVien WHERE TenDangNhap = ?";
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, username);
+
+            // Bước 3: thực thi câu lệnh truy vấn
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                String vaiTro = rs.getString("VaiTro");
+                st.close();
+                connection.close();
+                return vaiTro;
+            }
+            st.close();
+            connection.close();
+
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static boolean update(NhanVien nv) {
+        try {
+            // Bước 1: tạo kết nối đến CSDL
+            Connection connection = KetNoiCoSoDuLieu.ketNoiDB_KhangVersion();
+
+            // Bước 2: tạo ra đối tượng statement
+            String sql = "UPDATE NhanVien SET TenNV = ?, NgaySinh = ?, DiaChi = ?, SoDT = ?, GioiTinh = ? WHERE MaNV = ?";
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, nv.getTenNV());
+            st.setDate(2, java.sql.Date.valueOf(nv.getNgaySinh()));
+            st.setString(3, nv.getDiaChi());
+            st.setString(4, nv.getSoDT());
+            st.setString(5, nv.getGioiTinh().getValue());
+            st.setString(6, nv.getMaNV());
+
+            // Bước 3: thực thi câu lệnh truy vấn
+            int kq = st.executeUpdate();
+            if (kq > 0) {
+                st.close();
+                connection.close();
+                return true;
+            }
+            st.close();
+            connection.close();
+
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public static String layMatKhau(String username) {
+        try {
+            // Bước 1: tạo kết nối đến CSDL
+            Connection connection = KetNoiCoSoDuLieu.ketNoiDB_KhangVersion();
+
+            // Bước 2: tạo ra đối tượng statement
+            String sql = "SELECT MatKhau FROM NhanVien WHERE TenDangNhap = ?";
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, username);
+
+            // Bước 3: thực thi câu lệnh truy vấn
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                String matKhau = rs.getString("MatKhau");
+                st.close();
+                connection.close();
+                System.out.printf(matKhau);
+                return matKhau.trim();
+            }
+            st.close();
+            connection.close();
+
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static boolean doiMatKhau(String mkMoi, String username) {
+        try {
+            // Bước 1: tạo kết nối đến CSDL
+            Connection connection = KetNoiCoSoDuLieu.ketNoiDB_KhangVersion();
+
+            // Bước 2: tạo ra đối tượng statement
+            String sql = "UPDATE NhanVien SET MatKhau = ? WHERE TenDangNhap = ?";
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, mkMoi);
+            st.setString(2, username);
+
+            // Bước 3: thực thi câu lệnh truy vấn
+            int kq = st.executeUpdate();
+            if (kq > 0) {
+                st.close();
+                connection.close();
+                return true;
+            }
+            st.close();
+            connection.close();
+
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return false;
+
+    }
 
     public void NhanVien_DAO() {
         dsnv = new ArrayList<NhanVien>();
@@ -65,11 +188,11 @@ public class NhanVien_DAO {
         return this.ChonSql(sql, "%" + keyword + "%");
     }
 
-    public void testLogin(String username, String password){
+    public void testLogin(String username, String password) {
 
-        if(username.equals("Duy") && password.equals("anhduy2002")){
+        if (username.equals("Duy") && password.equals("anhduy2002")) {
 
-        }else{
+        } else {
 
         }
     }
@@ -109,6 +232,8 @@ public class NhanVien_DAO {
                 connection.close();
                 return true;
             }
+            st.close();
+            connection.close();
 
         } catch (SQLException e) {
             // TODO Auto-generated catch block
@@ -116,5 +241,78 @@ public class NhanVien_DAO {
         }
         return false;
 
+    }
+
+    public static NhanVien layThongTinNV(String username) {
+        NhanVien nv = new NhanVien();
+        try {
+            // Bước 1: tạo kết nối đến CSDL
+            Connection connection = KetNoiCoSoDuLieu.ketNoiDB_KhangVersion();
+
+            // Bước 2: tạo ra đối tượng statement
+            String sql = "SELECT * FROM NhanVien WHERE TenDangNhap = ?";
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, username);
+
+            // Bước 3: thực thi câu lệnh truy vấn
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                String maNV = rs.getString("MaNV");
+                String tenNV = rs.getString("TenNV");
+                String diaChi = rs.getString("DiaChi");
+                String soDT = rs.getString("SoDT");
+                LocalDate ngaySinh = rs.getDate("NgaySinh").toLocalDate();
+                GIOI_TINH gt = GIOI_TINH.NAM;
+                if (!rs.getString("GioiTinh").equals("Nam")) {
+                    nv.setGioiTinh(GIOI_TINH.NU);
+                }
+                st.close();
+                connection.close();
+                return nv = new NhanVien(maNV, tenNV, ngaySinh, diaChi, soDT, gt);
+            }
+            st.close();
+            connection.close();
+
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return nv;
+
+    }
+
+    public static NhanVien layNhanVienTheo_TenNhanVien(String tenNhanVienRequest){
+        NhanVien nhanVien = null;
+        String sql = "SELECT * FROM NhanVien WHERE TenNV = ?";
+
+        try (Connection connection = KetNoiCoSoDuLieu.ketNoiDB_HinhDB();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setString(1, tenNhanVienRequest);  // Set the TenNV parameter
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                nhanVien = new NhanVien();
+                nhanVien.setMaNV(resultSet.getString("MaNV"));
+                nhanVien.setTenNV(resultSet.getString("TenNV"));
+                nhanVien.setNgaySinh(resultSet.getDate("NgaySinh").toLocalDate());
+                nhanVien.setDiaChi(resultSet.getString("DiaChi"));
+                nhanVien.setSoDT(resultSet.getString("SoDT"));
+                if(resultSet.getString("GioiTinh").compareToIgnoreCase("Nam")==0){
+                    nhanVien.setGioiTinh(GIOI_TINH.NAM);
+                }
+                else {
+                    nhanVien.setGioiTinh(GIOI_TINH.NU);
+                }
+                nhanVien.setMatKhau(resultSet.getString("MatKhau"));
+                nhanVien.setVaiTro(resultSet.getString("VaiTro"));
+                nhanVien.setVaiTro(resultSet.getString("TenDangNhap"));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return nhanVien;
     }
 }

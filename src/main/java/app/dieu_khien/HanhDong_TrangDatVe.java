@@ -7,11 +7,14 @@ import app.thuc_the.*;
 import com.toedter.calendar.JDateChooser;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
@@ -28,19 +31,12 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
 
     public HanhDong_TrangDatVe(TrangDatVe trangDatVe) {
         this.trangDatVe = trangDatVe;
+        this.dsVeDaDat = new ArrayList<>();
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
-
-        if (source == this.trangDatVe.nutHienThiSoDoGhe) {
-            this.trangCacTau = new TrangCacTau(this.trangDatVe.layDSTau(), this.trangDatVe.layGheDao());
-            trangCacTau.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            trangCacTau.setVisible(true);
-        }
-
-        this.trangDatVe.soHieuDaChon = this.trangCacTau.laySoHieuTauChon();
 
         if (source == this.trangDatVe.nutLuaChonMotChieu) {
             this.trangDatVe.nutLuaChonKhuHoi.setSelected(false);
@@ -68,61 +64,114 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
             TrangDanhSachVeTau.moGiaoDienDanhSach();
         }
 
+        if (source == this.trangDatVe.nutHienThiSoDoGhe) {
+            LocalDateTime ngayKhoiHanh = trangDatVe.thanhNhapNgayDi.getDate()
+                    .toInstant()
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalDateTime();
+
+            String maGa = this.trangDatVe.gaDao.ChonTheoTen( (String) this.trangDatVe.thanhCacDiemDi.getSelectedItem()).getMaGa();
+
+            List<LichCapBenGa> dsLich = this.trangDatVe.lichDao.ChonTheoNgayKHVaGa(ngayKhoiHanh, maGa);
+
+            this.trangCacTau = new TrangCacTau(this.trangDatVe.layDSTau(), this.trangDatVe.layGheDao(), dsLich);
+            trangCacTau.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            trangCacTau.setVisible(true);
+        }
+
+//        if (this.trangCacTau.laySoHieuTauChon() != null) {
+//            this.trangDatVe.soHieuDaChon = this.trangCacTau.laySoHieuTauChon();
+//        } else {
+//            this.trangDatVe.soHieuDaChon = null;
+//        }
+
         if (source == this.trangDatVe.nutXacNhan) {
+            List<KhachHang> dsKhDatVe = this.trangDatVe.layDSKhDatVe();
+
+            String hoTen = dsKhDatVe.get(bienSoTang).getTenKH();
+            String sdt = dsKhDatVe.get(bienSoTang).getSoDT();
+            String email = dsKhDatVe.get(bienSoTang).getEmail();
+
+            if (bienSoTang < dsKhDatVe.size()) {
+                this.trangDatVe.thanhNhapHoTen.setText(dsKhDatVe.get(bienSoTang + 1).getTenKH());
+                this.trangDatVe.thanhNhapDienThoai.setText(dsKhDatVe.get(bienSoTang + 1).getSoDT());
+                this.trangDatVe.thanhNhapThuDienTu.setText(dsKhDatVe.get(bienSoTang + 1).getEmail());
+            }
+
+            GIOI_TINH gioiTinh = dsKhDatVe.get(bienSoTang).getGioiTinh();
+
+            if (gioiTinh.getValue().equals("Nam")) {
+                this.trangDatVe.nutLuaChonNam.setSelected(true);
+                this.trangDatVe.nutLuaChonNu.setSelected(false);
+            } else {
+                this.trangDatVe.nutLuaChonNam.setSelected(false);
+                this.trangDatVe.nutLuaChonNu.setSelected(true);
+            }
+
             String diemDi = (String) trangDatVe.thanhCacDiemDi.getSelectedItem();
             String diemDen = (String) trangDatVe.thanhCacDiemDen.getSelectedItem();
             String loaiVe = trangDatVe.nutLuaChonKhuHoi.isSelected() ? "Khu Hoi" : "Mot Chieu";
 
-            LocalDate ngayKhoiHanh = trangDatVe.thanhNhapNgayDi
-                    .getDate()
+            LocalDateTime ngayKhoiHanh = trangDatVe.thanhNhapNgayDi.getDate()
                     .toInstant()
                     .atZone(ZoneId.systemDefault())
-                    .toLocalDate();
+                    .toLocalDateTime();
 
-            LocalDate ngayTroVe = trangDatVe.thanhNhapNgayTroVe
-                    .getDate()
+            LocalDateTime ngayTroVe = trangDatVe.thanhNhapNgayTroVe.getDate()
                     .toInstant()
                     .atZone(ZoneId.systemDefault())
-                    .toLocalDate();
+                    .toLocalDateTime();
 
             List<Ghe> dsChoDaDat = new ArrayList<>(this.trangDatVe.gheDao.layDSGheDat());
 
-            String hoTen = this.trangDatVe.thanhNhapHoTen.getText();
-            String sdt = this.trangDatVe.thanhNhapDienThoai.getText();
-            String email = this.trangDatVe.thanhNhapThuDienTu.getText();
-
-            LocalDate ngaySinh = trangDatVe.thanhNhapNgaySinh
-                    .getDate()
-                    .toInstant()
-                    .atZone(ZoneId.systemDefault())
-                    .toLocalDate();
-
-            if (6 <= LocalDate.now().getYear() - ngaySinh.getYear() && LocalDate.now().getYear() - ngaySinh.getYear() <= 10) {
-                this.trangDatVe.thanhLoaiDoiTuong.setText("Trẻ em");
-            } else {
-                this.trangDatVe.thanhLoaiDoiTuong.setText("Người lớn");
-            }
-
-            String loaiDoiTuong = this.trangDatVe.thanhLoaiDoiTuong.getText();
-            GIOI_TINH gioiTinh = trangDatVe.nutLuaChonNam.isSelected() ? GIOI_TINH.NAM : GIOI_TINH.NU;
-            DaiNgo daiNgo = DaiNgo.GIAMGIAKHONGPHANTRAM;
             String soHieuTau = this.trangDatVe.soHieuDaChon;
             String maToa = dsChoDaDat.get(bienSoTang).getMaToa();
             String soGhe = dsChoDaDat.get(bienSoTang).getSoGhe();
+            String loaiDoiTuong = (String) this.trangDatVe.thanhCacLoaiDoiTuong.getSelectedItem();
 
-            System.out.println("Trang Dat ve" + soGhe);
+            // Tính toán giá vé
+            int khoangCach = this.trangDatVe.gaDao.luocDoKhoangCach.get(diemDen) - this.trangDatVe.gaDao.luocDoKhoangCach.get(diemDi);
+            int giaCoBan = this.trangDatVe.veDao.giaVeCoBan.get(dsChoDaDat.get(bienSoTang).getLoaiGhe().toString()).get(loaiDoiTuong);
+            double giaVe = khoangCach * giaCoBan;
 
-            this.khachHang = new KhachHang("Nguyễn Nhật Tấn", "Ai bít", "0768558858", "nguyennhattan223344@gmail.com", GIOI_TINH.NAM);
+            // Khởi tạo đối tượng vé
+            this.ve = new Ve(loaiDoiTuong, ngayKhoiHanh, ngayTroVe, diemDi, diemDen, giaVe, this.trangDatVe.dsKHDatVe.get(bienSoTang).getMaKH(), dsChoDaDat.get(bienSoTang).getMaGhe(), dsChoDaDat.get(bienSoTang).getLoaiGhe().toString());
 
-            this.ve = new Ve(loaiDoiTuong, ngayKhoiHanh, ngayTroVe, diemDi, diemDen, 100000, (new KhachHang()).getMaKH(), dsChoDaDat.get(bienSoTang).getMaGhe(), dsChoDaDat.get(bienSoTang).getLoaiGhe().toString());
+            // Dòng dữ liệu
+            Object[] duLieu = {String.valueOf(bienSoTang + 1), ve.getMaVe(), hoTen, ve.getLoaiDoiTuong(), (int) ve.getGiaVe(), ve.getGaKhoiHanh(), ve.getGaKetThuc(), LocalDate.now(), ve.getNgayKhoiHanh().toString(), ve.getNgayDatVe(), soHieuTau, "10:00AM", ve.getLoaiVe().toString(), maToa, soGhe};
 
-            Object[] duLieu = {String.valueOf(bienSoTang + 1), ve.getMaVe(), hoTen, ve.getLoaiDoiTuong(), ve.getGiaVe(), ve.getGaKhoiHanh(), ve.getGaKetThuc(), ve.getNgayKhoiHanh().toString(), ve.getNgayDatVe(), soHieuTau, "10:00AM", ve.getLoaiVe().toString(), maToa, soGhe};
-
+            // Thêm vào bảng
             this.trangDatVe.moHinhBang.addRow(duLieu);
 
+            // Thêm vào danh sách vé đã đặt
             dsVeDaDat.add(ve);
 
-            bienSoTang++;
+            this.bienSoTang++;
+        }
+        if (e.getSource() == this.trangDatVe.nutThanhToan) {
+            // Lấy model của JTable trong TrangDatVe
+            DefaultTableModel modelDatVe = (DefaultTableModel) this.trangDatVe.bangVeDangDat.getModel();
+
+            // Tạo danh sách để lưu các vé
+            List<Ve> danhSachVe = new ArrayList<>();
+
+//            // Duyệt qua các dòng của modelDatVe và thêm vào danh sách
+//            for (int i = 0; i < modelDatVe.getRowCount(); i++) {
+//                Ve ve = new Ve();
+//
+//                ve.setMaKhachHang(modelDatVe.getValueAt(i, 1).toString());
+//                ve.setLoaiDoiTuong(modelDatVe.getValueAt(i, 2).toString());
+//                ve.setLoaiVe(modelDatVe.getValueAt(i, 9).toString()); // Sửa index phù hợp
+//                ve.setMaGhe(modelDatVe.getValueAt(i, 11).toString());  // Sửa index phù hợp
+//                ve.setGiaVe(Float.parseFloat(modelDatVe.getValueAt(i, 4).toString()));
+//
+//                danhSachVe.add(ve);
+//            }
+
+            // Tạo đối tượng TrangThanhToan và truyền danh sách vé qua
+            TrangThanhToan trangThanhToan = new TrangThanhToan(danhSachVe);
+            trangThanhToan.setVisible(true);
+
         }
 
         if (e.getSource() == this.trangDatVe.nutInVe) {
@@ -160,8 +209,8 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
                     // Thiết lập các thuộc tính
                     // Mã vé giả lập
                     ve.setLoaiDoiTuong("Người lớn");                 // Loại đối tượng
-                    ve.setNgayKhoiHanh(LocalDate.now().plusDays(5)); // Ngày khởi hành sau 5 ngày từ hiện tại
-                    ve.setNgayDatVe(LocalDate.now());                // Ngày đặt vé là hôm nay
+                    ve.setNgayKhoiHanh(LocalDateTime.now().plusDays(5)); // Ngày khởi hành sau 5 ngày từ hiện tại
+                    ve.setNgayDatVe(LocalDateTime.now());                // Ngày đặt vé là hôm nay
                     ve.setGaKhoiHanh("Hà Nội");                      // Ga khởi hành
                     ve.setGaKetThuc("Hồ Chí Minh");                  // Ga kết thúc
                     ve.setGiaVe(100000 + (i * 50000));               // Giá vé tăng dần
@@ -248,11 +297,6 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
                     this.trangDatVe.nutLuaChonKhuHoi.isSelected()) {
                 kiemTraNgayTroVe();
             }
-
-            // Handle date of birth and age categorization
-            if (source == this.trangDatVe.thanhNhapNgaySinh.getDateEditor()) {
-                duaRaLoaiDoiTuong();
-            }
         }
     }
 
@@ -295,25 +339,6 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
         ImageIcon bieuTuongTau = new ImageIcon("assets/icon.png");
         hoiThoai.setIconImage(bieuTuongTau.getImage());
         hoiThoai.setVisible(true);
-    }
-
-    private void duaRaLoaiDoiTuong() {
-        LocalDate ngaySinh;
-        LocalDate ngayHienTai = LocalDate.now();
-
-        if (this.trangDatVe.thanhNhapNgaySinh.getDate() == null) {
-            ngaySinh = ngayHienTai;
-        } else {
-            ngaySinh = this.trangDatVe.thanhNhapNgaySinh.getDate()
-                    .toInstant()
-                    .atZone(ZoneId.systemDefault())
-                    .toLocalDate();
-        }
-
-        int tuoi = ngayHienTai.getYear() - ngaySinh.getYear();
-
-        String loaiDoiTuong = (tuoi <= 10) ? "Trẻ em" : "Người lớn";
-        this.trangDatVe.thanhLoaiDoiTuong.setText(loaiDoiTuong);
     }
 
     private LocalDate layNgay(JDateChooser dateChooser) {
