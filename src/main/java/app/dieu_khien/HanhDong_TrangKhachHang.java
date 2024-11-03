@@ -21,9 +21,11 @@ import java.util.ArrayList;
 public class HanhDong_TrangKhachHang implements ActionListener, MouseListener {
     private TrangKhachHang trangKhachHang;
 
+
     public HanhDong_TrangKhachHang(TrangKhachHang trangKhachHang) {
         this.trangKhachHang = trangKhachHang;
     }
+
 
     @Override
     public void actionPerformed(ActionEvent e) {

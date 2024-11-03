@@ -13,14 +13,16 @@ import java.util.Date;
 import app.dao.NhanVien_DAO;
 import app.giao_dien.TrangDinhHuong;
 import app.giao_dien.TrangDangNhap;
-import app.giao_dien.TrangNhanVien;
 import app.thuc_the.GIOI_TINH;
 
 import javax.swing.*;
 
 public class HanhDong_TrangDangNhap implements ActionListener, MouseListener {
     TrangDangNhap trangDangNhap;
-
+    public static String gioVaoTruc;
+    public static String tenNV;
+    public static String maNV;
+    public static LocalDateTime ngayGioBatDau;
 
     public HanhDong_TrangDangNhap(TrangDangNhap trangDangNhap) {
         this.trangDangNhap = trangDangNhap;
@@ -35,6 +37,7 @@ public class HanhDong_TrangDangNhap implements ActionListener, MouseListener {
             String username = this.trangDangNhap.truongTen.getText();
             String password = new String(this.trangDangNhap.truongMatKhau.getPassword());
             if(NhanVien_DAO.login(username, password)) {
+                maNV = username;
                 this.trangDangNhap.setVisible(false);
                 TrangDinhHuong trangDinhHuong = new TrangDinhHuong();
                 if(NhanVien_DAO.getVaiTro(username).equals("manager")) {
@@ -53,11 +56,14 @@ public class HanhDong_TrangDangNhap implements ActionListener, MouseListener {
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
                 LocalDateTime now = LocalDateTime.now();
                 String formattedDateTime = now.format(formatter);
+                ngayGioBatDau = now;
+                gioVaoTruc = formattedDateTime;
                 trangDinhHuong.trangNhanVien.label_hienGioVaoTruc.setText(formattedDateTime);
                 trangDinhHuong.setVisible(true);
                 TrangDangNhap.tenDangNhap = username;
 
                 trangDinhHuong.trangDatVe.datMaNV(NhanVien_DAO.layThongTinNV(username).getMaNV());
+                tenNV = NhanVien_DAO.layThongTinNV(username).getTenNV();
             } else {
                 JOptionPane.showMessageDialog(this.trangDangNhap, "Sai tên đăng nhập hoặc mật khẩu", "Lỗi", JOptionPane.ERROR_MESSAGE);
             }
@@ -66,7 +72,6 @@ public class HanhDong_TrangDangNhap implements ActionListener, MouseListener {
         if (source == this.trangDangNhap.nutDangXuat) {
             System.exit(0);
         }
-
     }
 
 
