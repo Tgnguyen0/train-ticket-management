@@ -12,17 +12,12 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
-import java.util.Set;
 import java.util.List;
+import java.util.Set;
 
 public class TrangSoDoGheMem extends JPanel {
-    /**/
     public JPanel trangChua;
     public JComboBox<String> thanhCacToa;
-
-    int soGhe;
-
-    /* Khoi Tao Phong Chu Mau Sac */
     public int kichThuocChu = 13;
     public int chieuDaiNut = 50;
     public int chieuRongNut = 50;
@@ -34,15 +29,11 @@ public class TrangSoDoGheMem extends JPanel {
     public Color doDo = new Color(220, 53, 69);
     public Border vienNhat = BorderFactory.createLineBorder(xanhNhat);
     public Border vienDam = BorderFactory.createLineBorder(xanhBrandeis);
-    public Border gachChanNhat = BorderFactory.createMatteBorder(0, 0, 1, 0, xanhNhat);
-    public Border gachChanDam = BorderFactory.createMatteBorder(5, 5, 5, 5, xanhBrandeis);
 
-    /**/
     public ActionListener hanhDong;
     public MouseListener thaoTacChuot;
 
     public Ghe_DAO gheDao;
-
     public Set<Ghe> gheDaDat;
     public List<Ghe> dsGhe;
     public String tenToa;
@@ -67,15 +58,13 @@ public class TrangSoDoGheMem extends JPanel {
     }
 
     public void taoTrangTieuDe() {
-        JPanel trangTieuDe = new JPanel();
-        trangTieuDe.setLayout(new FlowLayout(FlowLayout.CENTER));
+        JPanel trangTieuDe = new JPanel(new FlowLayout(FlowLayout.CENTER));
         trangTieuDe.setPreferredSize(new Dimension(800, 40));
         trangTieuDe.setBackground(trang);
 
         JLabel tieuDe = new JLabel("Sơ đồ toa ghế mềm " + this.tenToa, SwingConstants.CENTER);
         tieuDe.setPreferredSize(new Dimension(800, 40));
         tieuDe.setForeground(xanhBrandeis);
-        tieuDe.setBackground(trang);
         tieuDe.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.BOLD, 18));
         trangTieuDe.add(tieuDe);
 
@@ -83,132 +72,80 @@ public class TrangSoDoGheMem extends JPanel {
     }
 
     public void taoTrangChuaCacSoDoGhe() {
-        JPanel trangChuaCacSoDoGhe = new JPanel();
-        trangChuaCacSoDoGhe.setLayout(new FlowLayout(FlowLayout.CENTER));
+        JPanel trangChuaCacSoDoGhe = new JPanel(new FlowLayout(FlowLayout.CENTER));
         trangChuaCacSoDoGhe.setPreferredSize(new Dimension(800, 100));
         trangChuaCacSoDoGhe.setBackground(trang);
 
-        JPanel soDoGheToa = taoTrangSoDoGhe();
-        trangChuaCacSoDoGhe.add(soDoGheToa);
-
+        trangChuaCacSoDoGhe.add(taoTrangSoDoGhe());
         add(trangChuaCacSoDoGhe, BorderLayout.CENTER);
     }
 
     public JPanel taoTrangSoDoGhe() {
-        JPanel trangSoDoGhe = new JPanel();
+        JPanel trangSoDoGhe = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 10));
+        trangSoDoGhe.setPreferredSize(new Dimension(700, 400));
         trangSoDoGhe.setBackground(trang);
-        trangSoDoGhe.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 10));
-
         xepNutGhe(trangSoDoGhe);
-
         return trangSoDoGhe;
     }
 
-    public void xepNutGhe(JPanel trangDung) {
+    private void xepNutGhe(JPanel trangDung) {
         int soGhe = dsGhe.size();
         List<Ghe> dsGheDaDat = new ArrayList<>(gheDao.layDSGheDat());
 
-        dsGhe.get(0).setTrangThai(TRANG_THAI_GHE.Da_dat);
-        dsGhe.get(7).setTrangThai(TRANG_THAI_GHE.Da_dat);
         for (int j = 1; j <= soGhe; j++) {
-            JPanel chuaGheDoc = new JPanel();
-            chuaGheDoc.setLayout(new GridLayout(2, 1, 5, 10));
+            JPanel chuaGheDoc = new JPanel(new GridLayout(2, 1, 5, 10));
+            JPanel chua2GheDocTren = new JPanel(new GridLayout(2, 1, 0, 1));
+            JPanel chua2GheDocDuoi = new JPanel(new GridLayout(2, 1, 0, 1));
 
-            JPanel chua2GheDocTren = new JPanel();
-            chua2GheDocTren.setLayout(new GridLayout(2, 1, 0, 1));
+            for (int i = 0; i <= 3 && 4 * (j - 1) < soGhe; i++) {
+                JButton ghe = taoNutGhe(j, i, dsGheDaDat);
 
-            JPanel chua2GheDocDuoi = new JPanel();
-            chua2GheDocDuoi.setLayout(new GridLayout(2, 1, 0, 1));
-
-            if (j % 2 != 0) {
-                for (int i = 0; i <= 3 && 4 * (j - 1) < soGhe; i++) {
-                    JButton ghe = new JButton(String.valueOf(4 * (j - 1) + i + 1)); // Tạo nút với tên ghế
-                    ghe.setPreferredSize(new Dimension(chieuDaiNut, chieuRongNut)); // Thiết lập kích thước nút
-                    ghe.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, 12));
-                    ghe.setForeground(trang); // Đặt màu chữ
-
-                    if (dsGhe.get(4 * (j - 1) + i).getTrangThai() == TRANG_THAI_GHE.Trong) {
-                        ghe.setBackground(xanhBrandeis);
-                    } else {
-                        ghe.setBackground(doDo);
-                    }
-
-                    if (!gheDao.layDSGheDat().isEmpty()) {
-                        for (int k = 0 ; k < dsGheDaDat.size() ; k++) {
-                            if (dsGheDaDat.get(k).getSoGhe().equals(String.valueOf(4 * (j - 1) + i + 1)) &&
-                            dsGheDaDat.get(k).getMaToa().equals(this.maToa)) {
-                                ghe.setBackground(camNhuomDen);
-                            }
-                        }
-                    }
-
-                    //ghe.setBackground(datMauNenTheoDSGhe(j, i));
-                    //ghe.setBackground(datMauNenTheoGheDaDat(j, i));
-                    ghe.setFocusPainted(false); // Bỏ viền khi click (focus)
-                    ghe.setBorderPainted(false);
-                    ghe.addActionListener(this.hanhDong);
-
-                    if (i <= 1) {
-                        chua2GheDocTren.add(ghe);
-                    }
-
-                    if (i > 1) {
-                        chua2GheDocDuoi.add(ghe);
-                    }
-
-                    chuaGheDoc.add(chua2GheDocTren, 0);
-                    chuaGheDoc.add(chua2GheDocDuoi, 1);
+                if (i <= 1) {
+                    chua2GheDocTren.add(ghe);
+                } else {
+                    chua2GheDocDuoi.add(ghe);
                 }
             }
 
             if (j % 2 == 0) {
-                for (int i = 3; i >= 0 && 4 * (j - 1) < soGhe; i--) {
-                    JButton ghe = new JButton(String.valueOf(4 * (j - 1) + i + 1)); // Tạo nút với tên ghế
-                    ghe.setPreferredSize(new Dimension(chieuDaiNut, chieuRongNut)); // Thiết lập kích thước nút
-                    ghe.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, 12));
-
-                    if (dsGhe.get(4 * (j - 1) + i).getTrangThai() == TRANG_THAI_GHE.Trong) {
-                        ghe.setBackground(xanhBrandeis);
-                    } else {
-                        ghe.setBackground(doDo);
-                    }
-
-                    if (!gheDao.layDSGheDat().isEmpty()) {
-                        for (int k = 0 ; k < dsGheDaDat.size() ; k++) {
-                            if (dsGheDaDat.get(k).getSoGhe().equals(String.valueOf(4 * (j - 1) + i + 1)) &&
-                             this.maToa.equals(dsGheDaDat.get(k).getMaToa())) {
-                                ghe.setBackground(camNhuomDen);
-                            }
-                        }
-                    }
-
-                    //ghe.setBackground(datMauNenTheoDSGhe(j, i));
-                    //ghe.setBackground(datMauNenTheoGheDaDat(j, i));
-                    ghe.setForeground(trang); // Đặt màu chữ
-                    ghe.setFocusPainted(false); // Bỏ viền khi click (focus)
-                    ghe.setBorderPainted(false);
-                    ghe.addActionListener(this.hanhDong);
-
-                    if (i <= 1) {
-                        chua2GheDocTren.add(ghe);
-                    }
-
-                    if (i > 1) {
-                        chua2GheDocDuoi.add(ghe);
-                    }
-
-                    chuaGheDoc.add(chua2GheDocDuoi, 0);
-                    chuaGheDoc.add(chua2GheDocTren, 1);
-                }
+                chuaGheDoc.add(chua2GheDocDuoi);
+                chuaGheDoc.add(chua2GheDocTren);
+            } else {
+                chuaGheDoc.add(chua2GheDocTren);
+                chuaGheDoc.add(chua2GheDocDuoi);
             }
 
             trangDung.add(chuaGheDoc);
         }
     }
 
+    private JButton taoNutGhe(int j, int i, List<Ghe> dsGheDaDat) {
+        JButton ghe = new JButton(String.valueOf(4 * (j - 1) + i + 1));
+        ghe.setPreferredSize(new Dimension(chieuDaiNut, chieuRongNut));
+        ghe.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, 12));
+        ghe.setForeground(trang);
+        ghe.setBackground(datMauGhe(j, i, dsGheDaDat));
+        ghe.setFocusPainted(false);
+        ghe.setBorderPainted(false);
+        ghe.addActionListener(this.hanhDong);
+        return ghe;
+    }
+
+    private Color datMauGhe(int j, int i, List<Ghe> dsGheDaDat) {
+        Ghe gheHienTai = dsGhe.get(4 * (j - 1) + i);
+        if (gheHienTai.getTrangThai() == TRANG_THAI_GHE.Da_dat) {
+            return doDo;
+        }
+        for (Ghe gheDaDat : dsGheDaDat) {
+            if (gheDaDat.getSoGhe().equals(gheHienTai.getSoGhe()) && gheDaDat.getMaToa().equals(this.maToa)) {
+                return camNhuomDen;
+            }
+        }
+        return xanhBrandeis;
+    }
+
     public void taoTrangHuongDan() {
-        JPanel trangHuongDan = new JPanel();
-        trangHuongDan.setLayout(new FlowLayout(FlowLayout.CENTER));
+        JPanel trangHuongDan = new JPanel(new FlowLayout(FlowLayout.CENTER));
         trangHuongDan.setPreferredSize(new Dimension(800, 140));
         trangHuongDan.setBackground(trang);
 
@@ -219,48 +156,22 @@ public class TrangSoDoGheMem extends JPanel {
         add(trangHuongDan, BorderLayout.SOUTH);
     }
 
-    /*private Color datMauNenTheoGheDaDat(int soGhe, int soGheTrongHangDoc) {
-        if (!gheDao.layDSGheDat().isEmpty()) {
-            List<Ghe> dsGheDaDat = new ArrayList<>(gheDao.layDSGheDat());
-
-            for (int k = 0 ; k < dsGheDaDat.size() ; k++) {
-                if (dsGheDaDat.get(k).getSoGhe().equals(String.valueOf(4 * (soGhe - 1) + soGheTrongHangDoc + 1)) &&
-                ) {
-                    return doDo;
-                }
-            }
-        }
-
-        return xanhBrandeis;
-    }
-
-    private Color datMauNenTheoDSGhe(int soGhe, int soGheTrongHangDoc) {
-        if (dsGhe.get(4 * (soGhe - 1) + soGheTrongHangDoc).getTrangThai() == TRANG_THAI_GHE.Trong) {
-            return xanhBrandeis; // Đặt màu nền
-        }
-
-        return doDo;
-    }*/
-
     private void themBieuTuongVaTieuDe(JPanel trangHienTai, String cau, Color mau) {
-        JPanel trangChuaTieuDeVaBieuTuong = new JPanel();
+        JPanel trangChuaTieuDeVaBieuTuong = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 0));
         trangChuaTieuDeVaBieuTuong.setPreferredSize(new Dimension(250, chieuRongNut));
         trangChuaTieuDeVaBieuTuong.setBackground(trang);
-        trangChuaTieuDeVaBieuTuong.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 0));
 
         JButton nutBieuTuong = new JButton("");
-        nutBieuTuong.setPreferredSize(new Dimension(chieuDaiNut, chieuRongNut)); // Thiết lập kích thước nút
-        nutBieuTuong.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, 12));
-        nutBieuTuong.setBackground(mau); // Đặt màu nền
-        nutBieuTuong.setForeground(trang); // Đặt màu chữ
-        nutBieuTuong.setFocusPainted(false); // Bỏ viền khi click (focus)
+        nutBieuTuong.setPreferredSize(new Dimension(chieuDaiNut, chieuRongNut));
+        nutBieuTuong.setBackground(mau);
+        nutBieuTuong.setForeground(trang);
+        nutBieuTuong.setFocusPainted(false);
         nutBieuTuong.setBorderPainted(false);
 
         JLabel tieuDe = new JLabel(cau, SwingConstants.LEFT);
         tieuDe.setPreferredSize(new Dimension(140, chieuRongNut));
         tieuDe.setForeground(xanhBrandeis);
-        tieuDe.setBackground(trang);
-        tieuDe.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.BOLD, 12));
+        tieuDe.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, kichThuocChu));
 
         trangChuaTieuDeVaBieuTuong.add(nutBieuTuong);
         trangChuaTieuDeVaBieuTuong.add(tieuDe);

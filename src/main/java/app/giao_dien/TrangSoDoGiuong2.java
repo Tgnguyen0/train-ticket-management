@@ -18,25 +18,23 @@ import java.util.Set;
 public class TrangSoDoGiuong2 extends JPanel {
     JPanel trangChuaTieuDeVaSoDo;
     public JPanel trangChuaSoDoGiuong;
-    public JComboBox<String> thanhCacToa;
-
-    int soNut = 28;
-    String[] muc = {"D1", "A1"};
 
     /* Khoi Tao Phong Chu Mau Sac */
-    public int kichThuocChu = 13;
-    public int chieuDaiNut = 50;
-    public int chieuRongNut = 50;
+    public static int kichThuocChu = 13;
+    public static int chieuDaiNut = 50;
+    public static int chieuRongNut = 50;
+
+    public static Color trang = new Color(255, 255, 255);
+    public static Color xanhNhat = new Color(66, 186, 255);
+    public static Color xanhBrandeis = new Color(0, 112, 255);
+    public static Color camNhuomDen = new Color(253, 126, 20);
+    public static Color doDo = new Color(220, 53, 69);
+
     public PhongChuMoi phongTuyChinh = new PhongChuMoi();
-    public Color trang = new Color(255, 255, 255);
-    public Color xanhNhat = new Color(66, 186, 255);
-    public Color xanhBrandeis = new Color(0, 112, 255);
-    public Color camNhuomDen = new Color(253, 126, 20);
-    public Color doDo = new Color(220, 53, 69);
-    public Border vienNhat = BorderFactory.createLineBorder(xanhNhat);
-    public Border vienDam = BorderFactory.createLineBorder(xanhBrandeis);
-    public Border gachChanNhat = BorderFactory.createMatteBorder(0, 0, 1, 0, xanhNhat);
-    public Border gachChanDam = BorderFactory.createMatteBorder(0, 1, 0, 1, xanhBrandeis);
+    public static Border vienNhat = BorderFactory.createLineBorder(xanhNhat);
+    public static Border vienDam = BorderFactory.createLineBorder(xanhBrandeis);
+    public static Border gachChanNhat = BorderFactory.createMatteBorder(0, 0, 1, 0, xanhNhat);
+    public static Border gachChanDam = BorderFactory.createMatteBorder(0, 1, 0, 1, xanhBrandeis);
 
     private ActionListener hanhDong;
     private MouseListener thaoTacChuot;

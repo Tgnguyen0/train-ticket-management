@@ -87,7 +87,6 @@ public class TaoVeBangFilePDF {
             table.addCell(createCell("Loại Đối Tượng:", font));
             table.addCell(createCell(loaiDoiTuong, font));
 
-
             table.addCell(createCell("Loại Vé:", font));
             table.addCell(createCell(loaiVe, font));
 

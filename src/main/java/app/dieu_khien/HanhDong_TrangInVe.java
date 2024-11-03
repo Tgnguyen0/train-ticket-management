@@ -7,6 +7,8 @@ import app.thuc_the.KhachHang;
 import app.thuc_the.Toa;
 import app.thuc_the.Ve;
 
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -73,6 +75,8 @@ public class HanhDong_TrangInVe implements ActionListener, MouseListener {
                 TaoVeBangFilePDF taoVeBangFilePDF = new TaoVeBangFilePDF();
                 taoVeBangFilePDF.generateTicketPDF("vé được tạo/" + maVe + ".pdf", maVe, kh.getTenKH(), diemDi, diemDen, ngayDatVe,
                         ngayKhoiHanh, loaiVe, ghe.getMaGhe(), "Người Lớn", giaVe);
+
+                hienThiThongBao("In vé thành công", "Thông báo in vé");
             }
         }
     }
@@ -100,5 +104,18 @@ public class HanhDong_TrangInVe implements ActionListener, MouseListener {
     @Override
     public void mouseExited(MouseEvent e) {
 
+    }
+
+    private void hienThiThongBao(String chuThich, String tieuDe) {
+        JLabel thongBao = new JLabel(chuThich);
+        thongBao.setFont(this.trangInVe.phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, 12));
+
+        JOptionPane hienThiLoi = new JOptionPane(thongBao, JOptionPane.INFORMATION_MESSAGE);
+        hienThiLoi.setForeground(this.trangInVe.xanhBrandeis);
+
+        JDialog hoiThoai = hienThiLoi.createDialog(tieuDe);
+        ImageIcon bieuTuongTau = new ImageIcon("assets/icon.png");
+        hoiThoai.setIconImage(bieuTuongTau.getImage());
+        hoiThoai.setVisible(true);
     }
 }

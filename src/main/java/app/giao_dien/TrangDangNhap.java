@@ -64,7 +64,6 @@ public class TrangDangNhap extends JFrame {
 
         createLoginPanel();
         createBannerPanel();
-
     }
 
     // Banner Panel

@@ -76,11 +76,11 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
                 trangCacTau.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 trangCacTau.setVisible(true);
             } else {
-                hienThiThongBao("Chưa chọn ngày khởi hành", "Lỗi chọn ngày");
+                hienThiThongBao("Chưa chọn ngày khởi hành", "Lỗi chọn ngày", JOptionPane.ERROR_MESSAGE);
             }
         }
 
-        if (this.trangCacTau.laySoHieuTauChon() != null) {
+        if (this.trangCacTau != null && this.trangCacTau.laySoHieuTauChon() != null) {
             this.trangDatVe.soHieuDaChon = this.trangCacTau.laySoHieuTauChon();
 
             LocalDateTime ngayKhoiHanh = this.trangDatVe.thanhNhapNgayDi.getDate()       // Lấy ngày khởi hành
@@ -220,7 +220,16 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
         }
 
         if (e.getSource() == this.trangDatVe.nutThanhToan) {
-            this.trangDatVe.veDao.themDSVe(this.dsVeDaDat);
+            if (!this.dsVeDaDat.isEmpty()) {
+                //hienThiThongBao("Không có vé để thanh toán!", "Lỗi thanh toán", JOptionPane.INFORMATION_MESSAGE);
+
+                this.trangDatVe.veDao.themDSVe(this.dsVeDaDat);
+
+                TrangThanhToan trangThanhToan = new TrangThanhToan(this.trangDatVe.veDao.layDSVeDat(), this.trangDatVe.dsKHDatVe, this.dsGhe);
+                trangThanhToan.setVisible(true);
+            } else {
+                hienThiThongBao("Không có vé để thanh toán!", "Lỗi thanh toán", JOptionPane.ERROR_MESSAGE);
+            }
         }
 
         if (e.getSource() == this.trangDatVe.nutInVe) {
@@ -229,7 +238,7 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
                 trangInVe.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 trangInVe.setVisible(true);
             } else {
-                hienThiThongBao("Không có vé để in !", "Lỗi in vé");
+                hienThiThongBao("Không có vé để in !", "Lỗi in vé", JOptionPane.ERROR_MESSAGE);
             }
         }
     }
@@ -240,7 +249,7 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
             String loaiGheDaChon = (String) e.getItem();
 
             if (this.trangDatVe.thanhCacDiemDen.getSelectedItem().equals(this.trangDatVe.thanhCacDiemDi.getSelectedItem())) {
-                hienThiThongBao("Điểm đi và điểm đến không được trùng", "Lỗi chọn địa điểm");
+                hienThiThongBao("Điểm đi và điểm đến không được trùng", "Lỗi chọn địa điểm", JOptionPane.ERROR_MESSAGE);
             }
         }
     }
@@ -303,7 +312,7 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
 
         if (!ngayDi.isAfter(ngayHienTai) && !ngayDi.equals(ngayHienTai)) {
             if (!isErrorDialogVisible) {
-                hienThiThongBao("Ngày đi phải sau Ngày hiện tại.", "Lỗi chọn ngày đi");
+                hienThiThongBao("Ngày đi phải sau Ngày hiện tại.", "Lỗi chọn ngày đi", JOptionPane.ERROR_MESSAGE);
                 isErrorDialogVisible = true;
             }
         } else {
@@ -325,11 +334,11 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
         }
     }*/
 
-    private void hienThiThongBao(String chuThich, String tieuDe) {
+    private void hienThiThongBao(String chuThich, String tieuDe, int message) {
         JLabel thongBao = new JLabel(chuThich);
         thongBao.setFont(this.trangDatVe.phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, 12));
 
-        JOptionPane hienThiLoi = new JOptionPane(thongBao, JOptionPane.ERROR_MESSAGE);
+        JOptionPane hienThiLoi = new JOptionPane(thongBao, message);
         hienThiLoi.setForeground(this.trangDatVe.xanhBrandeis);
 
         JDialog hoiThoai = hienThiLoi.createDialog(tieuDe);
