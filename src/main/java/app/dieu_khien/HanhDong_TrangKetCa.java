@@ -7,10 +7,11 @@ import app.giao_dien.TrangKetCa;
 import app.thuc_the.CaTruc;
 
 
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.Phrase;
+import com.itextpdf.text.*;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Font;
 import com.itextpdf.text.pdf.*;
+import com.lowagie.text.Cell;
 import org.apache.poi.xwpf.usermodel.*;
 
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
@@ -21,7 +22,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import com.itextpdf.text.Document;
+
 import com.itextpdf.text.pdf.PdfWriter;
 import java.io.File;
 import java.io.FileInputStream;
@@ -34,6 +35,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Map;
 
 import static jdk.jfr.consumer.EventStream.openFile;
+import static org.apache.poi.ss.util.CellUtil.createCell;
 
 
 public class HanhDong_TrangKetCa implements ActionListener {
@@ -189,7 +191,7 @@ public class HanhDong_TrangKetCa implements ActionListener {
         Double tongVAT = Double.parseDouble(trangKetCa.label_hienTongVAT.getText());
         Double tongTienGiamGia = Double.parseDouble(trangKetCa.label_hienTongGiam.getText());
         CaTruc caTruc = new CaTruc(maNhanVien, ngayGioBatDau_localDateTime, ngayGioKetThuc_localDateTime, tongHoaDon, tongTienCaTruoc, tongTienHoaDon, tongTienThucThu, thatThoat, tongVAT, tongTienGiamGia);
-        System.out.println(caTruc.toString());
+        //System.out.println(caTruc.toString());
         CaTruc_DAO.themCaTruc(caTruc);
         JOptionPane.showMessageDialog(trangKetCa, "Thêm ca trực thành công");
         int luaChon = JOptionPane.showConfirmDialog(trangKetCa, "Bạn có muốn in phiếu không?", "In phiếu", JOptionPane.YES_NO_OPTION);
@@ -216,8 +218,6 @@ public class HanhDong_TrangKetCa implements ActionListener {
             TrangDangNhap trangDangNhap = new TrangDangNhap();
             trangDangNhap.setVisible(true);
         }
-
-
     }
 
     private void inPhieu( CaTruc caTruc) {
@@ -270,6 +270,72 @@ public class HanhDong_TrangKetCa implements ActionListener {
             out.close();
 
         } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void inPhieuPdf(CaTruc caTruc) {
+        String outPutPdf = "src/main/java/app/resources/PhieuKetCa_" + caTruc.getMaCaTruc() + ".pdf";
+        try {
+            // Đường dẫn tới file font hỗ trợ tiếng Việt (đảm bảo file này tồn tại trong thư mục dự án)
+            String fontPath = "src/main/resources/fonts/times.ttf";
+            BaseFont baseFont = BaseFont.createFont(fontPath, BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+            Font fontTitle = new Font(baseFont, 18, Font.BOLD);
+            Font fontSubtitle = new Font(baseFont, 16, Font.BOLD);
+            Font fontContent = new Font(baseFont, 12, Font.NORMAL);
+
+            Document document = new Document();
+            PdfWriter.getInstance(document, new FileOutputStream(outPutPdf));
+            document.open();
+
+            // Nội dung của tài liệu PDF
+            Paragraph nhaGa = new Paragraph("Nhà Ga Sài Gòn", fontTitle);
+            nhaGa.setAlignment(Element.ALIGN_CENTER);
+            document.add(nhaGa);
+
+            Paragraph phieuKetCa = new Paragraph("Báo Cáo Kết Ca", fontSubtitle);
+            phieuKetCa.setAlignment(Element.ALIGN_CENTER);
+            document.add(phieuKetCa);
+
+            Paragraph diaChi = new Paragraph("123 đường Thống Nhất, P.10, quận Gò Vấp, TP.Hồ Chí Minh", fontContent);
+            diaChi.setAlignment(Element.ALIGN_CENTER);
+            document.add(diaChi);
+
+            // Thông tin chi tiết
+            document.add(new Paragraph("Mã nhân viên: " + caTruc.getMaNhanVien(), fontContent));
+            document.add(new Paragraph("Tên nhân viên: " + trangKetCa.label_hienTenNV.getText(), fontContent));
+            document.add(new Paragraph("Ngày giờ bắt đầu: " + trangKetCa.label_hienGioVaoCa.getText(), fontContent));
+            document.add(new Paragraph("Ngày giờ kết thúc: " + trangKetCa.label_hienGioKetCa.getText(), fontContent));
+
+            // Tạo bảng thông tin
+            PdfPTable table = new PdfPTable(6);
+            table.setWidthPercentage(100);
+            table.setSpacingBefore(10f);
+            table.setSpacingAfter(10f);
+
+            // Tiêu đề cột
+            String[] headers = {"Tổng số hóa đơn", "Tổng tiền ca trực", "Tổng tiền hệ thống", "Tổng VAT", "Tổng giảm giá", "Tổng tiền thực thu"};
+            for (String header : headers) {
+                PdfPCell cell = new PdfPCell(new Phrase(header, fontContent));
+                cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+                table.addCell(cell);
+            }
+
+            // Dữ liệu bảng
+            table.addCell(new PdfPCell(new Phrase(String.valueOf(caTruc.getTongHoaDon()), fontContent)));
+            table.addCell(new PdfPCell(new Phrase(String.valueOf(caTruc.getTongTienCaTruoc()), fontContent)));
+            table.addCell(new PdfPCell(new Phrase(String.valueOf(caTruc.getTongTienHoaDon()), fontContent)));
+            table.addCell(new PdfPCell(new Phrase(String.valueOf(caTruc.getTongVAT()), fontContent)));
+            table.addCell(new PdfPCell(new Phrase(String.valueOf(caTruc.getTongTienGiamGia()), fontContent)));
+            table.addCell(new PdfPCell(new Phrase(String.valueOf(caTruc.getTongTienThucThu()), fontContent)));
+
+            document.add(table);
+
+            document.add(new Paragraph("Nhân viên kết ca: " + trangKetCa.label_hienTenNV.getText(), fontContent));
+            document.add(new Paragraph("Nhân viên nhận ca: " + trangKetCa.label_hienTenNV.getText(), fontContent));
+
+            document.close();
+
+        } catch (DocumentException | IOException e) {
             e.printStackTrace();
         }
     }
