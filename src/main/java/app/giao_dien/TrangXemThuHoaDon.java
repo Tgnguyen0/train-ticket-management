@@ -47,8 +47,8 @@ public class TrangXemThuHoaDon extends  JDialog{
 
         thanhToan.add(new Label(""));
         thanhToan.add(new Label(""));
-        thanhToan.add(new JLabel(" - Thành Tiền:")).setForeground(Color.WHITE);
-        thanhToan.add(new JLabel(String.valueOf(hoaDon.getThanhTien()))).setForeground(Color.WHITE);
+        thanhToan.add(new JLabel(" - Tổng Tiền:")).setForeground(Color.WHITE);
+        thanhToan.add(new JLabel(String.valueOf(hoaDon.getTongTien() ))).setForeground(Color.WHITE);
         thanhToan.add(new Label(""));
         thanhToan.add(new Label(""));
         thanhToan.add(new JLabel(" - Đãi Ngộ:")).setForeground(Color.WHITE);
@@ -59,8 +59,8 @@ public class TrangXemThuHoaDon extends  JDialog{
         thanhToan.add(new JLabel(String.valueOf(hoaDon.getThue()))).setForeground(Color.WHITE);
         thanhToan.add(new Label(""));
         thanhToan.add(new Label(""));
-        thanhToan.add(new JLabel(" + TỔNG TIỀN:")).setForeground(Color.WHITE);
-        thanhToan.add(new JLabel(String.valueOf(hoaDon.getTongTien()))).setForeground(Color.WHITE);
+        thanhToan.add(new JLabel(" + THÀNH TIỀN:")).setForeground(Color.WHITE);
+        thanhToan.add(new JLabel(String.valueOf(hoaDon.getThanhTien()))).setForeground(Color.WHITE);
         thanhToan.add(new Label(""));
         thanhToan.add(new Label(""));
         add(thanhToan, BorderLayout.SOUTH);
@@ -79,5 +79,3 @@ public class TrangXemThuHoaDon extends  JDialog{
     }
 
 }
-
-

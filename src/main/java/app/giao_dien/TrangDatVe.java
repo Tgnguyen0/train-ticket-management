@@ -709,7 +709,12 @@ public class TrangDatVe extends JPanel {
                 {"2", "V220101002", "Văn Toàn", "Người Lớn", "900000", "Sài Gòn", "Đồng Văn", "2024-10-25", "2024-9-3", "VN9029", "00:00", "Ghế Giường 6", "VNTOA000027", "17"},
         };
 
-        this.moHinhBang = new DefaultTableModel(duLieu, tieuDeCot);
+        this.moHinhBang = new DefaultTableModel(duLieu, tieuDeCot) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
 
         JTable bangVeDangDat = new JTable(moHinhBang);
         bangVeDangDat.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, kichThuocChu));
@@ -746,6 +751,7 @@ public class TrangDatVe extends JPanel {
         tieuDeBang.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, kichThuocChu));
         tieuDeBang.setBackground(trang);
         tieuDeBang.setForeground(xanhBrandeis);
+        tieuDeBang.setReorderingAllowed(false);
 
         DefaultTableCellRenderer vienBang = new DefaultTableCellRenderer() {
             @Override

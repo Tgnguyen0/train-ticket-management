@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Map;
 
 public class HoaDon_DAO {
+    String CHON_15_SQL = "SELECT TOP 15 * FROM HoaDon ORDER BY NgayLap DESC;";
     String CHON_TAT_SQL = "SELECT * FROM HoaDon";
     String CHON_THEO_MAHD_SQL = "SELECT * FROM HoaDon WHERE MaHD =?";
     String CHON_THEO_MAKH_SQL = "SELECT * FROM HoaDon WHERE MaKH =?";
@@ -43,7 +44,7 @@ public class HoaDon_DAO {
     }
 
     public List<HoaDon> chonTatCa() {
-        return this.chonSql(CHON_TAT_SQL);
+        return this.chonSql(CHON_15_SQL);
     }
 
     public List<HoaDon> chonSql(String sql, Object...args){

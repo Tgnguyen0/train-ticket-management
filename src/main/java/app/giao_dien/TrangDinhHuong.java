@@ -113,8 +113,6 @@ public class TrangDinhHuong extends JFrame {
 
         taoThanhDinhHuong();
         taoTrangChua();
-
-
     }
 
     public void taoThanhDinhHuong() {

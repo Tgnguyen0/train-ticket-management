@@ -9,7 +9,6 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.ArrayList;
 import java.util.List;
 
 public class HanhDong_TrangHoaDon implements ActionListener, MouseListener, ItemListener {
@@ -50,7 +49,7 @@ public class HanhDong_TrangHoaDon implements ActionListener, MouseListener, Item
             } else {
                 JOptionPane.showMessageDialog(trangHoaDon, "Bạn chưa chọn hóa đơn!");
             }
-    }else if (source == this.trangHoaDon.buttonTimKiem) {
+        }else if (source == this.trangHoaDon.buttonTimKiem) {
             String maHD = this.trangHoaDon.tfTimKiem.getText().trim();
             String maKH = this.trangHoaDon.tfTimKiem.getText().trim();
             // Kiểm tra xem có nhập mã hóa đơn hoặc mã khách hàng không
@@ -116,8 +115,9 @@ public class HanhDong_TrangHoaDon implements ActionListener, MouseListener, Item
 
     public void printSelectedInvoice(int selectedRow) {
         List<HoaDon> danhSachHoaDon = hoaDon_dao.chonTatCa();
-            HoaDon hoaDon = danhSachHoaDon.get(selectedRow);
-            TaoHoaDonFilePDF.createInvoicePdf(hoaDon); // Gọi phương thức tạo PDF
+        HoaDon hoaDon = danhSachHoaDon.get(selectedRow);
+        TaoHoaDonFilePDF tao = new TaoHoaDonFilePDF();
+        tao.createInvoicePdf(hoaDon);  // Gọi phương thức tạo PDF
     }
 
     @Override
