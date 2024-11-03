@@ -122,7 +122,7 @@ public class HanhDong_TrangDanhSachVe implements ActionListener, MouseListener {
             String giaVe = this.trangDanhSachVeTau.giaVe.getText();
             if(JOptionPane.showConfirmDialog(null, "Xác Nhận In Vé ") == JOptionPane.YES_OPTION){
                 TaoVeBangFilePDF taoVeBangFilePDF = new TaoVeBangFilePDF();
-                taoVeBangFilePDF.generateTicketPDF("D:\\VeTau.pdf", maVe, tenKhachHang, diemDi, diemDen, ngayDatVe,
+                taoVeBangFilePDF.generateTicketPDF("vé được tạo/vé.pdf", maVe, tenKhachHang, diemDi, diemDen, ngayDatVe,
                         ngayKhoiHanh, loaiVe, maGhe,doiTuong, giaVe);
                 JOptionPane.showMessageDialog(null, "In Vé Thành Công");
             }

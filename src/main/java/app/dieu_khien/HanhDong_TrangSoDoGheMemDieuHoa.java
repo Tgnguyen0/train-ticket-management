@@ -30,19 +30,13 @@ public class HanhDong_TrangSoDoGheMemDieuHoa implements ActionListener, MouseLis
             if (this.trangSoDoGheMemDieuHoa.gheDao.layDSGheDat().contains(ghe)) {
                 this.trangSoDoGheMemDieuHoa.gheDao.xoaGhe(ghe);
                 nutGhe.setBackground(this.trangSoDoGheMemDieuHoa.xanhBrandeis);
-            }
-            // Nếu ghế chưa chọn, thêm vào Set và đổi màu thành đỏ (giới hạn 10 ghế)
-            else {
-                if (this.trangSoDoGheMemDieuHoa.gheDao.layDSGheDat().size() < 10) {
-                    //System.out.println(ghe.getMaGhe());
-                    //System.out.println(ghe.getSoGhe());
-                    //System.out.println(ghe.getMaToa());
-                    this.trangSoDoGheMemDieuHoa.gheDao.themGhe(ghe);
-                    this.trangSoDoGheMemDieuHoa.gheDao.datGheChon(ghe);
-                    nutGhe.setBackground(this.trangSoDoGheMemDieuHoa.camNhuomDen);
-                } else {
-                    hienThiThongBao("Bạn chỉ có thể chọn tối đa 10 ghế.");
-                }
+            } else {
+                //System.out.println(ghe.getMaGhe());
+                //System.out.println(ghe.getSoGhe());
+                //System.out.println(ghe.getMaToa());
+                this.trangSoDoGheMemDieuHoa.gheDao.themGhe(ghe);
+                this.trangSoDoGheMemDieuHoa.gheDao.datGheChon(ghe);
+                nutGhe.setBackground(this.trangSoDoGheMemDieuHoa.camNhuomDen);
             }
         } else {
             hienThiThongBao("Ghế đã đặt.");

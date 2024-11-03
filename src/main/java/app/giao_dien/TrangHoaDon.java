@@ -59,6 +59,8 @@ public class TrangHoaDon extends JPanel {
     private ItemListener mucDaChon;
     public NhanVien_DAO nhanVien_dao;
     public HoaDon_DAO hoaDon_dao= new HoaDon_DAO();
+    public DefaultTableModel model;
+    public HoaDon hdTao;
 
     public TrangHoaDon() {
         initComponents();
@@ -66,6 +68,16 @@ public class TrangHoaDon extends JPanel {
         HoaDon_DAO hoaDon_dao= new HoaDon_DAO();
         hienThiDanhSachHoaDon( hoaDon_dao.chonTatCa());
     }
+
+    public void datHoaDonDTao(HoaDon hd) {
+        this.hdTao = hd;
+        System.out.println(hd.getMaHoaDon());
+    }
+
+    public HoaDon layHoaDonTao() {
+        return this.hdTao;
+    }
+
     private void initComponents() {
         List<HoaDon> listHD= new ArrayList<HoaDon>();
         trangChua_TieuDeHoaDon = new javax.swing.JPanel();
@@ -268,24 +280,25 @@ public class TrangHoaDon extends JPanel {
                                 .addContainerGap())
         );
 
-        tableDanhSach.setModel(new javax.swing.table.DefaultTableModel(
-                new Object [][] {
-                },
+        this.model = new DefaultTableModel(new Object [][] {},
                 new String [] {
                         "STT", "Mã Hóa Đơn", "Mã Khách Hàng","Thành Tiền", "Ngày Lập", "Số Lượng", "Tổng Tiền", "Trạng Thái","Mã Nhân Viên"
-                }
-        ) {
-            Class[] types = new Class [] {
+                })
+        {
+            Class[] types = new Class[]{
                     java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
-            boolean[] canEdit = new boolean [] {
+            boolean[] canEdit = new boolean[]{
                     false, false, false, false, false, false, false, false
             };
+
             // Hàm không cho phép chỉnh sửa dữ liệu trên Jtable
             public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
+                return canEdit[columnIndex];
             }
-        });
+        };
+
+        tableDanhSach.setModel(model);
 
         // Thiết lập Màu cho JtableHeader gồm màu sắc và font chữ
         JTableHeader header = tableDanhSach.getTableHeader();
@@ -538,7 +551,7 @@ public class TrangHoaDon extends JPanel {
     // Hàm hiển thị danh sách len Jtable
     public void hienThiDanhSachHoaDon(List<HoaDon> dsHD)
     {
-        DefaultTableModel model= (DefaultTableModel) tableDanhSach.getModel();
+        DefaultTableModel model = (DefaultTableModel) tableDanhSach.getModel();
         model.setRowCount(0);
         int stt=1;
         for (HoaDon o:dsHD)
