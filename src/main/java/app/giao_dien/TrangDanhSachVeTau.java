@@ -462,7 +462,7 @@ public class TrangDanhSachVeTau extends JFrame{
 
         tieuDe_LoaiVe.setText("Loại Ghế:");
 
-        textFieldLoaiVe.setText("jTextField2");
+        textFieldLoaiVe.setText("");
 
         javax.swing.GroupLayout trangChua_LoaiVeLayout = new javax.swing.GroupLayout(trangChua_LoaiVe);
         trangChua_LoaiVe.setLayout(trangChua_LoaiVeLayout);
