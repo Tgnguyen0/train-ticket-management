@@ -1,5 +1,7 @@
 package app.thuc_the;
 
+import lombok.Builder;
+
 public enum DaiNgo {
     KhongDaiNgo(0) ,
     GIAMGIAHAIMUOIPHANTRAM(0.20),
@@ -15,5 +17,18 @@ public enum DaiNgo {
 
     public double getValue() {
         return price;
+    }
+
+    public String toString() {
+        switch (this) {
+            case GIAMGIAHAIMUOIPHANTRAM:
+                return "20%";
+            case GIAMGIAMUOIPHANTRAM:
+                return "10%";
+            case GIAMGIANAMPHANTRAM:
+                return "5%";
+            default:
+                return "0%";
+        }
     }
 }

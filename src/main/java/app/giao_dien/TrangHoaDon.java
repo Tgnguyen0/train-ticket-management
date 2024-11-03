@@ -4,7 +4,6 @@ import app.dao.HoaDon_DAO;
 import app.dao.NhanVien_DAO;
 import app.dieu_khien.HanhDong_TrangHoaDon;
 import app.thuc_the.HoaDon;
-import app.thuc_the.NhanVien;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -65,7 +64,7 @@ public class TrangHoaDon extends JPanel {
         initComponents();
         setPreferredSize(new java.awt.Dimension(1200, 600));
         HoaDon_DAO hoaDon_dao= new HoaDon_DAO();
-        hienThiDanhSachHoaDon(hoaDon_dao.chonTatCa());
+        hienThiDanhSachHoaDon( hoaDon_dao.chonTatCa());
     }
     private void initComponents() {
         List<HoaDon> listHD= new ArrayList<HoaDon>();
@@ -273,7 +272,7 @@ public class TrangHoaDon extends JPanel {
                 new Object [][] {
                 },
                 new String [] {
-                        "STT", "Mã Hóa Đơn", "Mã Khách hàng","Thành tiền", "Ngày Lập", "Số lượng", "Tổng Tiền", "Trạng Thái","Mã Nhân Viên"
+                        "STT", "Mã Hóa Đơn", "Mã Khách Hàng","Thành Tiền", "Ngày Lập", "Số Lượng", "Tổng Tiền", "Trạng Thái","Mã Nhân Viên"
                 }
         ) {
             Class[] types = new Class [] {
@@ -282,15 +281,13 @@ public class TrangHoaDon extends JPanel {
             boolean[] canEdit = new boolean [] {
                     false, false, false, false, false, false, false, false
             };
-
-            //            public Class getColumnClass(int columnIndex) {
-//                return types [columnIndex];
-//            }
-//
+            // Hàm không cho phép chỉnh sửa dữ liệu trên Jtable
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
+
+        // Thiết lập Màu cho JtableHeader gồm màu sắc và font chữ
         JTableHeader header = tableDanhSach.getTableHeader();
         header.setDefaultRenderer(new DefaultTableCellRenderer() {
             @Override
@@ -303,6 +300,7 @@ public class TrangHoaDon extends JPanel {
                 return label;
             }
         });
+
         // Ẩn cột mã nhân viên
         tableDanhSach.getColumnModel().getColumn(8).setMinWidth(0);
         tableDanhSach.getColumnModel().getColumn(8).setMaxWidth(0);
@@ -570,8 +568,8 @@ public class TrangHoaDon extends JPanel {
             tfMaNhanVien.setText(maNV);
 
             NhanVien_DAO nhanVienDao = new NhanVien_DAO();
-            NhanVien nv = nhanVienDao.ChonTheoMa(maNV);
-            tfTenNhanVien.setText(nv.getTenNV());
+            String tenNV = nhanVienDao.ChonTheoMa(maNV).getTenNV();
+            tfTenNhanVien.setText(tenNV);
 
             // Không cho chỉnh sửa thông tin nhân viên
             tfMaNhanVien.setEditable(false);

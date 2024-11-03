@@ -30,7 +30,7 @@ public class TrangInVe extends JFrame {
     public Color trang = new Color(255, 255, 255);
     public Color xanhBrandeis = new Color(0, 112, 255);
     public Color xanhNhat = new Color(66, 186, 255);
-    private PhongChuMoi phongTuyChinh = new PhongChuMoi();
+    public PhongChuMoi phongTuyChinh = new PhongChuMoi();
     public int charSize = 13;
     public int chieuDaiNut = 160;
     public int chieuRongNut = 50;

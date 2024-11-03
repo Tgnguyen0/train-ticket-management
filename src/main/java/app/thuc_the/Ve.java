@@ -66,13 +66,14 @@ public class Ve {
 
     public String setMaVe() {
         String maVe;
-        String ngayTrongThang = String.valueOf(LocalDateTime.now().getDayOfMonth());
+        String ngayTrongThang = String.format("%02d", LocalDateTime.now().getDayOfMonth());
         String thang = String.valueOf(LocalDateTime.now().getMonthValue());
         String nam = String.valueOf(LocalDateTime.now().getYear());
+        String giay = String.format("%03d", LocalDateTime.now().getSecond());
 
         nam = nam.substring(nam.length() - 2);
 
-        maVe = "V" + nam + thang + ngayTrongThang;
+        maVe = "V" + nam + thang + ngayTrongThang + giay;
 
         return maVe;
     }
