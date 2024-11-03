@@ -93,6 +93,7 @@ public class TrangDatVe extends JPanel {
     public List<NhaGa> dsGa;
     public String soHieuDaChon;
     public List<KhachHang> dsKHDatVe;
+    public String maNV;
 
     public TrangDatVe() {
         this.tauDao = new Tau_DAO();
@@ -130,6 +131,14 @@ public class TrangDatVe extends JPanel {
 
         add(trangDonDatVe, BorderLayout.CENTER);
         add(trangDSVeDangDat, BorderLayout.SOUTH);
+    }
+
+    public void datMaNV(String maNV) {
+        this.maNV = maNV;
+    }
+
+    public String layMaNV() {
+        return this.maNV;
     }
 
     public List<Tau> layDSTau() {
@@ -586,8 +595,8 @@ public class TrangDatVe extends JPanel {
         thanhCacLoaiDoiTuong.setBackground(trang);
         thanhCacLoaiDoiTuong.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, kichThuocChu));
         thanhCacLoaiDoiTuong.setFocusable(false);
-        thanhCacLoaiDoiTuong.addItem("Người lớn");
-        thanhCacLoaiDoiTuong.addItem("Trẻ em");
+        thanhCacLoaiDoiTuong.addItem("Người Lớn");
+        thanhCacLoaiDoiTuong.addItem("Trẻ Em");
         thanhCacLoaiDoiTuong.setPreferredSize(new Dimension(chieuDaiNut, chieuRongNut));
         thanhCacLoaiDoiTuong.setRenderer(new CustomComboBoxRenderer());
         thanhCacLoaiDoiTuong.addItemListener(mucDaChon);

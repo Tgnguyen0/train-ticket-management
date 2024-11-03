@@ -1,6 +1,7 @@
 package app.thuc_the;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.Random;
 
@@ -58,12 +59,11 @@ public class HoaDon {
         String ngayTrongThang = String.valueOf(LocalDate.now().getDayOfMonth());
         String thang = String.valueOf(LocalDate.now().getMonthValue());
         String nam = String.valueOf(LocalDate.now().getYear());
+        String giay = String.format("%04d", LocalDateTime.now().getSecond());
 
         nam = nam.substring(nam.length() - 2);
 
-        int soNgauNhien = new Random().nextInt(900) + 100;
-
-        maHoaDon = nam + thang + ngayTrongThang + String.valueOf(soNgauNhien);
+        maHoaDon = "HD" + nam + thang + ngayTrongThang + giay;
 
         return maHoaDon;
     }

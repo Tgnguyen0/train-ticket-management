@@ -81,8 +81,8 @@ public class TrangSoDoGheMem extends JPanel {
     }
 
     public JPanel taoTrangSoDoGhe() {
-        JPanel trangSoDoGhe = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 10));
-        trangSoDoGhe.setPreferredSize(new Dimension(700, 400));
+        JPanel trangSoDoGhe = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 10));
+        trangSoDoGhe.setPreferredSize(new Dimension(810, 400));
         trangSoDoGhe.setBackground(trang);
         xepNutGhe(trangSoDoGhe);
         return trangSoDoGhe;

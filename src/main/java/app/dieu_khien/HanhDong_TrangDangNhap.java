@@ -56,6 +56,8 @@ public class HanhDong_TrangDangNhap implements ActionListener, MouseListener {
                 trangDinhHuong.trangNhanVien.label_hienGioVaoTruc.setText(formattedDateTime);
                 trangDinhHuong.setVisible(true);
                 TrangDangNhap.tenDangNhap = username;
+
+                trangDinhHuong.trangDatVe.datMaNV(NhanVien_DAO.layThongTinNV(username).getMaNV());
             } else {
                 JOptionPane.showMessageDialog(this.trangDangNhap, "Sai tên đăng nhập hoặc mật khẩu", "Lỗi", JOptionPane.ERROR_MESSAGE);
             }
