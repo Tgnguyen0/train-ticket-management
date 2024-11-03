@@ -1,19 +1,20 @@
 package app.dao;
 
+import app.giao_dien.TrangKetCa;
 import app.ket_noi_co_so_du_lieu.KetNoiCoSoDuLieu;
 import app.thuc_the.HoaDon;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import app.giao_dien.TrangChuaThongKeDoanhThuNhaGa;
-import app.ket_noi_co_so_du_lieu.KetNoiCoSoDuLieu;
-import app.thuc_the.HoaDon;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -312,6 +313,137 @@ public class HoaDon_DAO {
             e.printStackTrace();
         }
         return  danhSachDoanhThu;
+    }
+
+    public static double layTongTienHeThong() {
+        Connection c;
+        try {
+            c = KetNoiCoSoDuLieu.ketNoiDB_KhangVersion();
+            if (c == null) {
+                System.out.println("Ket noi that bai");
+                return 0.0;
+            }
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            LocalDateTime dauNgay = LocalDate.now().atStartOfDay();
+            String formattedDateTime_start = dauNgay.format(formatter);
+            LocalDateTime ngayGioKetThuc = TrangKetCa.ngayGioKetThuc;
+            String formattedDateTime_end = ngayGioKetThuc.format(formatter);
+
+            String sql = "SELECT SUM(ThanhTien) AS tongTienHeThong FROM [dbo].[HoaDon] WHERE NgayLap BETWEEN ? AND ?; ";
+            PreparedStatement ps = c.prepareStatement(sql);
+            ps.setString(1, formattedDateTime_start);
+            ps.setString(2, formattedDateTime_end);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                double tongTienHeThong = rs.getDouble("tongTienHeThong");
+                System.out.printf("Thanh cong!Tong tien he thong: %f", tongTienHeThong);
+                return tongTienHeThong;
+            }
+            ps.close();
+            c.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.printf("Tong tien he thong: %f", 0.0);
+        }
+        return 0.0;
+    }
+    public static double layTongVAT(){
+        Connection c;
+        try {
+            c = KetNoiCoSoDuLieu.ketNoiDB_KhangVersion();
+            if (c == null) {
+                System.out.println("Ket noi that bai");
+                return 0.0;
+            }
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            LocalDateTime dauNgay = LocalDate.now().atStartOfDay();
+            String formattedDateTime_start = dauNgay.format(formatter);
+            LocalDateTime ngayGioKetThuc = TrangKetCa.ngayGioKetThuc;
+            String formattedDateTime_end = ngayGioKetThuc.format(formatter);
+
+            String sql = "SELECT SUM((TongTien*Thue)) AS tongVAT FROM [dbo].[HoaDon] WHERE NgayLap BETWEEN ? AND ?; ";
+            PreparedStatement ps = c.prepareStatement(sql);
+            ps.setString(1, formattedDateTime_start);
+            ps.setString(2, formattedDateTime_end);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                double tongVAT = rs.getDouble("tongVAT");
+                System.out.printf("Thanh cong!Tong VAT: %f", tongVAT);
+                return tongVAT;
+            }
+            ps.close();
+            c.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.printf("Tong VAT: %f", 0.0);
+        }
+        return 0.0;
+    }
+    public static double layTongGiamGia(){
+        Connection c;
+        try {
+            c = KetNoiCoSoDuLieu.ketNoiDB_KhangVersion();
+            if (c == null) {
+                System.out.println("Ket noi that bai");
+                return 0.0;
+            }
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            LocalDateTime dauNgay = LocalDate.now().atStartOfDay();
+            String formattedDateTime_start = dauNgay.format(formatter);
+            LocalDateTime ngayGioKetThuc = TrangKetCa.ngayGioKetThuc;
+            String formattedDateTime_end = ngayGioKetThuc.format(formatter);
+
+            String sql = "SELECT SUM((TongTien*DaiNgo)) AS tongGiamGia FROM [dbo].[HoaDon] WHERE NgayLap BETWEEN ? AND ?; ";
+            PreparedStatement ps = c.prepareStatement(sql);
+            ps.setString(1, formattedDateTime_start);
+            ps.setString(2, formattedDateTime_end);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                double tongGiamGia = rs.getDouble("tongGiamGia");
+                System.out.printf("ThanhCong! Tong giam gia: %f", tongGiamGia);
+                return tongGiamGia;
+            }
+            ps.close();
+            c.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.printf("Tong giam gia: %f", 0.0);}
+        return 0.0;
+    }
+    public static int laySoHoaDon(){
+        Connection c;
+        try {
+            c = KetNoiCoSoDuLieu.ketNoiDB_KhangVersion();
+            if (c == null) {
+                System.out.println("Ket noi that bai");
+                return 0;
+            }
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            LocalDateTime ngayGioBatDau = TrangKetCa.ngayGioBatDau;
+            String formattedDateTime_start = ngayGioBatDau.format(formatter);
+            LocalDateTime ngayGioKetThuc = TrangKetCa.ngayGioKetThuc;
+            String formattedDateTime_end = ngayGioKetThuc.format(formatter);
+
+            String sql = "SELECT COUNT(MaHD) AS tongHoaDon FROM [dbo].[HoaDon] WHERE NgayLap BETWEEN ? AND ?; ";
+            PreparedStatement ps = c.prepareStatement(sql);
+            ps.setString(1, formattedDateTime_start);
+            ps.setString(2, formattedDateTime_end);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                int tongHoaDon = rs.getInt("tongHoaDon");
+                System.out.printf("ThanhCong! Tong hoa don: %d", tongHoaDon);
+                return tongHoaDon;
+            }
+            ps.close();
+            c.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.printf("Tong hoa don: %d", 0);}
+        return 0;
     }
 }
 

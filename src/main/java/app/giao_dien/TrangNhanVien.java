@@ -5,23 +5,30 @@ import java.awt.BorderLayout;
 import javax.swing.*;
 import java.awt.Font;
 
+import app.dao.CaTruc_DAO;
+import app.dieu_khien.HanhDong_TrangDangNhap;
 import app.dieu_khien.HanhDong_TrangNhanVien;
+import app.thuc_the.CaTruc;
 import com.toedter.calendar.JDateChooser;
 
 import java.awt.GridLayout;
 import javax.swing.border.TitledBorder;
 import javax.swing.border.EtchedBorder;
 import java.awt.Color;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 
 public class TrangNhanVien extends JPanel {
 
     private static final long serialVersionUID = 1L;
+    public static String tenNV;
     public JLabel label_nhanVien;
     public JLabel lable_hienMaNV;
     public JTextArea textArea_diaChi;
     public JTable table;
-    public JLabel label_hienGioVaoTruc_1;
+
     public JComboBox comboBox_gt;
     public JLabel label_hienGioVaoTruc;
     public JDateChooser dateChooser_ngaySinh;
@@ -136,15 +143,7 @@ public class TrangNhanVien extends JPanel {
         panel_time.add(label_hienGioVaoTruc);
         label_hienGioVaoTruc.setFont(new Font("Tahoma", Font.PLAIN, 20));
 
-        JLabel label_gioVaoTruc_1 = new JLabel("Thời gian trực:");
-        label_gioVaoTruc_1.setBounds(10, 41, 132, 25);
-        panel_time.add(label_gioVaoTruc_1);
-        label_gioVaoTruc_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
 
-        label_hienGioVaoTruc_1 = new JLabel("lorem ipsum");
-        label_hienGioVaoTruc_1.setBounds(152, 41, 116, 25);
-        panel_time.add(label_hienGioVaoTruc_1);
-        label_hienGioVaoTruc_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
 
         JPanel panel_Table = new JPanel();
         panel_Table.setBounds(680, 113, 647, 345);
@@ -264,6 +263,10 @@ public class TrangNhanVien extends JPanel {
         dateChooser_ngaySinh.setForeground(new Color(144, 202, 249));
         dateChooser_ngaySinh.setBackground(new Color(232, 245, 253)); // #E8F5FD
 
+        hienLichSuTrucLenBang();
+
+
+
 // ADD ACTION LISTENER
         HanhDong_TrangNhanVien hanhDong_trangNhanVien = new HanhDong_TrangNhanVien(this);
         btn_capNhatThongTin.addActionListener(hanhDong_trangNhanVien);
@@ -271,6 +274,8 @@ public class TrangNhanVien extends JPanel {
         btn_ketCa.addActionListener(hanhDong_trangNhanVien);
         btn_quanLyNV.addActionListener(hanhDong_trangNhanVien);
     }
+
+
 
     public void regexCapNhat(String ten,String sdt, String diaChi){
         if(!regexTen(ten) || !regexSDT(sdt) || !regexDiaChi(diaChi)){
@@ -303,6 +308,16 @@ public class TrangNhanVien extends JPanel {
             return false;
         }
         return true;
+    }
+    public void hienLichSuTrucLenBang(){
+
+        ArrayList<CaTruc> dsCaTruc = CaTruc_DAO.layDanhSachTruc(HanhDong_TrangDangNhap.maNV);
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        model.setRowCount(0);
+        for (CaTruc caTruc : dsCaTruc) {
+            model.addRow(new Object[]{caTruc.getNgayGioBatDau(), caTruc.getNgayGioKetThuc()});
+        }
+
     }
 
 }

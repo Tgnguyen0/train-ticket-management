@@ -37,6 +37,7 @@ public class TrangDinhHuong extends JFrame {
     public TrangHoaDon trangHoaDon;
     public TrangGioiThieu trangGioiThieu;
     public TrangKhachHang trangKhachHang;
+    public TrangChuaThongKeNhanVienTheoNam trangChuaThongKeTheoNam;
     public TrangNhanVien trangNhanVien;
     public TrangChuaThongKeNhanVienTheoThang trangChuaThongKeNhanVienTheoThang;
     public TrangChuaThongKeDoanhThuNhaGa trangChuaThongKeDoanhThuNhaGa;
