@@ -20,6 +20,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -209,8 +210,8 @@ public class HanhDong_TrangDanhSachVe implements ActionListener, MouseListener {
             this.trangDanhSachVeTau.ngayDatVe.setText(ve.getNgayDatVe()+"");
 
             this.trangDanhSachVeTau.ngayKhoiHanh.setText(ve.getNgayKhoiHanh()+"");
-
-            this.trangDanhSachVeTau.giaVe.setText(ve.getGiaVe()+"");
+            DecimalFormat df = new DecimalFormat("#,###.##");
+            this.trangDanhSachVeTau.giaVe.setText(df.format(ve.getGiaVe())+" VNĐ");
 
 
             logger.info(ve.toString());
