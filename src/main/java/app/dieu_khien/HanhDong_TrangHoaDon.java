@@ -43,6 +43,9 @@ public class HanhDong_TrangHoaDon implements ActionListener, MouseListener, Item
                     // Mở trang chi tiết hóa đơn với dữ liệu chính xác
                     TrangXemThuHoaDon xemThuHoaDon = new TrangXemThuHoaDon(hoaDon);
                     xemThuHoaDon.setVisible(true);
+                } else if (this.trangHoaDon.hdTao != null) {
+                    TrangXemThuHoaDon xemThuHoaDon = new TrangXemThuHoaDon(this.trangHoaDon.hdTao);
+                    xemThuHoaDon.setVisible(true);
                 } else {
                     JOptionPane.showMessageDialog(trangHoaDon, "Hóa đơn không tồn tại hoặc đã bị xóa!", "Lỗi", JOptionPane.ERROR_MESSAGE);
                 }
@@ -90,6 +93,20 @@ public class HanhDong_TrangHoaDon implements ActionListener, MouseListener, Item
             trangHoaDon.lamMoiDuLieu();
             UIManager.put("OptionPane.messageFont", new Font("Arial", Font.BOLD, 16)); // Đặt font chữ lớn hơn
             JOptionPane.showMessageDialog(this.trangHoaDon, "Làm mới dữ liệu thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+
+            Object[] duLieu = {
+                    this.trangHoaDon.tableDanhSach.getRowCount() + 1,
+                    this.trangHoaDon.hdTao.getMaHoaDon(),
+                    this.trangHoaDon.hdTao.getMaKhachHang(),
+                    this.trangHoaDon.hdTao.getThanhTien(),
+                    this.trangHoaDon.hdTao.getNgayLapHoaDon(),
+                    this.trangHoaDon.hdTao.getSoLuong(),
+                    this.trangHoaDon.hdTao.getTongTien(),
+                    this.trangHoaDon.hdTao.getTrangThai(),
+            };
+
+            this.trangHoaDon.model.addRow(duLieu);
+
         } else if (source == trangHoaDon.buttonInHoaDon) {
             int selectedRow = trangHoaDon.tableDanhSach.getSelectedRow();
 
@@ -109,8 +126,6 @@ public class HanhDong_TrangHoaDon implements ActionListener, MouseListener, Item
                 }
             }
         }
-
-
     }
 
     public void printSelectedInvoice(int selectedRow) {
@@ -118,6 +133,9 @@ public class HanhDong_TrangHoaDon implements ActionListener, MouseListener, Item
         HoaDon hoaDon = danhSachHoaDon.get(selectedRow);
         TaoHoaDonFilePDF tao = new TaoHoaDonFilePDF();
         tao.createInvoicePdf(hoaDon);  // Gọi phương thức tạo PDF
+
+        hoaDon.setTrangThai("Đã In");
+        hoaDon_dao.capNhatTrangThai(hoaDon);
     }
 
     @Override

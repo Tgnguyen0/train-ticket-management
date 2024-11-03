@@ -23,7 +23,7 @@ public class CaTruc_DAO {
             PreparedStatement ps = c.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-               tienCaTruoc = Double.parseDouble(rs.getString("tongTienThucThu"));
+                tienCaTruoc = Double.parseDouble(rs.getString("tongTienThucThu"));
                 // Process the data
             } else {
                 System.out.println("No data found.");
@@ -42,13 +42,14 @@ public class CaTruc_DAO {
     public CaTruc_DAO() {
     }
     public static boolean themCaTruc(CaTruc caTruc) {
-        Connection c = null;
+        Connection c ;//= null;
+        int kq = 0;
         try {
             c = KetNoiCoSoDuLieu.ketNoiDB_KhangVersion();
-            if (c == null) {
+            /*if (c == null) {
                 System.out.println("Ket noi that bai");
                 return false;
-            }
+            }*/
             String sql = "INSERT INTO [dbo].[CaTruc] ([maNV],[ngayGioBatDau],[ngayGioKetCa],[tongHoaDon],[tongTienCaTruoc],[tongTienHoaDon],[tongTienThucThu],[thatThoat],[tongVAT],[tongTienGiamGia]) VALUES (?,?,?,?,?,?,?,?,?,?)";
             PreparedStatement ps = c.prepareStatement(sql);
             ps.setString(1, caTruc.getMaNhanVien());
@@ -61,17 +62,24 @@ public class CaTruc_DAO {
             ps.setDouble(8, caTruc.getThatThoat());
             ps.setDouble(9, caTruc.getTongVAT());
             ps.setDouble(10, caTruc.getTongTienGiamGia());
-            int kq = ps.executeUpdate();
+            kq = ps.executeUpdate();
             ps.close();
             c.close();
-            if (kq > 0) {
+            /*if (kq > 0) {
                 System.out.println("Them thanh cong");
                 return true;
-            }
+            }*/
 
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        System.out.println("kq: " + kq);
+        if (kq > 0) {
+                System.out.println("Them thanh cong");
+                return true;
+            }
+
         return  false;
     }
 

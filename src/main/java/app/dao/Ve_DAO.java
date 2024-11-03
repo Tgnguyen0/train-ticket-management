@@ -33,20 +33,20 @@ public class Ve_DAO {
     Logger logger = LoggerFactory.getLogger(TrangThongTinChiTietVeTau.class);
     public Map<String, Map<String, Integer>> giaVeCoBan = Map.of(
             "Ghế Mềm", Map.of(
-                    "Trẻ em", 400,
-                    "Người lớn", 450
+                    "Trẻ Em", 400,
+                    "Người Lớn", 450
             ),
             "Giường Toa 4", Map.of(
-                    "Trẻ em", 550,
-                    "Người lớn", 600
+                    "Trẻ Em", 550,
+                    "Người Lớn", 600
             ),
             "Giường Toa 6", Map.of(
-                    "Trẻ em", 460,
-                    "Người lớn", 520
+                    "Trẻ Em", 460,
+                    "Người Lớn", 520
             ),
             "Giường Toa 2 VIP", Map.of(
-                    "Trẻ em", 750,
-                    "Người lớn", 800
+                    "Trẻ Em", 750,
+                    "Người Lớn", 800
             )
     );
 

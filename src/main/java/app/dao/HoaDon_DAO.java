@@ -21,10 +21,12 @@ import java.util.List;
 import java.util.Map;
 
 public class HoaDon_DAO {
-    String CHON_15_SQL = "SELECT TOP 15 * FROM HoaDon ORDER BY NgayLap DESC;";
+    String CHON_15_SQL = "SELECT * FROM HoaDon ORDER BY NgayLap DESC;";
     String CHON_TAT_SQL = "SELECT * FROM HoaDon";
     String CHON_THEO_MAHD_SQL = "SELECT * FROM HoaDon WHERE MaHD =?";
     String CHON_THEO_MAKH_SQL = "SELECT * FROM HoaDon WHERE MaKH =?";
+    String LUU_HOA_DON_SQL = "INSERT INTO HoaDon(MaHD,NgayLap,MaNV,ThanhTien,MaKH,SoLuong,TongTien,TrangThai,DaiNgo,Thue) VALUES (?,?,?,?,?,?,?,?,?,?)";
+    String CAP_NHAT_TRANG_THAI_SQL = "UPDATE HoaDon SET TrangThai = ? WHERE MaHD = ?";
 
     ArrayList<HoaDon> dshd;
     Logger logger = LoggerFactory.getLogger(TrangChuaThongKeDoanhThuNhaGa.class);
@@ -80,6 +82,44 @@ public class HoaDon_DAO {
         }
 
         return ds;
+    }
+
+    public void LuuHoaDon(HoaDon hd) {
+        LuuSQL(
+                LUU_HOA_DON_SQL,
+                hd.getMaHoaDon(),
+                hd.getNgayLapHoaDon(),
+                hd.getMaNhanVien(),
+                hd.getThanhTien(),
+                hd.getMaKhachHang(),
+                hd.getSoLuong(),
+                hd.getTongTien(),
+                hd.getTrangThai(),
+                hd.getDaiNgo().getValue(),
+                hd.getThue()
+        );
+    }
+
+    public void LuuSQL(String sql, Object... args) {
+        try {
+            try (PreparedStatement stmt = KetNoiCoSoDuLieu.layCauLenh(sql, args)) {
+                stmt.executeUpdate();
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            throw new RuntimeException(ex);
+        }
+    }
+
+    public void capNhatTrangThai(HoaDon hd) {
+        try {
+            KetNoiCoSoDuLieu.capNhat(CAP_NHAT_TRANG_THAI_SQL,
+                    hd.getTrangThai(),
+                    hd.getMaHoaDon()
+            );
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public static ArrayList<String> layToanBoNamTuHoaDon(){
@@ -385,8 +425,7 @@ public class HoaDon_DAO {
         Connection c;
         try {
             c = KetNoiCoSoDuLieu.ketNoiDB_KhangVersion();
-            if (c == null) {
-                System.out.println("Ket noi that bai");
+            if (c == null) {System.out.println("Ket noi that bai");
                 return 0.0;
             }
 
