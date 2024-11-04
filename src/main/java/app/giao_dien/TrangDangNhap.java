@@ -188,7 +188,6 @@ public class TrangDangNhap extends JFrame {
         giua.add(nhanQuenMatKhau);
 
         add(giua, BorderLayout.CENTER);
-
     }
 
     public static void main(String[] args) {
