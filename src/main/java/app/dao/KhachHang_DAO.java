@@ -178,12 +178,9 @@ public class KhachHang_DAO {
             st.setString(5, khachHang.getGioiTinh().getValue());
             st.setString(6, khachHang.getMaKH());
             // Bước 3: thực thi câu lệnh SQL
-            int ketQuaThucHien = st.executeUpdate();
-            if (ketQuaThucHien > 0) {
+            st.executeUpdate();
                 JOptionPane.showMessageDialog(null, "Cập nhật thành công");
-            } else {
-                JOptionPane.showMessageDialog(null, "Cập nhật thất bại");
-            }
+
 
 
             // Bước 4: đóng kết nối

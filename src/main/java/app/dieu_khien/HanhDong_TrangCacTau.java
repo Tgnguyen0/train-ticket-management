@@ -8,7 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class HanhDong_TrangCacTau implements ActionListener, MouseListener {
+public class HanhDong_TrangCacTau implements ActionListener, MouseListener, WindowListener {
     TrangCacTau trangSoDoChung;
 
     public HanhDong_TrangCacTau(TrangCacTau trangSoDoChung) {
@@ -36,20 +36,38 @@ public class HanhDong_TrangCacTau implements ActionListener, MouseListener {
         }
 
         if (e.getSource() == this.trangSoDoChung.nutTau1) {
-            System.out.println("nut Tau 1");
-            this.trangSoDoChung.soHieuTauChon = this.trangSoDoChung.nutTau1.getActionCommand();
+            if (this.trangSoDoChung.nutTau1.isEnabled()) {
+                System.out.println("nut Tau 1");
+                this.trangSoDoChung.soHieuTauChon = this.trangSoDoChung.nutTau1.getActionCommand();
+            } else {
+                hienThiThongBao("Tàu không qua ga này vào ngày bạn chọn", "Lỗi lịch tàu", JOptionPane.ERROR_MESSAGE);
+            }
+
         }
 
         if (e.getSource() == this.trangSoDoChung.nutTau2) {
-            this.trangSoDoChung.soHieuTauChon = this.trangSoDoChung.nutTau2.getActionCommand();
+            if (this.trangSoDoChung.nutTau2.isEnabled()) {
+                this.trangSoDoChung.soHieuTauChon = this.trangSoDoChung.nutTau2.getActionCommand();
+            } else {
+                hienThiThongBao("Tàu không qua ga này vào ngày bạn chọn", "Lỗi lịch tàu", JOptionPane.ERROR_MESSAGE);
+            }
         }
 
         if (e.getSource() == this.trangSoDoChung.nutTau3) {
-            this.trangSoDoChung.soHieuTauChon = this.trangSoDoChung.nutTau3.getActionCommand();
+            if (this.trangSoDoChung.nutTau3.isEnabled()) {
+                this.trangSoDoChung.soHieuTauChon = this.trangSoDoChung.nutTau3.getActionCommand();
+            } else {
+                hienThiThongBao("Tàu không qua ga này vào ngày bạn chọn", "Lỗi lịch tàu", JOptionPane.ERROR_MESSAGE);
+            }
         }
 
         if (e.getSource() == this.trangSoDoChung.nutTau4) {
-            this.trangSoDoChung.soHieuTauChon = this.trangSoDoChung.nutTau4.getActionCommand();
+            if (this.trangSoDoChung.nutTau4.isEnabled()) {
+                this.trangSoDoChung.soHieuTauChon = this.trangSoDoChung.nutTau4.getActionCommand();
+            } else {
+                hienThiThongBao("Tàu không qua ga này vào ngày bạn chọn", "Lỗi lịch tàu", JOptionPane.ERROR_MESSAGE);
+            }
+
         }
     }
 
@@ -168,5 +186,55 @@ public class HanhDong_TrangCacTau implements ActionListener, MouseListener {
     @Override
     public void mouseExited(MouseEvent e) {
         // Không sử dụng
+    }
+
+    @Override
+    public void windowOpened(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowClosing(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowClosed(WindowEvent e) {
+        if (!this.trangSoDoChung.gheDao.layDSGheDat().isEmpty()) {
+            hienThiThongBao("Xác nhận ghế chọn thành công", "Xác nhận thành công", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+
+    @Override
+    public void windowIconified(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowActivated(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {
+
+    }
+
+    private void hienThiThongBao(String chuThich, String tieuDe, int message) {
+        JLabel thongBao = new JLabel(chuThich);
+        thongBao.setFont(this.trangSoDoChung.phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, 12));
+
+        JOptionPane hienThiLoi = new JOptionPane(thongBao, message);
+        hienThiLoi.setForeground(this.trangSoDoChung.xanhBrandeis);
+
+        JDialog hoiThoai = hienThiLoi.createDialog(tieuDe);
+        ImageIcon bieuTuongTau = new ImageIcon("assets/icon.png");
+        hoiThoai.setIconImage(bieuTuongTau.getImage());
+        hoiThoai.setVisible(true);
     }
 }

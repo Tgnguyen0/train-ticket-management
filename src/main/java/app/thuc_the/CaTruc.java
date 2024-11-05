@@ -67,10 +67,10 @@ public class CaTruc {
                 '}';
     }
 
-    public CaTruc(String maNhanVien, LocalDateTime ngayGioKetThuc, LocalDateTime ngayGioBatDau) {
+    public CaTruc(String maNhanVien, LocalDateTime ngayGioBatDau, LocalDateTime ngayGioKetThuc) {
         this.maNhanVien = maNhanVien;
-        this.ngayGioKetThuc = ngayGioKetThuc;
         this.ngayGioBatDau = ngayGioBatDau;
+        this.ngayGioKetThuc = ngayGioKetThuc;
     }
 
     public String getMaCaTruc() {

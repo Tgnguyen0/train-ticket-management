@@ -220,35 +220,50 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
         }
 
         if (e.getSource() == this.trangDatVe.nutThanhToan) {
-            if (!this.dsVeDaDat.isEmpty()) {
-                if (this.dsVeDaDat.size() == this.trangDatVe.dsKHDatVe.size()) {
-                    this.trangDatVe.veDao.themDSVe(this.dsVeDaDat);
-
-                    TrangThanhToan trangThanhToan = new TrangThanhToan(this.trangDatVe.veDao.layDSVeDat(), this.trangDatVe.dsKHDatVe, this.dsGhe);
-                    trangThanhToan.setVisible(true);
-
-                    trangThanhToan.datMaNV(this.trangDatVe.layMaNV());
-                } else {
-                    hienThiThongBao("Chưa đặt vé xong!", "Lỗi thanh toán", JOptionPane.ERROR_MESSAGE);
-                }
-                //hienThiThongBao("Không có vé để thanh toán!", "Lỗi thanh toán", JOptionPane.INFORMATION_MESSAGE);
-            } else {
-                hienThiThongBao("Không có vé để thanh toán!", "Lỗi thanh toán", JOptionPane.ERROR_MESSAGE);
+            if (this.trangDatVe.layMaNV() == null) {
+                hienThiThongBao("Chưa có đăng nhập!", "Lỗi đăng nhập", JOptionPane.ERROR_MESSAGE);
+                return;
             }
+
+            if (this.dsVeDaDat.isEmpty()) {
+                hienThiThongBao("Chưa đặt vé xong!", "Lỗi đặt vé", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            if (this.dsVeDaDat.size() != this.trangDatVe.dsKHDatVe.size()) {
+                hienThiThongBao("Chưa đặt vé xong!", "Lỗi đặt vé", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            this.trangDatVe.veDao.themDSVe(this.dsVeDaDat);
+
+            TrangThanhToan trangThanhToan = new TrangThanhToan(this.trangDatVe.veDao.layDSVeDat(), this.trangDatVe.dsKHDatVe, this.dsGhe);
+            trangThanhToan.setVisible(true);
+
+
+
+            trangThanhToan.datMaNV(this.trangDatVe.layMaNV());
         }
 
         if (e.getSource() == this.trangDatVe.nutInVe) {
-            if (!this.dsVeDaDat.isEmpty()) {
-                if (this.dsVeDaDat.size() == this.trangDatVe.dsKHDatVe.size()) {
-                    TrangInVe trangInVe = new TrangInVe(this.dsVeDaDat, this.trangDatVe.layDSKhDatVe(), this.dsGhe);
-                    trangInVe.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                    trangInVe.setVisible(true);
-                } else {
-                    hienThiThongBao("Chưa đặt vé xong!", "Lỗi thanh toán", JOptionPane.ERROR_MESSAGE);
-                }
-            } else {
-                hienThiThongBao("Không có vé để in !", "Lỗi in vé", JOptionPane.ERROR_MESSAGE);
+            if (this.dsVeDaDat.isEmpty()) {
+                hienThiThongBao("Không có vé để in !", "Lỗi đặt vé", JOptionPane.ERROR_MESSAGE);
+                return;
             }
+
+            if (this.dsVeDaDat.size() != this.trangDatVe.dsKHDatVe.size()) {
+                hienThiThongBao("Chưa đặt vé xong!", "Lỗi đặt vé", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            if (this.dsVeDaDat.size() != this.trangDatVe.dsKHDatVe.size()) {
+                hienThiThongBao("Chưa đặt vé xong!", "Lỗi đặt vé", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            TrangInVe trangInVe = new TrangInVe(this.dsVeDaDat, this.trangDatVe.layDSKhDatVe(), this.dsGhe);
+            trangInVe.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            trangInVe.setVisible(true);
         }
     }
 

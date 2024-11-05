@@ -34,7 +34,7 @@ public class TrangCacTau extends JFrame {
     public Color trang = new Color(255, 255, 255);
     public Color xanhBrandeis = new Color(0, 112, 255);
     public Color xanhNhat = new Color(66, 186, 255);
-    private PhongChuMoi phongTuyChinh = new PhongChuMoi();
+    public PhongChuMoi phongTuyChinh = new PhongChuMoi();
     public int charSize = 13;
     public int chieuDaiNut = 200;
     public int chieuRongNut = 200;
@@ -44,6 +44,7 @@ public class TrangCacTau extends JFrame {
 
     private ActionListener hanhDong;
     private MouseListener thaoTacChuot;
+    private WindowListener hanhDongTrang;
 
     public Toa_DAO toaDao;
     public Ghe_DAO gheDao;
@@ -108,6 +109,9 @@ public class TrangCacTau extends JFrame {
         // Thêm ActionListener và MouseListener cho các nút
         this.hanhDong = new HanhDong_TrangCacTau(this);
         this.thaoTacChuot = new HanhDong_TrangCacTau(this);
+        this.hanhDongTrang = new HanhDong_TrangCacTau(this);
+
+        this.addWindowListener(hanhDongTrang);
 
         taoThanhDinhHuongToa();
         taoTrangChua();

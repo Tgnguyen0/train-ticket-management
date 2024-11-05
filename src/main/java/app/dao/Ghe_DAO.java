@@ -20,6 +20,7 @@ public class Ghe_DAO {
     String CHON_TAT_SQL = "SELECT * FROM Ghe";
     String CHON_THEO_MA_GHE_SQL = "select * from Ghe where MaGhe =?";
     String CHON_THEO_MA_TOA_SQL = "select * from Ghe where MaToa =?";
+    String CAP_NHAT_TRANG_THAI_GHE = "UPDATE Ghe SET TrangThaiGhe = ? WHERE MaGhe = ?";
 
     public Ghe_DAO() {
         gheDat = new HashSet<>();
@@ -45,6 +46,11 @@ public class Ghe_DAO {
         return this.gheDaChon;
     }
 
+    public void xoaDSGheChon() {
+        HashSet<Ghe> dsCanXoa = this.gheDat;
+        this.gheDat.removeAll(dsCanXoa);
+    }
+
     public Ghe ChonTheoMa(String maGhe) {
         List<Ghe> list = this.ChonSql(CHON_THEO_MA_GHE_SQL, maGhe);
         return list.size() > 0 ? list.get(0) : null;
@@ -57,6 +63,10 @@ public class Ghe_DAO {
 
     public List<Ghe> ChonTatCa() {
         return this.ChonSql(CHON_TAT_SQL);
+    }
+
+    public void capNhatTrangThaiGhe(String trangThai, String maGhe) {
+        LuuSQL(CAP_NHAT_TRANG_THAI_GHE, trangThai, maGhe);
     }
 
     protected List<Ghe> ChonSql(String sql, Object... args) {
@@ -106,6 +116,17 @@ public class Ghe_DAO {
             throw new RuntimeException(ex);
         }
         return list;
+    }
+
+    public void LuuSQL(String sql, Object... args) {
+        try {
+            try (PreparedStatement stmt = KetNoiCoSoDuLieu.layCauLenh(sql, args)) {
+                stmt.executeUpdate();
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            throw new RuntimeException(ex);
+        }
     }
 
     public List<Ghe> selectByKeyword(String keyword) {
