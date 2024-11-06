@@ -6,10 +6,6 @@ import app.thuc_the.HoaDon;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import app.giao_dien.TrangChuaThongKeDoanhThuNhaGa;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.time.LocalDate;
@@ -29,7 +25,7 @@ public class HoaDon_DAO {
     String CAP_NHAT_TRANG_THAI_SQL = "UPDATE HoaDon SET TrangThai = ? WHERE MaHD = ?";
 
     ArrayList<HoaDon> dshd;
-    Logger logger = LoggerFactory.getLogger(TrangChuaThongKeDoanhThuNhaGa.class);
+    //Logger logger = LoggerFactory.getLogger(TrangChuaThongKeDoanhThuNhaGa.class);
 
     public HoaDon_DAO() {
         dshd = new ArrayList<HoaDon>();

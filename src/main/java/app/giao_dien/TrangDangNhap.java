@@ -23,6 +23,8 @@ import javax.swing.border.Border;
 
 import app.dieu_khien.HanhDong_TrangDangNhap;
 import app.phong_chu_moi.PhongChuMoi;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class TrangDangNhap extends JFrame {
     public JTextField truongTen;
@@ -188,12 +190,14 @@ public class TrangDangNhap extends JFrame {
         giua.add(nhanQuenMatKhau);
 
         add(giua, BorderLayout.CENTER);
+
     }
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             TrangDangNhap trangDangNhap = new TrangDangNhap();
             trangDangNhap.setVisible(true);
+
         });
     }
 }
