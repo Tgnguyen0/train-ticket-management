@@ -2,6 +2,7 @@ package app.dao;
 
 import app.giao_dien.TrangKetCa;
 import app.ket_noi_co_so_du_lieu.KetNoiCoSoDuLieu;
+import app.thuc_the.DaiNgo;
 import app.thuc_the.HoaDon;
 
 import java.sql.ResultSet;
@@ -197,6 +198,50 @@ public class HoaDon_DAO {
         }
 
         return tongSoLuong;
+    }
+    public static ArrayList<HoaDon> danhSachHoaDonTrongThang_Nam(int nam, int thang){
+        ArrayList<HoaDon> danhSachHoaDon = new ArrayList<>();
+        String query = "SELECT *  FROM HoaDon WHERE YEAR(NgayLap) = ? and MONTH(NgayLap) = ? order by NgayLap ASC";
+
+        try (Connection connection = KetNoiCoSoDuLieu.ketNoiDB_HinhDB();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            preparedStatement.setInt(1, nam);
+            preparedStatement.setInt(2, thang);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                HoaDon hoaDon = new HoaDon();
+                hoaDon.setMaHoaDon(resultSet.getString("MaHD"));
+                hoaDon.setNgayLapHoaDon(resultSet.getDate("NgayLap").toLocalDate());
+                hoaDon.setMaNhanVien(resultSet.getString("MaNV"));
+                hoaDon.setThanhTien(resultSet.getDouble("ThanhTien"));
+                hoaDon.setMaKhachHang(resultSet.getString("MaKH"));
+                hoaDon.setSoLuong(resultSet.getInt("SoLuong"));
+                hoaDon.setTongTien(resultSet.getDouble("TongTien"));
+                hoaDon.setTrangThai(resultSet.getString("TrangThai"));
+                double daiNgo_DB = resultSet.getDouble("DaiNgo");
+                if (daiNgo_DB == 0.0){
+                    hoaDon.setDaiNgo(DaiNgo.GIAMGIAKHONGPHANTRAM);
+                }
+                else if(daiNgo_DB == 0.2){
+                    hoaDon.setDaiNgo(DaiNgo.GIAMGIAHAIMUOIPHANTRAM);
+                }
+                else if(daiNgo_DB == 0.05){
+                    hoaDon.setDaiNgo(DaiNgo.GIAMGIANAMPHANTRAM);
+                }
+                else if(daiNgo_DB == 0.10){
+                    hoaDon.setDaiNgo(DaiNgo.GIAMGIAMUOIPHANTRAM);
+                }
+                hoaDon.setThue(resultSet.getFloat("Thue"));
+
+                danhSachHoaDon.add(hoaDon);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return danhSachHoaDon;
     }
 
     public static Map<String, Double> layDoanhThuCacNam(int namXuatPhat, int namKetThuc){

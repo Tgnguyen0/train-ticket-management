@@ -606,7 +606,7 @@ public class TrangChuaThongKeNhanVienTheoNam extends JPanel{
         buttonThongKeDoanhThu.setForeground(this.trang);
         buttonThongKeDoanhThu.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.BOLD, 14));
 
-        buttonThongKeTheoThangCuaNhanVien.setText("<html>Thống Kê Theo Tháng  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Nhân Viên </html>");
+        buttonThongKeTheoThangCuaNhanVien.setText("<html>Thống Kê Theo Tháng<br>&nbsp;&nbsp;&nbsp;&nbsp;Nhân Viên </html>");
         buttonThongKeTheoThangCuaNhanVien.setBackground(this.xanhBrandeis);
         buttonThongKeTheoThangCuaNhanVien.setForeground(this.trang);
         buttonThongKeTheoThangCuaNhanVien.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.BOLD, 14));
@@ -721,7 +721,7 @@ public class TrangChuaThongKeNhanVienTheoNam extends JPanel{
         this.trangChuaBieuDoCot.removeAll();
         int nam = Integer.parseInt((String) danhSachNam.getSelectedItem());
         Map<String, Double> danhSachDoanhThu = HoaDon_DAO.layDoanhThuCuaTungNhanVienTheo_Nam(nam);
-        bieuDoCot = new BieuDoCot(danhSachDoanhThu);
+        bieuDoCot = new BieuDoCot(danhSachDoanhThu, TrangChuaThongKeNhanVienTheoNam.class);
 
 
         javax.swing.GroupLayout trangChuaBieuDoCotLayout = new javax.swing.GroupLayout(trangChuaBieuDoCot);
