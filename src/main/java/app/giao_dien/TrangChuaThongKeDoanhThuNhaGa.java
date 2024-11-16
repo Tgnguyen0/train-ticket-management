@@ -873,8 +873,16 @@ public class TrangChuaThongKeDoanhThuNhaGa extends JPanel {
         this.trangChuaBieuDoCot.removeAll();
         int namXuatPhat = Integer.parseInt((String) this.danhSachNamXuatPhat.getSelectedItem());
         int namKetThuc =  Integer.parseInt((String) this.danhSachNamKetThuc.getSelectedItem());
+        Map<String, Double> danhSachDoanhThu;
+        if(namXuatPhat > namKetThuc){
+            JOptionPane.showMessageDialog(null, "Năm Kết Thúc Phải Lớn Hơn Năm Xuất Phát", "Cảnh Báo",JOptionPane.ERROR_MESSAGE);
+            danhSachDoanhThu = HoaDon_DAO.layDoanhThuCacNam(0, 0);
+            this.barChartExample = new BieuDoCot(danhSachDoanhThu, TrangChuaThongKeDoanhThuNhaGa.class);
+        }
+        else {
+            danhSachDoanhThu = HoaDon_DAO.layDoanhThuCacNam(namXuatPhat, namKetThuc);
+        }
 
-        Map<String, Double> danhSachDoanhThu = HoaDon_DAO.layDoanhThuCacNam(namXuatPhat, namKetThuc);
         this.barChartExample = new BieuDoCot(danhSachDoanhThu, TrangChuaThongKeDoanhThuNhaGa.class);
 
         barChartExample.addMouseListener(new MouseAdapter() {

@@ -84,19 +84,19 @@ public class BieuDoCot extends JPanel {
                     try {
                         if(object == TrangChuaThongKeDoanhThuNhaGa.class){
                             TaoFileExcelDoanhThuNhaGaBieuDoCot taoFileExcelDoanhThuNhaGa = new TaoFileExcelDoanhThuNhaGaBieuDoCot();
-                            String filePath = "D:\\DoanhThu_BieuDoCot.xlsx";
+                            String filePath = "ThongKe/DoanhThuNhaGa_BieuDoCot.xlsx";
                             taoFileExcelDoanhThuNhaGa.TaoFileExcelDoanhThuNhaGa(danhSachDoanhThu, getChartImage(), filePath);
 
                         }
                         else if(object == TrangChuaThongKeNhanVienTheoNam.class){
                             log.info("xuất file trang chứa thống kê nhân viên theo năm");
                             TaoFileExcelDoanhThuNhanVienTheoNam taoFileExcelDoanhThuNhanVienTheoNam = new TaoFileExcelDoanhThuNhanVienTheoNam();
-                            String filePath = "D:\\DoanhThu_NhanVienTheoNam.xlsx";
+                            String filePath = "ThongKe/DoanhThu_NhanVienTheoNam.xlsx";
                             taoFileExcelDoanhThuNhanVienTheoNam.TaoFileExcelDoanhThuNhanVienTheoNam(danhSachDoanhThu, getChartImage(), filePath);
                         }
                         else if(object == TrangChuaThongKeNhanVienTheoThang.class){
                             log.info("xuất file trang chứa thống kê nhân viên theo tháng");
-                            String filePath = "D:\\DoanhThu_NhanVienTheoThang.xlsx";
+                            String filePath = "ThongKe/DoanhThu_NhanVienTheoThang.xlsx";
                             TaoFileExcelDoanhThuNhanVienTheoThang taoFileExcelDoanhThuNhanVienTheoThang = new TaoFileExcelDoanhThuNhanVienTheoThang();
                             taoFileExcelDoanhThuNhanVienTheoThang.TaoFileExcelDoanhThuNhanVienTheoThang(danhSachDoanhThu, getChartImage(), filePath);
 

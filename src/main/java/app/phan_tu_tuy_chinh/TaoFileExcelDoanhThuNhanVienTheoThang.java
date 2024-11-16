@@ -14,8 +14,6 @@ public class TaoFileExcelDoanhThuNhanVienTheoThang {
     public void TaoFileExcelDoanhThuNhanVienTheoThang(Map<String, Double> danhSachDoanhThu, byte[] chartImage, String filePath) {
         Workbook workbook = new XSSFWorkbook();
         Sheet sheet = workbook.createSheet("Thống kê Doanh Thu Nhan Vien Theo Thang");
-        sheet.setColumnWidth(0, 10000); // Cột "Năm"
-        sheet.setColumnWidth(1, 12000); // Cột "Doanh Thu"
 
 // Tạo tiêu đề chính
 // Tạo hàng và ô tiêu đề

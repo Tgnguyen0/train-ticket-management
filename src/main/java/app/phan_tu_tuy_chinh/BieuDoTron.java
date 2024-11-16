@@ -21,10 +21,17 @@ public class BieuDoTron extends JPanel {
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                JOptionPane.showMessageDialog(null, "Bạn Muốn Xuất File excel");
-                ArrayList<HoaDon> danhSachHoaDon = HoaDon_DAO.danhSachHoaDonTrongThang_Nam(Integer.parseInt(year),Integer.parseInt(month));
-                TaoFileExcelDoanhThuNhaGaBieuDoTron taoFileExcelDoanhThuNhaGaBieuDoTron = new TaoFileExcelDoanhThuNhaGaBieuDoTron();
-                taoFileExcelDoanhThuNhaGaBieuDoTron.TaoFileExcelDoanhThuNhaGaBieuDoTron(month, year, soVe, DoanhThu, danhSachHoaDon, createImage());
+                int option = JOptionPane.showConfirmDialog(
+                        null,
+                        "Bạn Có Muốn Xuất Hình Biểu Đồ Và Dữ Liệu Ra File Excel?",
+                        "Xác nhận",
+                        JOptionPane.YES_NO_OPTION
+                );
+                if(option == JOptionPane.YES_OPTION){
+                    ArrayList<HoaDon> danhSachHoaDon = HoaDon_DAO.danhSachHoaDonTrongThang_Nam(Integer.parseInt(year),Integer.parseInt(month));
+                    TaoFileExcelDoanhThuNhaGaBieuDoTron taoFileExcelDoanhThuNhaGaBieuDoTron = new TaoFileExcelDoanhThuNhaGaBieuDoTron();
+                    taoFileExcelDoanhThuNhaGaBieuDoTron.TaoFileExcelDoanhThuNhaGaBieuDoTron(month, year, soVe, DoanhThu, danhSachHoaDon, createImage());
+                }
             }
         });
     }

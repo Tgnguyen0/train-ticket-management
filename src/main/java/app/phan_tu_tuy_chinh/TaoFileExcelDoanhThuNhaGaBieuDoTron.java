@@ -139,7 +139,6 @@ public class TaoFileExcelDoanhThuNhaGaBieuDoTron {
 
             // Cột 2 - Ngày lập hóa đơn (dữ liệu dạng chuỗi)
             dataRow.createCell(1).setCellValue(hoaDon.getNgayLapHoaDon());
-            System.out.println(Date.valueOf(hoaDon.getNgayLapHoaDon()));
             dataRow.getCell(1).setCellStyle(dateCellStyle);
 
             // Cột 3 - Thành tiền (dữ liệu dạng số)
@@ -252,7 +251,7 @@ public class TaoFileExcelDoanhThuNhaGaBieuDoTron {
             sheet.setColumnWidth(10, 5000);
             sheet.setColumnWidth(11, 5000);
             // Ghi file Excel ra đĩa
-            try (FileOutputStream fileOut = new FileOutputStream("D:\\BieuDoTron.xlsx")) {
+            try (FileOutputStream fileOut = new FileOutputStream("ThongKe/BieuDoTron.xlsx")) {
                 workbook.write(fileOut);
                 JOptionPane.showMessageDialog(null, "Xuất file Excel thành công!");
             } catch (IOException e) {

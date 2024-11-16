@@ -177,9 +177,31 @@ public class TrangChuaThongKeNhanVienTheoNam extends JPanel{
     }
 
     public void thietLap_TrangChuaThongTinThongKe(){
-        labelThongKeTheoNam.setText("Thống kê theo năm");
-
+        labelThongKeTheoNam.setText("Thống kê theo năm:");
+        labelThongKeTheoNam.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.BOLD, 14));
         danhSachNam.setModel(model_DanhSachNam);
+        danhSachNam.setRenderer(new javax.swing.DefaultListCellRenderer() {
+            @Override
+            public java.awt.Component getListCellRendererComponent(
+                    javax.swing.JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+
+                // Gọi phương thức mặc định để thiết lập label
+                javax.swing.JLabel renderer = (javax.swing.JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+
+                // Căn giữa chữ trong JComboBox
+                renderer.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+                renderer.setFont(new Font("Arial", Font.PLAIN, 13));
+                // Kiểm tra nếu mục được chọn hoặc có con trỏ chuột đang chỉ vào
+                if (isSelected || cellHasFocus) {
+                    renderer.setBackground(xanhBrandeis); // Màu nền xanh
+                    renderer.setForeground(trang); // Màu chữ trắng
+                } else {
+                    renderer.setBackground(trang); // Màu nền trắng khi không chọn
+                    renderer.setForeground(xanhBrandeis); // Màu chữ đen khi không chọn
+                }
+                return renderer;
+            }
+        });
 
         buttonThongKe.setText("Thống Kê");
         buttonThongKe.setForeground(this.trang);
@@ -260,8 +282,10 @@ public class TrangChuaThongKeNhanVienTheoNam extends JPanel{
 
     public void thietLap_TrangChuaThongTinNhanVien(){
         labelThongTinNhanVien.setText("Nhân Viên Ứu Tú Của Năm");
+        labelThongTinNhanVien.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.BOLD, 14));
 
         labelMaNhanVien.setText("Mã Nhân Viên:");
+        labelMaNhanVien.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.PLAIN, 13));
 
         textFieldMaNhanVien.setText("");
         textFieldMaNhanVien.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.BOLD, 13));
@@ -289,6 +313,7 @@ public class TrangChuaThongKeNhanVienTheoNam extends JPanel{
         );
 
         labelTenNhanVien.setText("Họ và Tên:");
+        labelTenNhanVien.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.PLAIN, 13));
 
         textFieldTenNhanVien.setText("");
         textFieldTenNhanVien.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.BOLD, 13));
@@ -316,6 +341,7 @@ public class TrangChuaThongKeNhanVienTheoNam extends JPanel{
         );
 
         labelNgaySinh.setText("Ngày Sinh");
+        labelNgaySinh.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.PLAIN, 13));
 
         textFieldNgaySinhNhanVien.setText("");
         textFieldNgaySinhNhanVien.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.BOLD, 13));
@@ -366,6 +392,7 @@ public class TrangChuaThongKeNhanVienTheoNam extends JPanel{
         );
 
         labelSoDienThoai.setText("Số Điện Thoại:");
+        labelSoDienThoai.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.PLAIN, 13));
 
         textFieldSoDienThoai.setText("");
         textFieldSoDienThoai.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.BOLD, 13));
@@ -393,6 +420,7 @@ public class TrangChuaThongKeNhanVienTheoNam extends JPanel{
         );
 
         labelGioiTinh.setText("Giới Tính:");
+        labelGioiTinh.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.PLAIN, 13));
 
         textFieldGioiTinhNhanVien.setText("");
         textFieldGioiTinhNhanVien.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.BOLD, 13));
@@ -420,6 +448,7 @@ public class TrangChuaThongKeNhanVienTheoNam extends JPanel{
         );
 
         labelTongDoanhThu.setText("Tổng Doanh Thu:");
+        labelTongDoanhThu.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.PLAIN, 13));
 
         textFieldDoanhThu.setText("");
         textFieldDoanhThu.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.BOLD, 13));
@@ -756,10 +785,16 @@ public class TrangChuaThongKeNhanVienTheoNam extends JPanel{
         String doanhThu = (String) this.model_DanhSachNhanVienUuTu.getValueAt(index, 2);
         NhanVien nv = NhanVien_DAO.layNhanVienTheo_TenNhanVien(tenNhanVien);
         this.textFieldMaNhanVien.setText(nv.getMaNV());
+        this.textFieldMaNhanVien.setEditable(false);
         this.textFieldTenNhanVien.setText(nv.getTenNV());
+        this.textFieldTenNhanVien.setEditable(false);
         this.textFieldNgaySinhNhanVien.setText(nv.getNgaySinh().toString());
+        this.textFieldNgaySinhNhanVien.setEditable(false);
         this.textFieldSoDienThoai.setText(nv.getSoDT());
+        this.textFieldSoDienThoai.setEditable(false);
         this.textFieldGioiTinhNhanVien.setText(nv.getGioiTinh().getValue());
+        this.textFieldGioiTinhNhanVien.setEditable(false);
         this.textFieldDoanhThu.setText(doanhThu);
+        this.textFieldDoanhThu.setEditable(false);
     }
 }
