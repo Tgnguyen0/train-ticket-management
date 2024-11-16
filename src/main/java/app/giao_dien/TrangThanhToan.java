@@ -77,9 +77,10 @@ public class TrangThanhToan extends JDialog {
         this.gheDao = new Ghe_DAO();
         this.hanhDong = new HanhDong_TrangThanhToan(this);
         this.thaoTacChuot = new HanhDong_TrangThanhToan(this);
+        this.tongTien = 0.0;
 
         for (int i = 0 ; i < this.danhSachVe.size() ; i++) {
-            this.tongTien = this.danhSachVe.get(i).getGiaVe() * (1 - (this.danhSachVe.get(i).getLoaiDoiTuong().equals("Người Lớn") ? 0.0 : 0.025));
+            this.tongTien += this.danhSachVe.get(i).getGiaVe() * (1 - (this.danhSachVe.get(i).getLoaiDoiTuong().equals("Người Lớn") ? 0.0 : 0.025));
         }
 
         hienThi();

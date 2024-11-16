@@ -31,6 +31,11 @@ public class KhachHang_DAO {
         return dskhDatVe.add(kh);
     }
 
+    public void xoaDSKHDatVe() {
+        List<KhachHang> dsKH = this.dskhDatVe;
+        this.dskhDatVe.removeAll(dsKH);
+    }
+
     // Tìm Kiếm khách hàng
     public KhachHang TimKiemKhachHang(String tenKH, String diaChi, String sdt) {
         for (int i = 0; i < dskhDatVe.size(); i++) {
@@ -234,6 +239,7 @@ public class KhachHang_DAO {
         }
         return list;
     }
+
     public static int themKhachHang(KhachHang khachHang){
         int ketQuaThucThi = 0;
         try {

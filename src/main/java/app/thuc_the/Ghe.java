@@ -57,10 +57,11 @@ public class Ghe {
     public void setSoGhe(String soGhe) { this.soGhe = soGhe; }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Ghe ghe)) return false;
-        return getMaGhe() == ghe.getMaGhe();
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Ghe ghe = (Ghe) obj;
+        return soGhe.equals(ghe.soGhe) && maToa.equals(ghe.maToa);
     }
 
     @Override

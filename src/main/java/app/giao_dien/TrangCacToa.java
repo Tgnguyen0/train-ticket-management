@@ -22,7 +22,7 @@ public class TrangCacToa extends JPanel {
     public String soHieu;
 
     public JPanel trangChua;
-    public NutAnh nutToa1;
+    /*public NutAnh nutToa1;
     public NutAnh nutToa2;
     public NutAnh nutToa3;
     public NutAnh nutToa4;
@@ -33,9 +33,11 @@ public class TrangCacToa extends JPanel {
     public NutAnh nutToa9;
     public NutAnh nutToa10;
     public NutAnh nutToa11;
-    public NutAnh nutToa12;
+    public NutAnh nutToa12;*/
 
-    public TrangSoDoGheMem trangSoDoGheMem1;
+    public JPanel thanhDinhHuong;
+
+    /*public TrangSoDoGheMem trangSoDoGheMem1;
     public TrangSoDoGheMem trangSoDoGheMem2;
     public TrangSoDoGheMem trangSoDoGheMem3;
     public TrangSoDoGheMem trangSoDoGheMem4;
@@ -49,7 +51,7 @@ public class TrangCacToa extends JPanel {
     public TrangSoDoGiuong6 trangSoDoGiuong6So3;
 
     public TrangSoDoGiuong2 trangSoDoGiuong2So1;
-    public TrangSoDoGiuong2 trangSoDoGiuong2So2;
+    public TrangSoDoGiuong2 trangSoDoGiuong2So2;*/
 
     /* Khởi tạo phông chữ màu sắc */
     public Color trang = new Color(255, 255, 255);
@@ -71,7 +73,7 @@ public class TrangCacToa extends JPanel {
     public List<Toa> dsToa;
     public Set<Ghe> gheDaDat;
 
-    public List<Ghe> gheToa1;
+    /*public List<Ghe> gheToa1;
     public List<Ghe> gheToa2;
     public List<Ghe> gheToa3;
     public List<Ghe> gheToa4;
@@ -82,7 +84,7 @@ public class TrangCacToa extends JPanel {
     public List<Ghe> gheToa9;
     public List<Ghe> gheToa10;
     public List<Ghe> gheToa11;
-    public List<Ghe> gheToa12;
+    public List<Ghe> gheToa12;*/
     public int so;
 
     public TrangCacToa(int so, String soHieu, List<Toa> dsToa, Ghe_DAO gheDao) {
@@ -91,7 +93,7 @@ public class TrangCacToa extends JPanel {
         this.soHieu = soHieu;
         this.dsToa = dsToa;
 
-        this.gheToa1 = gheDao.ChonTheoMaToaTatCa(dsToa.get(0).getMaToa());
+        /*this.gheToa1 = gheDao.ChonTheoMaToaTatCa(dsToa.get(0).getMaToa());
         this.gheToa2 = gheDao.ChonTheoMaToaTatCa(dsToa.get(1).getMaToa());
         this.gheToa3 = gheDao.ChonTheoMaToaTatCa(dsToa.get(2).getMaToa());
         this.gheToa4 = gheDao.ChonTheoMaToaTatCa(dsToa.get(3).getMaToa());
@@ -105,7 +107,7 @@ public class TrangCacToa extends JPanel {
         this.gheToa10 = gheDao.ChonTheoMaToaTatCa(dsToa.get(9).getMaToa());
 
         this.gheToa11 = gheDao.ChonTheoMaToaTatCa(dsToa.get(10).getMaToa());
-        this.gheToa12 = gheDao.ChonTheoMaToaTatCa(dsToa.get(11).getMaToa());
+        this.gheToa12 = gheDao.ChonTheoMaToaTatCa(dsToa.get(11).getMaToa());*/
 
         setLayout(new BorderLayout());
         setPreferredSize(new Dimension(1200, 800));
@@ -124,12 +126,18 @@ public class TrangCacToa extends JPanel {
     }
 
     public void taoThanhDinhHuongTau() {
-        JPanel thanhDinhHuong = new JPanel();
+        thanhDinhHuong = new JPanel();
         thanhDinhHuong.setPreferredSize(new Dimension(1200, chieuRongNut + 40));
         thanhDinhHuong.setBackground(trang);
         thanhDinhHuong.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 0));
 
-        this.nutToa12 = taoNutToa(12);
+        for (int i = 12 ; i > 0 ; i--) {
+            JButton nutToa = taoNutToa(i);
+            nutToa.setActionCommand(String.valueOf(i));
+            thanhDinhHuong.add(nutToa);
+        }
+
+        /*this.nutToa12 = taoNutToa(12);
         this.nutToa12.setActionCommand("12");
         thanhDinhHuong.add(nutToa12);
 
@@ -175,7 +183,7 @@ public class TrangCacToa extends JPanel {
 
         this.nutToa1 = taoNutToa(1);
         this.nutToa1.setActionCommand("1");
-        thanhDinhHuong.add(nutToa1);
+        thanhDinhHuong.add(nutToa1);*/
 
         // Tạo Nút đến trang bán hàng
         /* Tạo nút ảnh với việc truyền đừờng dẫn ảnh chính, ảnh đang chọn,
@@ -290,31 +298,31 @@ public class TrangCacToa extends JPanel {
         trangHienTai.add(trangChuaTieuDeVaBieuTuong);
     }
 
-    public void taoTrangChua() {
+    /*public void taoTrangChua() {
         // Khởi tạo trang chứa các trang khác
         this.trangChua = new JPanel();
         this.trangChua.setPreferredSize(new Dimension(1200, 425));
         this.trangChua.setLayout(new CardLayout());
 
         // Khởi tạo trang Trang Sơ đồ Ghế Mềm
-        this.trangSoDoGheMem1 = new TrangSoDoGheMem(gheToa1, gheDao, dsToa.get(0).getTenToa(), dsToa.get(0).getMaToa());
-        this.trangSoDoGheMem2 = new TrangSoDoGheMem(gheToa2, gheDao, dsToa.get(1).getTenToa(), dsToa.get(1).getMaToa());
-        this.trangSoDoGheMem3 = new TrangSoDoGheMem(gheToa3, gheDao, dsToa.get(2).getTenToa(), dsToa.get(2).getMaToa());
-        this.trangSoDoGheMem4 = new TrangSoDoGheMem(gheToa4, gheDao, dsToa.get(3).getTenToa(), dsToa.get(3).getMaToa());
+        this.trangSoDoGheMem1 = new TrangSoDoGheMem(gheDao.ChonTheoMaToaTatCa(dsToa.get(0).getMaToa()), gheDao, dsToa.get(0).getTenToa(), dsToa.get(0).getMaToa());
+        this.trangSoDoGheMem2 = new TrangSoDoGheMem(gheDao.ChonTheoMaToaTatCa(dsToa.get(1).getMaToa()), gheDao, dsToa.get(1).getTenToa(), dsToa.get(1).getMaToa());
+        this.trangSoDoGheMem3 = new TrangSoDoGheMem(gheDao.ChonTheoMaToaTatCa(dsToa.get(2).getMaToa()), gheDao, dsToa.get(2).getTenToa(), dsToa.get(2).getMaToa());
+        this.trangSoDoGheMem4 = new TrangSoDoGheMem(gheDao.ChonTheoMaToaTatCa(dsToa.get(3).getMaToa()), gheDao, dsToa.get(3).getTenToa(), dsToa.get(3).getMaToa());
 
         // Khởi tạo trang Trang Sơ đồ Giường 6
-        this.trangSoDoGiuong6So1 = new TrangSoDoGiuong6(gheToa5, gheDao, dsToa.get(4).getTenToa(), dsToa.get(4).getMaToa());
-        this.trangSoDoGiuong6So2 = new TrangSoDoGiuong6(gheToa6, gheDao, dsToa.get(5).getTenToa(), dsToa.get(5).getMaToa());
-        this.trangSoDoGiuong6So3 = new TrangSoDoGiuong6(gheToa7, gheDao, dsToa.get(6).getTenToa(), dsToa.get(6).getMaToa());
+        this.trangSoDoGiuong6So1 = new TrangSoDoGiuong6(gheDao.ChonTheoMaToaTatCa(dsToa.get(4).getMaToa()), gheDao, dsToa.get(4).getTenToa(), dsToa.get(4).getMaToa());
+        this.trangSoDoGiuong6So2 = new TrangSoDoGiuong6(gheDao.ChonTheoMaToaTatCa(dsToa.get(5).getMaToa()), gheDao, dsToa.get(5).getTenToa(), dsToa.get(5).getMaToa());
+        this.trangSoDoGiuong6So3 = new TrangSoDoGiuong6(gheDao.ChonTheoMaToaTatCa(dsToa.get(6).getMaToa()), gheDao, dsToa.get(6).getTenToa(), dsToa.get(6).getMaToa());
 
         // Khởi tạo trang Trang Sơ đồ Giường 4
-        this.trangSoDoGiuong4So1 = new TrangSoDoGiuong4(gheToa8, gheDao, dsToa.get(7).getTenToa(), dsToa.get(7).getMaToa());
-        this.trangSoDoGiuong4So2 = new TrangSoDoGiuong4(gheToa9, gheDao, dsToa.get(8).getTenToa(), dsToa.get(8).getMaToa());
-        this.trangSoDoGiuong4So3 = new TrangSoDoGiuong4(gheToa10, gheDao, dsToa.get(9).getTenToa(), dsToa.get(9).getMaToa());
+        this.trangSoDoGiuong4So1 = new TrangSoDoGiuong4(gheDao.ChonTheoMaToaTatCa(dsToa.get(7).getMaToa()), gheDao, dsToa.get(7).getTenToa(), dsToa.get(7).getMaToa());
+        this.trangSoDoGiuong4So2 = new TrangSoDoGiuong4(gheDao.ChonTheoMaToaTatCa(dsToa.get(8).getMaToa()), gheDao, dsToa.get(8).getTenToa(), dsToa.get(8).getMaToa());
+        this.trangSoDoGiuong4So3 = new TrangSoDoGiuong4(gheDao.ChonTheoMaToaTatCa(dsToa.get(9).getMaToa()), gheDao, dsToa.get(9).getTenToa(), dsToa.get(9).getMaToa());
 
         // Khởi tạo trang Trang Sơ đồ Giường 2
-        this.trangSoDoGiuong2So1 = new TrangSoDoGiuong2(gheToa11, gheDao, dsToa.get(10).getTenToa(), dsToa.get(10).getMaToa());
-        this.trangSoDoGiuong2So2 = new TrangSoDoGiuong2(gheToa12, gheDao, dsToa.get(11).getTenToa(), dsToa.get(11).getMaToa());
+        this.trangSoDoGiuong2So1 = new TrangSoDoGiuong2(gheDao.ChonTheoMaToaTatCa(dsToa.get(10).getMaToa()), gheDao, dsToa.get(10).getTenToa(), dsToa.get(10).getMaToa());
+        this.trangSoDoGiuong2So2 = new TrangSoDoGiuong2(gheDao.ChonTheoMaToaTatCa(dsToa.get(11).getMaToa()), gheDao, dsToa.get(11).getTenToa(), dsToa.get(11).getMaToa());
 
         // Thêm vào trangChua
         this.trangChua.add(trangSoDoGheMem1, "Trang Ghe Mem 1");
@@ -337,5 +345,35 @@ public class TrangCacToa extends JPanel {
         this.trangChua.add(trangSoDoGiuong2So1,"Trang Giuong 2 So 2");
 
         add(this.trangChua, BorderLayout.SOUTH);
+    }*/
+
+    public void taoTrangChua() {
+        this.trangChua = new JPanel();
+        this.trangChua.setPreferredSize(new Dimension(1200, 425));
+        this.trangChua.setLayout(new CardLayout());
+
+        for (int i = 0; i < dsToa.size(); i++) {
+            Toa toa = dsToa.get(i);
+            String tenToa = toa.getTenToa();
+            String maToa = toa.getMaToa();
+            List<Ghe> gheList = gheDao.ChonTheoMaToaTatCa(maToa);
+
+            JPanel trangSoDo;
+            if (0 <= i && i <= 3) {
+                trangSoDo = new TrangSoDoGheMem(gheList, gheDao, tenToa, maToa);
+                this.trangChua.add(trangSoDo, "Trang Ghe Mem " + String.valueOf(i + 1));
+            } else if (4 <= i && i <= 6) {
+                trangSoDo = new TrangSoDoGiuong6(gheList, gheDao, tenToa, maToa);
+                this.trangChua.add(trangSoDo, "Trang Giuong 6 So " + String.valueOf(i - 3));
+            } else if (7 <= i && i <= 9) {
+                trangSoDo = new TrangSoDoGiuong4(gheList, gheDao, tenToa, maToa);
+                this.trangChua.add(trangSoDo, "Trang Giuong 4 So " + String.valueOf(i - 6));
+            } else if (i <= 11) {
+                trangSoDo = new TrangSoDoGiuong2(gheList, gheDao, tenToa, maToa);
+                this.trangChua.add(trangSoDo, "Trang Giuong 2 So " + String.valueOf(i - 9));
+            }
+        }
+
+        this.add(this.trangChua, BorderLayout.SOUTH);
     }
 }

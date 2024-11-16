@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Set;
 
 public class Ghe_DAO {
-    HashSet<Ghe> gheDat;
+    Set<Ghe> gheDat;
     Ghe gheDaChon;
     String CHON_TAT_SQL = "SELECT * FROM Ghe";
     String CHON_THEO_MA_GHE_SQL = "select * from Ghe where MaGhe =?";
@@ -23,7 +23,7 @@ public class Ghe_DAO {
     String CAP_NHAT_TRANG_THAI_GHE = "UPDATE Ghe SET TrangThaiGhe = ? WHERE MaGhe = ?";
 
     public Ghe_DAO() {
-        gheDat = new HashSet<>();
+        this.gheDat = new HashSet<>();
     }
 
     public boolean themGhe(Ghe ghe) {
@@ -31,10 +31,10 @@ public class Ghe_DAO {
     }
 
     public boolean xoaGhe(Ghe ghe) {
-        return gheDat.contains(ghe) ? gheDat.remove(ghe) : false;
+        return gheDat.remove(ghe);
     }
 
-    public HashSet<Ghe> layDSGheDat() {
+    public Set<Ghe> layDSGheDat() {
         return this.gheDat;
     }
 
@@ -47,7 +47,7 @@ public class Ghe_DAO {
     }
 
     public void xoaDSGheChon() {
-        HashSet<Ghe> dsCanXoa = this.gheDat;
+        Set<Ghe> dsCanXoa = this.gheDat;
         this.gheDat.removeAll(dsCanXoa);
     }
 

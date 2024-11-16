@@ -36,38 +36,19 @@ public class HanhDong_TrangCacTau implements ActionListener, MouseListener, Wind
         }
 
         if (e.getSource() == this.trangSoDoChung.nutTau1) {
-            if (this.trangSoDoChung.nutTau1.isEnabled()) {
-                System.out.println("nut Tau 1");
-                this.trangSoDoChung.soHieuTauChon = this.trangSoDoChung.nutTau1.getActionCommand();
-            } else {
-                hienThiThongBao("Tàu không qua ga này vào ngày bạn chọn", "Lỗi lịch tàu", JOptionPane.ERROR_MESSAGE);
-            }
-
+            this.trangSoDoChung.soHieuTauChon = this.trangSoDoChung.nutTau1.getActionCommand();
         }
 
         if (e.getSource() == this.trangSoDoChung.nutTau2) {
-            if (this.trangSoDoChung.nutTau2.isEnabled()) {
-                this.trangSoDoChung.soHieuTauChon = this.trangSoDoChung.nutTau2.getActionCommand();
-            } else {
-                hienThiThongBao("Tàu không qua ga này vào ngày bạn chọn", "Lỗi lịch tàu", JOptionPane.ERROR_MESSAGE);
-            }
+            this.trangSoDoChung.soHieuTauChon = this.trangSoDoChung.nutTau2.getActionCommand();
         }
 
         if (e.getSource() == this.trangSoDoChung.nutTau3) {
-            if (this.trangSoDoChung.nutTau3.isEnabled()) {
-                this.trangSoDoChung.soHieuTauChon = this.trangSoDoChung.nutTau3.getActionCommand();
-            } else {
-                hienThiThongBao("Tàu không qua ga này vào ngày bạn chọn", "Lỗi lịch tàu", JOptionPane.ERROR_MESSAGE);
-            }
+            this.trangSoDoChung.soHieuTauChon = this.trangSoDoChung.nutTau3.getActionCommand();
         }
 
         if (e.getSource() == this.trangSoDoChung.nutTau4) {
-            if (this.trangSoDoChung.nutTau4.isEnabled()) {
-                this.trangSoDoChung.soHieuTauChon = this.trangSoDoChung.nutTau4.getActionCommand();
-            } else {
-                hienThiThongBao("Tàu không qua ga này vào ngày bạn chọn", "Lỗi lịch tàu", JOptionPane.ERROR_MESSAGE);
-            }
-
+            this.trangSoDoChung.soHieuTauChon = this.trangSoDoChung.nutTau4.getActionCommand();
         }
     }
 
@@ -76,6 +57,11 @@ public class HanhDong_TrangCacTau implements ActionListener, MouseListener, Wind
         Object source = e.getSource();
 
         if (source == this.trangSoDoChung.nutTau1) {
+            if (!this.trangSoDoChung.nutTau1.isEnabled()) {
+                hienThiThongBao("Tàu không qua ga này vào ngày bạn chọn", "Lỗi lịch tàu", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
             // Đặt ảnh cho nút tau1 và đặt lại ảnh gốc cho các nút còn lại
             this.trangSoDoChung.nutTau1.datAnhDangChon();
 
@@ -99,6 +85,12 @@ public class HanhDong_TrangCacTau implements ActionListener, MouseListener, Wind
         }
 
         if (source == this.trangSoDoChung.nutTau2) {
+
+            if (!this.trangSoDoChung.nutTau2.isEnabled()) {
+                hienThiThongBao("Tàu không qua ga này vào ngày bạn chọn", "Lỗi lịch tàu", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
             // Đặt ảnh cho nút tau2 và đặt lại ảnh gốc cho các nút còn lại
             this.trangSoDoChung.nutTau2.datAnhDangChon();
 
@@ -122,6 +114,11 @@ public class HanhDong_TrangCacTau implements ActionListener, MouseListener, Wind
         }
 
         if (source == this.trangSoDoChung.nutTau3) {
+            if (!this.trangSoDoChung.nutTau3.isEnabled()) {
+                hienThiThongBao("Tàu không qua ga này vào ngày bạn chọn", "Lỗi lịch tàu", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
             // Đặt ảnh cho nút tau3 và đặt lại ảnh gốc cho các nút còn lại
             this.trangSoDoChung.nutTau3.datAnhDangChon();
 
@@ -145,6 +142,11 @@ public class HanhDong_TrangCacTau implements ActionListener, MouseListener, Wind
         }
 
         if (source == this.trangSoDoChung.nutTau4) {
+            if (!this.trangSoDoChung.nutTau4.isEnabled()) {
+                hienThiThongBao("Tàu không qua ga này vào ngày bạn chọn", "Lỗi lịch tàu", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
             // Đặt ảnh cho nút tau4 và đặt lại ảnh gốc cho các nút còn lại
             this.trangSoDoChung.nutTau4.datAnhDangChon();
 
@@ -195,14 +197,20 @@ public class HanhDong_TrangCacTau implements ActionListener, MouseListener, Wind
 
     @Override
     public void windowClosing(WindowEvent e) {
+        if (!this.trangSoDoChung.gheDao.layDSGheDat().isEmpty()) {
+            hienThiThongBao("Xác nhận ghế chọn thành công !", "Xác nhận thành công", JOptionPane.INFORMATION_MESSAGE);
 
+            e.getWindow().dispose();
+        } else {
+            hienThiThongBao("Chưa có chọn ghế !", "Lỗi chọn ghế", JOptionPane.ERROR_MESSAGE);
+
+            ((javax.swing.JFrame) e.getWindow()).setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        }
     }
 
     @Override
     public void windowClosed(WindowEvent e) {
-        if (!this.trangSoDoChung.gheDao.layDSGheDat().isEmpty()) {
-            hienThiThongBao("Xác nhận ghế chọn thành công", "Xác nhận thành công", JOptionPane.INFORMATION_MESSAGE);
-        }
+
     }
 
     @Override

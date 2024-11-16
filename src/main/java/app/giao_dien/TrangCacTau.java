@@ -69,10 +69,6 @@ public class TrangCacTau extends JFrame {
 
         this.dsTau = dsTau;
         this.dsLichTau = dsLichTau;
-        this.dsToa1 = toaDao.ChonTheoSoHieuTatCa(this.dsTau.get(0).getSoHieu());
-        this.dsToa2 = toaDao.ChonTheoSoHieuTatCa(this.dsTau.get(1).getSoHieu());
-        this.dsToa3 = toaDao.ChonTheoSoHieuTatCa(this.dsTau.get(2).getSoHieu());
-        this.dsToa4 = toaDao.ChonTheoSoHieuTatCa(this.dsTau.get(3).getSoHieu());
 
         /*for (int i = 0 ; i < this.dsLichTau.size() ; i++) {
             System.out.println(this.dsLichTau.get(i).getMaTau());
@@ -101,7 +97,7 @@ public class TrangCacTau extends JFrame {
 
         setIconImage(icon.getImage());
         setLocationRelativeTo(null);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        //setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         setResizable(true);
         setLayout(new BorderLayout());
@@ -290,10 +286,15 @@ public class TrangCacTau extends JFrame {
         this.trangChua.setPreferredSize(new Dimension(1200, 600));
         this.trangChua.setLayout(new CardLayout());
 
-        if (coQuaGaTau1) this.trangCacToa1 = new TrangCacToa(1, this.dsTau.get(0).getSoHieu(), this.dsToa1, this.gheDao);
-        if (coQuaGaTau2) this.trangCacToa2 = new TrangCacToa(2, this.dsTau.get(1).getSoHieu(), this.dsToa2, this.gheDao);
-        if (coQuaGaTau3) this.trangCacToa3 = new TrangCacToa(3, this.dsTau.get(2).getSoHieu(), this.dsToa3, this.gheDao);
-        if (coQuaGaTau4) this.trangCacToa4 = new TrangCacToa(4, this.dsTau.get(3).getSoHieu(), this.dsToa4, this.gheDao);
+        /*this.dsToa1 = toaDao.ChonTheoSoHieuTatCa(this.dsTau.get(0).getSoHieu());
+        this.dsToa2 = toaDao.ChonTheoSoHieuTatCa(this.dsTau.get(1).getSoHieu());
+        this.dsToa3 = toaDao.ChonTheoSoHieuTatCa(this.dsTau.get(2).getSoHieu());
+        this.dsToa4 = toaDao.ChonTheoSoHieuTatCa(this.dsTau.get(3).getSoHieu());*/
+
+        if (coQuaGaTau1) this.trangCacToa1 = new TrangCacToa(1, this.dsTau.get(0).getSoHieu(), toaDao.ChonTheoSoHieuTatCa(this.dsTau.get(0).getSoHieu()), this.gheDao);
+        if (coQuaGaTau2) this.trangCacToa2 = new TrangCacToa(2, this.dsTau.get(1).getSoHieu(), toaDao.ChonTheoSoHieuTatCa(this.dsTau.get(1).getSoHieu()), this.gheDao);
+        if (coQuaGaTau3) this.trangCacToa3 = new TrangCacToa(3, this.dsTau.get(2).getSoHieu(), toaDao.ChonTheoSoHieuTatCa(this.dsTau.get(2).getSoHieu()), this.gheDao);
+        if (coQuaGaTau4) this.trangCacToa4 = new TrangCacToa(4, this.dsTau.get(3).getSoHieu(), toaDao.ChonTheoSoHieuTatCa(this.dsTau.get(3).getSoHieu()), this.gheDao);
 
         if (coQuaGaTau1) this.trangChua.add(trangCacToa1, "Cac toa cua tau 1");
         if (coQuaGaTau2) this.trangChua.add(trangCacToa2, "Cac toa cua tau 2");
