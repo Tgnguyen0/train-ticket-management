@@ -27,6 +27,7 @@ public class HoaDon_DAO {
     String CHON_THEO_MAKH_SQL = "SELECT * FROM HoaDon WHERE MaKH =?";
     String LUU_HOA_DON_SQL = "INSERT INTO HoaDon(MaHD,NgayLap,MaNV,ThanhTien,MaKH,SoLuong,TongTien,TrangThai,DaiNgo,Thue) VALUES (?,?,?,?,?,?,?,?,?,?)";
     String CAP_NHAT_TRANG_THAI_SQL = "UPDATE HoaDon SET TrangThai = ? WHERE MaHD = ?";
+    String CHON_THEO_MAHD_HAY_MAKH_SQL = "SELECT * FROM HoaDon WHERE MaHD =? OR MaKH =?";
 
     ArrayList<HoaDon> dshd;
     Logger logger = LoggerFactory.getLogger(TrangChuaThongKeDoanhThuNhaGa.class);
@@ -43,6 +44,11 @@ public class HoaDon_DAO {
     public HoaDon ChonTheoMaKH(String maKH){
         List<HoaDon> ds = this.chonSql(CHON_THEO_MAKH_SQL, maKH);
         return ds.size() > 0 ? ds.get(0) : null;
+    }
+
+    public List<HoaDon> ChonTheoMaHDHayMaKh(String maHD, String maKH) {
+        List<HoaDon> ds = this.chonSql(CHON_THEO_MAHD_HAY_MAKH_SQL, maHD, maKH);
+        return ds;
     }
 
     public List<HoaDon> chonTatCa() {
@@ -425,7 +431,8 @@ public class HoaDon_DAO {
         Connection c;
         try {
             c = KetNoiCoSoDuLieu.ketNoiDB_KhangVersion();
-            if (c == null) {System.out.println("Ket noi that bai");
+            if (c == null) {
+                System.out.println("Ket noi that bai");
                 return 0.0;
             }
 
@@ -462,8 +469,8 @@ public class HoaDon_DAO {
             }
 
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-            LocalDateTime ngayGioBatDau = TrangKetCa.ngayGioBatDau;
-            String formattedDateTime_start = ngayGioBatDau.format(formatter);
+            LocalDateTime dauNgay = LocalDate.now().atStartOfDay();
+            String formattedDateTime_start = dauNgay.format(formatter);
             LocalDateTime ngayGioKetThuc = TrangKetCa.ngayGioKetThuc;
             String formattedDateTime_end = ngayGioKetThuc.format(formatter);
 

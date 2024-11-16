@@ -42,14 +42,13 @@ public class CaTruc_DAO {
     public CaTruc_DAO() {
     }
     public static boolean themCaTruc(CaTruc caTruc) {
-        Connection c ;//= null;
-        int kq = 0;
+        Connection c = null;
         try {
             c = KetNoiCoSoDuLieu.ketNoiDB_KhangVersion();
-            /*if (c == null) {
+            if (c == null) {
                 System.out.println("Ket noi that bai");
                 return false;
-            }*/
+            }
             String sql = "INSERT INTO [dbo].[CaTruc] ([maNV],[ngayGioBatDau],[ngayGioKetCa],[tongHoaDon],[tongTienCaTruoc],[tongTienHoaDon],[tongTienThucThu],[thatThoat],[tongVAT],[tongTienGiamGia]) VALUES (?,?,?,?,?,?,?,?,?,?)";
             PreparedStatement ps = c.prepareStatement(sql);
             ps.setString(1, caTruc.getMaNhanVien());
@@ -62,24 +61,17 @@ public class CaTruc_DAO {
             ps.setDouble(8, caTruc.getThatThoat());
             ps.setDouble(9, caTruc.getTongVAT());
             ps.setDouble(10, caTruc.getTongTienGiamGia());
-            kq = ps.executeUpdate();
+            int kq = ps.executeUpdate();
             ps.close();
             c.close();
-            /*if (kq > 0) {
-                System.out.println("Them thanh cong");
-                return true;
-            }*/
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        System.out.println("kq: " + kq);
-        if (kq > 0) {
+            if (kq > 0) {
                 System.out.println("Them thanh cong");
                 return true;
             }
 
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return  false;
     }
 

@@ -99,7 +99,7 @@ public class NhanVien_DAO {
                 String matKhau = rs.getString("MatKhau");
                 st.close();
                 connection.close();
-                System.out.printf(matKhau);
+                System.out.println(matKhau);
                 return matKhau.trim();
             }
             st.close();
@@ -123,15 +123,14 @@ public class NhanVien_DAO {
             st.setString(1, mkMoi);
             st.setString(2, username);
 
+
+            st.executeUpdate();
+
             // Bước 3: thực thi câu lệnh truy vấn
-            int kq = st.executeUpdate();
-            if (kq > 0) {
-                st.close();
-                connection.close();
-                return true;
-            }
+
             st.close();
             connection.close();
+            return true;
 
         } catch (SQLException e) {
             // TODO Auto-generated catch block

@@ -15,14 +15,15 @@ import java.util.List;
 import java.util.Set;
 
 public class Ghe_DAO {
-    HashSet<Ghe> gheDat;
+    Set<Ghe> gheDat;
     Ghe gheDaChon;
     String CHON_TAT_SQL = "SELECT * FROM Ghe";
     String CHON_THEO_MA_GHE_SQL = "select * from Ghe where MaGhe =?";
     String CHON_THEO_MA_TOA_SQL = "select * from Ghe where MaToa =?";
+    String CAP_NHAT_TRANG_THAI_GHE = "UPDATE Ghe SET TrangThaiGhe = ? WHERE MaGhe = ?";
 
     public Ghe_DAO() {
-        gheDat = new HashSet<>();
+        this.gheDat = new HashSet<>();
     }
 
     public boolean themGhe(Ghe ghe) {
@@ -30,10 +31,10 @@ public class Ghe_DAO {
     }
 
     public boolean xoaGhe(Ghe ghe) {
-        return gheDat.contains(ghe) ? gheDat.remove(ghe) : false;
+        return gheDat.remove(ghe);
     }
 
-    public HashSet<Ghe> layDSGheDat() {
+    public Set<Ghe> layDSGheDat() {
         return this.gheDat;
     }
 
@@ -43,6 +44,11 @@ public class Ghe_DAO {
 
     public Ghe traGheChon() {
         return this.gheDaChon;
+    }
+
+    public void xoaDSGheChon() {
+        Set<Ghe> dsCanXoa = this.gheDat;
+        this.gheDat.removeAll(dsCanXoa);
     }
 
     public Ghe ChonTheoMa(String maGhe) {
@@ -57,6 +63,10 @@ public class Ghe_DAO {
 
     public List<Ghe> ChonTatCa() {
         return this.ChonSql(CHON_TAT_SQL);
+    }
+
+    public void capNhatTrangThaiGhe(String trangThai, String maGhe) {
+        LuuSQL(CAP_NHAT_TRANG_THAI_GHE, trangThai, maGhe);
     }
 
     protected List<Ghe> ChonSql(String sql, Object... args) {
@@ -106,6 +116,17 @@ public class Ghe_DAO {
             throw new RuntimeException(ex);
         }
         return list;
+    }
+
+    public void LuuSQL(String sql, Object... args) {
+        try {
+            try (PreparedStatement stmt = KetNoiCoSoDuLieu.layCauLenh(sql, args)) {
+                stmt.executeUpdate();
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            throw new RuntimeException(ex);
+        }
     }
 
     public List<Ghe> selectByKeyword(String keyword) {

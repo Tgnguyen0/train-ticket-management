@@ -1,12 +1,16 @@
 package app.giao_dien;
+import app.dao.Ghe_DAO;
 import app.dao.HoaDon_DAO;
 import app.dao.Toa_DAO;
 import app.dieu_khien.HanhDong_TrangThanhToan;
 import app.phan_tu_tuy_chinh.CustomCellRenderer;
+import app.phong_chu_moi.PhongChuMoi;
 import app.thuc_the.*;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.table.DefaultTableModel;
+import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
 import java.time.LocalDate;
@@ -49,12 +53,16 @@ public class TrangThanhToan extends JDialog {
     public JTextField tfVAT;
     public Toa_DAO toaDoa;
     public HoaDon_DAO hdDao;
+    public Ghe_DAO gheDao;
     public List<Ve> danhSachVe;
     public List<KhachHang> dsKh;
     public List<Ghe> dsGheDat;
     public DaiNgo daiNgo;
     public Double tongTien;
     public String maNV;
+
+    public PhongChuMoi phongTuyChinh = new PhongChuMoi();
+    public Color xanhBrandeis = new Color(0, 112, 255);
 
     public ActionListener hanhDong;
     public MouseListener thaoTacChuot;
@@ -66,11 +74,13 @@ public class TrangThanhToan extends JDialog {
         this.dsGheDat = dsGhe;
         this.toaDoa = new Toa_DAO();
         this.hdDao = new HoaDon_DAO();
+        this.gheDao = new Ghe_DAO();
         this.hanhDong = new HanhDong_TrangThanhToan(this);
         this.thaoTacChuot = new HanhDong_TrangThanhToan(this);
+        this.tongTien = 0.0;
 
         for (int i = 0 ; i < this.danhSachVe.size() ; i++) {
-            this.tongTien = this.danhSachVe.get(i).getGiaVe() * (1 - (this.danhSachVe.get(i).getLoaiDoiTuong().equals("Người Lớn") ? 0.0 : 0.025));
+            this.tongTien += this.danhSachVe.get(i).getGiaVe() * (1 - (this.danhSachVe.get(i).getLoaiDoiTuong().equals("Người Lớn") ? 0.0 : 0.025));
         }
 
         hienThi();

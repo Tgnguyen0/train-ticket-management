@@ -3,6 +3,7 @@ package app.giao_dien;
 import app.dao.Ghe_DAO;
 import app.dao.KhachHang_DAO;
 import app.dao.Toa_DAO;
+import app.dieu_khien.HanhDong_TrangCacTau;
 import app.dieu_khien.HanhDong_TrangDatVe;
 import app.dieu_khien.HanhDong_TrangInVe;
 import app.phong_chu_moi.PhongChuMoi;
@@ -16,6 +17,7 @@ import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
+import java.awt.event.WindowListener;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -41,6 +43,7 @@ public class TrangInVe extends JFrame {
 
     public ActionListener hanhDong;
     public MouseListener thaoTacChuot;
+    public WindowListener thaoTacTrang;
 
     public Toa_DAO toaDao;
 
@@ -55,8 +58,6 @@ public class TrangInVe extends JFrame {
         this.dsGhe = dsGhe;
         this.dsKH = dsKhachDat;
 
-        this.hanhDong = hanhDong;
-
         setTitle("Quản lý bán vé tại ga");
         setSize(new Dimension(800, 550));
         setLocationRelativeTo(null);
@@ -66,6 +67,9 @@ public class TrangInVe extends JFrame {
 
         this.hanhDong = new HanhDong_TrangInVe(this);
         this.thaoTacChuot = new HanhDong_TrangInVe(this);
+        this.thaoTacTrang = new HanhDong_TrangInVe(this);
+
+        this.addWindowListener(thaoTacTrang);
 
         taoTrangChuaVe();
         taoNutXacNhanIn();
@@ -91,7 +95,7 @@ public class TrangInVe extends JFrame {
 
             KhachHang kh = null;
             for (int j = 0 ; j < this.dsKH.size() ; j++) {
-                if (dsKH.get(i).getMaKH().equals(ve.getMaKhachHang())) {
+                if (dsKH.get(j).getMaKH().equals(ve.getMaKhachHang())) {
                     kh = dsKH.get(j);
                 }
             }
@@ -145,7 +149,6 @@ public class TrangInVe extends JFrame {
             nutVe.setBorder(gachChanDam);
             nutVe.setForeground(xanhBrandeis);
             nutVe.setFocusPainted(false);
-            nutVe.addActionListener(this.hanhDong); // Gắn hành động
 
             trangChua.add(nutVe);
         }
@@ -165,6 +168,6 @@ public class TrangInVe extends JFrame {
         nutXacNhanIn.setForeground(trang);
         nutXacNhanIn.setFocusPainted(false);
         nutXacNhanIn.setBorderPainted(false);
-        nutXacNhanIn.addActionListener(hanhDong); // Gắn hành động in/xem trước
+        nutXacNhanIn.addActionListener(this.hanhDong); // Gắn hành động in/xem trước
     }
 }

@@ -19,7 +19,7 @@ import java.util.Locale;
 public class TaoHoaDonFilePDF {
     private PhongChuMoi phongTuyChinh = new PhongChuMoi();
 
-    public void createInvoicePdf(HoaDon hoaDon) {
+    public static void createInvoicePdf(HoaDon hoaDon) {
         String filePath = "hoá đơn được tạo/" + hoaDon.getMaHoaDon() + ".pdf";
 
         Document document = new Document();
