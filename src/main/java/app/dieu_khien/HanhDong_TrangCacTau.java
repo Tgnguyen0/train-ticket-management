@@ -202,9 +202,9 @@ public class HanhDong_TrangCacTau implements ActionListener, MouseListener, Wind
 
             e.getWindow().dispose();
         } else {
-            hienThiThongBao("Chưa có chọn ghế !", "Lỗi chọn ghế", JOptionPane.ERROR_MESSAGE);
+            //hienThiThongBao("Chưa có chọn ghế !", "Lỗi chọn ghế", JOptionPane.ERROR_MESSAGE);
 
-            ((javax.swing.JFrame) e.getWindow()).setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+            //((javax.swing.JFrame) e.getWindow()).setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         }
     }
 
@@ -225,7 +225,12 @@ public class HanhDong_TrangCacTau implements ActionListener, MouseListener, Wind
 
     @Override
     public void windowActivated(WindowEvent e) {
+        if (!this.trangSoDoChung.nutTau1.isEnabled() && !this.trangSoDoChung.nutTau2.isEnabled() &&
+                !this.trangSoDoChung.nutTau3.isEnabled() && !this.trangSoDoChung.nutTau4.isEnabled()) {
+            e.getWindow().dispose();
 
+            hienThiThongBao("Ngày này không có tàu chạy qua !", "Lỗi chọn ngày", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     @Override
