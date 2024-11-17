@@ -245,7 +245,7 @@ public class NhanVien_DAO {
                 LocalDate ngaySinh = rs.getDate("NgaySinh").toLocalDate();
                 GIOI_TINH gt = GIOI_TINH.NAM;
                 if (!rs.getString("GioiTinh").equals("Nam")) {
-                    nv.setGioiTinh(GIOI_TINH.NU);
+                    gt = GIOI_TINH.NU;
                 }
                 st.close();
                 connection.close();
