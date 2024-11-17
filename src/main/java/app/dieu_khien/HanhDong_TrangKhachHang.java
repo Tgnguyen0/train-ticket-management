@@ -138,12 +138,11 @@ public class HanhDong_TrangKhachHang implements ActionListener, MouseListener {
 
         KhachHang khachHang = new KhachHang(tenKhachHangTuInHoa.toString().trim(), diaChi, sdt, email, gt);
         System.out.println(khachHang.toString() + " " + khachHang.getGioiTinh().getValue());
-        if(KhachHang_DAO.themKhachHang(khachHang) > 0){
+        KhachHang_DAO.themKhachHang(khachHang);
+
             JOptionPane.showMessageDialog(null, "Thêm khách hàng mới thành công!");
             this.lamMoi();
-        } else {
-            JOptionPane.showMessageDialog(null, "Thêm khách hàng mới thất bại!");
-        }
+
         lamMoiDanhSach();
         this.trangKhachHang.hienKhachHangVuaThem(KhachHang_DAO.layCuoiDanhSach());
     }

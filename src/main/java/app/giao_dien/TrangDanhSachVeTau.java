@@ -232,7 +232,7 @@ public class TrangDanhSachVeTau extends JFrame{
 
     public void thietLap_TrangChuaTieuDe() {
         tieuDe.setText("                                                            Danh Sach Bán Vé Tàu");
-
+        tieuDe.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.BOLD, 20));
         javax.swing.GroupLayout trangChua_TieuDeLayout = new javax.swing.GroupLayout(trangChua_TieuDe);
         trangChua_TieuDe.setLayout(trangChua_TieuDeLayout);
         trangChua_TieuDeLayout.setHorizontalGroup(
@@ -252,7 +252,7 @@ public class TrangDanhSachVeTau extends JFrame{
     }
     public void thietLap_TrangChuaThanhTimKiem(){
         timKiemVe.setText("Tìm Kiếm vé ");
-
+        timKiemVe.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.BOLD, 14));
         thanhTimKiem.setText("Tìm kiếm theo mã vé");
 
         timKiem.setText("Tìm Kiếm");
@@ -1036,8 +1036,6 @@ public class TrangDanhSachVeTau extends JFrame{
             this.model.addRow(data);
         }
     }
-
-
 
     public void caiDatVoHieuHoaChoCacThanh(){
         this.textFieldMaVe.setEnabled(false);

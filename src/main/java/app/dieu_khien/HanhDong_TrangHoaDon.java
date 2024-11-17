@@ -9,6 +9,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.SQLException;
 import java.util.List;
 
 public class HanhDong_TrangHoaDon implements ActionListener, MouseListener, ItemListener {
@@ -63,7 +64,7 @@ public class HanhDong_TrangHoaDon implements ActionListener, MouseListener, Item
                 return; // Kết thúc nếu không có dữ liệu
             }
 
-            List<HoaDon> ketQuaTimKiem = hoaDon_dao.ChonTheoMaHD(maHD);
+            List<HoaDon> ketQuaTimKiem = hoaDon_dao.ChonTheoMaHDHayMaKh(maHD, maKH);
 
             // Kiểm tra xem có tìm thấy hóa đơn nào không
             if (ketQuaTimKiem.isEmpty()) {
@@ -129,13 +130,23 @@ public class HanhDong_TrangHoaDon implements ActionListener, MouseListener, Item
     }
 
     public void printSelectedInvoice(int selectedRow) {
-        List<HoaDon> danhSachHoaDon = hoaDon_dao.chonTatCa();
-        HoaDon hoaDon = danhSachHoaDon.get(selectedRow);
-        TaoHoaDonFilePDF tao = new TaoHoaDonFilePDF();
-        tao.createInvoicePdf(hoaDon);  // Gọi phương thức tạo PDF
+        // Lấy mã hóa đơn từ hàng đã chọn
+        String maHoaDon = (String) trangHoaDon.tableDanhSach.getValueAt(selectedRow, 1); // Giả sử mã hóa đơn ở cột 1
 
-        hoaDon.setTrangThai("Đã In");
-        hoaDon_dao.capNhatTrangThai(hoaDon);
+        // Tìm hóa đơn tương ứng từ cơ sở dữ liệu
+        HoaDon hoaDon = null;
+        List<HoaDon> ketQua = hoaDon_dao.ChonTheoMaHD(maHoaDon); // Bạn có thể bỏ qua mã khách hàng nếu không cần thiết
+        if (!ketQua.isEmpty()) {
+            hoaDon = ketQua.get(0); // Giả sử chỉ có một hóa đơn cho mã này
+        }
+
+        // Nếu hóa đơn không tìm thấy
+        if (hoaDon == null) {
+            JOptionPane.showMessageDialog(trangHoaDon, "Hóa đơn không tồn tại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        // Gọi phương thức tạo PDF
+        //TaoHoaDonFilePDF.createInvoicePdf(hoaDon);
     }
 
     @Override

@@ -16,8 +16,8 @@ import java.util.List;
 import java.util.Set;
 
 public class TrangSoDoGheMem extends JPanel {
-    public JPanel trangChua;
-    public JComboBox<String> thanhCacToa;
+    //public JPanel trangChua;
+    //public JComboBox<String> thanhCacToa;
     public int kichThuocChu = 13;
     public int chieuDaiNut = 50;
     public int chieuRongNut = 50;
@@ -34,7 +34,6 @@ public class TrangSoDoGheMem extends JPanel {
     public MouseListener thaoTacChuot;
 
     public Ghe_DAO gheDao;
-    public Set<Ghe> gheDaDat;
     public List<Ghe> dsGhe;
     public String tenToa;
     public String maToa;
@@ -136,11 +135,16 @@ public class TrangSoDoGheMem extends JPanel {
         if (gheHienTai.getTrangThai() == TRANG_THAI_GHE.Da_dat) {
             return doDo;
         }
+
         for (Ghe gheDaDat : dsGheDaDat) {
             if (gheDaDat.getSoGhe().equals(gheHienTai.getSoGhe()) && gheDaDat.getMaToa().equals(this.maToa)) {
                 return camNhuomDen;
             }
+
+            //System.out.println("Ghe da dat: " + gheDaDat.getSoGhe() + " " + gheDaDat.getMaToa());
+            //System.out.println("Ghe hien tai: " + gheHienTai.getSoGhe() + " " + gheHienTai.getMaToa());
         }
+
         return xanhBrandeis;
     }
 

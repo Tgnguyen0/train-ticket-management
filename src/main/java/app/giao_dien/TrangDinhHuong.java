@@ -249,25 +249,24 @@ public class TrangDinhHuong extends JFrame {
         this.trangChua.setLayout(new CardLayout());
 
         this.trangChu = new TrangChu(); // Khởi tạo trang Trang chủ
-        //this.trangDatVe = new TrangDatVe(); // Khởi tạo trang Trang Đặt Vé
-        //this.trangHoaDon = new TrangHoaDon(); // Khởi tạo trang Trang Hóa Đơn
-        //this.trangGioiThieu = new TrangGioiThieu(); // Khởi tạo trang Giới Thiệu
-        //this.trangKhachHang = new TrangKhachHang(); // Khởi tạo trang Trang Khách Hàng
-        //this.trangChuaThongKeTheoNam = new TrangChuaThongKeNhanVienTheoNam();
-        //this.trangNhanVien = new TrangNhanVien(); // Khởi tạo trang Trang Nhân Viên
+        this.trangDatVe = new TrangDatVe(); // Khởi tạo trang Trang Đặt Vé
+        this.trangHoaDon = new TrangHoaDon(); // Khởi tạo trang Trang Hóa Đơn
+        this.trangGioiThieu = new TrangGioiThieu(); // Khởi tạo trang Giới Thiệu
+        this.trangKhachHang = new TrangKhachHang(); // Khởi tạo trang Trang Khách Hàng
+        this.trangNhanVien = new TrangNhanVien(); // Khởi tạo trang Trang Nhân Viên
         this.trangChuaThongKeNhanVienTheoThang = new TrangChuaThongKeNhanVienTheoThang(this);
         this.trangChuaThongKeDoanhThuNhaGa = new TrangChuaThongKeDoanhThuNhaGa(this);
         this.trangChuaThongKeNhanVienTheoNam = new TrangChuaThongKeNhanVienTheoNam( this);
         // kiểm tra trang thống kê
-//        this.trangChua.add(trangChu, "Trang Chu");
-//        this.trangChua.add(trangDatVe, "Trang Dat Ve");
-//        this.trangChua.add(trangHoaDon,"Trang Hoa Don");
-//        this.trangChua.add(trangGioiThieu,"Trang Gioi Thieu");
-//        this.trangChua.add(trangKhachHang, "Trang Khach Hang");
+        this.trangChua.add(trangChu, "Trang Chu");
+        this.trangChua.add(trangDatVe, "Trang Dat Ve");
+        this.trangChua.add(trangHoaDon,"Trang Hoa Don");
+        this.trangChua.add(trangGioiThieu,"Trang Gioi Thieu");
+        this.trangChua.add(trangKhachHang, "Trang Khach Hang");
         this.trangChua.add(trangChuaThongKeDoanhThuNhaGa, "Trang Thong Ke");
         this.trangChua.add(trangChuaThongKeNhanVienTheoThang, "ThongKeDoanhThuTheoThang");
         this.trangChua.add(trangChuaThongKeNhanVienTheoNam, "ThongKeDoanhThuTheoNam");
-       // this.trangChua.add(trangNhanVien, "Trang Nhan Vien");
+        this.trangChua.add(trangNhanVien, "Trang Nhan Vien");
 
         add(this.trangChua);
     }

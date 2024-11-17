@@ -24,6 +24,7 @@ public class HanhDong_TrangDangNhap implements ActionListener, MouseListener {
     public static String maNV;
     public static LocalDateTime ngayGioBatDau;
 
+
     public HanhDong_TrangDangNhap(TrangDangNhap trangDangNhap) {
         this.trangDangNhap = trangDangNhap;
     }

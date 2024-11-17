@@ -7,4 +7,8 @@ public enum TRANG_THAI_GHE {
     TRANG_THAI_GHE(String value) {
         this.value = value;
     }
+
+    public String getValue() {
+        return value;
+    }
 }

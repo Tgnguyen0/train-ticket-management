@@ -1,18 +1,13 @@
 package app.dieu_khien;
 
-import app.giao_dien.TrangCacTau;
+import app.phan_tu_tuy_chinh.NutAnh;
 import app.giao_dien.TrangCacToa;
-import app.thuc_the.Ghe;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Stack;
 
 public class HanhDong_TrangCacToa implements ActionListener, MouseListener {
     TrangCacToa trangCacToa;
@@ -25,6 +20,7 @@ public class HanhDong_TrangCacToa implements ActionListener, MouseListener {
     public void actionPerformed(ActionEvent e) {
         CardLayout cardLayout = (CardLayout) this.trangCacToa.trangChua.getLayout();
         String command = e.getActionCommand();
+        System.out.println(command);
 
         switch (command) {
             case "1":
@@ -71,8 +67,115 @@ public class HanhDong_TrangCacToa implements ActionListener, MouseListener {
     public void mouseClicked(MouseEvent e) {
         Object source = e.getSource();
 
-        if (source == this.trangCacToa.nutToa1) {
+        if (source == this.trangCacToa.thanhDinhHuong.getComponent(0)) {
+            ( (NutAnh) this.trangCacToa.thanhDinhHuong.getComponent(0)).datAnhDangChon();
+
+            for (int i = 1; i < 12 ; i++) {
+                ( (NutAnh) this.trangCacToa.thanhDinhHuong.getComponent(i)).datAnhMacDinh();
+            }
+        }
+
+        if (source == this.trangCacToa.thanhDinhHuong.getComponent(1)) {
+            ( (NutAnh) this.trangCacToa.thanhDinhHuong.getComponent(1)).datAnhDangChon();
+
+            for (int i = 0; i < 12 ; i++) {
+                if (i != 1)
+                ( (NutAnh) this.trangCacToa.thanhDinhHuong.getComponent(i)).datAnhMacDinh();
+            }
+        }
+
+        if (source == this.trangCacToa.thanhDinhHuong.getComponent(2)) {
+            ( (NutAnh) this.trangCacToa.thanhDinhHuong.getComponent(2)).datAnhDangChon();
+
+            for (int i = 0; i < 12 ; i++) {
+                if (i != 2)
+                    ( (NutAnh) this.trangCacToa.thanhDinhHuong.getComponent(i)).datAnhMacDinh();
+            }
+        }
+
+        if (source == this.trangCacToa.thanhDinhHuong.getComponent(3)) {
+            ( (NutAnh) this.trangCacToa.thanhDinhHuong.getComponent(3)).datAnhDangChon();
+
+            for (int i = 0; i < 12 ; i++) {
+                if (i != 3)
+                    ( (NutAnh) this.trangCacToa.thanhDinhHuong.getComponent(i)).datAnhMacDinh();
+            }
+        }
+
+        if (source == this.trangCacToa.thanhDinhHuong.getComponent(4)) {
+            ( (NutAnh) this.trangCacToa.thanhDinhHuong.getComponent(4)).datAnhDangChon();
+
+            for (int i = 0; i < 12 ; i++) {
+                if (i != 4)
+                    ( (NutAnh) this.trangCacToa.thanhDinhHuong.getComponent(i)).datAnhMacDinh();
+            }
+        }
+
+        if (source == this.trangCacToa.thanhDinhHuong.getComponent(5)) {
+            ( (NutAnh) this.trangCacToa.thanhDinhHuong.getComponent(5)).datAnhDangChon();
+
+            for (int i = 0; i < 12 ; i++) {
+                if (i != 5)
+                    ( (NutAnh) this.trangCacToa.thanhDinhHuong.getComponent(i)).datAnhMacDinh();
+            }
+        }
+
+        if (source == this.trangCacToa.thanhDinhHuong.getComponent(6)) {
+            ( (NutAnh) this.trangCacToa.thanhDinhHuong.getComponent(6)).datAnhDangChon();
+
+            for (int i = 0; i < 12 ; i++) {
+                if (i != 6)
+                    ( (NutAnh) this.trangCacToa.thanhDinhHuong.getComponent(i)).datAnhMacDinh();
+            }
+        }
+
+        if (source == this.trangCacToa.thanhDinhHuong.getComponent(7)) {
+            ( (NutAnh) this.trangCacToa.thanhDinhHuong.getComponent(7)).datAnhDangChon();
+
+            for (int i = 0; i < 12 ; i++) {
+                if (i != 7)
+                    ( (NutAnh) this.trangCacToa.thanhDinhHuong.getComponent(i)).datAnhMacDinh();
+            }
+        }
+
+        if (source == this.trangCacToa.thanhDinhHuong.getComponent(8)) {
+            ( (NutAnh) this.trangCacToa.thanhDinhHuong.getComponent(8)).datAnhDangChon();
+
+            for (int i = 0; i < 12 ; i++) {
+                if (i != 8)
+                    ( (NutAnh) this.trangCacToa.thanhDinhHuong.getComponent(i)).datAnhMacDinh();
+            }
+        }
+
+        if (source == this.trangCacToa.thanhDinhHuong.getComponent(9)) {
+            ( (NutAnh) this.trangCacToa.thanhDinhHuong.getComponent(9)).datAnhDangChon();
+
+            for (int i = 0; i < 12 ; i++) {
+                if (i != 9)
+                    ( (NutAnh) this.trangCacToa.thanhDinhHuong.getComponent(i)).datAnhMacDinh();
+            }
+        }
+
+        if (source == this.trangCacToa.thanhDinhHuong.getComponent(10)) {
+            ( (NutAnh) this.trangCacToa.thanhDinhHuong.getComponent(10)).datAnhDangChon();
+
+            for (int i = 0; i < 12 ; i++) {
+                if (i != 10)
+                    ( (NutAnh) this.trangCacToa.thanhDinhHuong.getComponent(i)).datAnhMacDinh();
+            }
+        }
+
+        if (source == this.trangCacToa.thanhDinhHuong.getComponent(11)) {
+            ((NutAnh) this.trangCacToa.thanhDinhHuong.getComponent(11)).datAnhDangChon();
+
+            for (int i = 0; i < 11 ; i++) {
+                ( (NutAnh) this.trangCacToa.thanhDinhHuong.getComponent(i)).datAnhMacDinh();
+            }
+        }
+
+        /*if (source == this.trangCacToa.nutToa1) {
             // Đặt ảnh cho nút tau1 và đặt lại ảnh gốc cho các nút còn lại
+
             this.trangCacToa.nutToa1.datAnhDangChon();
             this.trangCacToa.nutToa2.datAnhMacDinh();
             this.trangCacToa.nutToa3.datAnhMacDinh();
@@ -261,7 +364,7 @@ public class HanhDong_TrangCacToa implements ActionListener, MouseListener {
             this.trangCacToa.nutToa9.datAnhMacDinh();
             this.trangCacToa.nutToa10.datAnhMacDinh();
             this.trangCacToa.nutToa11.datAnhMacDinh();
-        }
+        }*/
     }
 
     @Override

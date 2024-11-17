@@ -69,10 +69,8 @@ public class HanhDong_TrangNhanVien implements ActionListener {
             gt = GIOI_TINH.NU;
         }
         NhanVien nv = new NhanVien(ma, ten, ngaySinh, diaChi, sdt, gt);
-        if(NhanVien_DAO.update(nv)) {
+        NhanVien_DAO.update(nv);
             JOptionPane.showMessageDialog(null, "Cập nhật thông tin thành công");
-        } else {
-            JOptionPane.showMessageDialog(null, "Cập nhật thông tin thất bại");
-        }
+
     }
 }
