@@ -1,6 +1,10 @@
 package app.giao_dien;
 
+import app.dieu_khien.HanhDong_TrangQuenMatKhau;
+
 import java.awt.*;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseListener;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -8,9 +12,10 @@ import javax.swing.border.EmptyBorder;
 public class TrangQuenMatKhau extends JFrame {
 
     private static final long serialVersionUID = 1L;
+    public final JButton btn_xacNhan;
     private JPanel contentPane;
-    private JPasswordField passwordField_mkMoi;
-    private JPasswordField passwordField_xacNhanMK;
+    public JPasswordField passwordField_mkMoi;
+    public JPasswordField passwordField_xacNhanMK;
 
     /**
      * Launch the application.
@@ -72,13 +77,18 @@ public class TrangQuenMatKhau extends JFrame {
         passwordField_xacNhanMK.setFont(new Font("Tahoma", Font.PLAIN, 16));
         contentPane.add(passwordField_xacNhanMK);
 
-        JButton btn_xacNhan = new JButton("Xác nhận");
+        btn_xacNhan = new JButton("Xác nhận");
         btn_xacNhan.setFont(new Font("Tahoma", Font.PLAIN, 20));
         btn_xacNhan.setForeground(Color.WHITE);
         btn_xacNhan.setBackground(new Color(0x0070FF)); // Blue background
         btn_xacNhan.setBounds(291, 180, 135, 33);
         btn_xacNhan.setBorderPainted(false); // Remove button border
         contentPane.add(btn_xacNhan);
+
+        ActionListener hanhDong = new HanhDong_TrangQuenMatKhau(this);
+        MouseListener thaoTacChuot = new HanhDong_TrangQuenMatKhau(this);
+        btn_xacNhan.addActionListener(hanhDong);
+        btn_xacNhan.addMouseListener(thaoTacChuot);
     }
 
 }

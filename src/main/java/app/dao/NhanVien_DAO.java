@@ -225,7 +225,7 @@ public class NhanVien_DAO {
     }
 
     public static NhanVien layThongTinNV(String username) {
-        NhanVien nv = new NhanVien();
+        NhanVien nv = null;
         try {
             // Bước 1: tạo kết nối đến CSDL
             Connection connection = KetNoiCoSoDuLieu.ketNoiDB_KhangVersion();

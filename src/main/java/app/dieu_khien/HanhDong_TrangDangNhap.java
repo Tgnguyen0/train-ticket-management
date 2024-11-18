@@ -13,6 +13,7 @@ import java.util.Date;
 import app.dao.NhanVien_DAO;
 import app.giao_dien.TrangDinhHuong;
 import app.giao_dien.TrangDangNhap;
+import app.giao_dien.TrangOTP;
 import app.thuc_the.GIOI_TINH;
 
 import javax.swing.*;
@@ -81,7 +82,10 @@ public class HanhDong_TrangDangNhap implements ActionListener, MouseListener {
 
     @Override
     public void mousePressed(MouseEvent e) {
-        throw new UnsupportedOperationException("Unimplemented method 'mouseClicked'");
+        if(e.getSource() == this.trangDangNhap.nhanQuenMatKhau) {
+            this.trangDangNhap.setVisible(false);
+            new TrangOTP().setVisible(true);
+        }
     }
 
     @Override
