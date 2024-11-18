@@ -23,6 +23,7 @@ public class TrangKetCa extends JFrame {
 
     @Serial
     private static final long serialVersionUID = 1L;
+    public JLabel label_hienTien;
     public  JLabel label_hienTenNV;
     public JLabel label_hienTongGiam;
     public JLabel label_hienTongVAT;
@@ -77,6 +78,7 @@ public class TrangKetCa extends JFrame {
     public int soTo100000 = 0;
     public int soTo200000 = 0;
     public int soTo500000 = 0;
+    public int tienMat = 0;
     public Double tongTien = 0.0;
 
     public static LocalDateTime ngayGioBatDau;
@@ -212,7 +214,7 @@ public class TrangKetCa extends JFrame {
 
         JPanel panel_1 = new JPanel();
         panel_1.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "X\u00E1c nh\u1EADn ti\u1EC1n", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-        panel_1.setBounds(499, 124, 448, 408);
+        panel_1.setBounds(499, 124, 448, 459);
         contentPane.add(panel_1);
         panel_1.setLayout(null);
 
@@ -423,7 +425,7 @@ public class TrangKetCa extends JFrame {
 
         btn_xacNhan = new JButton("Xác nhận");
         btn_xacNhan.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        btn_xacNhan.setBounds(824, 546, 115, 33);
+        btn_xacNhan.setBounds(824, 607, 115, 33);
         contentPane.add(btn_xacNhan);
 
         btn_hoanTat = new JButton("Hoàn tất");
@@ -450,6 +452,13 @@ public class TrangKetCa extends JFrame {
         label_hienMaNV.setFont(new Font("Tahoma", Font.PLAIN, 20));
         label_hienMaNV.setBounds(146, 39, 273, 25);
         contentPane.add(label_hienMaNV);
+
+        label_hienTien = new JLabel("0");
+        label_hienTien.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        label_hienTien.setBounds(215, 389, 203, 25);
+        panel_1.add(label_hienTien);
+
+
 
         HanhDong_TrangKetCa hdTrangKetCa = new HanhDong_TrangKetCa(this);
         btn_minus_1000.addActionListener(hdTrangKetCa);

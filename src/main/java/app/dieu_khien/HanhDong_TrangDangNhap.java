@@ -13,6 +13,7 @@ import java.util.Date;
 import app.dao.NhanVien_DAO;
 import app.giao_dien.TrangDinhHuong;
 import app.giao_dien.TrangDangNhap;
+import app.giao_dien.TrangOTP;
 import app.thuc_the.GIOI_TINH;
 
 import javax.swing.*;
@@ -49,11 +50,9 @@ public class HanhDong_TrangDangNhap implements ActionListener, MouseListener {
                 trangDinhHuong.trangNhanVien.dateChooser_ngaySinh.setDate(Date.from(NhanVien_DAO.layThongTinNV(username).getNgaySinh().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
                 trangDinhHuong.trangNhanVien.textArea_diaChi.setText(NhanVien_DAO.layThongTinNV(username).getDiaChi());
                 trangDinhHuong.trangNhanVien.textField_sdt.setText(NhanVien_DAO.layThongTinNV(username).getSoDT());
-                GIOI_TINH gt = GIOI_TINH.NAM;
-                if(!NhanVien_DAO.layThongTinNV(username).getGioiTinh().equals("Nam")) {
-                    gt = GIOI_TINH.NU;
-                }
-                trangDinhHuong.trangNhanVien.comboBox_gt.setSelectedItem(gt);
+                trangDinhHuong.trangNhanVien.comboBox_gt.setSelectedItem(NhanVien_DAO.layThongTinNV(username).getGioiTinh().getValue());
+
+
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
                 LocalDateTime now = LocalDateTime.now();
                 String formattedDateTime = now.format(formatter);
@@ -83,7 +82,10 @@ public class HanhDong_TrangDangNhap implements ActionListener, MouseListener {
 
     @Override
     public void mousePressed(MouseEvent e) {
-        throw new UnsupportedOperationException("Unimplemented method 'mouseClicked'");
+        if(e.getSource() == this.trangDangNhap.nhanQuenMatKhau) {
+            this.trangDangNhap.setVisible(false);
+            new TrangOTP().setVisible(true);
+        }
     }
 
     @Override
