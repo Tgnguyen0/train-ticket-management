@@ -55,6 +55,9 @@ public class HanhDong_TrangNhanVien implements ActionListener {
         String sdt = trangNhanVien.textField_sdt.getText();
         String diaChi = trangNhanVien.textArea_diaChi.getText();
         trangNhanVien.regexCapNhat(ten, sdt, diaChi);
+        if(!trangNhanVien.regex_birthDay()){
+            return;
+        }
         int luaChon = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn cập nhật thông tin?", "Xác nhận", JOptionPane.YES_NO_OPTION);
         if(luaChon == JOptionPane.NO_OPTION) {
             return;
@@ -73,4 +76,5 @@ public class HanhDong_TrangNhanVien implements ActionListener {
             JOptionPane.showMessageDialog(null, "Cập nhật thông tin thành công");
 
     }
+
 }
