@@ -5,11 +5,15 @@ import app.dao.Ghe_DAO;
 import app.dao.LichCapBenGa_DAO;
 import app.dieu_khien.HanhDong_TrangDanhSachVe;
 import app.dieu_khien.HanhDong_TrangThongTinChiTietVeTau;
+import app.phong_chu_moi.PhongChuMoi;
 import app.thuc_the.Ghe;
 import app.thuc_the.NhaGa;
 import com.toedter.calendar.JDateChooser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
 import java.time.LocalDateTime;
@@ -69,8 +73,11 @@ public class TrangThongTinChiTietVeTau extends JFrame {
     public Ga_DAO gaDao;
     public LichCapBenGa_DAO lichDao;
     public Ghe_DAO gheDao;
-
+    public Ghe ghe;
     public List<NhaGa> dsGa;
+    public Color xanhBrandeis = new Color(0, 112, 255);
+
+    Logger logger = LoggerFactory.getLogger(TrangThongTinChiTietVeTau.class);
 
     public TrangThongTinChiTietVeTau(String maVe, String loaiVe, String diemDi, String diemDen, LocalDateTime ngayKhoiHanh,
                                      String ngayTroVe, String tenKhachHang, String soHieu, String tenToa,
@@ -83,7 +90,7 @@ public class TrangThongTinChiTietVeTau extends JFrame {
         this.gheDao = new Ghe_DAO(); // Khởi tạo ghế dao
         gheDao.themGhe(ghe); // Thêm ghe đã có vào dsGheDat
         dsGa = this.gaDao.ChonTatCa(); // Lấy danh sách nhà ga
-
+        this.ghe = ghe;
         this.ac = new HanhDong_TrangThongTinChiTietVeTau(this);
         this.mouse = new HanhDong_TrangThongTinChiTietVeTau(this);
 
@@ -180,6 +187,7 @@ public class TrangThongTinChiTietVeTau extends JFrame {
         }
 
         this.thanhChonDiemDi.setSelectedItem(diemDi);
+        //logger.info(diemDi);
 
         for (int i = 0 ; i < dsGa.size() ; i++) {
             // Bỏ "vũng tàu" với "cần thơ" vì không có đường ray qua
@@ -201,6 +209,8 @@ public class TrangThongTinChiTietVeTau extends JFrame {
         this.thanhChonNgayDatVe.setDate(Date.from(ngayDatVe.atZone(ZoneId.systemDefault()).toInstant()));
         this.textFieldLoaiDoiTuong.setText(doiTuong);
         this.textFieldGiaVe.setText(giaVe);
+        this.thanhChonDiemDi.setEditable(false);
+        this.thanhChonDiemDen.setEditable(false);
 
         /*
             cài đặt vô hiệu hóa các jtextField
@@ -219,8 +229,11 @@ public class TrangThongTinChiTietVeTau extends JFrame {
 
     public void thietLap_TrangChuaMaVe(){
         labelMaVe.setText("Mã Vé: ");
-
+        labelGiaVe.setFont(new Font("Arial", Font.PLAIN, 13));
         textFieldMaVe.setText("");
+        textFieldMaVe.setForeground(Color.BLUE);
+        textFieldMaVe.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.BOLD, 13));
+        textFieldMaVe.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, xanhBrandeis));
 
         javax.swing.GroupLayout trangChuaMaVeLayout = new javax.swing.GroupLayout(trangChuaMaVe);
         trangChuaMaVe.setLayout(trangChuaMaVeLayout);
@@ -247,9 +260,12 @@ public class TrangThongTinChiTietVeTau extends JFrame {
     public void thietLap_TrangTenKhacHang(){
 
         labelTenKhachHang.setText("Họ Và Tên:");
+        labelTenKhachHang.setFont(new Font("Arial", Font.PLAIN, 13));
 
         textFieldTenKhachHang.setText("");
-
+        textFieldTenKhachHang.setForeground(Color.BLUE);
+        textFieldTenKhachHang.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.BOLD, 13));
+        textFieldTenKhachHang.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, xanhBrandeis));
         javax.swing.GroupLayout trangChuaTenKhachHangLayout = new javax.swing.GroupLayout(trangChuaTenKhachHang);
         trangChuaTenKhachHang.setLayout(trangChuaTenKhachHangLayout);
         trangChuaTenKhachHangLayout.setHorizontalGroup(
@@ -275,9 +291,12 @@ public class TrangThongTinChiTietVeTau extends JFrame {
     public void thietLap_TrangChuaLoaiVe(){
 
         labelLoaiVe.setText("Loại Vé:");
+        labelLoaiVe.setFont(new Font("Arial", Font.PLAIN, 13));
 
         textFieldLoaiVe.setText("");
-
+        textFieldLoaiVe.setForeground(Color.BLUE);
+        textFieldLoaiVe.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.BOLD, 13));
+        textFieldLoaiVe.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, xanhBrandeis));
         javax.swing.GroupLayout trangChuaLoaiVeLayout = new javax.swing.GroupLayout(trangChuaLoaiVe);
         trangChuaLoaiVe.setLayout(trangChuaLoaiVeLayout);
         trangChuaLoaiVeLayout.setHorizontalGroup(
@@ -302,9 +321,12 @@ public class TrangThongTinChiTietVeTau extends JFrame {
 
     public void thietLap_TrangChuaSoHieuTau(){
         labelSoHieu.setText("Số Hiệu:");
+        labelSoHieu.setFont(new Font("Arial", Font.PLAIN, 13));
 
         textFieldSoHieu.setText("");
-
+        textFieldSoHieu.setForeground(Color.BLUE);
+        textFieldSoHieu.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.BOLD, 13));
+        textFieldSoHieu.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, xanhBrandeis));
         javax.swing.GroupLayout trangChuaSoHieuTauLayout = new javax.swing.GroupLayout(trangChuaSoHieuTau);
         trangChuaSoHieuTau.setLayout(trangChuaSoHieuTauLayout);
         trangChuaSoHieuTauLayout.setHorizontalGroup(
@@ -330,8 +352,34 @@ public class TrangThongTinChiTietVeTau extends JFrame {
     public void thietLap_TrangChuaDiemDi(){
 
         labelDiemDi.setText("Điểm Đi:");
+        labelDiemDi.setFont(new Font("Arial", Font.PLAIN, 13));
 
         //thanhChonDiemDi.setText("");
+        thanhChonDiemDi.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.BOLD, 13));
+        thanhChonDiemDi.setRenderer(new javax.swing.DefaultListCellRenderer() {
+            @Override
+            public java.awt.Component getListCellRendererComponent(
+                    javax.swing.JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+
+                // Gọi phương thức mặc định để thiết lập label
+                javax.swing.JLabel renderer = (javax.swing.JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+
+                // Căn giữa chữ trong JComboBox
+                renderer.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+                renderer.setFont(new Font("Arial", Font.PLAIN, 13));
+                // Kiểm tra nếu mục được chọn hoặc có con trỏ chuột đang chỉ vào
+                if (isSelected || cellHasFocus) {
+                    renderer.setBackground(xanhBrandeis); // Màu nền xanh
+                    renderer.setForeground(Color.WHITE); // Màu chữ trắng
+                    renderer.setFont(new Font("Arial", Font.BOLD, 13));
+
+                } else {
+                    renderer.setBackground(Color.WHITE); // Màu nền trắng khi không chọn
+                    renderer.setForeground(xanhBrandeis); // Màu chữ đen khi không chọn
+                }
+                return renderer;
+            }
+        });
 
         javax.swing.GroupLayout trangChuaDiemDiLayout = new javax.swing.GroupLayout(trangChuaDiemDi);
         trangChuaDiemDi.setLayout(trangChuaDiemDiLayout);
@@ -358,9 +406,12 @@ public class TrangThongTinChiTietVeTau extends JFrame {
     public void thietLap_TrangChuaTenToa(){
 
         labelToa.setText("Tên Toa:");
+        labelToa.setFont(new Font("Arial", Font.PLAIN, 13));
 
         textFieldToa.setText("");
-
+        textFieldToa.setForeground(Color.BLUE);
+        textFieldToa.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.BOLD, 13));
+        textFieldToa.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, xanhBrandeis));
         javax.swing.GroupLayout trangChuaTenToaLayout = new javax.swing.GroupLayout(trangChuaTenToa);
         trangChuaTenToa.setLayout(trangChuaTenToaLayout);
         trangChuaTenToaLayout.setHorizontalGroup(
@@ -385,9 +436,33 @@ public class TrangThongTinChiTietVeTau extends JFrame {
 
     public void thietLap_TrangChuaDiemDen(){
         labelDiemDen.setText("Điểm Đến:");
+        labelDiemDen.setFont(new Font("Arial", Font.PLAIN, 13));
 
         //thanhChonDiemDen.setText("");
+        thanhChonDiemDen.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.BOLD, 13));
+        thanhChonDiemDen.setRenderer(new javax.swing.DefaultListCellRenderer() {
+            @Override
+            public java.awt.Component getListCellRendererComponent(
+                    javax.swing.JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
 
+                // Gọi phương thức mặc định để thiết lập label
+                javax.swing.JLabel renderer = (javax.swing.JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+
+                // Căn giữa chữ trong JComboBox
+                renderer.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+                renderer.setFont(new Font("Arial", Font.PLAIN, 13));
+                // Kiểm tra nếu mục được chọn hoặc có con trỏ chuột đang chỉ vào
+                if (isSelected || cellHasFocus) {
+                    renderer.setBackground(xanhBrandeis); // Màu nền xanh
+                    renderer.setForeground(Color.WHITE); // Màu chữ trắng
+                    renderer.setFont(new Font("Arial", Font.BOLD, 13));
+                } else {
+                    renderer.setBackground(Color.WHITE); // Màu nền trắng khi không chọn
+                    renderer.setForeground(xanhBrandeis); // Màu chữ đen khi không chọn
+                }
+                return renderer;
+            }
+        });
         javax.swing.GroupLayout trangChuaDiemDenLayout = new javax.swing.GroupLayout(trangChuaDiemDen);
         trangChuaDiemDen.setLayout(trangChuaDiemDenLayout);
         trangChuaDiemDenLayout.setHorizontalGroup(
@@ -414,9 +489,12 @@ public class TrangThongTinChiTietVeTau extends JFrame {
 
 
         labelGhe.setText("Vị Trí Ghế:");
+        labelGhe.setFont(new Font("Arial", Font.PLAIN, 13));
 
-        textFieldGhe.setText("CON CAC");
-
+        textFieldGhe.setText("");
+        textFieldGhe.setForeground(Color.BLUE);
+        textFieldGhe.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.BOLD, 13));
+        textFieldGhe.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, xanhBrandeis));
         javax.swing.GroupLayout trangChuaViTriGheLayout = new javax.swing.GroupLayout(trangChuaViTriGhe);
         trangChuaViTriGhe.setLayout(trangChuaViTriGheLayout);
         trangChuaViTriGheLayout.setHorizontalGroup(
@@ -440,7 +518,8 @@ public class TrangThongTinChiTietVeTau extends JFrame {
     }
 
     public void thietLap_TrangChuaNgayKhoiHanh(){
-        labelNgayKhoiHanh.setText("Ngày Khởi Hành:");
+        labelNgayKhoiHanh.setText("<html>&nbsp;&nbsp;&nbsp;Ngày<br>KhởiHành:</html>");
+        labelNgayKhoiHanh.setFont(new Font("Arial", Font.PLAIN, 13));
 
         javax.swing.GroupLayout trangChuaNgayKhoiHanhLayout = new javax.swing.GroupLayout(trangChuaNgayKhoiHanh);
         trangChuaNgayKhoiHanh.setLayout(trangChuaNgayKhoiHanhLayout);
@@ -466,7 +545,8 @@ public class TrangThongTinChiTietVeTau extends JFrame {
     }
 
     public void thietLap_TrangChuaNgayDatVe(){
-        labelNgayDatVe.setText("Ngày Đặt Vé:");
+        labelNgayDatVe.setText("<html>&nbsp;&nbsp;Ngày<br>Đặt Vé:");
+        labelNgayDatVe.setFont(new Font("Arial", Font.PLAIN, 13));
 
         javax.swing.GroupLayout trangChuaNgayDatVeLayout = new javax.swing.GroupLayout(trangChuaNgayDatVe);
         trangChuaNgayDatVe.setLayout(trangChuaNgayDatVeLayout);
@@ -491,8 +571,10 @@ public class TrangThongTinChiTietVeTau extends JFrame {
 
     public void thietLap_TrangChuaNgayTroVe(){
         labelNgayTroVe.setText("Ngày Trở Về:");
+        labelNgayTroVe.setFont(new Font("Arial", Font.PLAIN, 13));
 
         textFieldNgayTroVe.setText("");
+        textFieldNgayTroVe.setForeground(Color.BLUE);
 
         javax.swing.GroupLayout trangChuaNgayTroVeLayout = new javax.swing.GroupLayout(trangChuaNgayTroVe);
         trangChuaNgayTroVe.setLayout(trangChuaNgayTroVeLayout);
@@ -518,9 +600,12 @@ public class TrangThongTinChiTietVeTau extends JFrame {
 
     public void trangChua_TrangChuaLoaiDoiTuong(){
         labelLoaiDoiTuong.setText("Đối Tượng:");
+        labelLoaiDoiTuong.setFont(new Font("Arial", Font.PLAIN, 13));
 
         textFieldLoaiDoiTuong.setText("");
-
+        textFieldLoaiDoiTuong.setForeground(Color.BLUE);
+        textFieldLoaiDoiTuong.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.BOLD, 13));
+        textFieldLoaiDoiTuong.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, xanhBrandeis));
         javax.swing.GroupLayout trangChuaLoaiDoiTuongLayout = new javax.swing.GroupLayout(trangChuaLoaiDoiTuong);
         trangChuaLoaiDoiTuong.setLayout(trangChuaLoaiDoiTuongLayout);
         trangChuaLoaiDoiTuongLayout.setHorizontalGroup(
@@ -543,9 +628,12 @@ public class TrangThongTinChiTietVeTau extends JFrame {
     }
     public void thietLap_TrangChuaGiaVe(){
         labelGiaVe.setText("Giá Vé:");
+        labelGiaVe.setFont(new Font("Arial", Font.PLAIN, 13));
 
         textFieldGiaVe.setText("");
-
+        textFieldGiaVe.setForeground(Color.BLUE);
+        textFieldGiaVe.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.BOLD, 13));
+        textFieldGiaVe.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, xanhBrandeis));
         javax.swing.GroupLayout trangChuaGiaVeLayout = new javax.swing.GroupLayout(trangChuaGiaVe);
         trangChuaGiaVe.setLayout(trangChuaGiaVeLayout);
         trangChuaGiaVeLayout.setHorizontalGroup(
@@ -573,13 +661,24 @@ public class TrangThongTinChiTietVeTau extends JFrame {
 
     public void thietLap_TrangChuaCacButton(){
         buttonCapNhat.setText("Cập Nhật");
+        buttonCapNhat.setBackground(xanhBrandeis);
+        buttonCapNhat.setForeground(Color.WHITE);
+        buttonCapNhat.setFont(new Font("Arial", Font.BOLD, 14));
 
         buttonXacNhan.setText("Xác Nhận");
+        buttonXacNhan.setBackground(xanhBrandeis);
+        buttonXacNhan.setForeground(Color.WHITE);
+        buttonXacNhan.setFont(new Font("Arial", Font.BOLD, 14));
 
         buttonInVe.setText("In Vé");
+        buttonInVe.setBackground(xanhBrandeis);
+        buttonInVe.setForeground(Color.WHITE);
+        buttonInVe.setFont(new Font("Arial", Font.BOLD, 14));
 
         buttonViTriGhe.setText("Vị Trí Ghế");
-
+        buttonViTriGhe.setBackground(xanhBrandeis);
+        buttonViTriGhe.setForeground(Color.WHITE);
+        buttonViTriGhe.setFont(new Font("Arial", Font.BOLD, 14));
 
         javax.swing.GroupLayout trangChuaCacButtonLayout = new javax.swing.GroupLayout(trangChuaCacButton);
         trangChuaCacButton.setLayout(trangChuaCacButtonLayout);
@@ -624,7 +723,7 @@ public class TrangThongTinChiTietVeTau extends JFrame {
                         .addGroup(trangChuaThongTinVeChiTietLayout.createSequentialGroup()
                                 .addGroup(trangChuaThongTinVeChiTietLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(trangChuaThongTinVeChiTietLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                .addComponent(trangChuaNgayTroVe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(trangChuaGiaVe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addGroup(trangChuaThongTinVeChiTietLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                                         .addComponent(trangChuaDiemDen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                         .addComponent(trangChuaNgayKhoiHanh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -636,7 +735,6 @@ public class TrangThongTinChiTietVeTau extends JFrame {
                                         .addComponent(trangChuaNgayDatVe, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(trangChuaLoaiDoiTuong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, trangChuaThongTinVeChiTietLayout.createSequentialGroup()
-                                .addComponent(trangChuaGiaVe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(trangChuaCacButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -667,11 +765,11 @@ public class TrangThongTinChiTietVeTau extends JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(trangChuaThongTinVeChiTietLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                         .addComponent(trangChuaLoaiDoiTuong, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(trangChuaNgayTroVe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addComponent(trangChuaGiaVe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(trangChuaThongTinVeChiTietLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                         .addComponent(trangChuaCacButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(trangChuaGiaVe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                        ))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -689,8 +787,6 @@ public class TrangThongTinChiTietVeTau extends JFrame {
     public void caiDatVoHieuHoa(){
         this.textFieldMaVe.setEditable(false);
         this.textFieldLoaiVe.setEditable(false);
-        //this.textFieldDiemDi.setEditable(false);
-        //this.textFieldDiemDen.setEditable(false);
         this.textFieldNgayTroVe.setEditable(false);
         this.textFieldTenKhachHang.setEditable(false);
         this.textFieldSoHieu.setEditable(false);
@@ -700,6 +796,10 @@ public class TrangThongTinChiTietVeTau extends JFrame {
         this.textFieldLoaiDoiTuong.setEditable(false);
         this.textFieldGiaVe.setEditable(false);
         this.buttonViTriGhe.setEnabled(false);
+        this.thanhChonDiemDi.setEnabled(false);
+        this.thanhChonDiemDen.setEnabled(false);
+        this.thanhChonNgayKhoiHanh.setEnabled(false);
+        this.thanhChonNgayDatVe.setEnabled(false);
     }
 
     public void choPhepCapNhat(){

@@ -24,6 +24,7 @@ import java.text.DecimalFormat;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 @Slf4j
@@ -38,28 +39,30 @@ public class HanhDong_TrangDanhSachVe implements ActionListener, MouseListener {
         this.trangDanhSachVeTau = trangDanhSachVeTau;
         this.databaseVe = new Ve_DAO();
 
-        List<Ve> dsVe = null;
-        try {
-            dsVe = databaseVe.layToanBoVe();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        trangDanhSachVeTau.dayDuLieuVaoBang(dsVe);
-        logger.info("lấy thành công");
+//        List<Ve> dsVe = null;
+//        try {
+//            dsVe = databaseVe.layToanBoVe();
+//        } catch (SQLException e) {
+//            throw new RuntimeException(e);
+//        }
+//        trangDanhSachVeTau.dayDuLieuVaoBang(dsVe);
 
     }
 
     public  void quanLyDanhSachVeTrongBang() throws SQLException {
         List<Ve> dsVe = databaseVe.layToanBoVe();
         trangDanhSachVeTau.dayDuLieuVaoBang(dsVe);
-        logger.info("lấy thành công");
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.trangDanhSachVeTau.buttonLamMoi) {
                 this.trangDanhSachVeTau.lamMoiCacThanh();
-                logger.info("lấy thành công");
+            try {
+                this.quanLyDanhSachVeTrongBang();
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
         }
         else if (e.getSource() == this.trangDanhSachVeTau.timKiem) {
             String maVe = this.trangDanhSachVeTau.thanhTimKiem.getText();
@@ -77,32 +80,42 @@ public class HanhDong_TrangDanhSachVe implements ActionListener, MouseListener {
 
                 }
             } catch (SQLException ex) {
-//                JOptionPane.showMessageDialog(null, Message_Not_Found);
+                 JOptionPane.showMessageDialog(null, Message_Not_Found);
                 // Bạn có thể thêm logic xử lý lỗi hoặc khôi phục dữ liệu mặc định ở đây
-                logger.info("Không Thể Kết Nối Database ");
+
             }
         }
         else if(e.getSource() == this.trangDanhSachVeTau.buttonHuyVe){
             String maVe = this.trangDanhSachVeTau.textFieldMaVe.getText();
 
             try {
-                LocalDateTime ngayKhoiHanh = this.databaseVe.getNgayKhoiHanh_DuaVaoMaVe(maVe);
-                logger.info(ngayKhoiHanh.toString());
-                logger.info(LocalDate.now().toString());
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 
-                // Chuyển đổi `LocalDateTime` thành `LocalDate` và sử dụng `atStartOfDay()`
-                LocalDate today = LocalDate.now();
-                LocalDateTime startOfToday = today.atStartOfDay();
+                LocalDateTime ngayKhoiHanh_Ve = this.databaseVe.getNgayKhoiHanh_DuaVaoMaVe(maVe);
 
-                Duration duration = Duration.between(startOfToday, ngayKhoiHanh);
 
-                if (duration.toHours() >= 24) {
-                    JOptionPane.showMessageDialog(null, "Hủy Vé Thành Công!");
-                } else {
-                    JOptionPane.showMessageDialog(null, "Hủy Vé Không Thành Công!");
+                String maGhe = this.trangDanhSachVeTau.textFieldMaGhe.getText();
+
+                LocalDateTime gioKhoiHanhTau = this.databaseVe.getNgayKhoiHanhCuaTau_DuaVaoMaGhe(maGhe, "Sài Gòn");
+                LocalDateTime dateCurrent = LocalDateTime.now();
+                if(gioKhoiHanhTau != null){
+                    // tính khoảng cách 2 localdatetime
+                    Duration duration = Duration.between(ngayKhoiHanh_Ve, gioKhoiHanhTau);
+
+                    if (duration.toHours() >= 24 && ngayKhoiHanh_Ve.isAfter(dateCurrent)) {
+                        JOptionPane.showMessageDialog(null, "Hủy Vé Thành Công!");
+                        int location = this.trangDanhSachVeTau.table.getSelectedRow();
+                        this.trangDanhSachVeTau.model.removeRow(location);
+                        this.trangDanhSachVeTau.lamMoiCacThanh();
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Hủy Vé Không Thành Công!","Cảnh Báo!!!!!" ,JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+                else {
+                    JOptionPane.showMessageDialog(null, "Hủy Vé Không Thành Công!","Cảnh Báo!!!!!" ,JOptionPane.ERROR_MESSAGE);
                 }
             } catch (SQLException ex) {
-                throw new RuntimeException(ex);
+                JOptionPane.showMessageDialog(null, "Hủy Vé Không Thành Công!","Cảnh Báo!!!!!" ,JOptionPane.ERROR_MESSAGE);
             }
 
         }
@@ -153,7 +166,7 @@ public class HanhDong_TrangDanhSachVe implements ActionListener, MouseListener {
             }
         }
         else if(e.getSource() == this.trangDanhSachVeTau.buttonThongTinChiTiet){
-            logger.info("Đã chọn nút thông tin chi tiết ");
+            //logger.info("Đã chọn nút thông tin chi tiết ");
             String maVe = this.trangDanhSachVeTau.textFieldMaVe.getText();
             String maKhachHang = this.trangDanhSachVeTau.textFieldMaKhachHang.getText();
             KhachHang_DAO khachHangDao = new KhachHang_DAO();
@@ -171,14 +184,14 @@ public class HanhDong_TrangDanhSachVe implements ActionListener, MouseListener {
             /*
                 lấy vị trí ghế ngồi
              */
-            // Nhớ thay bằng cái maGhe đã định sẵn
-            Ghe ghe = Ghe_DAO.layGheTheoMaGhe("0049");
+                // Nhớ thay bằng cái maGhe đã định sẵn
+                Ghe ghe = Ghe_DAO.layGheTheoMaGhe(maGhe);
             /*
                 lấy tên toa và lấy số hiệu
              */
-            Toa toa = Toa_DAO.layToaTheoMaToa(ghe.getMaToa());
+                Toa toa = Toa_DAO.layToaTheoMaToa(ghe.getMaToa());
 
-            List<Ve> danhSachVe = new ArrayList<>();
+                List<Ve> danhSachVe = new ArrayList<>();
 
             try {
                 // Lấy ngày khởi hành để tìm lịch tàu
@@ -196,9 +209,9 @@ public class HanhDong_TrangDanhSachVe implements ActionListener, MouseListener {
     @Override
     public void mouseClicked(MouseEvent e) {
         int location = this.trangDanhSachVeTau.table.getSelectedRow();
-        logger.info(location+"");
+//        logger.info(location+"");
         String maVe = (String) this.trangDanhSachVeTau.model.getValueAt(location, 0);
-        logger.info(maVe);
+       // logger.info(maVe);
         List<Ve> danhSachVe = new ArrayList<>();
         try {
             danhSachVe = databaseVe.layVe_DuaVaoMaVe(maVe);
@@ -232,14 +245,15 @@ public class HanhDong_TrangDanhSachVe implements ActionListener, MouseListener {
             this.trangDanhSachVeTau.textFieldDoiTuong.setDisabledTextColor(Color.BLUE);
             this.trangDanhSachVeTau.textFieldDoiTuong.setEnabled(false);
 
-            this.trangDanhSachVeTau.ngayDatVe.setText(ve.getNgayDatVe()+"");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+            this.trangDanhSachVeTau.ngayDatVe.setText(formatter.format(ve.getNgayDatVe()));
 
-            this.trangDanhSachVeTau.ngayKhoiHanh.setText(ve.getNgayKhoiHanh()+"");
+            this.trangDanhSachVeTau.ngayKhoiHanh.setText(formatter.format(ve.getNgayKhoiHanh()));
             DecimalFormat df = new DecimalFormat("#,###.##");
             this.trangDanhSachVeTau.giaVe.setText(df.format(ve.getGiaVe())+" VNĐ");
 
 
-            logger.info(ve.toString());
+//            logger.info(ve.toString());
         } catch (SQLException ex) {
             throw new RuntimeException(ex);
         }

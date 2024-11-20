@@ -276,7 +276,7 @@ public class Ve_DAO {
 
     public List<Ve> layToanBoVe() throws SQLException {
         List<Ve> danhSachVe = new ArrayList<>();
-        String sql = "SELECT * FROM Ve";
+        String sql = "SELECT * FROM Ve ORDER BY NgayDatVe DESC";
         Connection connection = KetNoiCoSoDuLieu.ketNoiDB_HinhDB();
         PreparedStatement statement = connection.prepareStatement(sql);
         ResultSet resultSet = statement.executeQuery();
@@ -347,6 +347,28 @@ public class Ve_DAO {
         if (resultSet.next()) { // Di chuyển con trỏ đến dòng kết quả đầu tiên
             String maVe = resultSet.getString("MaVe");
             ngayKhoiHanh = resultSet.getTimestamp("NgayKhoiHanh")
+                    .toInstant()
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalDateTime(); // Chuyển đổi thành LocalDateTime
+        }
+        return ngayKhoiHanh;
+    }
+
+    public LocalDateTime getNgayKhoiHanhCuaTau_DuaVaoMaGhe(String maGheRequest, String gaKhoiHanhRequest) throws SQLException {
+        LocalDateTime ngayKhoiHanh = null;
+        String sql = "select top 1 lich.GioKhoiHanh from Ghe g join Toa t on g.MaToa = t.MaToa join Tau tau on t.SoHieu = tau.SoHieu \n" +
+                "\t\t\t\t\tjoin LichCapBenGa lich on tau.SoHieu = lich.SoHieu join NhaGa ga on lich.MaGa = ga.MaGa\n" +
+                "where g.MaGhe = ? and ga.TenGa = ? and lich.GioKhoiHanh >= GETDATE() \n" +
+                "order by lich.GioKhoiHanh ASC";
+        Connection connection = KetNoiCoSoDuLieu.ketNoiDB_HinhDB();
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setString(1, maGheRequest); // Đặt tham số MaVe
+        statement.setString(2, gaKhoiHanhRequest); // Đặt tham số ga khởi hành
+
+        ResultSet resultSet = statement.executeQuery();
+
+        if (resultSet.next()) { // Di chuyển con trỏ đến dòng kết quả đầu tiên
+            ngayKhoiHanh = resultSet.getTimestamp("GioKhoiHanh")
                     .toInstant()
                     .atZone(ZoneId.systemDefault())
                     .toLocalDateTime(); // Chuyển đổi thành LocalDateTime
