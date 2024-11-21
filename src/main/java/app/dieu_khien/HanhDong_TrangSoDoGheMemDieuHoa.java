@@ -24,7 +24,7 @@ public class HanhDong_TrangSoDoGheMemDieuHoa implements ActionListener, MouseLis
         int soGhe = Integer.parseInt(nutGhe.getActionCommand()) - 1; // -1 để chuyển từ ghế số sang chỉ số mảng
         Ghe ghe = this.trangSoDoGheMemDieuHoa.dsGhe.get(soGhe);
 
-        System.out.println("Ghe mem " + "TRC THEM: " + ghe.getSoGhe() + " " + ghe.getMaToa());
+        //System.out.println("Ghe mem " + "TRC THEM: " + ghe.getSoGhe() + " " + ghe.getMaToa());
         /*if (!this.trangSoDoGheMemDieuHoa.gheDao.layDSGheDat().isEmpty()) {
             for (Ghe gheTest : this.trangSoDoGheMemDieuHoa.gheDao.layDSGheDat()) {
                 System.out.println("Ghe mem " + "TRC IF: " + gheTest.getSoGhe() + " " + gheTest.getMaToa());
@@ -39,30 +39,34 @@ public class HanhDong_TrangSoDoGheMemDieuHoa implements ActionListener, MouseLis
             if (this.trangSoDoGheMemDieuHoa.gheDao.layDSGheDat().contains(ghe)) {
                 this.trangSoDoGheMemDieuHoa.gheDao.layDSGheDat().remove(ghe);
 
-                if (!this.trangSoDoGheMemDieuHoa.gheDao.layDSGheDat().isEmpty()) {
+                /*if (!this.trangSoDoGheMemDieuHoa.gheDao.layDSGheDat().isEmpty()) {
                     for (Ghe gheTest : this.trangSoDoGheMemDieuHoa.gheDao.layDSGheDat()) {
                         System.out.println("Ghe mem " + "XOA GHE: " + gheTest.getSoGhe() + " " + gheTest.getMaToa());
                     }
                 }  else {
                     System.out.println("Ghe mem rong");
-                }
-
+                }*/
 
                 nutGhe.setBackground(this.trangSoDoGheMemDieuHoa.xanhBrandeis);
             } else {
                 //System.out.println(ghe.getMaGhe());
                 //System.out.println(ghe.getSoGhe());
                 //System.out.println(ghe.getMaToa());
-                this.trangSoDoGheMemDieuHoa.gheDao.layDSGheDat().add(ghe);
+                if (this.trangSoDoGheMemDieuHoa.gheDao.layDSGheDat().size() > this.trangSoDoGheMemDieuHoa.gheDao.laySoGheToiDa() - 1) {
+                    hienThiThongBao("Không được chọn quá số lượng khách đặt", "Lỗi đặt ghế");
+                    return;
+                }
+
+                this.trangSoDoGheMemDieuHoa.gheDao.themGhe(ghe);
                 this.trangSoDoGheMemDieuHoa.gheDao.datGheChon(ghe);
 
-                if (!this.trangSoDoGheMemDieuHoa.gheDao.layDSGheDat().isEmpty()) {
+                /*if (!this.trangSoDoGheMemDieuHoa.gheDao.layDSGheDat().isEmpty()) {
                     for (Ghe gheTest : this.trangSoDoGheMemDieuHoa.gheDao.layDSGheDat()) {
                         System.out.println("Ghe mem " + "THEM GHE: " + gheTest.getSoGhe() + " " + gheTest.getMaToa());
                     }
                 }  else {
                     System.out.println("Ghe mem rong");
-                }
+                }*/
 
                 nutGhe.setBackground(this.trangSoDoGheMemDieuHoa.camNhuomDen);
             }
@@ -70,9 +74,9 @@ public class HanhDong_TrangSoDoGheMemDieuHoa implements ActionListener, MouseLis
             hienThiThongBao("Ghế đã đặt.", "Lỗi Chọn Ghế");
         }
 
-        for (Ghe gheTest : this.trangSoDoGheMemDieuHoa.gheDao.layDSGheDat()) {
+        /*for (Ghe gheTest : this.trangSoDoGheMemDieuHoa.gheDao.layDSGheDat()) {
             System.out.println("Ghe mem " + "SAU CUNG: " + gheTest.getSoGhe() + " " + gheTest.getMaToa());
-        }
+        }*/
     }
 
     // Phương thức hiển thị thông báo lỗi chung
