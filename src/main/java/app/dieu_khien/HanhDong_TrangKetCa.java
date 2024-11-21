@@ -11,7 +11,6 @@ import com.itextpdf.text.*;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.pdf.*;
-import com.lowagie.text.Cell;
 import org.apache.poi.xwpf.usermodel.*;
 
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
@@ -26,17 +25,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import com.itextpdf.text.pdf.PdfWriter;
-import java.io.File;
+
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-import java.text.AttributedCharacterIterator;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Map;
 
-import static jdk.jfr.consumer.EventStream.openFile;
 import static org.apache.poi.ss.util.CellUtil.createCell;
 
 
@@ -55,40 +51,57 @@ public class HanhDong_TrangKetCa implements ActionListener {
             } else {
                 this.trangKetCa.soTo1000--;
                 this.trangKetCa.textField_1000.setText(String.valueOf(this.trangKetCa.soTo1000));
+                this.trangKetCa.tienMat -=1000;
+                this.trangKetCa.label_hienTien.setText(String.valueOf(this.trangKetCa.tienMat));
             }
         } else if (e.getSource() == this.trangKetCa.btn_plus_1000) {
             this.trangKetCa.soTo1000++;
             this.trangKetCa.textField_1000.setText(String.valueOf(this.trangKetCa.soTo1000));
+            this.trangKetCa.tienMat +=1000;
+            this.trangKetCa.label_hienTien.setText(String.valueOf(this.trangKetCa.tienMat));
+
         } else if (e.getSource() == this.trangKetCa.btn_minus_2000) {
             if (this.trangKetCa.soTo2000 == 0) {
                 return;
             } else {
                 this.trangKetCa.soTo2000--;
                 this.trangKetCa.textField_2000.setText(String.valueOf(this.trangKetCa.soTo2000));
+                this.trangKetCa.tienMat -=2000;
+                this.trangKetCa.label_hienTien.setText(String.valueOf(this.trangKetCa.tienMat));
             }
         } else if (e.getSource() == this.trangKetCa.btn_plus_2000) {
             this.trangKetCa.soTo2000++;
             this.trangKetCa.textField_2000.setText(String.valueOf(this.trangKetCa.soTo2000));
+            this.trangKetCa.tienMat +=2000;
+            this.trangKetCa.label_hienTien.setText(String.valueOf(this.trangKetCa.tienMat));
         } else if (e.getSource() == this.trangKetCa.btn_minus_5000) {
             if (this.trangKetCa.soTo5000 == 0) {
                 return;
             } else {
                 this.trangKetCa.soTo5000--;
                 this.trangKetCa.textField_5000.setText(String.valueOf(this.trangKetCa.soTo5000));
+                this.trangKetCa.tienMat -=5000;
+                this.trangKetCa.label_hienTien.setText(String.valueOf(this.trangKetCa.tienMat));
             }
         } else if (e.getSource() == this.trangKetCa.btn_plus_5000) {
             this.trangKetCa.soTo5000++;
             this.trangKetCa.textField_5000.setText(String.valueOf(this.trangKetCa.soTo5000));
+            this.trangKetCa.tienMat +=5000;
+            this.trangKetCa.label_hienTien.setText(String.valueOf(this.trangKetCa.tienMat));
         } else if (e.getSource() == this.trangKetCa.btn_minus_10000) {
             if (this.trangKetCa.soTo10000 == 0) {
                 return;
             } else {
                 this.trangKetCa.soTo10000--;
                 this.trangKetCa.textField_10000.setText(String.valueOf(this.trangKetCa.soTo10000));
+                this.trangKetCa.tienMat -=10000;
+                this.trangKetCa.label_hienTien.setText(String.valueOf(this.trangKetCa.tienMat));
             }
         } else if (e.getSource() == this.trangKetCa.btn_plus_10000) {
             this.trangKetCa.soTo10000++;
             this.trangKetCa.textField_10000.setText(String.valueOf(this.trangKetCa.soTo10000));
+            this.trangKetCa.tienMat +=10000;
+            this.trangKetCa.label_hienTien.setText(String.valueOf(this.trangKetCa.tienMat));
 
         } else if (e.getSource() == this.trangKetCa.btn_minus_20000) {
             if (this.trangKetCa.soTo20000 == 0) {
@@ -96,80 +109,70 @@ public class HanhDong_TrangKetCa implements ActionListener {
             } else {
                 this.trangKetCa.soTo20000--;
                 this.trangKetCa.textField_20000.setText(String.valueOf(this.trangKetCa.soTo20000));
+                this.trangKetCa.tienMat -=20000;
+                this.trangKetCa.label_hienTien.setText(String.valueOf(this.trangKetCa.tienMat));
             }
         } else if (e.getSource() == this.trangKetCa.btn_plus_20000) {
             this.trangKetCa.soTo20000++;
             this.trangKetCa.textField_20000.setText(String.valueOf(this.trangKetCa.soTo20000));
+            this.trangKetCa.tienMat +=20000;
+            this.trangKetCa.label_hienTien.setText(String.valueOf(this.trangKetCa.tienMat));
         } else if (e.getSource() == this.trangKetCa.btn_minus_50000) {
             if (this.trangKetCa.soTo50000 == 0) {
                 return;
             } else {
                 this.trangKetCa.soTo50000--;
                 this.trangKetCa.textField_50000.setText(String.valueOf(this.trangKetCa.soTo50000));
+                this.trangKetCa.tienMat -=50000;
+                this.trangKetCa.label_hienTien.setText(String.valueOf(this.trangKetCa.tienMat));
             }
         } else if (e.getSource() == this.trangKetCa.btn_plus_50000) {
             this.trangKetCa.soTo50000++;
             this.trangKetCa.textField_50000.setText(String.valueOf(this.trangKetCa.soTo50000));
+            this.trangKetCa.tienMat +=50000;
+            this.trangKetCa.label_hienTien.setText(String.valueOf(this.trangKetCa.tienMat));
         } else if (e.getSource() == this.trangKetCa.btn_minus_100000) {
             if (this.trangKetCa.soTo100000 == 0) {
                 return;
             } else {
                 this.trangKetCa.soTo100000--;
                 this.trangKetCa.textField_100000.setText(String.valueOf(this.trangKetCa.soTo100000));
+                this.trangKetCa.tienMat -=100000;
+                this.trangKetCa.label_hienTien.setText(String.valueOf(this.trangKetCa.tienMat));
             }
         } else if (e.getSource() == this.trangKetCa.btn_plus_100000) {
             this.trangKetCa.soTo100000++;
             this.trangKetCa.textField_100000.setText(String.valueOf(this.trangKetCa.soTo100000));
+            this.trangKetCa.tienMat +=100000;
+            this.trangKetCa.label_hienTien.setText(String.valueOf(this.trangKetCa.tienMat));
         } else if (e.getSource() == this.trangKetCa.btn_minus_200000) {
             if (this.trangKetCa.soTo200000 == 0) {
                 return;
             } else {
                 this.trangKetCa.soTo200000--;
                 this.trangKetCa.textField_200000.setText(String.valueOf(this.trangKetCa.soTo200000));
+                this.trangKetCa.tienMat -=200000;
+                this.trangKetCa.label_hienTien.setText(String.valueOf(this.trangKetCa.tienMat));
             }
         } else if (e.getSource() == this.trangKetCa.btn_plus_200000) {
             this.trangKetCa.soTo200000++;
             this.trangKetCa.textField_200000.setText(String.valueOf(this.trangKetCa.soTo200000));
+            this.trangKetCa.tienMat +=200000;
+            this.trangKetCa.label_hienTien.setText(String.valueOf(this.trangKetCa.tienMat));
         } else if (e.getSource() == this.trangKetCa.btn_minus_500000) {
             if (this.trangKetCa.soTo500000 == 0) {
                 return;
             } else {
                 this.trangKetCa.soTo500000--;
                 this.trangKetCa.textField_500000.setText(String.valueOf(this.trangKetCa.soTo500000));
+                this.trangKetCa.tienMat -=500000;
+                this.trangKetCa.label_hienTien.setText(String.valueOf(this.trangKetCa.tienMat));
             }
         } else if (e.getSource() == this.trangKetCa.btn_plus_500000) {
             this.trangKetCa.soTo500000++;
             this.trangKetCa.textField_500000.setText(String.valueOf(this.trangKetCa.soTo500000));
-        } else if (e.getSource() == this.trangKetCa.btn_minus_100000) {
-            if (this.trangKetCa.soTo100000 == 0) {
-                return;
-            } else {
-                this.trangKetCa.soTo100000--;
-                this.trangKetCa.textField_100000.setText(String.valueOf(this.trangKetCa.soTo100000));
-            }
-        } else if (e.getSource() == this.trangKetCa.btn_plus_100000) {
-            this.trangKetCa.soTo100000++;
-            this.trangKetCa.textField_100000.setText(String.valueOf(this.trangKetCa.soTo100000));
-        } else if (e.getSource() == this.trangKetCa.btn_minus_200000) {
-            if (this.trangKetCa.soTo200000 == 0) {
-                return;
-            } else {
-                this.trangKetCa.soTo200000--;
-                this.trangKetCa.textField_200000.setText(String.valueOf(this.trangKetCa.soTo200000));
-            }
-        } else if (e.getSource() == this.trangKetCa.btn_plus_200000) {
-            this.trangKetCa.soTo200000++;
-            this.trangKetCa.textField_200000.setText(String.valueOf(this.trangKetCa.soTo200000));
-        } else if (e.getSource() == this.trangKetCa.btn_minus_500000) {
-            if (this.trangKetCa.soTo500000 == 0) {
-                return;
-            } else {
-                this.trangKetCa.soTo500000--;
-                this.trangKetCa.textField_500000.setText(String.valueOf(this.trangKetCa.soTo500000));
-            }
-        } else if (e.getSource() == this.trangKetCa.btn_plus_500000) {
-            this.trangKetCa.soTo500000++;
-            this.trangKetCa.textField_500000.setText(String.valueOf(this.trangKetCa.soTo500000));
+            this.trangKetCa.tienMat +=500000;
+            this.trangKetCa.label_hienTien.setText(String.valueOf(this.trangKetCa.tienMat));
         } else if (e.getSource() == trangKetCa.btn_xacNhan) {
             this.xacNhan();
         } else if (e.getSource() == trangKetCa.btn_hoanTat) {
