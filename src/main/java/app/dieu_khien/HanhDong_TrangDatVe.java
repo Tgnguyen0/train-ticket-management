@@ -57,26 +57,33 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
         }
 
         if (source == this.trangDatVe.nutHienThiSoDoGhe) {
-            if (trangDatVe.thanhNhapNgayDi.getDate() != null) {
-                LocalDateTime ngayKhoiHanh = trangDatVe.thanhNhapNgayDi.getDate()
-                        .toInstant()
-                        .atZone(ZoneId.systemDefault())
-                        .toLocalDateTime();
-
-                this.maGa = this.trangDatVe.gaDao.ChonTheoTen( (String) this.trangDatVe.thanhCacDiemDi.getSelectedItem()).getMaGa();
-
-                List<LichCapBenGa> dsLich = this.trangDatVe.lichDao.ChonTheoNgayKHVaGa(ngayKhoiHanh, maGa);
-
-                for (int i = 0 ; i < dsLich.size() ; i++) {
-                    System.out.println(dsLich.get(i).getMaTau());
-                }
-
-                trangCacTau = new TrangCacTau(this.trangDatVe.layDSTau(), this.trangDatVe.layGheDao(), dsLich);
-                trangCacTau.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                trangCacTau.setVisible(true);
-            } else {
+            if (trangDatVe.thanhNhapNgayDi.getDate() == null) {
                 hienThiThongBao("Chưa chọn ngày khởi hành", "Lỗi chọn ngày", JOptionPane.ERROR_MESSAGE);
+                return;
             }
+
+            if (trangDatVe.layDSKhDatVe() == null) {
+                hienThiThongBao("Chưa có danh sách khách đặt vé", "Lỗi đặt vé", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            LocalDateTime ngayKhoiHanh = trangDatVe.thanhNhapNgayDi.getDate()
+                    .toInstant()
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalDateTime();
+
+            this.maGa = this.trangDatVe.gaDao.ChonTheoTen( (String) this.trangDatVe.thanhCacDiemDi.getSelectedItem()).getMaGa();
+
+            List<LichCapBenGa> dsLich = this.trangDatVe.lichDao.ChonTheoNgayKHVaGa(ngayKhoiHanh, maGa);
+            this.trangDatVe.layGheDao().datSoGheToiDa(this.trangDatVe.layDSKhDatVe().size());
+
+            /*for (int i = 0 ; i < dsLich.size() ; i++) {
+                System.out.println(dsLich.get(i).getMaTau());
+            }*/
+
+            trangCacTau = new TrangCacTau(this.trangDatVe.layDSTau(), this.trangDatVe.layGheDao(), dsLich);
+            trangCacTau.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            trangCacTau.setVisible(true);
         }
 
         if (this.trangCacTau != null && this.trangCacTau.laySoHieuTauChon() != null) {
@@ -101,6 +108,12 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
         }
 
         if (source == this.trangDatVe.nutXacNhan) {
+            if (this.trangDatVe.soHieuDaChon == null) {
+                hienThiThongBao("Chưa chọn số hiệu tàu", "Lỗi chọn ghế", JOptionPane.INFORMATION_MESSAGE);
+
+                return;
+            }
+
             // Lấy danh sách khách hàng đã đặt vé
             List<KhachHang> dsKhDatVe = this.trangDatVe.layDSKhDatVe();
             // Lấy danh sách chỗ đã đặt

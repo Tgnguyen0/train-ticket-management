@@ -55,7 +55,9 @@ public class TrangCacTau extends JFrame {
     public List<Toa> dsToa3;
     public List<Toa> dsToa4;
     public List<LichCapBenGa> dsLichTau;
+
     public String soHieuTauChon;
+    public int soLuongKhachDat;
 
     public boolean coQuaGaTau1 = false;
     public boolean coQuaGaTau2 = false;
