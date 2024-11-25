@@ -64,7 +64,7 @@ public class TrangHoaDon extends JPanel {
         initComponents();
         setPreferredSize(new java.awt.Dimension(1200, 600));
         HoaDon_DAO hoaDon_dao= new HoaDon_DAO();
-        hienThiDanhSachHoaDon( hoaDon_dao.layDanhSachHoaDon());
+        hienThiDanhSachHoaDon( hoaDon_dao.chonTatCa());
     }
     private void initComponents() {
         List<HoaDon> listHD= new ArrayList<HoaDon>();
@@ -282,7 +282,7 @@ public class TrangHoaDon extends JPanel {
                     false, false, false, false, false, false, false, false
             };
             // Hàm không cho phép chỉnh sửa dữ liệu trên Jtable
-                public boolean isCellEditable(int rowIndex, int columnIndex) {
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
@@ -545,14 +545,14 @@ public class TrangHoaDon extends JPanel {
         {
             model.addRow(new Object[]{
                     stt++,
-                    o.getMaHD(),
-                    o.getMaKH(),
+                    o.getMaHoaDon(),
+                    o.getMaKhachHang(),
                     o.getThanhTien(),
-                    o.getNgayLap(),
+                    o.getNgayLapHoaDon(),
                     o.getSoLuong(),
                     o.getTongTien(),
                     o.getTrangThai(),
-                    o.getMaNV()
+                    o.getMaNhanVien()
             });
         }
     }
@@ -568,7 +568,7 @@ public class TrangHoaDon extends JPanel {
             tfMaNhanVien.setText(maNV);
 
             NhanVien_DAO nhanVienDao = new NhanVien_DAO();
-            String tenNV = nhanVienDao.layTenNhanVien(maNV);
+            String tenNV = nhanVienDao.ChonTheoMa(maNV).getTenNV();
             tfTenNhanVien.setText(tenNV);
 
             // Không cho chỉnh sửa thông tin nhân viên
@@ -585,6 +585,6 @@ public class TrangHoaDon extends JPanel {
         tfTenNhanVien.setText("");
         tfMaNhanVien.setEditable(false);
         tfTenNhanVien.setEditable(false);
-        hienThiDanhSachHoaDon(hoaDon_dao.layDanhSachHoaDon());
+        hienThiDanhSachHoaDon(hoaDon_dao.chonTatCa());
     }
 }

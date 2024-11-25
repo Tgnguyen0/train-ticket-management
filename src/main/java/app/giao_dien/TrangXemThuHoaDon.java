@@ -28,17 +28,17 @@ public class TrangXemThuHoaDon extends  JDialog{
         add(Pntitle, BorderLayout.NORTH);
 
         thongTinHoaDon.add(new JLabel("Mã Hóa Đơn:")).setForeground(Color.BLACK); // Nhãn mã hóa đơn
-        thongTinHoaDon.add(new JLabel(hoaDon.getMaHD())).setForeground(Color.BLACK);
+        thongTinHoaDon.add(new JLabel(hoaDon.getMaHoaDon())).setForeground(Color.BLACK);
         thongTinHoaDon.add(new JLabel("Mã Khách Hàng:")).setForeground(Color.BLACK);
-        thongTinHoaDon.add(new JLabel(hoaDon.getMaKH())).setForeground(Color.BLACK);
+        thongTinHoaDon.add(new JLabel(hoaDon.getMaKhachHang())).setForeground(Color.BLACK);
         thongTinHoaDon.add(new JLabel("Ngày Lập:")).setForeground(Color.BLACK);
-        thongTinHoaDon.add(new JLabel(hoaDon.getNgayLap().toString())).setForeground(Color.BLACK);
+        thongTinHoaDon.add(new JLabel(hoaDon.getNgayLapHoaDon().toString())).setForeground(Color.BLACK);
         thongTinHoaDon.add(new JLabel("Số lượng:")).setForeground(Color.BLACK);
         thongTinHoaDon.add(new JLabel(String.valueOf(hoaDon.getSoLuong()))).setForeground(Color.BLACK);
         thongTinHoaDon.add(new JLabel("Trạng Thái:")).setForeground(Color.BLACK);
         thongTinHoaDon.add(new JLabel(hoaDon.getTrangThai())).setForeground(Color.BLACK);
         thongTinHoaDon.add(new JLabel("Mã Nhân Viên:")).setForeground(Color.BLACK);
-        thongTinHoaDon.add(new JLabel(hoaDon.getMaNV())).setForeground(Color.BLACK);
+        thongTinHoaDon.add(new JLabel(hoaDon.getMaNhanVien())).setForeground(Color.BLACK);
 
         add(thongTinHoaDon, BorderLayout.CENTER);
 
@@ -79,5 +79,3 @@ public class TrangXemThuHoaDon extends  JDialog{
     }
 
 }
-
-

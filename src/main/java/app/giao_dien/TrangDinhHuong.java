@@ -78,7 +78,6 @@ public class TrangDinhHuong extends JFrame {
         setResizable(true);
         setLayout(new BorderLayout());
 
-
         // SET GIAO DIỆN TRỰC TIẾP KHÔNG QUA MAIN
         try {
             for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
@@ -114,8 +113,6 @@ public class TrangDinhHuong extends JFrame {
 
         taoThanhDinhHuong();
         taoTrangChua();
-
-
     }
 
     public void taoThanhDinhHuong() {

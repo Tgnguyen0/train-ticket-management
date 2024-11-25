@@ -227,7 +227,7 @@ public class TrangDanhSachVeTau extends JFrame{
         this.setVisible(true);
     }
 
-    public void thietLap_TrangChuaTieuDe(){
+    public void thietLap_TrangChuaTieuDe() {
         tieuDe.setText("                                                            Danh Sach Bán Vé Tàu");
 
         javax.swing.GroupLayout trangChua_TieuDeLayout = new javax.swing.GroupLayout(trangChua_TieuDe);
@@ -462,7 +462,7 @@ public class TrangDanhSachVeTau extends JFrame{
 
         tieuDe_LoaiVe.setText("Loại Ghế:");
 
-        textFieldLoaiVe.setText("jTextField2");
+        textFieldLoaiVe.setText("");
 
         javax.swing.GroupLayout trangChua_LoaiVeLayout = new javax.swing.GroupLayout(trangChua_LoaiVe);
         trangChua_LoaiVe.setLayout(trangChua_LoaiVeLayout);

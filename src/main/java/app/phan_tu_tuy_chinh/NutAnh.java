@@ -12,13 +12,14 @@ public class NutAnh extends JButton {
     private Image anhMacDinh;
     private Image anhDangChon;
     private Image anhHienTai;
+    private Image anhVoHieu;
     private double doDai;
     private double doRong;
     private JLabel label;
     private Color xanhBrandeis = new Color(0, 112, 255);
     private PhongChuMoi phongTuyChinh = new PhongChuMoi();
 
-    public NutAnh(String duongDanMacDinh, String duongDanDangChon, double doDai, double doRong, double viTriChu, String textLabel, int x) {
+    public NutAnh(String duongDanMacDinh, String duongDanDangChon, String duongDanVoHieu, double doDai, double doRong, double viTriChu, String textLabel, int x) {
         this.doDai = doDai;
         this.doRong = doRong;
         this.label = new JLabel(textLabel);
@@ -31,6 +32,8 @@ public class NutAnh extends JButton {
             this.anhMacDinh = ImageIO.read(new File(duongDanMacDinh))
                     .getScaledInstance((int) doDai, (int) doRong, Image.SCALE_SMOOTH);
             this.anhDangChon = ImageIO.read(new File(duongDanDangChon))
+                    .getScaledInstance((int) doDai, (int) doRong, Image.SCALE_SMOOTH);
+            this.anhVoHieu = ImageIO.read(new File(duongDanVoHieu))
                     .getScaledInstance((int) doDai, (int) doRong, Image.SCALE_SMOOTH);
             this.anhHienTai = this.anhMacDinh;
         } catch (IOException e) {
@@ -92,6 +95,12 @@ public class NutAnh extends JButton {
         repaint();
     }
 
+    public void datAnhVoHieu() {
+        this.anhHienTai = this.anhVoHieu;
+        revalidate();
+        repaint();
+    }
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -104,5 +113,9 @@ public class NutAnh extends JButton {
 
     public void chinhKichThuocJlabel(int chieuDai, int chieuRong) {
         this.label.setPreferredSize(new Dimension(chieuDai, chieuRong));
+    }
+
+    public void kichHoat(boolean choPhep) {
+        this.setEnabled(choPhep);
     }
 }

@@ -9,11 +9,7 @@ public class CustomHeaderRenderer extends DefaultTableCellRenderer {
     public Color trang = new Color(255, 255, 255);
 
     public CustomHeaderRenderer() {
-        setHorizontalAlignment(CENTER);
-        setBorder(BorderFactory.createEmptyBorder()); // Loại bỏ khung viền
-//        setBackground(Color.WHITE);
-//        setForeground(Color.WHITE);
-
+        setHorizontalAlignment(SwingConstants.CENTER);
         setBackground(trang);
         setForeground(xanhBrandeis);
     }
@@ -21,10 +17,9 @@ public class CustomHeaderRenderer extends DefaultTableCellRenderer {
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
         Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-        c.setFont(c.getFont().deriveFont(3));
-        c.setBackground(Color.BLUE);  // Màu nền xanh dương
-        c.setForeground(Color.WHITE); // Màu chữ trắng
-        c.setFont(new Font("Arial", Font.BOLD, 12)); // Đặt font cho head
+        c.setFont(new Font("Arial", Font.BOLD, 12)); // Thay đổi font nếu muốn // Font cho header
+        // Thiết lập viền cho header (giữ viền phía dưới)
+        setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, xanhBrandeis));
         return c;
     }
 }

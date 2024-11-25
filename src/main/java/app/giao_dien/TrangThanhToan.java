@@ -1,13 +1,21 @@
 package app.giao_dien;
+import app.dao.Toa_DAO;
+import app.dieu_khien.HanhDong_TrangThanhToan;
+import app.phan_tu_tuy_chinh.CustomCellRenderer;
+import app.thuc_the.Ghe;
+import app.thuc_the.KhachHang;
+import app.thuc_the.Toa;
 import app.thuc_the.Ve;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseListener;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class TrangThanhToan extends JDialog {
-
     // Khai Báo Các Biến
     public JButton ButtonThanhToan;
     public JLabel LuuY1;
@@ -21,13 +29,8 @@ public class TrangThanhToan extends JDialog {
     public JPanel PanelTongTien;
     public JLabel TitleLuuY;
     public JLabel TitleThanhToan;
-    public JButton jButton1;
-    public JButton jButton2;
-    public JButton jButton3;
-    public JButton jButton4;
-    public JButton jButton5;
-    public JButton jButton6;
-    public JRadioButton jRadioButton2;
+    public JTextField thanhTienNhan;
+    public JRadioButton radioChuyenKhoan;
     public JScrollPane jScrollPane1;
     public DefaultTableModel model;
     public JTable danhSachVeThanhToan;
@@ -46,17 +49,30 @@ public class TrangThanhToan extends JDialog {
     public JTextField tfTongTien;
     public JTextField tfTraLai;
     public JTextField tfVAT;
-    public java.util.List<Ve> danhSachVe;
+    public Toa_DAO toaDoa;
+    public List<Ve> danhSachVe;
+    public List<KhachHang> dsKh;
+    public List<Ghe> dsGheDat;
 
-    public TrangThanhToan(List<Ve> ve) {
+    public ActionListener hanhDong;
+    public MouseListener thaoTacChuot;
+
+    public TrangThanhToan(List<Ve> dsVe, List<KhachHang> dsKh, List<Ghe> dsGhe) {
         super();
+        this.danhSachVe = dsVe;
+        this.dsKh = dsKh;
+        this.dsGheDat = dsGhe;
+        this.toaDoa = new Toa_DAO();
+
+        this.hanhDong = new HanhDong_TrangThanhToan(this);
+        this.thaoTacChuot = new HanhDong_TrangThanhToan(this);
+
         hienThi();
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
 
     private void hienThi() {
-        danhSachVe = new ArrayList<>();
         PanelLuuY = new JPanel();
         TitleLuuY = new JLabel();
         LuuY1 = new JLabel();
@@ -82,16 +98,11 @@ public class TrangThanhToan extends JDialog {
         lnTraLai = new JLabel();
         tfTongTien = new JTextField();
         tfTraLai = new JTextField();
-        jButton1 = new JButton();
-        jButton2 = new JButton();
-        jButton3 = new JButton();
-        jButton4 = new JButton();
-        jButton5 = new JButton();
-        jButton6 = new JButton();
+        thanhTienNhan = new JTextField();
         PanelPhuongThucThanhToan = new JPanel();
         lbPhuongThucThanhToan = new JLabel();
         radioTienMat = new JRadioButton();
-        jRadioButton2 = new JRadioButton();
+        radioChuyenKhoan = new JRadioButton();
         ButtonThanhToan = new JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -171,17 +182,18 @@ public class TrangThanhToan extends JDialog {
                                 .addComponent(TitleThanhToan)
                                 .addContainerGap(20, Short.MAX_VALUE))
         );
+
         model = new DefaultTableModel(
                 new Object[][]{},
                 new String[]{
-                        "STT", "Tên Khách Hàng", "Loại Vé", "Loại Ghế", "Vị Trí", "Giá Vé"
+                        "STT", "Tên Khách Hàng", "Loại Vé", "Số Hiệu", "Toa", "Loại Ghế", "Vị Trí", "Giá Vé"
                 }
         ) {
             Class[] types = new Class[]{
-                    Integer.class, String.class, String.class, String.class, String.class, Float.class
+                    Integer.class, String.class, String.class,  String.class,  String.class, String.class, String.class, Float.class
             };
             boolean[] canEdit = new boolean[]{
-                    false, false, false, false, false, false
+                    false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -193,7 +205,55 @@ public class TrangThanhToan extends JDialog {
             }
         };
 
+        for (int i = 0 ; i < this.danhSachVe.size() ; i++) {
+
+            KhachHang kh = null;
+
+            for (int j = 0 ; j < dsKh.size() ; j++) {
+                if (danhSachVe.get(i).getMaKhachHang().equals(dsKh.get(j).getMaKH())) {
+                    kh = dsKh.get(j);
+                }
+            }
+
+            Ghe ghe = null;
+
+            for (int j = 0 ; j < dsGheDat.size() ; j++) {
+                if (danhSachVe.get(i).getMaGhe().equals(dsGheDat.get(j).getMaGhe())) {
+                    ghe = dsGheDat.get(j);
+                }
+            }
+
+            Toa toa = this.toaDoa.ChonTheoMa(ghe.getMaToa());
+
+            Object[] duLieu = {
+                    String.valueOf(i + 1),                                                         // Thứ tự
+                    //this.danhSachVe.get(i).getMaVe(),                                                // Mã vé
+                    kh.getTenKH(),                                                                   // Họ tên khách hàng
+                    this.danhSachVe.get(i).getLoaiDoiTuong(),                                        // Loại đối tượng
+                    //(int) this.danhSachVe.get(i).getGiaVe(),                                         // Giá vé
+                    /*this.danhSachVe.get(i).getGaKhoiHanh(),                                          // Ga xuất phát
+                    this.danhSachVe.get(i).getGaKetThuc(),                                           // Ga đích
+                    this.danhSachVe.get(i).getNgayDatVe().getYear() + "-" +
+                        this.danhSachVe.get(i).getNgayDatVe().getMonth().getValue() + "-" +
+                            this.danhSachVe.get(i).getNgayDatVe().getDayOfMonth(),                                           // Ngày đặt vé
+                    this.danhSachVe.get(i).getNgayKhoiHanh().getYear() + "-" +                       // Ngày khởi hành
+                            this.danhSachVe.get(i).getNgayKhoiHanh().getMonth().getValue() + "-" +
+                                this.danhSachVe.get(i).getNgayKhoiHanh().getDayOfMonth(),*/
+                    toa.getSoHieu(),                                                                 // Số hiệu tàu
+                    /*this.danhSachVe.get(i).getNgayKhoiHanh().toLocalTime().getHour() + ":" +         // Giờ xuất phát
+                            this.danhSachVe.get(i).getNgayKhoiHanh().toLocalTime().getMinute(),*/
+                    toa.getTenToa(),
+                    ghe.getLoaiGhe().toString(), //ghe.getMaToa(),                                    // Loại ghế                           // Mã toa
+                    ghe.getSoGhe(),                                                                   // Số ghế
+                    (int) this.danhSachVe.get(i).getGiaVe(),
+            };
+
+            model.addRow(duLieu);
+        }
+
         danhSachVeThanhToan = new JTable(model);
+        danhSachVeThanhToan.addMouseListener(thaoTacChuot);
+        danhSachVeThanhToan.setDefaultRenderer(Object.class, new CustomCellRenderer());
         JScrollPane jScrollPane1 = new JScrollPane(danhSachVeThanhToan);
         this.add(jScrollPane1);
 
@@ -232,11 +292,11 @@ public class TrangThanhToan extends JDialog {
         lbVAT.setForeground(new java.awt.Color(0, 112, 255));
         lbVAT.setText("Thuế VAT:");
 
-        tfThanhTien.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tfThanhTienActionPerformed(evt);
-            }
-        });
+        tfThanhTien.setText("0");
+        tfThanhTien.addActionListener(this.hanhDong);
+        tfKhuyenMai.setText("0%");
+        tfVAT.setText("0%");
+        tfVAT.setEditable(false);
 
         javax.swing.GroupLayout PanelThanhToan1Layout = new javax.swing.GroupLayout(PanelThanhToan1);
         PanelThanhToan1.setLayout(PanelThanhToan1Layout);
@@ -250,7 +310,7 @@ public class TrangThanhToan extends JDialog {
                                         .addComponent(lbVAT, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(PanelThanhToan1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(tfThanhTien, javax.swing.GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE)
+                                        .addComponent(tfTongTien, javax.swing.GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE)
                                         .addComponent(tfKhuyenMai, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(tfVAT))
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -261,7 +321,7 @@ public class TrangThanhToan extends JDialog {
                                 .addContainerGap(8, Short.MAX_VALUE)
                                 .addGroup(PanelThanhToan1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(lbThanhTien)
-                                        .addComponent(tfThanhTien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(tfTongTien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(18, 18, 18)
                                 .addGroup(PanelThanhToan1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(lbKhuyenMai, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -293,18 +353,6 @@ public class TrangThanhToan extends JDialog {
             }
         });
 
-        jButton1.setText("jButton1");
-
-        jButton2.setText("jButton2");
-
-        jButton3.setText("jButton3");
-
-        jButton4.setText("jButton4");
-
-        jButton5.setText("jButton5");
-
-        jButton6.setText("jButton6");
-
         javax.swing.GroupLayout PanelTongTienLayout = new javax.swing.GroupLayout(PanelTongTien);
         PanelTongTien.setLayout(PanelTongTienLayout);
         PanelTongTienLayout.setHorizontalGroup(
@@ -319,17 +367,10 @@ public class TrangThanhToan extends JDialog {
                                 .addGroup(PanelTongTienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                         .addGroup(PanelTongTienLayout.createSequentialGroup()
                                                 .addGroup(PanelTongTienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE))
-                                                .addGap(18, 18, 18)
+                                                        .addComponent(thanhTienNhan, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE))
                                                 .addGroup(PanelTongTienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 36, Short.MAX_VALUE)
-                                                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE))
-                                                .addGap(18, 18, 18)
-                                                .addGroup(PanelTongTienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)))
-                                        .addComponent(tfTongTien)
+                                                ))
+                                        .addComponent(tfThanhTien)
                                         .addComponent(tfTraLai))
                                 .addContainerGap(51, Short.MAX_VALUE))
         );
@@ -339,7 +380,7 @@ public class TrangThanhToan extends JDialog {
                                 .addGap(15, 15, 15)
                                 .addGroup(PanelTongTienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(lbTongTien)
-                                        .addComponent(tfTongTien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(tfThanhTien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGroup(PanelTongTienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(PanelTongTienLayout.createSequentialGroup()
                                                 .addGap(26, 26, 26)
@@ -347,14 +388,10 @@ public class TrangThanhToan extends JDialog {
                                         .addGroup(PanelTongTienLayout.createSequentialGroup()
                                                 .addGap(18, 18, 18)
                                                 .addGroup(PanelTongTienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                                        .addComponent(jButton1)
-                                                        .addComponent(jButton2)
-                                                        .addComponent(jButton5))))
+                                                        .addComponent(thanhTienNhan))))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(PanelTongTienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jButton3)
-                                        .addComponent(jButton4)
-                                        .addComponent(jButton6))
+                                )
                                 .addGap(18, 18, 18)
                                 .addGroup(PanelTongTienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(lnTraLai)
@@ -368,17 +405,19 @@ public class TrangThanhToan extends JDialog {
 
         radioTienMat.setForeground(new java.awt.Color(0, 112, 255));
         radioTienMat.setText("Tiền Mặt (Cash)");
+        radioTienMat.addActionListener(hanhDong);
         radioTienMat.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 radioTienMatActionPerformed(evt);
             }
         });
 
-        jRadioButton2.setForeground(new java.awt.Color(0, 112, 255));
-        jRadioButton2.setText("Chuyển Khoản (Banking)");
-        jRadioButton2.addActionListener(new java.awt.event.ActionListener() {
+        radioChuyenKhoan.setForeground(new java.awt.Color(0, 112, 255));
+        radioChuyenKhoan.setText("Chuyển Khoản (Banking)");
+        radioChuyenKhoan.addActionListener(hanhDong);
+        radioChuyenKhoan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton2ActionPerformed(evt);
+                radioChuyenKhoanActionPerformed(evt);
             }
         });
 
@@ -391,7 +430,7 @@ public class TrangThanhToan extends JDialog {
                                 .addGroup(PanelPhuongThucThanhToanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                         .addComponent(lbPhuongThucThanhToan, javax.swing.GroupLayout.DEFAULT_SIZE, 189, Short.MAX_VALUE)
                                         .addComponent(radioTienMat, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jRadioButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(radioChuyenKhoan, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addContainerGap(288, Short.MAX_VALUE))
         );
         PanelPhuongThucThanhToanLayout.setVerticalGroup(
@@ -402,7 +441,7 @@ public class TrangThanhToan extends JDialog {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(radioTienMat)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jRadioButton2)
+                                .addComponent(radioChuyenKhoan)
                                 .addContainerGap(12, Short.MAX_VALUE))
         );
 
@@ -472,7 +511,7 @@ public class TrangThanhToan extends JDialog {
         // TODO add your handling code here:
     }
 
-    private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {
+    private void radioChuyenKhoanActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
     }
 

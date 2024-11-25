@@ -1,11 +1,19 @@
 package app.dieu_khien;
 
 import app.giao_dien.TrangInVe;
+import app.phan_tu_tuy_chinh.TaoVeBangFilePDF;
+import app.thuc_the.Ghe;
+import app.thuc_the.KhachHang;
+import app.thuc_the.Toa;
+import app.thuc_the.Ve;
 
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.time.LocalDateTime;
 
 public class HanhDong_TrangInVe implements ActionListener, MouseListener {
     public TrangInVe trangInVe;
@@ -17,20 +25,59 @@ public class HanhDong_TrangInVe implements ActionListener, MouseListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.trangInVe.nutXacNhanIn) {
-            /*String maVe = this.ve.getMaVe();
-            String tenKhachHang = this.khachHang.getTenKH();
-            String maGhe = this.ve.getMaGhe();
-            String diemDi = this.ve.getGaKhoiHanh();
-            String diemDen = this.ve.getGaKetThuc();
-            String loaiVe = this.ve.getLoaiVe();
-            String doiTuong = this.ve.getLoaiDoiTuong();
-            String ngayDatVe = this.ve.getNgayDatVe().toString();
-            String ngayKhoiHanh = this.ve.getNgayKhoiHanh().toString();
-            String giaVe = String.valueOf(this.ve.getGiaVe());
+            for (Ve ve : this.trangInVe.dsVe) {
 
-            TaoVeBangFilePDF taoVeBangFilePDF = new TaoVeBangFilePDF();
-            taoVeBangFilePDF.generateTicketPDF("vé được tạo/VeTau.pdf", maVe, tenKhachHang, diemDi, diemDen, ngayDatVe,
-                    ngayKhoiHanh, loaiVe, maGhe,doiTuong, giaVe);*/
+                Ghe ghe = null;
+                for (int j = 0 ; j < this.trangInVe.dsGhe.size() ; j++) {
+                    if (this.trangInVe.dsGhe.get(j).getMaGhe().equals(ve.getMaGhe())) {
+                        ghe = this.trangInVe.dsGhe.get(j);
+                    }
+                }
+
+                KhachHang kh = null;
+                for (int j = 0 ; j < this.trangInVe.dsKH.size() ; j++) {
+                    if (this.trangInVe.dsKH.get(j).getMaKH().equals(ve.getMaKhachHang())) {
+                        kh = this.trangInVe.dsKH.get(j);
+                    }
+                }
+
+                Toa toa = this.trangInVe.toaDao.ChonTheoMa(ghe.getMaToa());
+
+
+                /*ve.getMaVe(),
+                        soHieu,
+                        kh.getTenKH(),
+                        ve.getGaKhoiHanh(),
+                        kh.getSoDT(),
+                        ve.getGaKetThuc(),
+                        kh.getEmail(),
+                        ve.getNgayKhoiHanh().getYear() + "-" + ve.getNgayKhoiHanh().getMonth().getValue() + "-" + ve.getNgayKhoiHanh().getDayOfMonth(),
+                        ve.getNgayDatVe().getYear() + "-" + ve.getNgayDatVe().getMonth().getValue() + "-" + ve.getNgayDatVe().getDayOfMonth(),
+                        ve.getNgayKhoiHanh().getHour() + ":" + ve.getNgayKhoiHanh().getMinute(),
+                        ve.getLoaiVe(),
+                        toa.getTenToa(),
+                        ghe.getSoGhe(),
+                        ve.getGiaVe()*/
+                String maVe = ve.getMaVe();
+                String soHieu = toa.getSoHieu();
+                String tenKH = kh.getTenKH();
+                String diemDi = ve.getGaKhoiHanh();
+                String sdtKH = kh.getSoDT();
+                String diemDen = ve.getGaKetThuc();
+                String emailKH = kh.getEmail();
+                String ngayKhoiHanh = ve.getNgayKhoiHanh().getYear() + "-" + ve.getNgayKhoiHanh().getMonth().getValue() + "-" + ve.getNgayKhoiHanh().getDayOfMonth();
+                String ngayDatVe = ve.getNgayDatVe().getYear() + "-" + ve.getNgayDatVe().getMonth().getValue() + "-" + ve.getNgayDatVe().getDayOfMonth();
+                String gioKhoiHanh = ve.getNgayKhoiHanh().getHour() + ":" + ve.getNgayKhoiHanh().getMinute();
+                String loaiVe = ve.getLoaiVe();
+                String soGhe = String.valueOf(ghe.getSoGhe());
+                String giaVe = String.valueOf(ve.getGiaVe());
+
+                TaoVeBangFilePDF taoVeBangFilePDF = new TaoVeBangFilePDF();
+                taoVeBangFilePDF.generateTicketPDF("vé được tạo/" + maVe + ".pdf", maVe, kh.getTenKH(), diemDi, diemDen, ngayDatVe,
+                        ngayKhoiHanh, loaiVe, ghe.getMaGhe(), "Người Lớn", giaVe);
+
+                hienThiThongBao("In vé thành công", "Thông báo in vé");
+            }
         }
     }
 
@@ -57,5 +104,18 @@ public class HanhDong_TrangInVe implements ActionListener, MouseListener {
     @Override
     public void mouseExited(MouseEvent e) {
 
+    }
+
+    private void hienThiThongBao(String chuThich, String tieuDe) {
+        JLabel thongBao = new JLabel(chuThich);
+        thongBao.setFont(this.trangInVe.phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, 12));
+
+        JOptionPane hienThiLoi = new JOptionPane(thongBao, JOptionPane.INFORMATION_MESSAGE);
+        hienThiLoi.setForeground(this.trangInVe.xanhBrandeis);
+
+        JDialog hoiThoai = hienThiLoi.createDialog(tieuDe);
+        ImageIcon bieuTuongTau = new ImageIcon("assets/icon.png");
+        hoiThoai.setIconImage(bieuTuongTau.getImage());
+        hoiThoai.setVisible(true);
     }
 }

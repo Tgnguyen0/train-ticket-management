@@ -4,16 +4,21 @@ import app.dao.HoaDon_DAO;
 import app.giao_dien.*;
 import app.phan_tu_tuy_chinh.TaoHoaDonFilePDF;
 import app.thuc_the.HoaDon;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.SQLException;
 import java.util.List;
 
 public class HanhDong_TrangHoaDon implements ActionListener, MouseListener, ItemListener {
     TrangHoaDon trangHoaDon ;
     HoaDon_DAO hoaDon_dao = new HoaDon_DAO();
+    Logger logger = LoggerFactory.getLogger(HanhDong_TrangHoaDon.class);
+    List<HoaDon> ketQuaTimKiem;
 
     public HanhDong_TrangHoaDon(TrangHoaDon trangHoaDon) {
         this.trangHoaDon = trangHoaDon;
@@ -33,7 +38,13 @@ public class HanhDong_TrangHoaDon implements ActionListener, MouseListener, Item
                 String tenKH = (String) trangHoaDon.tableDanhSach.getValueAt(selectedRow, 2); // Giả sử tên khách hàng ở cột 2
 
                 // Gọi phương thức TimKiemHoaDon với mã hóa đơn và tên khách hàng
-                List<HoaDon> ketQua = hoaDon_dao.TimKiemHoaDon(maHD, tenKH);
+                List<HoaDon> ketQua = null;
+                try {
+                    ketQua = hoaDon_dao.TimKiemHoaDon(maHD, tenKH);
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
+                //List<HoaDon> ketQua = hoaDon_dao.ChonTheoMaHD(maHD);
 
                 // Kiểm tra nếu tìm thấy kết quả
                 if (!ketQua.isEmpty()) {
@@ -60,7 +71,13 @@ public class HanhDong_TrangHoaDon implements ActionListener, MouseListener, Item
                 return; // Kết thúc nếu không có dữ liệu
             }
 
-            List<HoaDon> ketQuaTimKiem = hoaDon_dao.TimKiemHoaDon(maHD, maKH);
+            try {
+                ketQuaTimKiem = hoaDon_dao.TimKiemHoaDon(maHD, maKH);
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+
+//            List<HoaDon> ketQuaTimKiem = hoaDon_dao.ChonTheoMaHD(maHD);
 
             // Kiểm tra xem có tìm thấy hóa đơn nào không
             if (ketQuaTimKiem.isEmpty()) {
@@ -75,24 +92,23 @@ public class HanhDong_TrangHoaDon implements ActionListener, MouseListener, Item
                 for (HoaDon o : ketQuaTimKiem) {
                     model.addRow(new Object[]{
                             stt++,
-                            o.getMaHD(),
-                            o.getMaKH(),
+                            o.getMaHoaDon(),
+                            o.getMaKhachHang(),
                             o.getThanhTien(),
-                            o.getNgayLap(),
+                            o.getNgayLapHoaDon(),
                             o.getSoLuong(),
                             o.getTongTien(),
                             o.getTrangThai(),
-                            o.getMaNV()
+                            o.getMaNhanVien(),
                     });
-                }
-            }
+                // Thiết lập hàng đầu tiên là được chọn
+            }}
         } else if (source == trangHoaDon.buttonLamMoi) {
             trangHoaDon.lamMoiDuLieu();
             UIManager.put("OptionPane.messageFont", new Font("Arial", Font.BOLD, 16)); // Đặt font chữ lớn hơn
             JOptionPane.showMessageDialog(this.trangHoaDon, "Làm mới dữ liệu thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
         } else if (source == trangHoaDon.buttonInHoaDon) {
             int selectedRow = trangHoaDon.tableDanhSach.getSelectedRow();
-
             // Nếu không click chọn hóa đơn
             if (selectedRow == -1) {
                 JOptionPane.showMessageDialog(trangHoaDon, "Vui lòng chọn hóa đơn để in.", "Thông báo", JOptionPane.WARNING_MESSAGE);
@@ -108,16 +124,33 @@ public class HanhDong_TrangHoaDon implements ActionListener, MouseListener, Item
                     JOptionPane.showMessageDialog(trangHoaDon, "In hóa đơn thất bại!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                 }
             }
-        }
-
-
-    }
+        }}
 
     public void printSelectedInvoice(int selectedRow) {
-        List<HoaDon> danhSachHoaDon = hoaDon_dao.layDanhSachHoaDon();
-            HoaDon hoaDon = danhSachHoaDon.get(selectedRow);
-            TaoHoaDonFilePDF.createInvoicePdf(hoaDon);  // Gọi phương thức tạo PDF
+        // Lấy mã hóa đơn từ hàng đã chọn
+        String maHoaDon = (String) trangHoaDon.tableDanhSach.getValueAt(selectedRow, 1); // Giả sử mã hóa đơn ở cột 1
+
+        // Tìm hóa đơn tương ứng từ cơ sở dữ liệu
+        HoaDon hoaDon = null;
+        try {
+            List<HoaDon> ketQua = hoaDon_dao.TimKiemHoaDon(maHoaDon, null); // Bạn có thể bỏ qua mã khách hàng nếu không cần thiết
+            if (!ketQua.isEmpty()) {
+                hoaDon = ketQua.get(0); // Giả sử chỉ có một hóa đơn cho mã này
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(trangHoaDon, "Lỗi khi tìm hóa đơn để in: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Nếu hóa đơn không tìm thấy
+        if (hoaDon == null) {
+            JOptionPane.showMessageDialog(trangHoaDon, "Hóa đơn không tồn tại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        // Gọi phương thức tạo PDF
+        TaoHoaDonFilePDF.createInvoicePdf(hoaDon);
     }
+
 
     @Override
     public void itemStateChanged(ItemEvent e) {

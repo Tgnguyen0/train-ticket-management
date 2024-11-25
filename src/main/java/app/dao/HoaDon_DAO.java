@@ -2,21 +2,22 @@ package app.dao;
 
 import app.giao_dien.TrangHoaDon;
 import app.ket_noi_co_so_du_lieu.JDBCUtil;
-import app.thuc_the.HoaDon;
-import app.thuc_the.KhachHang;
-import app.thuc_the.NhanVien;
+import app.thuc_the.*;
 
 import java.sql.*;
 
-import app.giao_dien.TrangChuaThongKeDoanhThuNhaGa;
 import app.ket_noi_co_so_du_lieu.KetNoiCoSoDuLieu;
 import app.thuc_the.HoaDon;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import app.giao_dien.TrangChuaThongKeDoanhThuNhaGa;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,11 +25,18 @@ import java.util.List;
 import java.util.Map;
 
 public class HoaDon_DAO {
+    String CHON_15_SQL = "SELECT TOP 15 * FROM HoaDon ORDER BY NgayLap DESC;";
+    String CHON_TAT_SQL = "SELECT * FROM HoaDon";
+    String CHON_THEO_MAHD_SQL = "SELECT * FROM HoaDon WHERE MaHD =?";
+    String CHON_THEO_MAKH_SQL = "SELECT * FROM HoaDon WHERE MaKH =?";
+
     ArrayList<HoaDon> dshd;
 
     Logger logger  = LoggerFactory.getLogger(TrangChuaThongKeDoanhThuNhaGa.class);
 
-    // Khởi tạo danh sách khách hàng
+
+
+
     public HoaDon_DAO() {
         dshd = new ArrayList<HoaDon>();
     }
@@ -45,15 +53,28 @@ public class HoaDon_DAO {
 
             while (rs.next()) {
                 HoaDon hd = new HoaDon();
-                hd.setMaHD(rs.getString("MaHD"));
-                hd.setNgayLap(rs.getDate("NgayLap").toLocalDate());
-                hd.setMaNV(rs.getString("MaNV"));
+                hd.setMaHoaDon(rs.getString("MaHD"));
+                hd.setNgayLapHoaDon(rs.getDate("NgayLap").toLocalDate());
+                hd.setMaNhanVien(rs.getString("MaNV"));
                 hd.setThanhTien(rs.getFloat("ThanhTien"));
-                hd.setMaKH(rs.getString("MaKH"));
+                hd.setMaKhachHang(rs.getString("MaKH"));
                 hd.setSoLuong(rs.getInt("SoLuong"));
                 hd.setTongTien(rs.getFloat("TongTien"));
                 hd.setTrangThai(rs.getString("TrangThai"));
-                hd.setDaiNgo(rs.getFloat("DaiNgo"));
+                if(rs.getFloat("DaiNgo") == 0){
+                    hd.setDaiNgo(DaiNgo.KhongDaiNgo);
+                }
+                else if( rs.getFloat("DaiNgo") == 0.2  ){
+                    hd.setDaiNgo(DaiNgo.GIAMGIAHAIMUOIPHANTRAM);
+                }
+                else if( rs.getFloat("DaiNgo") == 0.1  ){
+                    hd.setDaiNgo(DaiNgo.GIAMGIAMUOIPHANTRAM);
+                }
+                else if( rs.getFloat("DaiNgo") == 0.05  ){
+                    hd.setDaiNgo(DaiNgo.GIAMGIANAMPHANTRAM);
+                }
+
+                //hd.setDaiNgo(rs.getFloat("DaiNgo"));
                 hd.setThue(rs.getFloat("Thue"));
 
                 danhSachHoaDon.add(hd);
@@ -64,7 +85,7 @@ public class HoaDon_DAO {
 
         return danhSachHoaDon;
     }
-    public List<HoaDon> TimKiemHoaDon (String maHD, String maKH){
+    public List<HoaDon> TimKiemHoaDon (String maHD, String maKH) throws SQLException {
             List<HoaDon> danhSachHoaDon = new ArrayList<>();
             String sql = "SELECT * FROM HoaDon WHERE MaHD LIKE ? OR MaKH LIKE ?";
 
@@ -78,16 +99,27 @@ public class HoaDon_DAO {
                 while (rs.next()) {
                     HoaDon hoaDon = new HoaDon();
                     // Giả sử bạn có các phương thức set tương ứng để gán giá trị cho các thuộc tính
-                    hoaDon.setMaHD(rs.getString("MaHD"));
-                    hoaDon.setMaKH(rs.getString("MaKH"));
-                    hoaDon.setNgayLap(rs.getDate("NgayLap").toLocalDate());
-                    hoaDon.setMaNV(rs.getString("MaNV"));
+                    hoaDon.setMaHoaDon(rs.getString("MaHD"));
+                    hoaDon.setMaKhachHang(rs.getString("MaKH"));
+                    hoaDon.setNgayLapHoaDon(rs.getDate("NgayLap").toLocalDate());
+                    hoaDon.setMaNhanVien(rs.getString("MaNV"));
                     hoaDon.setThanhTien(rs.getFloat("ThanhTien"));
                     hoaDon.setSoLuong(rs.getInt("SoLuong"));
                     hoaDon.setTongTien(rs.getFloat("TongTien"));
                     hoaDon.setTrangThai(rs.getString("TrangThai"));
-                    hoaDon.setDaiNgo(rs.getFloat("DaiNgo"));
-                    // Thêm các thuộc tính khác nếu cần
+                    if(rs.getFloat("DaiNgo") == 0){
+                        hoaDon.setDaiNgo(DaiNgo.KhongDaiNgo);
+                    }
+                    else if( rs.getFloat("DaiNgo") == 0.2  ){
+                        hoaDon.setDaiNgo(DaiNgo.GIAMGIAHAIMUOIPHANTRAM);
+                    }
+                    else if( rs.getFloat("DaiNgo") == 0.1  ){
+                        hoaDon.setDaiNgo(DaiNgo.GIAMGIAMUOIPHANTRAM);
+                    }
+                    else if( rs.getFloat("DaiNgo") == 0.05  ){
+                        hoaDon.setDaiNgo(DaiNgo.GIAMGIANAMPHANTRAM);
+                    }
+                    hoaDon.setThue(rs.getFloat("Thue"));
                     danhSachHoaDon.add(hoaDon);
                 }
             } catch (SQLException e) {
@@ -95,6 +127,54 @@ public class HoaDon_DAO {
             }
             return danhSachHoaDon;
         }
+    public List<HoaDon> ChonTheoMaHD(String maHD) {
+        List<HoaDon> ds = this.chonSql(CHON_THEO_MAHD_SQL, maHD);
+        return ds;
+    }
+
+    public HoaDon ChonTheoMaKH(String maKH){
+        List<HoaDon> ds = this.chonSql(CHON_THEO_MAKH_SQL, maKH);
+        return ds.size() > 0 ? ds.get(0) : null;
+    }
+
+    public List<HoaDon> chonTatCa() {
+        return this.chonSql(CHON_15_SQL);
+    }
+
+    public List<HoaDon> chonSql(String sql, Object...args){
+        List<HoaDon> ds = new ArrayList<>();
+
+        try {
+            ResultSet boKetQua = null;
+            try {
+                boKetQua = KetNoiCoSoDuLieu.truyVan(sql, args);
+
+                while (boKetQua.next()) {
+                    HoaDon hd = new HoaDon();
+
+                    hd.setMaHDTuCSDL(boKetQua.getString("MaHD"));
+                    hd.setNgayLapHoaDon(boKetQua.getDate("NgayLap").toLocalDate());
+                    hd.setMaNhanVien(boKetQua.getString("MaNV"));
+                    hd.setThanhTien(boKetQua.getDouble("ThanhTien"));
+                    hd.setMaKhachHang(boKetQua.getString("MaKH"));
+                    hd.setSoLuong(boKetQua.getInt("SoLuong"));
+                    hd.setTongTien(boKetQua.getDouble("TongTien"));
+                    hd.setTrangThai(boKetQua.getString("TrangThai"));
+                    hd.setThue(boKetQua.getFloat("Thue"));
+
+                    ds.add(hd);
+                }
+
+            } finally {
+                boKetQua.getStatement().getConnection().close();
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            throw new RuntimeException(ex);
+        }
+
+        return ds;
+    }
 
 
     public static ArrayList<String> layToanBoNamTuHoaDon(){
@@ -135,6 +215,7 @@ public class HoaDon_DAO {
 
         return tongDoanhThu;
     }
+
     public static double tongDoanhThuCuaThang_Nam(int nam, int thang){
         double tongDoanhThu = 0.0;
         String query = "SELECT SUM(ThanhTien) AS Total FROM HoaDon WHERE YEAR(NgayLap) = ? and MONTH(NgayLap) = ?";
