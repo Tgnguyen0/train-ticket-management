@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Set;
 
 public class Ghe_DAO {
+    int soGheToiDa;
     Set<Ghe> gheDat;
     Ghe gheDaChon;
     String CHON_TAT_SQL = "SELECT * FROM Ghe";
@@ -25,6 +26,10 @@ public class Ghe_DAO {
     public Ghe_DAO() {
         this.gheDat = new HashSet<>();
     }
+
+    public void datSoGheToiDa(int soGhe) { this.soGheToiDa = soGhe; }
+
+    public int laySoGheToiDa() { return this.soGheToiDa; }
 
     public boolean themGhe(Ghe ghe) {
         return gheDat.add(ghe);

@@ -91,6 +91,8 @@ public class HanhDong_TrangThanhToan implements ActionListener, MouseListener {
             }
 
             ((TrangDatVe) TrangDinhHuong.getTrangChua().getComponent(1)).datThanhToan(true);
+            ((TrangDatVe) TrangDinhHuong.getTrangChua().getComponent(1)).thanhNhapNgayDi.setDate(null);
+            ((TrangDatVe) TrangDinhHuong.getTrangChua().getComponent(1)).thanhNhapGioDen.setText("");
             ((TrangHoaDon) TrangDinhHuong.getTrangChua().getComponent(2)).datHoaDonDTao(hd);
         }
 
@@ -147,6 +149,8 @@ public class HanhDong_TrangThanhToan implements ActionListener, MouseListener {
             }
 
             ((TrangDatVe) TrangDinhHuong.getTrangChua().getComponent(1)).datThanhToan(true);
+            ((TrangDatVe) TrangDinhHuong.getTrangChua().getComponent(1)).thanhNhapNgayDi.setDate(null);
+            ((TrangDatVe) TrangDinhHuong.getTrangChua().getComponent(1)).thanhNhapGioDen.setText("");
             ((TrangHoaDon) TrangDinhHuong.getTrangChua().getComponent(2)).datHoaDonDTao(hd);
         }
     }

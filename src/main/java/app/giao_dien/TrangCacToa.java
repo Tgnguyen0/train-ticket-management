@@ -72,6 +72,7 @@ public class TrangCacToa extends JPanel {
     public Ghe_DAO gheDao;
     public List<Toa> dsToa;
     public Set<Ghe> gheDaDat;
+    public int soLuongKhachDat;
 
     /*public List<Ghe> gheToa1;
     public List<Ghe> gheToa2;
@@ -119,10 +120,6 @@ public class TrangCacToa extends JPanel {
         taoThanhDinhHuongTau();
         taoTrangHuongDan();
         taoTrangChua();
-    }
-
-    public void datGheDao(Ghe_DAO gheDao) {
-        this.gheDao = gheDao;
     }
 
     public void taoThanhDinhHuongTau() {

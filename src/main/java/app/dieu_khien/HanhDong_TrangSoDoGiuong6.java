@@ -29,6 +29,11 @@ public class HanhDong_TrangSoDoGiuong6 implements ActionListener, MouseListener 
                 this.trangSoDoGiuong6.giuongDao.xoaGhe(ghe);
                 nutGhe.setBackground(this.trangSoDoGiuong6.xanhBrandeis);
             } else {
+                if (this.trangSoDoGiuong6.giuongDao.layDSGheDat().size() > this.trangSoDoGiuong6.giuongDao.laySoGheToiDa() - 1) {
+                    hienThiThongBao("Không được chọn quá số lượng khách đặt");
+                    return;
+                }
+
                 this.trangSoDoGiuong6.giuongDao.themGhe(ghe);
                 this.trangSoDoGiuong6.giuongDao.datGheChon(ghe);
                 nutGhe.setBackground(this.trangSoDoGiuong6.camNhuomDen);
