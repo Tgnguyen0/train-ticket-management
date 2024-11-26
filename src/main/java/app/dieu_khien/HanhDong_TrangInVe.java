@@ -63,18 +63,18 @@ public class HanhDong_TrangInVe implements ActionListener, MouseListener, Window
                         ve.getGiaVe()*/
 
                 String maVe = ve.getMaVe();
-                String soHieu = toa.getSoHieu();
+                /*String soHieu = toa.getSoHieu();
                 String tenKH = kh.getTenKH();
                 String diemDi = ve.getGaKhoiHanh();
                 String sdtKH = kh.getSoDT();
                 String diemDen = ve.getGaKetThuc();
-                String emailKH = kh.getEmail();
+                String emailKH = kh.getEmail();*/
                 String ngayKhoiHanh = ve.getNgayKhoiHanh().getYear() + "-" + ve.getNgayKhoiHanh().getMonth().getValue() + "-" + ve.getNgayKhoiHanh().getDayOfMonth();
                 String ngayDatVe = ve.getNgayDatVe().getYear() + "-" + ve.getNgayDatVe().getMonth().getValue() + "-" + ve.getNgayDatVe().getDayOfMonth();
                 String gioKhoiHanh = ve.getNgayKhoiHanh().getHour() + ":" + ve.getNgayKhoiHanh().getMinute();
-                String loaiVe = ve.getLoaiVe();
+                /*String loaiVe = ve.getLoaiVe();
                 String soGhe = String.valueOf(ghe.getSoGhe());
-                String giaVe = String.valueOf(ve.getGiaVe());
+                String giaVe = String.valueOf(ve.getGiaVe());*/
 
                 taoVeBangFilePDF.generateTicketPDF(
                         "vé được tạo/" + maVe + ".pdf",
