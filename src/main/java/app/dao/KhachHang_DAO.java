@@ -337,7 +337,7 @@ public class KhachHang_DAO {
     }
 
     public static KhachHang timTheoMaKH_KhangVersion(String maKH){
-        KhachHang kh = new KhachHang();
+        KhachHang kh = null;
         try {
             Connection connection = KetNoiCoSoDuLieu.ketNoiDB_KhangVersion();
             String sql = "SELECT * FROM KhachHang WHERE MaKH = ?";

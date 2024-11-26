@@ -15,9 +15,10 @@ import java.awt.GridLayout;
 import javax.swing.border.TitledBorder;
 import javax.swing.border.EtchedBorder;
 import java.awt.Color;
-import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.swing.table.DefaultTableModel;
 
 public class TrangNhanVien extends JPanel {
@@ -318,6 +319,17 @@ public class TrangNhanVien extends JPanel {
             model.addRow(new Object[]{caTruc.getNgayGioBatDau(), caTruc.getNgayGioKetThuc()});
         }
 
+    }
+    public boolean regex_birthDay() {
+        Date date = dateChooser_ngaySinh.getDate();
+        LocalDate ngaySinh = LocalDate.of(date.getYear() + 1900, date.getMonth() + 1, date.getDate());
+        LocalDate ngayHienTai = LocalDate.now();
+        // phai tren 18 tuoi
+        if(ngayHienTai.getYear() - ngaySinh.getYear() < 18) {
+            JOptionPane.showMessageDialog(null, "Nhân viên phải trên 18 tuổi");
+            return false;
+        }
+        return true;
     }
 
 }
