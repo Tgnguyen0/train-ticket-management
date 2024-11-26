@@ -25,6 +25,7 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
     public List<Ve> dsVeDaDat;
     public List<Ghe> dsGhe;
     public String maGa;
+    public boolean khonglonHonHoacBangNgayHienTai;
 
     public HanhDong_TrangDatVe(TrangDatVe trangDatVe) {
         this.trangDatVe = trangDatVe;
@@ -57,6 +58,11 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
         }
 
         if (source == this.trangDatVe.nutHienThiSoDoGhe) {
+            if (khonglonHonHoacBangNgayHienTai) {
+                hienThiThongBao("Ngày đi phải sau Ngày hiện tại.", "Lỗi chọn ngày đi", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
             if (trangDatVe.thanhNhapNgayDi.getDate() == null) {
                 hienThiThongBao("Chưa chọn ngày khởi hành", "Lỗi chọn ngày", JOptionPane.ERROR_MESSAGE);
                 return;
@@ -347,7 +353,7 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
 
         // Kiểm tra thay đổi thực sự của ngày
         if (evt.getOldValue() != evt.getNewValue()) {
-            LocalDate ngayDi = layNgay(this.trangDatVe.thanhNhapNgayDi); // Lấy ngày đi tại thời điểm thay đổi
+            //LocalDate ngayDi = layNgay(this.trangDatVe.thanhNhapNgayDi); // Lấy ngày đi tại thời điểm thay đổi
             //LocalDate ngayTroVe = layNgay(this.trangDatVe.thanhNhapNgayTroVe); // Lấy ngày trở về tại thời điểm thay đổi
 
             // Check for departure date validation
@@ -373,7 +379,10 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
                 hienThiThongBao("Ngày đi phải sau Ngày hiện tại.", "Lỗi chọn ngày đi", JOptionPane.ERROR_MESSAGE);
                 isErrorDialogVisible = true;
             }
+
+            khonglonHonHoacBangNgayHienTai = true;
         } else {
+            khonglonHonHoacBangNgayHienTai = false;
             isErrorDialogVisible = false;
         }
     }
