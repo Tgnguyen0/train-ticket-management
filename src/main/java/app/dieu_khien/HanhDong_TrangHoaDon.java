@@ -146,7 +146,7 @@ public class HanhDong_TrangHoaDon implements ActionListener, MouseListener, Item
             return;
         }
         // Gọi phương thức tạo PDF
-        //TaoHoaDonFilePDF.createInvoicePdf(hoaDon);
+        TaoHoaDonFilePDF.createInvoicePdf(hoaDon);
     }
 
     @Override

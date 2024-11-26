@@ -279,6 +279,31 @@ public class TrangCacTau extends JFrame {
         //nutTau4.setEnabled(false);
         thanhDinhHuong.add(nutTau4);
 
+        if (this.gheDao.layDSGheDat() != null || !this.gheDao.layDSGheDat().isEmpty()) {
+            Toa_DAO toaDao = new Toa_DAO();
+
+            for (Ghe ghe : this.gheDao.layDSGheDat()) {
+                Toa toaDaChon = toaDao.ChonTheoMa(ghe.getMaToa());
+
+                if (nutTau1.getActionCommand().equals(toaDaChon.getMaTau())) {
+                    nutTau1.datAnhDangChon();
+                }
+
+                if (nutTau2.getActionCommand().equals(toaDaChon.getMaTau())) {
+                    nutTau2.datAnhDangChon();
+                }
+
+                if (nutTau3.getActionCommand().equals(toaDaChon.getMaTau())) {
+                    nutTau3.datAnhDangChon();
+                }
+
+                if (nutTau4.getActionCommand().equals(toaDaChon.getMaTau())) {
+                    nutTau4.datAnhDangChon();
+                }
+            }
+
+        }
+
         add(thanhDinhHuong, BorderLayout.NORTH);
     }
 
