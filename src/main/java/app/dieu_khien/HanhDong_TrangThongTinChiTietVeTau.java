@@ -85,11 +85,16 @@ public class HanhDong_TrangThongTinChiTietVeTau implements ActionListener, Mouse
 
             // Lấy dach sách lịch có liên quan đến ngày khởi hành, nhà ga
             List<LichCapBenGa> dsLich = this.trangThongTinChiTietVeTau.lichDao.ChonTheoNgayKHVaGa(ngayKhoiHanh, maGa);
+            this.trangThongTinChiTietVeTau.gheDao.datSoGheToiDa(1);
+            //System.out.println("So ghe: " + this.trangThongTinChiTietVeTau.gheDao.layDSGheDat().size());
 
             // Khởi tạo trang sơ đồ
             this.trangCacTau = new TrangCacTau((new Tau_DAO()).chonTatCa(), this.trangThongTinChiTietVeTau.gheDao, dsLich);
             trangCacTau.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             trangCacTau.setVisible(true);
+
+            // Xóa ghế cũ đã chọn trước trong danh sách để chọn ghế lại
+            this.trangThongTinChiTietVeTau.gheDao.xoaDSGheChon();
         }
 
         else if(e.getSource() == this.trangThongTinChiTietVeTau.buttonInVe){

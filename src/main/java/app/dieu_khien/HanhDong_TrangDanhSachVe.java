@@ -106,6 +106,7 @@ public class HanhDong_TrangDanhSachVe implements ActionListener, MouseListener {
                         doiTuong,
                         giaVe
                 );
+
                 JOptionPane.showMessageDialog(null, "In Vé Thành Công");
             }
         }

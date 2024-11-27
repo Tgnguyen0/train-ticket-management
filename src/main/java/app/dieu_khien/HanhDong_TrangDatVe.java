@@ -5,6 +5,7 @@ import app.giao_dien.*;
 import app.phan_tu_tuy_chinh.TaoVeBangFilePDF;
 import app.thuc_the.*;
 import com.toedter.calendar.JDateChooser;
+import java.time.temporal.ChronoUnit;
 
 import javax.swing.*;
 import java.awt.*;
@@ -25,6 +26,8 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
     public List<Ve> dsVeDaDat;
     public List<Ghe> dsGhe;
     public String maGa;
+    public boolean khonglonHonHoacBangNgayHienTai;
+    public boolean khongQuaBaNgaySoVoiHienTai;
 
     public HanhDong_TrangDatVe(TrangDatVe trangDatVe) {
         this.trangDatVe = trangDatVe;
@@ -59,26 +62,43 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
         }
 
         if (source == this.trangDatVe.nutHienThiSoDoGhe) {
-            if (trangDatVe.thanhNhapNgayDi.getDate() != null) {
-                LocalDateTime ngayKhoiHanh = trangDatVe.thanhNhapNgayDi.getDate()
-                        .toInstant()
-                        .atZone(ZoneId.systemDefault())
-                        .toLocalDateTime();
-
-                this.maGa = this.trangDatVe.gaDao.ChonTheoTen( (String) this.trangDatVe.thanhCacDiemDi.getSelectedItem()).getMaGa();
-
-                List<LichCapBenGa> dsLich = this.trangDatVe.lichDao.ChonTheoNgayKHVaGa(ngayKhoiHanh, maGa);
-
-                for (int i = 0 ; i < dsLich.size() ; i++) {
-                    System.out.println(dsLich.get(i).getMaTau());
-                }
-
-                trangCacTau = new TrangCacTau(this.trangDatVe.layDSTau(), this.trangDatVe.layGheDao(), dsLich);
-                trangCacTau.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                trangCacTau.setVisible(true);
-            } else {
-                hienThiThongBao("Chưa chọn ngày khởi hành", "Lỗi chọn ngày", JOptionPane.ERROR_MESSAGE);
+            if (khonglonHonHoacBangNgayHienTai) {
+                hienThiThongBao("Ngày đi phải sau Ngày hiện tại.", "Lỗi chọn ngày đi", JOptionPane.ERROR_MESSAGE);
+                return;
             }
+
+            if (khongQuaBaNgaySoVoiHienTai) {
+                hienThiThongBao("Ngày đi không được cách quá 2 ngày so với ngày hiện tại.", "Lỗi chọn ngày đi", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            if (trangDatVe.thanhNhapNgayDi.getDate() == null) {
+                hienThiThongBao("Chưa chọn ngày khởi hành", "Lỗi chọn ngày", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            if (trangDatVe.layDSKhDatVe() == null) {
+                hienThiThongBao("Chưa có danh sách khách đặt vé", "Lỗi đặt vé", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            LocalDateTime ngayKhoiHanh = trangDatVe.thanhNhapNgayDi.getDate()
+                    .toInstant()
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalDateTime();
+
+            this.maGa = this.trangDatVe.gaDao.ChonTheoTen( (String) this.trangDatVe.thanhCacDiemDi.getSelectedItem()).getMaGa();
+
+            List<LichCapBenGa> dsLich = this.trangDatVe.lichDao.ChonTheoNgayKHVaGa(ngayKhoiHanh, maGa);
+            this.trangDatVe.layGheDao().datSoGheToiDa(this.trangDatVe.layDSKhDatVe().size());
+
+            /*for (int i = 0 ; i < dsLich.size() ; i++) {
+                System.out.println(dsLich.get(i).getMaTau());
+            }*/
+
+            trangCacTau = new TrangCacTau(this.trangDatVe.layDSTau(), this.trangDatVe.layGheDao(), dsLich);
+            trangCacTau.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            trangCacTau.setVisible(true);
         }
 
         if (this.trangCacTau != null && this.trangCacTau.laySoHieuTauChon() != null) {
@@ -103,6 +123,12 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
         }
 
         if (source == this.trangDatVe.nutXacNhan) {
+            if (this.trangDatVe.soHieuDaChon == null) {
+                hienThiThongBao("Chưa chọn số hiệu tàu", "Lỗi chọn ghế", JOptionPane.INFORMATION_MESSAGE);
+
+                return;
+            }
+
             // Lấy danh sách khách hàng đã đặt vé
             List<KhachHang> dsKhDatVe = this.trangDatVe.layDSKhDatVe();
             // Lấy danh sách chỗ đã đặt
@@ -260,9 +286,9 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
 
             trangThanhToan.datMaNV(this.trangDatVe.layMaNV());
 
-            /*for (int i = 0 ; i < this.trangDatVe.veDao.layDSVeDat().size() ; i++) {
+            for (int i = 0 ; i < this.trangDatVe.veDao.layDSVeDat().size() ; i++) {
                 this.trangDatVe.veDao.luuVe(this.trangDatVe.veDao.layDSVeDat().get(i));
-            }*/
+            }
         }
 
         if (e.getSource() == this.trangDatVe.nutInVe) {
@@ -336,7 +362,7 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
 
         // Kiểm tra thay đổi thực sự của ngày
         if (evt.getOldValue() != evt.getNewValue()) {
-            LocalDate ngayDi = layNgay(this.trangDatVe.thanhNhapNgayDi); // Lấy ngày đi tại thời điểm thay đổi
+            //LocalDate ngayDi = layNgay(this.trangDatVe.thanhNhapNgayDi); // Lấy ngày đi tại thời điểm thay đổi
             //LocalDate ngayTroVe = layNgay(this.trangDatVe.thanhNhapNgayTroVe); // Lấy ngày trở về tại thời điểm thay đổi
 
             // Check for departure date validation
@@ -354,15 +380,30 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
     }
 
     private void kiemTraNgayDi() {
-        LocalDate ngayDi = layNgay(this.trangDatVe.thanhNhapNgayDi);
-        LocalDate ngayHienTai = LocalDate.now();
+        LocalDate ngayDi = layNgay(this.trangDatVe.thanhNhapNgayDi); // Lấy ngày đi từ JDateChooser
+        LocalDate ngayHienTai = LocalDate.now(); // Ngày hiện tại
 
+        // Kiểm tra nếu ngày đi không hợp lệ (trước ngày hiện tại)
         if (!ngayDi.isAfter(ngayHienTai) && !ngayDi.equals(ngayHienTai)) {
             if (!isErrorDialogVisible) {
                 hienThiThongBao("Ngày đi phải sau Ngày hiện tại.", "Lỗi chọn ngày đi", JOptionPane.ERROR_MESSAGE);
                 isErrorDialogVisible = true;
             }
-        } else {
+            khonglonHonHoacBangNgayHienTai = true;
+        }
+        // Kiểm tra nếu ngày đi cách quá 2 ngày
+        else if (ChronoUnit.DAYS.between(ngayHienTai, ngayDi) > 2) {
+            if (!isErrorDialogVisible) {
+                hienThiThongBao("Ngày đi không được cách quá 2 ngày so với ngày hiện tại.", "Lỗi chọn ngày đi", JOptionPane.ERROR_MESSAGE);
+                isErrorDialogVisible = true;
+            }
+
+            khongQuaBaNgaySoVoiHienTai = true;
+        }
+        // Ngày đi hợp lệ
+        else {
+            khonglonHonHoacBangNgayHienTai = false;
+            khongQuaBaNgaySoVoiHienTai = false;
             isErrorDialogVisible = false;
         }
     }

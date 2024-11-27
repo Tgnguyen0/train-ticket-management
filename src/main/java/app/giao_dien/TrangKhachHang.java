@@ -42,11 +42,13 @@ public class TrangKhachHang extends JPanel {
     public JTextField textField_timEmail;
     public ArrayList<KhachHang> dsKH;
     public static ArrayList<KhachHang> dsHangCho;
+    public KhachHang_DAO khDao;
 
     /**
      * Create the panel.
      */
     public TrangKhachHang() {
+        khDao = new KhachHang_DAO();
         HanhDong_TrangKhachHang hanhDong_trangKhachHang = new HanhDong_TrangKhachHang(this);
 
         setBorder(new LineBorder(new Color(0, 128, 255), 1, true));
@@ -416,15 +418,13 @@ public class TrangKhachHang extends JPanel {
 
     public void themVaoHangCho(){
         String maKH = this.label_hienThiMaKH.getText();
-        String tenKH = this.textField_HoTen.getText();
-        String sdt = this.textField_SDT.getText();
-        String email = this.textField_email.getText();
-        String diaChi = this.textArea_diaChi.getText();
-        String gioiTinh = this.comboBox_gioiTinh.getSelectedItem().toString();
-        GIOI_TINH gt = GIOI_TINH.NAM;
-        if(gioiTinh.equals("Nữ")){
-            gt = GIOI_TINH.NU;
+
+        if(maKH.equals("<mã khách hàng>")) {
+            JOptionPane.showMessageDialog(null, "Vui lòng chọn khách hàng!");
+            return;
         }
+
+        String tenKH = this.textField_HoTen.getText();
         for(int i = 0; i < this.table_hangCho.getRowCount(); i++){
             if (this.table_hangCho.getValueAt(i, 0).equals(maKH)){
                 JOptionPane.showMessageDialog(null, "Khách hàng đã có trong hàng chờ!");

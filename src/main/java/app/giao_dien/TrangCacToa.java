@@ -72,6 +72,7 @@ public class TrangCacToa extends JPanel {
     public Ghe_DAO gheDao;
     public List<Toa> dsToa;
     public Set<Ghe> gheDaDat;
+    public int soLuongKhachDat;
 
     /*public List<Ghe> gheToa1;
     public List<Ghe> gheToa2;
@@ -121,10 +122,6 @@ public class TrangCacToa extends JPanel {
         taoTrangChua();
     }
 
-    public void datGheDao(Ghe_DAO gheDao) {
-        this.gheDao = gheDao;
-    }
-
     public void taoThanhDinhHuongTau() {
         thanhDinhHuong = new JPanel();
         thanhDinhHuong.setPreferredSize(new Dimension(1200, chieuRongNut + 40));
@@ -132,9 +129,18 @@ public class TrangCacToa extends JPanel {
         thanhDinhHuong.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 0));
 
         for (int i = 12 ; i > 0 ; i--) {
-            JButton nutToa = taoNutToa(i);
+            NutAnh nutToa = taoNutToa(i);
             nutToa.setActionCommand(String.valueOf(i));
             thanhDinhHuong.add(nutToa);
+
+            if (!this.gheDao.layDSGheDat().isEmpty()) {
+
+                for (Ghe ghe : this.gheDao.layDSGheDat()) {
+                    if (ghe.getMaToa().equals(dsToa.get(i - 1).getMaToa())) {
+                        nutToa.datAnhDangChon();
+                    }
+                }
+            }
         }
 
         /*this.nutToa12 = taoNutToa(12);
