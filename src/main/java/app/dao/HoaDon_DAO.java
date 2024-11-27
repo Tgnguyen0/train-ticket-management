@@ -5,10 +5,8 @@ import app.ket_noi_co_so_du_lieu.KetNoiCoSoDuLieu;
 import app.thuc_the.DaiNgo;
 import app.thuc_the.HoaDon;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
+import javax.swing.*;
+import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -250,6 +248,47 @@ public class HoaDon_DAO {
         return danhSachHoaDon;
     }
 
+    public static HoaDon  layHoaDonDuaVao_MaHoaDon(String maHoaDon){
+        HoaDon hoaDon = null;
+        String query = "select * from HoaDon where MaHD = ?";
+
+        try (Connection connection = KetNoiCoSoDuLieu.ketNoiDB_HinhDB();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            preparedStatement.setString(1, maHoaDon);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                hoaDon = new HoaDon();
+                hoaDon.setMaHoaDon(resultSet.getString("MaHD"));
+                hoaDon.setNgayLapHoaDon(resultSet.getDate("NgayLap").toLocalDate());
+                hoaDon.setMaNhanVien(resultSet.getString("MaNV"));
+                hoaDon.setThanhTien(resultSet.getDouble("ThanhTien"));
+                hoaDon.setMaKhachHang(resultSet.getString("MaKH"));
+                hoaDon.setSoLuong(resultSet.getInt("SoLuong"));
+                hoaDon.setTongTien(resultSet.getDouble("TongTien"));
+                hoaDon.setTrangThai(resultSet.getString("TrangThai"));
+                double daiNgo_DB = resultSet.getDouble("DaiNgo");
+                if (daiNgo_DB == 0.0){
+                    hoaDon.setDaiNgo(DaiNgo.GIAMGIAKHONGPHANTRAM);
+                }
+                else if(daiNgo_DB == 0.2){
+                    hoaDon.setDaiNgo(DaiNgo.GIAMGIAHAIMUOIPHANTRAM);
+                }
+                else if(daiNgo_DB == 0.05){
+                    hoaDon.setDaiNgo(DaiNgo.GIAMGIANAMPHANTRAM);
+                }
+                else if(daiNgo_DB == 0.10){
+                    hoaDon.setDaiNgo(DaiNgo.GIAMGIAMUOIPHANTRAM);
+                }
+                hoaDon.setThue(resultSet.getFloat("Thue"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return hoaDon;
+    }
+
     public static Map<String, Double> layDoanhThuCacNam(int namXuatPhat, int namKetThuc){
         Map<String, Double> doanhThuTheoNam = new HashMap<>();
 
@@ -402,6 +441,41 @@ public class HoaDon_DAO {
         return  danhSachDoanhThu;
     }
 
+    public static void capNhatHoaDon(HoaDon hoaDon){
+        String sql = "UPDATE HoaDon SET NgayLap = ? , MaNV = ?, ThanhTien = ?, MaKH = ?, " +
+                "SoLuong = ?, TongTien = ?, TrangThai = ?, DaiNgo = ?, Thue = ? \n" +
+                "\t\twhere MaHD = ? ";
+
+        try (Connection connection = KetNoiCoSoDuLieu.ketNoiDB_HinhDB();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            // Gán các giá trị vào câu lệnh SQL
+            preparedStatement.setDate(1, Date.valueOf(hoaDon.getNgayLapHoaDon()));
+            preparedStatement.setString(2, hoaDon.getMaNhanVien());
+            preparedStatement.setDouble(3, hoaDon.getThanhTien());
+            preparedStatement.setString(4, hoaDon.getMaKhachHang());
+            preparedStatement.setInt(5, hoaDon.getSoLuong());
+            preparedStatement.setDouble(6, hoaDon.getTongTien());
+            preparedStatement.setString(7, hoaDon.getTrangThai());
+            preparedStatement.setDouble(8, hoaDon.getDaiNgo().getValue()); // Giả sử `DaiNgo` có phương thức `toString`
+            preparedStatement.setFloat(9, hoaDon.getThue());
+            preparedStatement.setString(10, hoaDon.getMaHoaDon());
+
+            // Thực thi câu lệnh
+            int rowsUpdated = preparedStatement.executeUpdate();
+            if (rowsUpdated > 0) {
+                //System.out.println("Cập nhật thành công hóa đơn có mã: " + hoaDon.getMaHoaDon());
+                JOptionPane.showMessageDialog(null, "Cập nhật thành công hóa đơn có mã: " + hoaDon.getMaHoaDon());
+            } else {
+               // System.out.println("Không tìm thấy hóa đơn với mã: " + hoaDon.getMaHoaDon());
+                JOptionPane.showMessageDialog(null, "Không tìm thấy hóa đơn với mã: " + hoaDon.getMaHoaDon());
+
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
     public static double layTongTienHeThong() {
         Connection c;
         try {
@@ -435,6 +509,7 @@ public class HoaDon_DAO {
         }
         return 0.0;
     }
+
     public static double layTongVAT(){
         Connection c;
         try {

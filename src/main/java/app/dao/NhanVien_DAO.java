@@ -225,7 +225,7 @@ public class NhanVien_DAO {
     }
 
     public static NhanVien layThongTinNV(String username) {
-        NhanVien nv = new NhanVien();
+        NhanVien nv = null;
         try {
             // Bước 1: tạo kết nối đến CSDL
             Connection connection = KetNoiCoSoDuLieu.ketNoiDB_KhangVersion();
@@ -245,7 +245,7 @@ public class NhanVien_DAO {
                 LocalDate ngaySinh = rs.getDate("NgaySinh").toLocalDate();
                 GIOI_TINH gt = GIOI_TINH.NAM;
                 if (!rs.getString("GioiTinh").equals("Nam")) {
-                    nv.setGioiTinh(GIOI_TINH.NU);
+                    gt = GIOI_TINH.NU;
                 }
                 st.close();
                 connection.close();

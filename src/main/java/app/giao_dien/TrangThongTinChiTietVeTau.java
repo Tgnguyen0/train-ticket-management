@@ -33,7 +33,7 @@ public class TrangThongTinChiTietVeTau extends JFrame {
     public javax.swing.JLabel labelLoaiVe;
     public javax.swing.JLabel labelMaVe;
     public javax.swing.JLabel labelNgayDatVe;
-    public javax.swing.JLabel labelNgayKhoiHanh;
+    public JLabel labelNgayKhoiHanh;
     public javax.swing.JLabel labelNgayTroVe;
     public javax.swing.JLabel labelSoHieu;
     public javax.swing.JLabel labelTenKhachHang;

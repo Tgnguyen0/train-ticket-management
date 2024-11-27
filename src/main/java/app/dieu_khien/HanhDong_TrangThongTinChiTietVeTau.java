@@ -33,32 +33,27 @@ public class HanhDong_TrangThongTinChiTietVeTau implements ActionListener, Mouse
     public void actionPerformed(ActionEvent e) {
 
         if(e.getSource() == this.trangThongTinChiTietVeTau.buttonCapNhat){
-            try {
                 String maVe = this.trangThongTinChiTietVeTau.textFieldMaVe.getText();
                // logger.info(maVe);
-                LocalDateTime ngayKhoiHanh_Ve = null;
-                ngayKhoiHanh_Ve = this.databaseVe.getNgayKhoiHanh_DuaVaoMaVe(maVe);
-                String maGhe = this.trangThongTinChiTietVeTau.ghe.getMaGhe();
-
-                LocalDateTime gioKhoiHanhTau = null;
-                gioKhoiHanhTau = this.databaseVe.getNgayKhoiHanhCuaTau_DuaVaoMaGhe(maGhe, "Sài Gòn");
-
+                LocalDateTime  ngayKhoiHanh_Ve = this.databaseVe.getNgayKhoiHanh_DuaVaoMaVe(maVe);
+//                String maGhe = this.trangThongTinChiTietVeTau.ghe.getMaGhe();
+//                logger.info(maGhe);
+//                LocalDateTime gioKhoiHanhTau = null;
+//                gioKhoiHanhTau = this.databaseVe.getNgayKhoiHanhCuaTau_DuaVaoMaGhe(maGhe, "Sài Gòn");
+//                logger.info(String.valueOf(gioKhoiHanhTau.getDayOfWeek()));
                 LocalDateTime dateCurrent = LocalDateTime.now();
-                if(gioKhoiHanhTau != null){
-                    // tính khoảng cách 2 localdatetime
-                    Duration duration = Duration.between(ngayKhoiHanh_Ve, gioKhoiHanhTau);
 
-                    if (duration.toHours() >= 24 && ngayKhoiHanh_Ve.isAfter(dateCurrent)) {
+                    // tính khoảng cách 2 localdatetime
+                    Duration duration = Duration.between(dateCurrent, ngayKhoiHanh_Ve);
+
+                    if (duration.toHours() >= 24) {
                         if(JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn cập nhật?") == JOptionPane.YES_OPTION){
                             this.trangThongTinChiTietVeTau.choPhepCapNhat();
                         }
                     } else {
                         JOptionPane.showMessageDialog(null, "Chuyến Tàu Đã Xuất Phát Không Thể Cập Nhật Thành Công!","Cảnh Báo!!!!!" ,JOptionPane.ERROR_MESSAGE);
                     }
-                }
-            } catch (SQLException ex) {
-                throw new RuntimeException(ex);
-            }
+
         }
         else if (e.getSource() == this.trangThongTinChiTietVeTau.buttonXacNhan){
            if(JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn xác nhận không?\n Sau Khi xác nhận sẽ cập nhật lại thông tin vé ") == JOptionPane.YES_OPTION){

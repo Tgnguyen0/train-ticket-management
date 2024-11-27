@@ -53,7 +53,9 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
         }
 
         if (source == this.trangDatVe.nutDSVe) {
-            TrangDanhSachVeTau.moGiaoDienDanhSach();
+           // TrangDanhSachVeTau.moGiaoDienDanhSach();
+            CardLayout cardLayout = (CardLayout) this.trangDatVe.trangDinhHuong.getTrangChua().getLayout();
+            cardLayout.show(this.trangDatVe.trangDinhHuong.getTrangChua(), "Trang Danh Sach Ve");
         }
 
         if (source == this.trangDatVe.nutHienThiSoDoGhe) {
