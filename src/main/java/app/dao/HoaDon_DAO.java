@@ -463,6 +463,7 @@ public class HoaDon_DAO {
 
             // Thực thi câu lệnh
             int rowsUpdated = preparedStatement.executeUpdate();
+            System.out.println("rowsUpdated: "+ rowsUpdated);
             if (rowsUpdated > 0) {
                 //System.out.println("Cập nhật thành công hóa đơn có mã: " + hoaDon.getMaHoaDon());
                 JOptionPane.showMessageDialog(null, "Cập nhật thành công hóa đơn có mã: " + hoaDon.getMaHoaDon());
