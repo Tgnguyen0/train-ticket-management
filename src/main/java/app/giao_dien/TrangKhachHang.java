@@ -42,11 +42,13 @@ public class TrangKhachHang extends JPanel {
     public JTextField textField_timEmail;
     public ArrayList<KhachHang> dsKH;
     public static ArrayList<KhachHang> dsHangCho;
+    public KhachHang_DAO khDao;
 
     /**
      * Create the panel.
      */
     public TrangKhachHang() {
+        khDao = new KhachHang_DAO();
         HanhDong_TrangKhachHang hanhDong_trangKhachHang = new HanhDong_TrangKhachHang(this);
 
         setBorder(new LineBorder(new Color(0, 128, 255), 1, true));

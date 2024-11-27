@@ -5,6 +5,7 @@ import app.giao_dien.*;
 import app.phan_tu_tuy_chinh.TaoVeBangFilePDF;
 import app.thuc_the.*;
 import com.toedter.calendar.JDateChooser;
+import java.time.temporal.ChronoUnit;
 
 import javax.swing.*;
 import java.awt.*;
@@ -26,6 +27,7 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
     public List<Ghe> dsGhe;
     public String maGa;
     public boolean khonglonHonHoacBangNgayHienTai;
+    public boolean khongQuaBaNgaySoVoiHienTai;
 
     public HanhDong_TrangDatVe(TrangDatVe trangDatVe) {
         this.trangDatVe = trangDatVe;
@@ -60,6 +62,11 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
         if (source == this.trangDatVe.nutHienThiSoDoGhe) {
             if (khonglonHonHoacBangNgayHienTai) {
                 hienThiThongBao("Ngày đi phải sau Ngày hiện tại.", "Lỗi chọn ngày đi", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            if (khongQuaBaNgaySoVoiHienTai) {
+                hienThiThongBao("Ngày đi không được cách quá 2 ngày so với ngày hiện tại.", "Lỗi chọn ngày đi", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
@@ -371,18 +378,30 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
     }
 
     private void kiemTraNgayDi() {
-        LocalDate ngayDi = layNgay(this.trangDatVe.thanhNhapNgayDi);
-        LocalDate ngayHienTai = LocalDate.now();
+        LocalDate ngayDi = layNgay(this.trangDatVe.thanhNhapNgayDi); // Lấy ngày đi từ JDateChooser
+        LocalDate ngayHienTai = LocalDate.now(); // Ngày hiện tại
 
+        // Kiểm tra nếu ngày đi không hợp lệ (trước ngày hiện tại)
         if (!ngayDi.isAfter(ngayHienTai) && !ngayDi.equals(ngayHienTai)) {
             if (!isErrorDialogVisible) {
                 hienThiThongBao("Ngày đi phải sau Ngày hiện tại.", "Lỗi chọn ngày đi", JOptionPane.ERROR_MESSAGE);
                 isErrorDialogVisible = true;
             }
-
             khonglonHonHoacBangNgayHienTai = true;
-        } else {
+        }
+        // Kiểm tra nếu ngày đi cách quá 2 ngày
+        else if (ChronoUnit.DAYS.between(ngayHienTai, ngayDi) > 2) {
+            if (!isErrorDialogVisible) {
+                hienThiThongBao("Ngày đi không được cách quá 2 ngày so với ngày hiện tại.", "Lỗi chọn ngày đi", JOptionPane.ERROR_MESSAGE);
+                isErrorDialogVisible = true;
+            }
+
+            khongQuaBaNgaySoVoiHienTai = true;
+        }
+        // Ngày đi hợp lệ
+        else {
             khonglonHonHoacBangNgayHienTai = false;
+            khongQuaBaNgaySoVoiHienTai = false;
             isErrorDialogVisible = false;
         }
     }

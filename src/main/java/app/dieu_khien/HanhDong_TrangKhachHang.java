@@ -16,6 +16,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class HanhDong_TrangKhachHang implements ActionListener, MouseListener {
@@ -53,22 +54,30 @@ public class HanhDong_TrangKhachHang implements ActionListener, MouseListener {
 
     public boolean datVe() {
         int row = this.trangKhachHang.table_hangCho.getRowCount();
-        this.trangKhachHang.dsHangCho = new ArrayList<>();
+        // Đừng thay đổi khúc này !
+        List<KhachHang> dsHangCho = new ArrayList<KhachHang>();
         if(row == 0){
             JOptionPane.showMessageDialog(null, "Hàng chờ trống!");
         } else {
-           for (int i = 0; i < row; i++) {
-               trangKhachHang.dsHangCho.add(KhachHang_DAO.timTheoMaKH_KhangVersion(this.trangKhachHang.table_hangCho.getValueAt(i, 0).toString()));
-           }
-           this.trangKhachHang.clearTable(trangKhachHang.table_hangCho);
-           this.lamMoi();
-           this.lamMoiDanhSach();
-           this.trangKhachHang.hide();
+            // Đừng thay đổi khúc này !
+            for (int i = 0; i < row; i++) {
+               dsHangCho.add(this.trangKhachHang.khDao.ChonTheoMaKH(this.trangKhachHang.table_hangCho.getValueAt(i, 0).toString()));
+            }
 
-           ((TrangDatVe) TrangDinhHuong.getTrangChua().getComponent(1)).datDSKhDatVe(this.trangKhachHang.dsHangCho);
+            /*for (int i = 0; i < row; i++) {
+                trangKhachHang.dsHangCho.add(KhachHang_DAO.timTheoMaKH_KhangVersion(this.trangKhachHang.table_hangCho.getValueAt(i, 0).toString()));
+            }*/
+            this.trangKhachHang.clearTable(trangKhachHang.table_hangCho);
+            this.lamMoi();
+            this.lamMoiDanhSach();
+            this.trangKhachHang.hide();
 
-           CardLayout cardLayout = (CardLayout) TrangDinhHuong.getTrangChua().getLayout();
-           cardLayout.show(TrangDinhHuong.getTrangChua(), "Trang Dat Ve");
+            //((TrangDatVe) TrangDinhHuong.getTrangChua().getComponent(1)).datDSKhDatVe(this.trangKhachHang.dsHangCho);
+            // Đừng thay đổi khúc này !
+            ((TrangDatVe) TrangDinhHuong.getTrangChua().getComponent(1)).datDSKhDatVe(dsHangCho);
+
+            CardLayout cardLayout = (CardLayout) TrangDinhHuong.getTrangChua().getLayout();
+            cardLayout.show(TrangDinhHuong.getTrangChua(), "Trang Dat Ve");
 
             String hoTen = ((TrangDatVe) TrangDinhHuong.getTrangChua().getComponent(1)).dsKHDatVe.get(0).getTenKH();
             ((TrangDatVe) TrangDinhHuong.getTrangChua().getComponent(1)).thanhNhapHoTen.setText(hoTen);

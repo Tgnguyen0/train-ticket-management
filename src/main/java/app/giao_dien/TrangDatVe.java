@@ -92,7 +92,7 @@ public class TrangDatVe extends JPanel {
     public List<Tau> dsTau;
     public List<NhaGa> dsGa;
     public String soHieuDaChon;
-    public List<KhachHang> dsKHDatVe;
+    public static List<KhachHang> dsKHDatVe;
     public String maNV;
     public Boolean daThanhToan = false;
 
@@ -153,7 +153,7 @@ public class TrangDatVe extends JPanel {
     }
 
     public void datDSKhDatVe(List<KhachHang> ds) {
-        this.dsKHDatVe = ds;
+        dsKHDatVe = ds;
     }
 
     public List<KhachHang> layDSKhDatVe() {
