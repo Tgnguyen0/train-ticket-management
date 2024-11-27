@@ -103,8 +103,8 @@ public class KhachHang_DAO {
         return i;
     }
 
-    public KhachHang ChonTheoID(String manv) {
-        List<KhachHang> list = this.ChonSQL(CHON_THEO_MA_SQL, manv);
+    public KhachHang ChonTheoMaKH(String maKH) {
+        List<KhachHang> list = this.ChonSQL(CHON_THEO_MA_SQL, maKH);
         return list.size() > 0 ? list.get(0) : null;
     }
 
