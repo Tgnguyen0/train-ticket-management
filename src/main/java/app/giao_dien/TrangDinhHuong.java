@@ -42,6 +42,7 @@ public class TrangDinhHuong extends JFrame {
     public TrangChuaThongKeNhanVienTheoThang trangChuaThongKeNhanVienTheoThang;
     public TrangChuaThongKeDoanhThuNhaGa trangChuaThongKeDoanhThuNhaGa;
     public TrangChuaThongKeNhanVienTheoNam trangChuaThongKeNhanVienTheoNam;
+    public TrangDanhSachVeTau trangDanhSachVeTau;
     /* Khởi tạo phông chữ màu sắc */
     public Color trang = new Color(255, 255, 255);
     public Color xanhBrandeis = new Color(0, 112, 255);
@@ -237,12 +238,13 @@ public class TrangDinhHuong extends JFrame {
         this.trangChua.setLayout(new CardLayout());
 
         this.trangChu = new TrangChu(); // Khởi tạo trang Trang chủ
-        this.trangDatVe = new TrangDatVe(); // Khởi tạo trang Trang Đặt Vé
+        this.trangDatVe = new TrangDatVe(this); // Khởi tạo trang Trang Đặt Vé
         this.trangHoaDon = new TrangHoaDon(); // Khởi tạo trang Trang Hóa Đơn
         this.trangGioiThieu = new TrangGioiThieu(); // Khởi tạo trang Giới Thiệu
         this.trangKhachHang = new TrangKhachHang(); // Khởi tạo trang Trang Khách Hàng
-        //this.trangChuaThongKeTheoNam = new TrangChuaThongKeNhanVienTheoNam();
         this.trangNhanVien = new TrangNhanVien(); // Khởi tạo trang Trang Nhân Viên
+        this.trangDanhSachVeTau = new TrangDanhSachVeTau();
+
         this.trangChuaThongKeNhanVienTheoThang = new TrangChuaThongKeNhanVienTheoThang(this);
         this.trangChuaThongKeDoanhThuNhaGa = new TrangChuaThongKeDoanhThuNhaGa(this);
         this.trangChuaThongKeNhanVienTheoNam = new TrangChuaThongKeNhanVienTheoNam( this);
@@ -256,6 +258,7 @@ public class TrangDinhHuong extends JFrame {
         this.trangChua.add(trangChuaThongKeNhanVienTheoThang, "ThongKeDoanhThuTheoThang");
         this.trangChua.add(trangChuaThongKeNhanVienTheoNam, "ThongKeDoanhThuTheoNam");
         this.trangChua.add(trangNhanVien, "Trang Nhan Vien");
+        this.trangChua.add(trangDanhSachVeTau, "Trang Danh Sach Ve");
 
         add(this.trangChua);
     }

@@ -50,11 +50,11 @@ public class HanhDong_TrangDinhHuong implements ActionListener, MouseListener {
     }
 
     public void mousePressed(MouseEvent e) {
-        throw new UnsupportedOperationException("Unimplemented method 'mousePressed'");
+       // throw new UnsupportedOperationException("Unimplemented method 'mousePressed'");
     }
 
     public void mouseReleased(MouseEvent e) {
-        throw new UnsupportedOperationException("Unimplemented method 'mouseReleased'");
+        //throw new UnsupportedOperationException("Unimplemented method 'mouseReleased'");
     }
 
     public void mouseEntered(MouseEvent e) {
