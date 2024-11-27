@@ -17,7 +17,7 @@ public class CustomHeaderRenderer extends DefaultTableCellRenderer {
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
         Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-        c.setFont(new Font("Arial", Font.BOLD, 12)); // Thay đổi font nếu muốn // Font cho header
+        c.setFont(new Font("Arial", Font.BOLD, 14)); // Thay đổi font nếu muốn // Font cho header
         // Thiết lập viền cho header (giữ viền phía dưới)
         setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, xanhBrandeis));
         return c;

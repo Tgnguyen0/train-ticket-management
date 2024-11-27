@@ -95,8 +95,8 @@ public class TrangDatVe extends JPanel {
     public static List<KhachHang> dsKHDatVe;
     public String maNV;
     public Boolean daThanhToan = false;
-
-    public TrangDatVe() {
+    public TrangDinhHuong trangDinhHuong;
+    public TrangDatVe(TrangDinhHuong mainFrame) {
         this.tauDao = new Tau_DAO();
         this.gheDao = new Ghe_DAO();
         this.gaDao = new Ga_DAO();
@@ -109,6 +109,7 @@ public class TrangDatVe extends JPanel {
         setPreferredSize(new Dimension(1200, 600));
         setLayout(new BorderLayout());
         setFont(this.phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, 13));
+        this.trangDinhHuong = mainFrame;
 
         trangDonDatVe = new JPanel();
         trangDonDatVe.setPreferredSize(new Dimension(1200, 500));

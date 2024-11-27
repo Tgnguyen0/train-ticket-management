@@ -222,8 +222,30 @@ public class TrangChuaThongKeNhanVienTheoThang extends JPanel {
 
     public void  thietLap_TrangChuaNutChonThang(){
         labelThang.setText("Tháng");
-
+        labelThang.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.BOLD, 13));
         danhSachThang.setModel(model_DanhSachCacThang);
+        danhSachThang.setRenderer(new javax.swing.DefaultListCellRenderer() {
+            @Override
+            public java.awt.Component getListCellRendererComponent(
+                    javax.swing.JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+
+                // Gọi phương thức mặc định để thiết lập label
+                javax.swing.JLabel renderer = (javax.swing.JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+
+                // Căn giữa chữ trong JComboBox
+                renderer.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+                renderer.setFont(new Font("Arial", Font.PLAIN, 13));
+                // Kiểm tra nếu mục được chọn hoặc có con trỏ chuột đang chỉ vào
+                if (isSelected || cellHasFocus) {
+                    renderer.setBackground(xanhBrandeis); // Màu nền xanh
+                    renderer.setForeground(trang); // Màu chữ trắng
+                } else {
+                    renderer.setBackground(trang); // Màu nền trắng khi không chọn
+                    renderer.setForeground(xanhBrandeis); // Màu chữ đen khi không chọn
+                }
+                return renderer;
+            }
+        });
 
         javax.swing.GroupLayout trangChuaNutChonThangLayout = new javax.swing.GroupLayout(trangChuaNutChonThang);
         trangChuaNutChonThang.setLayout(trangChuaNutChonThangLayout);
@@ -251,8 +273,31 @@ public class TrangChuaThongKeNhanVienTheoThang extends JPanel {
 
     public void  thietLap_TrangChuaNutChonNam(){
         labelNam.setText("Năm");
+        labelNam.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.BOLD, 13));
 
         danhSachNam.setModel(model_DanhSachCacNam);
+        danhSachNam.setRenderer(new javax.swing.DefaultListCellRenderer() {
+            @Override
+            public java.awt.Component getListCellRendererComponent(
+                    javax.swing.JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+
+                // Gọi phương thức mặc định để thiết lập label
+                javax.swing.JLabel renderer = (javax.swing.JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+
+                // Căn giữa chữ trong JComboBox
+                renderer.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+                renderer.setFont(new Font("Arial", Font.PLAIN, 13));
+                // Kiểm tra nếu mục được chọn hoặc có con trỏ chuột đang chỉ vào
+                if (isSelected || cellHasFocus) {
+                    renderer.setBackground(xanhBrandeis); // Màu nền xanh
+                    renderer.setForeground(trang); // Màu chữ trắng
+                } else {
+                    renderer.setBackground(trang); // Màu nền trắng khi không chọn
+                    renderer.setForeground(xanhBrandeis); // Màu chữ đen khi không chọn
+                }
+                return renderer;
+            }
+        });
 
         javax.swing.GroupLayout trangChuaNutChonNamLayout = new javax.swing.GroupLayout(trangChuaNutChonNam);
         trangChuaNutChonNam.setLayout(trangChuaNutChonNamLayout);
@@ -364,6 +409,7 @@ public class TrangChuaThongKeNhanVienTheoThang extends JPanel {
 
     public void  thietLap_trangChuaMaNhanVien(){
         labelMa.setText("Mã Nhân Viên:");
+        labelMa.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.PLAIN, 13));
 
         textFieldMaNhanVien.setText("");
         textFieldMaNhanVien.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.BOLD, 13));
@@ -392,6 +438,7 @@ public class TrangChuaThongKeNhanVienTheoThang extends JPanel {
 
     public void  thietLap_TrangChuaTenNhanVien(){
         labelTen.setText("Họ Và Tên:");
+        labelTen.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.PLAIN, 13));
 
         textFieldTenNhanVien.setText("");
         textFieldTenNhanVien.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.BOLD, 13));
@@ -421,6 +468,7 @@ public class TrangChuaThongKeNhanVienTheoThang extends JPanel {
 
     public void thietLap_TrangChuaNgaySinhNhanVien(){
         labelNgaySinh.setText("Ngày Sinh:");
+        labelNgaySinh.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.PLAIN, 13));
 
         textFieldNgaySinhNhanVien.setText("");
         textFieldNgaySinhNhanVien.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.BOLD, 13));
@@ -475,6 +523,7 @@ public class TrangChuaThongKeNhanVienTheoThang extends JPanel {
 
     public void thietLap_TrangChuaSoDienThoaiNhanVien(){
         labelSoDienThoai.setText("Số Điện Thoại:");
+        labelSoDienThoai.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.PLAIN, 13));
 
         textFieldSoDienThoaiNhanVien.setText("");
         textFieldSoDienThoaiNhanVien.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.BOLD, 13));
@@ -504,6 +553,7 @@ public class TrangChuaThongKeNhanVienTheoThang extends JPanel {
 
     public void thietLap_TrangChuaGioiTinhNhanVien(){
         labelGioiTinh.setText("Giới Tính:");
+        labelGioiTinh.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.PLAIN, 13));
 
         textFieldGioiTinhNhanVien.setText("");
         textFieldGioiTinhNhanVien.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.BOLD, 13));
@@ -533,6 +583,7 @@ public class TrangChuaThongKeNhanVienTheoThang extends JPanel {
 
     public void thietLap_TrangChuaDoanhThuNhanVien(){
         labelDoanhThu.setText("Doanh Thu:");
+        labelDoanhThu.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.PLAIN, 13));
 
         textFieldDoanhThuNhanVien.setText("");
         textFieldDoanhThuNhanVien.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.BOLD, 13));
@@ -739,7 +790,7 @@ public class TrangChuaThongKeNhanVienTheoThang extends JPanel {
         );
     }
     public void thietLap_TrangChuaNutChuyenTrang(){
-        buttonThongKeDoanhThu.setText("<html>Thống Kê Doanh Thu <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Nhà Ga</html>");
+        buttonThongKeDoanhThu.setText("<html>&nbsp;&nbsp;&nbsp;Thống Kê<br>Doanh Thu Nhà Ga</html>");
         buttonThongKeDoanhThu.setBackground(this.xanhBrandeis);
         buttonThongKeDoanhThu.setForeground(this.trang);
         buttonThongKeDoanhThu.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.BOLD, 14));
@@ -748,30 +799,27 @@ public class TrangChuaThongKeNhanVienTheoThang extends JPanel {
         buttonThongKeTheoNamNhanVien.setForeground(this.trang);
         buttonThongKeTheoNamNhanVien.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.BOLD, 14));
 
-        javax.swing.GroupLayout trangChuaNutChuyenDoiTrangLayout = new javax.swing.GroupLayout(trangChuaNutChuyenDoiTrang);
-        trangChuaNutChuyenDoiTrang.setLayout(trangChuaNutChuyenDoiTrangLayout);
-        trangChuaNutChuyenDoiTrangLayout.setHorizontalGroup(
-                trangChuaNutChuyenDoiTrangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, trangChuaNutChuyenDoiTrangLayout.createSequentialGroup()
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(buttonThongKeTheoNamNhanVien, 180, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(65, 65, 65))
-                        .addGroup(trangChuaNutChuyenDoiTrangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(trangChuaNutChuyenDoiTrangLayout.createSequentialGroup()
-                                        .addGap(97, 97, 97)
-                                        .addComponent(buttonThongKeDoanhThu,180, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addContainerGap(254, Short.MAX_VALUE)))
+        javax.swing.GroupLayout trangChuaCacNutChuyenTrangLayout = new javax.swing.GroupLayout(trangChuaNutChuyenDoiTrang);
+        trangChuaNutChuyenDoiTrang.setLayout(trangChuaCacNutChuyenTrangLayout);
+        trangChuaCacNutChuyenTrangLayout.setHorizontalGroup(
+                trangChuaCacNutChuyenTrangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(trangChuaCacNutChuyenTrangLayout.createSequentialGroup()
+                                .addGap(97, 97, 97)
+                                .addComponent(buttonThongKeDoanhThu,180, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(20, 20, 20) // 20px gap between buttons
+                                .addComponent(buttonThongKeTheoNamNhanVien, 180, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(54, Short.MAX_VALUE))
         );
-        trangChuaNutChuyenDoiTrangLayout.setVerticalGroup(
-                trangChuaNutChuyenDoiTrangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, trangChuaNutChuyenDoiTrangLayout.createSequentialGroup()
+        trangChuaCacNutChuyenTrangLayout.setVerticalGroup(
+                trangChuaCacNutChuyenTrangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, trangChuaCacNutChuyenTrangLayout.createSequentialGroup()
                                 .addContainerGap(50, Short.MAX_VALUE)
-                                .addComponent(buttonThongKeTheoNamNhanVien, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(buttonThongKeDoanhThu, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(38, 38, 38))
-                        .addGroup(trangChuaNutChuyenDoiTrangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(trangChuaNutChuyenDoiTrangLayout.createSequentialGroup()
+                        .addGroup(trangChuaCacNutChuyenTrangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(trangChuaCacNutChuyenTrangLayout.createSequentialGroup()
                                         .addGap(49, 49, 49)
-                                        .addComponent(buttonThongKeDoanhThu, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(buttonThongKeTheoNamNhanVien, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addContainerGap(39, Short.MAX_VALUE)))
         );
     }
@@ -842,7 +890,7 @@ public class TrangChuaThongKeNhanVienTheoThang extends JPanel {
         this.model_DoanhThu.setRowCount(0);
         int thang = Integer.parseInt((String) this.danhSachThang.getSelectedItem());
         int nam = Integer.parseInt((String) this.danhSachNam.getSelectedItem());
-        DecimalFormat df = new DecimalFormat("#,###.##");
+        DecimalFormat df = new DecimalFormat("#,###.## VNĐ");
         double doanhThu = HoaDon_DAO.tongDoanhThuCuaThang_Nam(nam, thang);
         Object[] objects = {thang+"", nam+"",df.format(doanhThu)};
         this.model_DoanhThu.addRow(objects);
@@ -864,11 +912,17 @@ public class TrangChuaThongKeNhanVienTheoThang extends JPanel {
         NhanVien nv = NhanVien_DAO.layNhanVienTheo_TenNhanVien(tenNhanVien);
         if(nv!= null){
             this.textFieldMaNhanVien.setText(nv.getMaNV());
+            this.textFieldMaNhanVien.setEditable(false);
             this.textFieldTenNhanVien.setText(nv.getTenNV());
+            this.textFieldTenNhanVien.setEditable(false);
             this.textFieldNgaySinhNhanVien.setText(nv.getNgaySinh().toString());
+            this.textFieldNgaySinhNhanVien.setEditable(false);
             this.textFieldSoDienThoaiNhanVien.setText(nv.getSoDT());
+            this.textFieldSoDienThoaiNhanVien.setEditable(false);
             this.textFieldGioiTinhNhanVien.setText(nv.getGioiTinh().getValue());
+            this.textFieldGioiTinhNhanVien.setEditable(false);
             this.textFieldDoanhThuNhanVien.setText(df.format(doanhThu)+"VNĐ");
+            this.textFieldDoanhThuNhanVien.setEditable(false);
         }
         else {
             this.textFieldMaNhanVien.setText("");
@@ -885,7 +939,7 @@ public class TrangChuaThongKeNhanVienTheoThang extends JPanel {
         int thang = Integer.parseInt((String) this.danhSachThang.getSelectedItem());
         int nam = Integer.parseInt((String) this.danhSachNam.getSelectedItem());
         Map<String, Double> danhSachDoanhThuNhanVien = HoaDon_DAO.layDoanhThuCuaTungNhanVienTheo_Thang_Nam(nam, thang);
-        this.bieuDoCot = new BieuDoCot(danhSachDoanhThuNhanVien);
+        this.bieuDoCot = new BieuDoCot(danhSachDoanhThuNhanVien, TrangChuaThongKeNhanVienTheoThang.class);
 
         javax.swing.GroupLayout trangChuaBieuDoCotLayout = new javax.swing.GroupLayout(trangChuaBieuDoCot);
         trangChuaBieuDoCot.setLayout(trangChuaBieuDoCotLayout);

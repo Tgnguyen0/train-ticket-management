@@ -13,6 +13,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.sql.SQLException;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.List;
@@ -20,23 +22,42 @@ import java.util.List;
 public class HanhDong_TrangThongTinChiTietVeTau implements ActionListener, MouseListener {
     TrangThongTinChiTietVeTau trangThongTinChiTietVeTau ;
     TrangCacTau trangCacTau;
-
+    Ve_DAO databaseVe ;
     Logger logger = LoggerFactory.getLogger(TrangThongTinChiTietVeTau.class);
     public HanhDong_TrangThongTinChiTietVeTau(TrangThongTinChiTietVeTau trangThongTinChiTietVeTau){
         this.trangThongTinChiTietVeTau = trangThongTinChiTietVeTau;
+        databaseVe = new Ve_DAO();
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
+
         if(e.getSource() == this.trangThongTinChiTietVeTau.buttonCapNhat){
-            if(JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn cập nhật?") == JOptionPane.YES_OPTION){
-                this.trangThongTinChiTietVeTau.choPhepCapNhat();
-            }
+                String maVe = this.trangThongTinChiTietVeTau.textFieldMaVe.getText();
+               // logger.info(maVe);
+                LocalDateTime  ngayKhoiHanh_Ve = this.databaseVe.getNgayKhoiHanh_DuaVaoMaVe(maVe);
+//                String maGhe = this.trangThongTinChiTietVeTau.ghe.getMaGhe();
+//                logger.info(maGhe);
+//                LocalDateTime gioKhoiHanhTau = null;
+//                gioKhoiHanhTau = this.databaseVe.getNgayKhoiHanhCuaTau_DuaVaoMaGhe(maGhe, "Sài Gòn");
+//                logger.info(String.valueOf(gioKhoiHanhTau.getDayOfWeek()));
+                LocalDateTime dateCurrent = LocalDateTime.now();
+
+                    // tính khoảng cách 2 localdatetime
+                    Duration duration = Duration.between(dateCurrent, ngayKhoiHanh_Ve);
+
+                    if (duration.toHours() >= 24) {
+                        if(JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn cập nhật?") == JOptionPane.YES_OPTION){
+                            this.trangThongTinChiTietVeTau.choPhepCapNhat();
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Chuyến Tàu Đã Xuất Phát Không Thể Cập Nhật Thành Công!","Cảnh Báo!!!!!" ,JOptionPane.ERROR_MESSAGE);
+                    }
+
         }
         else if (e.getSource() == this.trangThongTinChiTietVeTau.buttonXacNhan){
            if(JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn xác nhận không?\n Sau Khi xác nhận sẽ cập nhật lại thông tin vé ") == JOptionPane.YES_OPTION){
                 String maVe = this.trangThongTinChiTietVeTau.textFieldMaVe.getText();
-                logger.info(maVe);
                 //String ngayDatVe = this.trangThongTinChiTietVeTau.textFieldNgayDatVe.getText();
                 String giaVe = this.trangThongTinChiTietVeTau.textFieldGiaVe.getText();
                 String viTriGhe = this.trangThongTinChiTietVeTau.textFieldGhe.getText();

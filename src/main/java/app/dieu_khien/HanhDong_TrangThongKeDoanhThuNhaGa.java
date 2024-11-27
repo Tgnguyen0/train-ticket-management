@@ -2,16 +2,17 @@ package app.dieu_khien;
 
 import app.dao.HoaDon_DAO;
 import app.giao_dien.TrangChuaThongKeDoanhThuNhaGa;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 
-public class HanhDong_TrangThongKeDoanhThuNhaGa implements ActionListener, MouseListener {
+public class HanhDong_TrangThongKeDoanhThuNhaGa extends MouseAdapter implements ActionListener, MouseListener {
     TrangChuaThongKeDoanhThuNhaGa trangChuaThongKeDoanhThuNhaGa ;
     HoaDon_DAO  hoaDonDao ;
+
+    Logger logger = LoggerFactory.getLogger(TrangChuaThongKeDoanhThuNhaGa.class);
     public HanhDong_TrangThongKeDoanhThuNhaGa(TrangChuaThongKeDoanhThuNhaGa trangChuaThongKeDoanhThuNhaGa){
         this.trangChuaThongKeDoanhThuNhaGa = trangChuaThongKeDoanhThuNhaGa;
         this.hoaDonDao = new HoaDon_DAO();
@@ -21,7 +22,7 @@ public class HanhDong_TrangThongKeDoanhThuNhaGa implements ActionListener, Mouse
         if(e.getSource() == this.trangChuaThongKeDoanhThuNhaGa.buttonThongKeThang){
             this.trangChuaThongKeDoanhThuNhaGa.tinhDoanhThuNhaGaTrongThang();
             this.trangChuaThongKeDoanhThuNhaGa.taoBieuDoTronCuaDoanhThang();
-
+            logger.info("Đã click vào biểu đồ cột");
             this.trangChuaThongKeDoanhThuNhaGa.trangChuaBieuDoTron.revalidate();
             this.trangChuaThongKeDoanhThuNhaGa.trangChuaBieuDoTron.repaint();
 
@@ -42,10 +43,6 @@ public class HanhDong_TrangThongKeDoanhThuNhaGa implements ActionListener, Mouse
         }
     }
 
-    @Override
-    public void mouseClicked(MouseEvent e) {
-
-    }
 
     @Override
     public void mousePressed(MouseEvent e) {
@@ -59,7 +56,9 @@ public class HanhDong_TrangThongKeDoanhThuNhaGa implements ActionListener, Mouse
 
     @Override
     public void mouseEntered(MouseEvent e) {
-
+        if (e.getSource() == this.trangChuaThongKeDoanhThuNhaGa.trangChuaBieuDoCot){
+            logger.info("Đã di chuyển vào biểu đồ cột");
+        }
     }
 
     @Override

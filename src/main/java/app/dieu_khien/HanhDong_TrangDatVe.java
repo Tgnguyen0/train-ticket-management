@@ -56,7 +56,9 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
         }
 
         if (source == this.trangDatVe.nutDSVe) {
-            TrangDanhSachVeTau.moGiaoDienDanhSach();
+           // TrangDanhSachVeTau.moGiaoDienDanhSach();
+            CardLayout cardLayout = (CardLayout) this.trangDatVe.trangDinhHuong.getTrangChua().getLayout();
+            cardLayout.show(this.trangDatVe.trangDinhHuong.getTrangChua(), "Trang Danh Sach Ve");
         }
 
         if (source == this.trangDatVe.nutHienThiSoDoGhe) {
@@ -284,9 +286,9 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
 
             trangThanhToan.datMaNV(this.trangDatVe.layMaNV());
 
-            /*for (int i = 0 ; i < this.trangDatVe.veDao.layDSVeDat().size() ; i++) {
+            for (int i = 0 ; i < this.trangDatVe.veDao.layDSVeDat().size() ; i++) {
                 this.trangDatVe.veDao.luuVe(this.trangDatVe.veDao.layDSVeDat().get(i));
-            }*/
+            }
         }
 
         if (e.getSource() == this.trangDatVe.nutInVe) {

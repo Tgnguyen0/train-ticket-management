@@ -274,79 +274,118 @@ public class Ve_DAO {
         }
     }
 
-    public List<Ve> layToanBoVe() throws SQLException {
+    public static List<Ve> layToanBoVe() {
         List<Ve> danhSachVe = new ArrayList<>();
         String sql = "SELECT * FROM Ve";
-        Connection connection = KetNoiCoSoDuLieu.ketNoiDB_HinhDB();
-        PreparedStatement statement = connection.prepareStatement(sql);
-        ResultSet resultSet = statement.executeQuery();
-        while (resultSet.next()) {
-            String maVe = resultSet.getString("MaVe");
-            LocalDateTime ngayDatVe = resultSet.getTimestamp("NgayDatVe")
-                    .toInstant()
-                    .atZone(ZoneId.systemDefault())
-                    .toLocalDateTime(); // Chuyển đổi thành LocalDateTime
-            double giaVe = resultSet.getDouble("GiaVe");
-            String maKh = resultSet.getString("MaKH");
-            String gaKhoiHanh = resultSet.getString("GaKhoiHanh");
-            String gaKetThuc = resultSet.getString("GaKetThuc");
-            String maGhe = resultSet.getString("MaGhe");
-            String loaiGhe = resultSet.getString("LoaiVe");
-            String loaiDoiTuong = resultSet.getString("LoaiDoiTuong");
-            LocalDateTime ngayKhoiHanh = resultSet.getTimestamp("NgayKhoiHanh")
-                    .toInstant()
-                    .atZone(ZoneId.systemDefault())
-                    .toLocalDateTime(); // Chuyển đổi thành LocalDateTime
+        try {
+            Connection connection = KetNoiCoSoDuLieu.ketNoiDB_HinhDB();
+            PreparedStatement statement = null;
+            statement = connection.prepareStatement(sql);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                String maVe = resultSet.getString("MaVe");
+                LocalDateTime ngayDatVe = resultSet.getTimestamp("NgayDatVe")
+                        .toInstant()
+                        .atZone(ZoneId.systemDefault())
+                        .toLocalDateTime(); // Chuyển đổi thành LocalDateTime
+                double giaVe = resultSet.getDouble("GiaVe");
+                String maKh = resultSet.getString("MaKH");
+                String gaKhoiHanh = resultSet.getString("GaKhoiHanh");
+                String gaKetThuc = resultSet.getString("GaKetThuc");
+                String maGhe = resultSet.getString("MaGhe");
+                String loaiVe = resultSet.getString("LoaiVe");
+                String loaiDoiTuong = resultSet.getString("LoaiDoiTuong");
+                LocalDateTime ngayKhoiHanh = resultSet.getTimestamp("NgayKhoiHanh")
+                        .toInstant()
+                        .atZone(ZoneId.systemDefault())
+                        .toLocalDateTime(); // Chuyển đổi thành LocalDateTime
 
-            danhSachVe.add(new Ve(maVe, loaiDoiTuong, ngayKhoiHanh, ngayDatVe, gaKhoiHanh, gaKetThuc, giaVe, maKh, maGhe, loaiGhe));
+                danhSachVe.add(new Ve(maVe, loaiDoiTuong, ngayKhoiHanh, ngayDatVe, gaKhoiHanh, gaKetThuc, giaVe, maKh, maGhe, loaiVe));
+            }
+            connection.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
         return danhSachVe;
     }
 
-    public List<Ve> layVe_DuaVaoMaVe(String maVeRequest) throws SQLException {
+    public static List<Ve> layVe_DuaVaoMaVe(String maVeRequest)  {
         List<Ve> danhSachVe = new ArrayList<>();
         String sql = "SELECT * FROM Ve WHERE MaVe = ?";
-        Connection connection = KetNoiCoSoDuLieu.ketNoiDB_HinhDB();
-        PreparedStatement statement = connection.prepareStatement(sql);
-        statement.setString(1, maVeRequest); // Đặt tham số MaVe
 
-        ResultSet resultSet = statement.executeQuery();
+        try {
+            Connection connection = KetNoiCoSoDuLieu.ketNoiDB_HinhDB();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, maVeRequest); // Đặt tham số MaVe
 
-        while (resultSet.next()) { // Di chuyển con trỏ đến dòng kết quả đầu tiên
-            String maVe = resultSet.getString("MaVe");
-            LocalDateTime ngayDatVe = resultSet.getTimestamp("NgayDatVe")
-                    .toInstant()
-                    .atZone(ZoneId.systemDefault())
-                    .toLocalDateTime(); // Chuyển đổi thành LocalDateTime
-            double giaVe = resultSet.getDouble("GiaVe");
-            String maKh = resultSet.getString("MaKH");
-            String gaKhoiHanh = resultSet.getString("GaKhoiHanh");
-            String gaKetThuc = resultSet.getString("GaKetThuc");
-            String maGhe = resultSet.getString("MaGhe");
-            String loaiGhe = resultSet.getString("LoaiVe");
-            String loaiDoiTuong = resultSet.getString("LoaiDoiTuong");
-            LocalDateTime ngayKhoiHanh = resultSet.getTimestamp("NgayKhoiHanh")
-                    .toInstant()
-                    .atZone(ZoneId.systemDefault())
-                    .toLocalDateTime(); // Chuyển đổi thành LocalDateTime
+            ResultSet resultSet = statement.executeQuery();
 
-            danhSachVe.add(new Ve(maVe, loaiDoiTuong, ngayKhoiHanh, ngayDatVe, gaKhoiHanh, gaKetThuc, giaVe, maKh, maGhe, loaiGhe));
+            while (resultSet.next()) { // Di chuyển con trỏ đến dòng kết quả đầu tiên
+                String maVe = resultSet.getString("MaVe");
+                LocalDateTime ngayDatVe = resultSet.getTimestamp("NgayDatVe")
+                        .toInstant()
+                        .atZone(ZoneId.systemDefault())
+                        .toLocalDateTime(); // Chuyển đổi thành LocalDateTime
+                double giaVe = resultSet.getDouble("GiaVe");
+                String maKh = resultSet.getString("MaKH");
+                String gaKhoiHanh = resultSet.getString("GaKhoiHanh");
+                String gaKetThuc = resultSet.getString("GaKetThuc");
+                String maGhe = resultSet.getString("MaGhe");
+                String loaiGhe = resultSet.getString("LoaiVe");
+                String loaiDoiTuong = resultSet.getString("LoaiDoiTuong");
+                LocalDateTime ngayKhoiHanh = resultSet.getTimestamp("NgayKhoiHanh")
+                        .toInstant()
+                        .atZone(ZoneId.systemDefault())
+                        .toLocalDateTime(); // Chuyển đổi thành LocalDateTime
+
+                danhSachVe.add(new Ve(maVe, loaiDoiTuong, ngayKhoiHanh, ngayDatVe, gaKhoiHanh, gaKetThuc, giaVe, maKh, maGhe, loaiGhe));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
+
         return danhSachVe;
     }
 
-    public LocalDateTime getNgayKhoiHanh_DuaVaoMaVe(String maVeRequest) throws SQLException {
+    public static LocalDateTime getNgayKhoiHanh_DuaVaoMaVe(String maVeRequest) {
         LocalDateTime ngayKhoiHanh = null;
         String sql = "SELECT * FROM Ve WHERE MaVe = ?";
         Connection connection = KetNoiCoSoDuLieu.ketNoiDB_HinhDB();
+        try {
+            PreparedStatement statement  = connection.prepareStatement(sql);
+            statement.setString(1, maVeRequest); // Đặt tham số MaVe
+
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) { // Di chuyển con trỏ đến dòng kết quả đầu tiên
+                String maVe = resultSet.getString("MaVe");
+                ngayKhoiHanh = resultSet.getTimestamp("NgayKhoiHanh")
+                        .toInstant()
+                        .atZone(ZoneId.systemDefault())
+                        .toLocalDateTime(); // Chuyển đổi thành LocalDateTime
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return ngayKhoiHanh;
+    }
+
+    public static LocalDateTime getNgayKhoiHanhCuaTau_DuaVaoMaGhe(String maGheRequest, String gaKhoiHanhRequest) throws SQLException {
+        LocalDateTime ngayKhoiHanh = null;
+        String sql = "select top 1 lich.GioKhoiHanh from Ghe g join Toa t on g.MaToa = t.MaToa join Tau tau on t.SoHieu = tau.SoHieu \n" +
+                "\t\t\t\t\tjoin LichCapBenGa lich on tau.SoHieu = lich.SoHieu join NhaGa ga on lich.MaGa = ga.MaGa\n" +
+                "where g.MaGhe = ? and ga.TenGa = ? and lich.GioKhoiHanh >= GETDATE() \n" +
+                "order by lich.GioKhoiHanh ASC";
+        Connection connection = KetNoiCoSoDuLieu.ketNoiDB_HinhDB();
         PreparedStatement statement = connection.prepareStatement(sql);
-        statement.setString(1, maVeRequest); // Đặt tham số MaVe
+        statement.setString(1, maGheRequest); // Đặt tham số MaVe
+        statement.setString(2, gaKhoiHanhRequest); // Đặt tham số ga khởi hành
 
         ResultSet resultSet = statement.executeQuery();
 
         if (resultSet.next()) { // Di chuyển con trỏ đến dòng kết quả đầu tiên
-            String maVe = resultSet.getString("MaVe");
-            ngayKhoiHanh = resultSet.getTimestamp("NgayKhoiHanh")
+            ngayKhoiHanh = resultSet.getTimestamp("GioKhoiHanh")
                     .toInstant()
                     .atZone(ZoneId.systemDefault())
                     .toLocalDateTime(); // Chuyển đổi thành LocalDateTime
@@ -380,6 +419,29 @@ public class Ve_DAO {
                 JOptionPane.showMessageDialog(null, "Cập Nhật Thành Công!");
             } else {
                 JOptionPane.showMessageDialog(null, "Cập Nhật Thất Bại!");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Lỗi khi cập nhật vé trong cơ sở dữ liệu");
+        }
+    }
+
+    public static void xoaVe(String maVe){
+        String sql = "delete Ve where MaVe = ? ";
+
+        try (
+                Connection connection = KetNoiCoSoDuLieu.ketNoiDB_HinhDB();
+                PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setString(1, maVe);
+
+            // Thực hiện câu lệnh cập nhật
+            int rowsAffected = preparedStatement.executeUpdate();
+            if (rowsAffected > 0 || rowsAffected == -1) {
+                JOptionPane.showMessageDialog(null, "Xóa Thành Công!");
+            } else {
+                JOptionPane.showMessageDialog(null, "Xóa Thất Bại!");
             }
 
         } catch (SQLException e) {
