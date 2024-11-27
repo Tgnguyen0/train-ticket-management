@@ -438,7 +438,7 @@ public class Ve_DAO {
 
             // Thực hiện câu lệnh cập nhật
             int rowsAffected = preparedStatement.executeUpdate();
-            if (rowsAffected > 0) {
+            if (rowsAffected > 0 || rowsAffected == -1) {
                 JOptionPane.showMessageDialog(null, "Xóa Thành Công!");
             } else {
                 JOptionPane.showMessageDialog(null, "Xóa Thất Bại!");

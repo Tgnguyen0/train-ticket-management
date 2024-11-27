@@ -417,7 +417,10 @@ public class TrangChiTietHoaDon extends JFrame {
     }
 
     public void capNhatHoaDon(){
+        logger.info("Mã Vé: " +this.maVe );
         ChiTietHoaDon_DAO.xoaChiTietHoaDon(this.maVe, this.hoaDon.getMaHoaDon());
+
+        logger.info("Hóa Đơn: " + this.hoaDon.getMaHoaDon());
         HoaDon_DAO.capNhatHoaDon(this.hoaDon);
         this.trangDanhSachVeTau.xacNhan = true;
         logger.info(trangDanhSachVeTau.xacNhan+"");
