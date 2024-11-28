@@ -1,6 +1,7 @@
 package app.dieu_khien;
 
 import app.giao_dien.TrangDinhHuong;
+import app.giao_dien.TrangNhanVien;
 
 import javax.swing.*;
 import java.awt.*;
@@ -37,8 +38,14 @@ public class HanhDong_TrangDinhHuong implements ActionListener, MouseListener {
                 cardLayout.show(this.trangDinhHuong.trangChua, "Trang Khach Hang");
                 break;
             case "Thống Kê":
-                cardLayout.show(this.trangDinhHuong.trangChua, "Trang Thong Ke");
-                break;
+                if (TrangNhanVien.label_nhanVien.getText().equals("QUẢN LÝ")) {
+                    cardLayout.show(this.trangDinhHuong.trangChua, "Trang Thong Ke");
+                    break;
+                } else  {
+                    JOptionPane.showMessageDialog(null, "Chỉ có quản lý mới có quyền truy cập trang này", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                    break;
+                }
+
             case "Nhân Viên":
                 cardLayout.show(this.trangDinhHuong.trangChua, "Trang Nhan Vien");
                 break;
