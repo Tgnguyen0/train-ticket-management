@@ -97,8 +97,6 @@ public class HanhDong_TrangNhanVien implements ActionListener, PropertyChangeLis
             if (date != null) {
                 this.hienLichSuTruc(date, trangNhanVien.lable_hienMaNV.getText());
             }
-        } else {
-            System.err.println("Unsupported value type: " + newValue.getClass());
         }
     }
 
