@@ -1,6 +1,7 @@
 package app.dao;
 
 import app.ket_noi_co_so_du_lieu.KetNoiCoSoDuLieu;
+import app.thuc_the.ChiTietHoaDon;
 import app.thuc_the.Ve;
 
 import javax.swing.*;
@@ -29,6 +30,7 @@ public class ChiTietHoaDon_DAO {
         }
         return maHoaDon;
     }
+
     public static ArrayList<Ve> layDanhSachVeTau_MaHoaDon(String maHoaDon){
         ArrayList<Ve> danhSachVe = new ArrayList<>();
         String sql = "select v.MaVe as MaVe, \n" +
@@ -100,6 +102,27 @@ public class ChiTietHoaDon_DAO {
 
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+    }
+
+    public static void themCTHD(ChiTietHoaDon cthd) {
+        String sql = "INSERT INTO ChiTietHoaDon(MaHD,MaVe) VALUES (?,?)";
+
+        LuuSQL(
+                sql,
+                cthd.getMaHoaDon(),
+                cthd.getMaVe()
+        );
+    }
+
+    public static void LuuSQL(String sql, Object... args) {
+        try {
+            try (PreparedStatement stmt = KetNoiCoSoDuLieu.layCauLenh(sql, args)) {
+                stmt.executeUpdate();
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            throw new RuntimeException(ex);
         }
     }
 }

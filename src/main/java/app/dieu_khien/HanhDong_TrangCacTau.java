@@ -1,12 +1,17 @@
 package app.dieu_khien;
 
 import app.giao_dien.TrangCacTau;
+import app.giao_dien.TrangDatVe;
+import app.giao_dien.TrangDinhHuong;
 import app.phan_tu_tuy_chinh.NutAnh;
 import app.thuc_the.Ghe;
+import app.thuc_the.LichCapBenGa;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 public class HanhDong_TrangCacTau implements ActionListener, MouseListener, WindowListener {
     TrangCacTau trangSoDoChung;
@@ -199,6 +204,22 @@ public class HanhDong_TrangCacTau implements ActionListener, MouseListener, Wind
     public void windowClosing(WindowEvent e) {
         if (!this.trangSoDoChung.gheDao.layDSGheDat().isEmpty()) {
             hienThiThongBao("Xác nhận ghế chọn thành công !", "Xác nhận thành công", JOptionPane.INFORMATION_MESSAGE);
+            ((TrangDatVe) TrangDinhHuong.getTrangChua().getComponent(1)).datSoHieuDaChon(this.trangSoDoChung.soHieuTauChon);
+
+            LocalDateTime ngayKhoiHanh = ((TrangDatVe) TrangDinhHuong.getTrangChua().getComponent(1)).thanhNhapNgayDi.getDate()       // Lấy ngày khởi hành
+                    .toInstant()
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalDateTime();
+
+            // Lấy lịch tàu đó
+            LichCapBenGa lich = ((TrangDatVe) TrangDinhHuong.getTrangChua().getComponent(1)).lichDao.ChonTheoSoHieuNgayKHVaGa(
+                    this.trangSoDoChung.soHieuTauChon,
+                    ngayKhoiHanh,
+                    this.trangSoDoChung.maGa
+            );
+
+            ((TrangDatVe) TrangDinhHuong.getTrangChua().getComponent(1)).thanhNhapGioDen.setText(lich.getGioKhoiHanh().getHour() +
+                    ":" + lich.getGioKhoiHanh().getMinute());
 
             e.getWindow().dispose();
         } else {
