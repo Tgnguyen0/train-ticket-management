@@ -165,6 +165,14 @@ public class TrangDatVe extends JPanel {
         this.daThanhToan = daThanhToan;
     }
 
+    public void datSoHieuDaChon(String soHieu) {
+        this.soHieuDaChon = soHieu;
+    }
+
+    public String laySoHieuDaChon() {
+        return this.soHieuDaChon;
+    }
+
     private void taoDonThongTinVe() {
         JPanel trangChuaDonDat = new JPanel();
         trangChuaDonDat.setPreferredSize(new Dimension(580, 410));

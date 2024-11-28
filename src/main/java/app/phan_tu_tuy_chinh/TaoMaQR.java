@@ -9,6 +9,7 @@ import com.google.zxing.client.j2se.MatrixToImageWriter;
 import java.awt.image.BufferedImage;
 
 public class TaoMaQR {
+    // Khởi tạo mã QR
     public BufferedImage generateQRCodeImage(String text) throws WriterException {
         QRCodeWriter qrCodeWriter = new QRCodeWriter();
         BitMatrix bitMatrix = qrCodeWriter.encode(text, BarcodeFormat.QR_CODE, 100, 100);

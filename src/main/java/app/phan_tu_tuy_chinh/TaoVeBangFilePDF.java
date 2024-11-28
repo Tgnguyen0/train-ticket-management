@@ -189,11 +189,11 @@ public class TaoVeBangFilePDF {
         // Tạo mã QR
 
         try {
-            BufferedImage qrImage = new TaoMaQR().generateQRCodeImage(qrText);
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            ImageIO.write(qrImage, "png", baos);
-            Image qrCode = Image.getInstance(baos.toByteArray());
-            qrCode.scaleAbsolute(160, 160);
+            BufferedImage qrImage = new TaoMaQR().generateQRCodeImage(qrText); //
+            ByteArrayOutputStream baos = new ByteArrayOutputStream(); //
+            ImageIO.write(qrImage, "png", baos); // Ảnh theo dịnh dạng .png
+            Image qrCode = Image.getInstance(baos.toByteArray()); //
+            qrCode.scaleAbsolute(160, 160); // Thiết lặp kích thước
 
             return qrCode;
         } catch (Exception e) {
