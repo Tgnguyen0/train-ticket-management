@@ -3,11 +3,11 @@ package app.dao;
 import app.ket_noi_co_so_du_lieu.KetNoiCoSoDuLieu;
 import app.thuc_the.CaTruc;
 
-import javax.swing.text.DateFormatter;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class CaTruc_DAO {
     public static double layTienCaTruoc(){
@@ -89,7 +89,6 @@ public class CaTruc_DAO {
             PreparedStatement ps = c.prepareStatement(sql);
             ps.setString(1, maNV);
             ResultSet rs = ps.executeQuery();
-            System.out.println(rs);
             while (rs.next()) {
                 System.out.println(1);
                 String maNhanVien = rs.getString("maNV");
@@ -115,6 +114,43 @@ public class CaTruc_DAO {
         }
         return null;
 
+    }
+    public static ArrayList<CaTruc> layCaTrucTheoNgay (LocalDateTime date, String maNV){
+        ArrayList<CaTruc> danhSachTruc = new ArrayList<>();
+        Connection c = null;
+        LocalDateTime lastOfDay = date.withHour(23).withMinute(59).withSecond(59);
+        try {
+            c = KetNoiCoSoDuLieu.ketNoiDB_KhangVersion();
+            if (c == null) {
+                System.out.println("Ket noi that bai");
+                return null;
+            }
+            String sql = "SELECT * FROM [dbo].[CaTruc] WHERE maNV = ? and CONVERT(DATE, ngayGioBatDau) = ? and CONVERT(DATE, ngayGioKetCa) = ? order by maCa desc;";
+            PreparedStatement ps = c.prepareStatement(sql);
+            ps.setString(1, maNV);
+            ps.setString(2, date.toString());
+            ps.setString(3, lastOfDay.toString());
+            ResultSet rs = ps.executeQuery();
+            System.out.println(rs);
+            while (rs.next()) {
+                String maNhanVien = rs.getString("maNV");
+                String ngayGioBatDau = rs.getString("ngayGioBatDau").replace(".0", "");
+                String ngayGioKetThuc = rs.getString("ngayGioKetCa").replace(".0", "");
+
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                LocalDateTime ngayGioBatDau_localDateTime = LocalDateTime.parse(ngayGioBatDau, formatter);
+                LocalDateTime ngayGioKetThuc_localDateTime = LocalDateTime.parse(ngayGioKetThuc, formatter);
+
+                CaTruc caTruc = new CaTruc(maNhanVien, ngayGioBatDau_localDateTime, ngayGioKetThuc_localDateTime);
+                danhSachTruc.add(caTruc);
+            }
+            ps.close();
+            c.close();
+            return danhSachTruc;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public static CaTruc layCaTrucTheoMaNV(String maNhanVien) {
