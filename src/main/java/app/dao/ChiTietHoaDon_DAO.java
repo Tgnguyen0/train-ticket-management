@@ -85,14 +85,16 @@ public class ChiTietHoaDon_DAO {
            preparedStatement.setString(2, maHoaDon);
 
             // Thực thi câu lệnh
-            int rowsUpdated = preparedStatement.executeUpdate();
-            if (rowsUpdated > 0) {
+            int rowsUpdated = preparedStatement.executeUpdate() ;
+//            System.out.println("rowsUpdated: "+ rowsUpdated);
+            if (rowsUpdated > 0 || rowsUpdated == -1) {
                 //System.out.println("Cập nhật thành công hóa đơn có mã: " + hoaDon.getMaHoaDon());
                 //JOptionPane.showMessageDialog(null, "Cập nhật thành công hóa đơn có mã: " + maVe);
                 System.out.println("Xóa thành công chi tiết hóa đơn của "+ maHoaDon);
             } else {
                 // System.out.println("Không tìm thấy hóa đơn với mã: " + hoaDon.getMaHoaDon());
                 //JOptionPane.showMessageDialog(null, "Không tìm thấy hóa đơn với mã: " + );
+                System.out.println("Xóa không thành công chi tiết hóa đơn của "+ maHoaDon);
 
             }
 
