@@ -5,6 +5,7 @@ import app.dao.NhanVien_DAO;
 import app.giao_dien.TrangDoiMatKhau;
 import app.giao_dien.TrangKetCa;
 import app.giao_dien.TrangNhanVien;
+import app.giao_dien.TrangQuanLyNhanVien;
 import app.thuc_the.CaTruc;
 import app.thuc_the.GIOI_TINH;
 import app.thuc_the.NhanVien;
@@ -39,7 +40,14 @@ public class HanhDong_TrangNhanVien implements ActionListener, PropertyChangeLis
             this.doiMatKhau();
         } else if (e.getActionCommand().equals("Kết ca")) {
             this.ketCa();
+        } else if (o == trangNhanVien.btn_quanLyNV) {
+            this.quanLyNhanVien();
         }
+    }
+
+    private void quanLyNhanVien() {
+        TrangQuanLyNhanVien trangQuanLyNhanVien = new TrangQuanLyNhanVien();
+        trangQuanLyNhanVien.setVisible(true);
     }
 
 

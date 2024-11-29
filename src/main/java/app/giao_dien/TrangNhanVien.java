@@ -24,6 +24,7 @@ import javax.swing.table.DefaultTableModel;
 public class TrangNhanVien extends JPanel {
 
     private static final long serialVersionUID = 1L;
+    public final JButton btn_quanLyNV;
     public JDateChooser dateChooser_ngayTruc;
     public static JLabel label_nhanVien;
     public JLabel lable_hienMaNV;
@@ -194,7 +195,7 @@ public class TrangNhanVien extends JPanel {
         btn_capNhatThongTin.setFont(new Font("Tahoma", Font.PLAIN, 17));
         panel_buttonGroup.add(btn_capNhatThongTin);
 
-        JButton btn_quanLyNV = new JButton("Quản lý nhân viên");
+        btn_quanLyNV = new JButton("Quản lý nhân viên");
         btn_quanLyNV.setFont(new Font("Tahoma", Font.PLAIN, 17));
         panel_buttonGroup.add(btn_quanLyNV);
 
