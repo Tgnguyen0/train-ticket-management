@@ -262,7 +262,7 @@ public class NhanVien_DAO {
 
     }
 
-    public static NhanVien layNhanVienTheo_TenNhanVien(String tenNhanVienRequest){
+    public static NhanVien layNhanVienTheo_TenNhanVien(String tenNhanVienRequest) {
         NhanVien nhanVien = null;
         String sql = "SELECT * FROM NhanVien WHERE TenNV = ?";
 
@@ -279,10 +279,9 @@ public class NhanVien_DAO {
                 nhanVien.setNgaySinh(resultSet.getDate("NgaySinh").toLocalDate());
                 nhanVien.setDiaChi(resultSet.getString("DiaChi"));
                 nhanVien.setSoDT(resultSet.getString("SoDT"));
-                if(resultSet.getString("GioiTinh").compareToIgnoreCase("Nam")==0){
+                if (resultSet.getString("GioiTinh").compareToIgnoreCase("Nam") == 0) {
                     nhanVien.setGioiTinh(GIOI_TINH.NAM);
-                }
-                else {
+                } else {
                     nhanVien.setGioiTinh(GIOI_TINH.NU);
                 }
                 nhanVien.setMatKhau(resultSet.getString("MatKhau"));
@@ -295,5 +294,64 @@ public class NhanVien_DAO {
         }
 
         return nhanVien;
+    }
+
+    public static int themNhanVien(NhanVien nv) {
+        int kq = 0;
+        try {
+            Connection c = KetNoiCoSoDuLieu.ketNoiDB_KhangVersion();
+            if (c == null) {
+                return 0;
+            }
+            String sql = "INSERT INTO NhanVien(TenNV, NgaySinh, DiaChi, SoDT, GioiTinh,VaiTro) VALUES( ?, ?, ?, ?, ?, ?)";
+            PreparedStatement ps = c.prepareStatement(sql);
+            ps.setString(1, nv.getTenNV());
+            ps.setDate(2, java.sql.Date.valueOf(nv.getNgaySinh()));
+            ps.setString(3, nv.getDiaChi());
+            ps.setString(4, nv.getSoDT());
+            ps.setString(5, nv.getGioiTinh().getValue());
+            ps.setString(6, nv.getVaiTro());
+            kq = ps.executeUpdate();
+            ps.close();
+            c.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return kq;
+    }
+    public static ArrayList<NhanVien> layDSNV() {
+        ArrayList<NhanVien> dsnv = null;
+        try {
+            Connection c = KetNoiCoSoDuLieu.ketNoiDB_KhangVersion();
+            if (c == null) {
+                return null;
+            }
+            String sql = "SELECT * FROM NhanVien order by TenNV";
+            PreparedStatement ps = c.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            dsnv = new ArrayList<>();
+            while (rs.next()) {
+                NhanVien nv = new NhanVien();
+                nv.setMaNV(rs.getString("MaNV"));
+                nv.setTenNV(rs.getString("TenNV"));
+                nv.setNgaySinh(rs.getDate("NgaySinh").toLocalDate());
+                nv.setDiaChi(rs.getString("DiaChi"));
+                nv.setSoDT(rs.getString("SoDT"));
+                GIOI_TINH gt = GIOI_TINH.NAM;
+                if (!rs.getString("GioiTinh").equals("Nam")) {
+                    gt = GIOI_TINH.NU;
+                }
+                nv.setGioiTinh(gt);
+                nv.setVaiTro(rs.getString("VaiTro"));
+                dsnv.add(nv);
+            }
+            rs.close();
+            ps.close();
+            c.close();
+            return dsnv;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return dsnv;
     }
 }

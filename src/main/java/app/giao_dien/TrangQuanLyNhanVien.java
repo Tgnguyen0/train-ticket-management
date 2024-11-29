@@ -3,15 +3,18 @@ package app.giao_dien;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 
 import javax.swing.table.DefaultTableModel;
 
 import app.dieu_khien.HanhDong_TrangQuanLyNhanVien;
+import app.thuc_the.NhanVien;
 import com.toedter.calendar.JDateChooser;
 
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.table.TableModel;
 
 
 public class TrangQuanLyNhanVien extends JFrame {
@@ -20,7 +23,13 @@ public class TrangQuanLyNhanVien extends JFrame {
     public final JTextArea textArea_diaChi;
     public final JLabel label_hienThiMaNV;
     public final JButton btn_xemLichSuTruc;
-    public JComboBox comboBox_gioiTinh;
+    public final JComboBox comboBox_vaiTro;
+    public final JButton btn_xemToanBo;
+    public final JDateChooser dateChooser;
+    public final JButton btn_lamMoi;
+    public DefaultTableModel tableModel;
+    public JButton  btn_themNV;
+    public final JComboBox comboBox_gioiTinh;
     public JTable table;
     public JTextField textField_HoTen;
     public JTextField textField_SDT;
@@ -142,7 +151,7 @@ public class TrangQuanLyNhanVien extends JFrame {
         label_sdt_1.setBounds(10, 136, 94, 25);
         panel_thongTinNV.add(label_sdt_1);
 
-        JDateChooser dateChooser = new JDateChooser();
+        dateChooser = new JDateChooser();
         dateChooser.setBounds(143, 138, 227, 25);
         panel_thongTinNV.add(dateChooser);
 
@@ -151,7 +160,7 @@ public class TrangQuanLyNhanVien extends JFrame {
         label_vaiTro.setBounds(488, 171, 66, 25);
         panel_thongTinNV.add(label_vaiTro);
 
-        JComboBox comboBox_vaiTro = new JComboBox();
+        comboBox_vaiTro = new JComboBox();
         comboBox_vaiTro.setModel(new DefaultComboBoxModel(new String[]{"Nhân viên", "Quản lý"}));
         comboBox_vaiTro.setMaximumRowCount(2);
         comboBox_vaiTro.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -163,12 +172,12 @@ public class TrangQuanLyNhanVien extends JFrame {
         btn_capNhat.setBounds(229, 37, 115, 33);
         panel_thongTinKH.add(btn_capNhat);
 
-        JButton btn_lamMoi = new JButton("Làm mới");
+        btn_lamMoi = new JButton("Làm mới");
         btn_lamMoi.setFont(new Font("Tahoma", Font.PLAIN, 20));
         btn_lamMoi.setBounds(354, 37, 115, 33);
         panel_thongTinKH.add(btn_lamMoi);
 
-        JButton btn_themNV = new JButton("Thêm nhân viên");
+        btn_themNV = new JButton("Thêm nhân viên");
         btn_themNV.setFont(new Font("Tahoma", Font.PLAIN, 20));
         btn_themNV.setBounds(28, 37, 191, 33);
         panel_thongTinKH.add(btn_themNV);
@@ -203,6 +212,8 @@ public class TrangQuanLyNhanVien extends JFrame {
         JScrollPane scrollPane_table = new JScrollPane(table);
         panel_table.add(scrollPane_table);
 
+        tableModel = (DefaultTableModel) table.getModel();
+
         JPanel panel = new JPanel();
         panel.setBorder(null);
         panel_table.add(panel, BorderLayout.NORTH);
@@ -235,12 +246,60 @@ public class TrangQuanLyNhanVien extends JFrame {
         panel.add(btn_lamTrongDanhSach);
         btn_lamTrongDanhSach.setFont(new Font("Tahoma", Font.PLAIN, 20));
 
-        JButton btn_xemToanBo = new JButton("Xem toàn bộ");
+        btn_xemToanBo = new JButton("Xem toàn bộ");
         btn_xemToanBo.setFont(new Font("Tahoma", Font.PLAIN, 20));
         panel.add(btn_xemToanBo);
 
         //--------------------------------------ADD ACTION LISTENER--------------------------------------
         HanhDong_TrangQuanLyNhanVien hanhDong_trangQuanLyNhanVien = new HanhDong_TrangQuanLyNhanVien(this);
         btn_xemLichSuTruc.addActionListener(hanhDong_trangQuanLyNhanVien);
+        btn_themNV.addActionListener(hanhDong_trangQuanLyNhanVien);
+        btn_xemToanBo.addActionListener(hanhDong_trangQuanLyNhanVien);
+        btn_lamMoi.addActionListener(hanhDong_trangQuanLyNhanVien);
+    }
+    public static boolean regexTen(String tenKH){
+        String regex = "^[\\p{L}]+(?:\\s+[\\p{L}'-]+)+$";
+        //xoa khoang trang thua giua cac tu
+
+        if(!tenKH.matches(regex)){
+            JOptionPane.showMessageDialog(null, "Tên không được có ký tự đặc biệt, số hoặc chỉ có một từ!");
+            return false;
+        }
+        return true;
+    }
+    public static boolean regexDiaChi(String diaChi){
+        String regex = "^([\\p{L}0-9\\s,.-]+)?$";
+
+        if(!diaChi.matches(regex)){
+            JOptionPane.showMessageDialog(null, "Địa chỉ không được có ký tự đặc biệt!");
+            return false;
+        }
+        return true;
+    }
+    public static boolean regexSDT(String sdt){
+        String regex = "^[0-9]{10}$";
+        if(!sdt.matches(regex)){
+            JOptionPane.showMessageDialog(null, "Số điện thoại phải đủ 10 số và không có ký tự đặc biệt!");
+            return false;
+        }
+        return true;
+    }
+
+    public void hienDanhSachNhanVien(ArrayList<NhanVien> danhSachNhanVien) {
+        tableModel.setRowCount(0);
+        for (int i = 0; i < danhSachNhanVien.size(); i++) {
+            NhanVien nv = danhSachNhanVien.get(i);
+            tableModel.addRow(new Object[]{i + 1, nv.getMaNV(), nv.getTenNV(), nv.getSoDT(), nv.getGioiTinh()});
+        }
+    }
+
+    public void lamMoi() {
+        label_hienThiMaNV.setText("<mã nhân viên>");
+        textField_HoTen.setText("");
+        textField_SDT.setText("");
+        textArea_diaChi.setText("");
+        dateChooser.setDate(null);
+        comboBox_gioiTinh.setSelectedIndex(0);
+        comboBox_vaiTro.setSelectedIndex(0);
     }
 }
