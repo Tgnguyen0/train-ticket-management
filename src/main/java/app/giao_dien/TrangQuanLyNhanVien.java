@@ -3,7 +3,9 @@ package app.giao_dien;
 
 import javax.swing.*;
 import java.awt.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 
 
 import javax.swing.table.DefaultTableModel;
@@ -27,6 +29,10 @@ public class TrangQuanLyNhanVien extends JFrame {
     public final JButton btn_xemToanBo;
     public final JDateChooser dateChooser;
     public final JButton btn_lamMoi;
+    public final JButton btn_tim;
+    public final JButton btn_capNhat;
+    public final JButton btn_thuHoiTK;
+    public final JButton btn_lamTrongDanhSach;
     public DefaultTableModel tableModel;
     public JButton  btn_themNV;
     public final JComboBox comboBox_gioiTinh;
@@ -167,7 +173,7 @@ public class TrangQuanLyNhanVien extends JFrame {
         comboBox_vaiTro.setBounds(580, 171, 110, 25);
         panel_thongTinNV.add(comboBox_vaiTro);
 
-        JButton btn_capNhat = new JButton("Cập nhật");
+        btn_capNhat = new JButton("Cập nhật");
         btn_capNhat.setFont(new Font("Tahoma", Font.PLAIN, 20));
         btn_capNhat.setBounds(229, 37, 115, 33);
         panel_thongTinKH.add(btn_capNhat);
@@ -187,7 +193,7 @@ public class TrangQuanLyNhanVien extends JFrame {
         btn_xemLichSuTruc.setBounds(479, 37, 191, 33);
         panel_thongTinKH.add(btn_xemLichSuTruc);
 
-        JButton btn_thuHoiTK = new JButton("Thu hồi tài khoản");
+        btn_thuHoiTK = new JButton("Thu hồi tài khoản");
         btn_thuHoiTK.setFont(new Font("Tahoma", Font.PLAIN, 20));
         btn_thuHoiTK.setBounds(817, 327, 191, 33);
         panel_thongTinKH.add(btn_thuHoiTK);
@@ -208,6 +214,7 @@ public class TrangQuanLyNhanVien extends JFrame {
 
         table.setFont(new Font("Tahoma", Font.PLAIN, 15));
         table.setBounds(0, 0, 1, 1);
+        table.setDefaultEditor(Object.class, null);
 
         JScrollPane scrollPane_table = new JScrollPane(table);
         panel_table.add(scrollPane_table);
@@ -238,11 +245,11 @@ public class TrangQuanLyNhanVien extends JFrame {
         panel.add(textField_timSDT);
         textField_timSDT.setColumns(10);
 
-        JButton btn_tim = new JButton("Tìm");
+        btn_tim = new JButton("Tìm");
         btn_tim.setFont(new Font("Tahoma", Font.PLAIN, 20));
         panel.add(btn_tim);
 
-        JButton btn_lamTrongDanhSach = new JButton("Làm trống danh sách");
+        btn_lamTrongDanhSach = new JButton("Làm trống danh sách");
         panel.add(btn_lamTrongDanhSach);
         btn_lamTrongDanhSach.setFont(new Font("Tahoma", Font.PLAIN, 20));
 
@@ -256,6 +263,19 @@ public class TrangQuanLyNhanVien extends JFrame {
         btn_themNV.addActionListener(hanhDong_trangQuanLyNhanVien);
         btn_xemToanBo.addActionListener(hanhDong_trangQuanLyNhanVien);
         btn_lamMoi.addActionListener(hanhDong_trangQuanLyNhanVien);
+        btn_tim.addActionListener(hanhDong_trangQuanLyNhanVien);
+        table.addMouseListener(hanhDong_trangQuanLyNhanVien);
+    }
+    public  boolean regex_birthDay() {
+        Date date = dateChooser.getDate();
+        LocalDate ngaySinh = LocalDate.of(date.getYear() + 1900, date.getMonth() + 1, date.getDate());
+        LocalDate ngayHienTai = LocalDate.now();
+        // phai tren 18 tuoi
+        if (ngayHienTai.getYear() - ngaySinh.getYear() < 18) {
+            JOptionPane.showMessageDialog(null, "Nhân viên phải trên 18 tuổi");
+            return false;
+        }
+        return true;
     }
     public static boolean regexTen(String tenKH){
         String regex = "^[\\p{L}]+(?:\\s+[\\p{L}'-]+)+$";

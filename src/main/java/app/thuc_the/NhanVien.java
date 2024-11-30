@@ -36,6 +36,16 @@ public class NhanVien {
         this.vaiTro = vaiTro;
     }
 
+    public NhanVien(String maNV, String tenNV, LocalDate ngaySinh, String diaChi, String soDT, GIOI_TINH gioiTinh, String vaiTro) {
+        this.maNV = maNV;
+        this.tenNV = tenNV;
+        this.ngaySinh = ngaySinh;
+        this.diaChi = diaChi;
+        this.soDT = soDT;
+        this.gioiTinh = gioiTinh;
+        this.vaiTro = vaiTro;
+    }
+
     public NhanVien(String maNV, String tenNV, LocalDate ngaySinh, String diaChi, String soDT, GIOI_TINH gioiTinh) {
         this.maNV = maNV;
         this.tenNV = tenNV;
