@@ -41,6 +41,10 @@ public class HanhDong_TrangNhanVien implements ActionListener, PropertyChangeLis
         } else if (e.getActionCommand().equals("Kết ca")) {
             this.ketCa();
         } else if (o == trangNhanVien.btn_quanLyNV) {
+            if (TrangNhanVien.label_nhanVien.getText().equals("NHÂN VIÊN")) {
+                JOptionPane.showMessageDialog(null, "Chỉ quản lý mới có quyền truy cập");
+                return;
+            }
             this.quanLyNhanVien();
         }
     }

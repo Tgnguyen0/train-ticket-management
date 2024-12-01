@@ -16,14 +16,13 @@ import com.toedter.calendar.JDateChooser;
 
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
-import javax.swing.table.TableModel;
 
 
 public class TrangQuanLyNhanVien extends JFrame {
 
     public static final long serialVersionUID = 1L;
     public final JTextArea textArea_diaChi;
-    public final JLabel label_hienThiMaNV;
+    public static JLabel label_hienThiMaNV;
     public final JButton btn_xemLichSuTruc;
     public final JComboBox comboBox_vaiTro;
     public final JButton btn_xemToanBo;
@@ -265,6 +264,8 @@ public class TrangQuanLyNhanVien extends JFrame {
         btn_lamMoi.addActionListener(hanhDong_trangQuanLyNhanVien);
         btn_tim.addActionListener(hanhDong_trangQuanLyNhanVien);
         table.addMouseListener(hanhDong_trangQuanLyNhanVien);
+        btn_capNhat.addActionListener(hanhDong_trangQuanLyNhanVien);
+        btn_thuHoiTK.addActionListener(hanhDong_trangQuanLyNhanVien);
     }
     public  boolean regex_birthDay() {
         Date date = dateChooser.getDate();
@@ -321,5 +322,14 @@ public class TrangQuanLyNhanVien extends JFrame {
         dateChooser.setDate(null);
         comboBox_gioiTinh.setSelectedIndex(0);
         comboBox_vaiTro.setSelectedIndex(0);
+    }
+    public void hienMotNhanVien(NhanVien nv){
+        lamTrongDS();
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        model.addRow(new Object[]{model.getRowCount() + 1, nv.getMaNV(), nv.getTenNV(), nv.getSoDT(), nv.getGioiTinh()});
+    }
+
+    public void lamTrongDS() {
+        tableModel.setRowCount(0);
     }
 }

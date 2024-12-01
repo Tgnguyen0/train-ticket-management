@@ -29,13 +29,13 @@ public class CaTruc_DAO {
                 System.out.println("No data found.");
                 // Handle the case when no data is available
             }
-            System.out.printf("Tien ca truoc: %f", tienCaTruoc);
+
             ps.close();
             c.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        System.out.printf("Tien ca truoc: %f", tienCaTruoc);
+
         return tienCaTruoc;
     }
 
@@ -65,7 +65,6 @@ public class CaTruc_DAO {
             ps.close();
             c.close();
             if (kq > 0) {
-                System.out.println("Them thanh cong");
                 return true;
             }
 
@@ -76,7 +75,6 @@ public class CaTruc_DAO {
     }
 
     public static ArrayList<CaTruc> layDanhSachTruc(String maNV) {
-        System.out.println(maNV);
         ArrayList<CaTruc> danhSachTruc = new ArrayList<>();
         Connection c = null;
         try {
@@ -90,20 +88,14 @@ public class CaTruc_DAO {
             ps.setString(1, maNV);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                System.out.println(1);
                 String maNhanVien = rs.getString("maNV");
-                System.out.println(2);
                 String ngayGioBatDau = rs.getString("ngayGioBatDau").replace(".0", "");
                 String ngayGioKetThuc = rs.getString("ngayGioKetCa").replace(".0", "");
-                System.out.println(4);
-                System.out.println(ngayGioKetThuc);
-
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
                 LocalDateTime ngayGioBatDau_localDateTime = LocalDateTime.parse(ngayGioBatDau, formatter);
                 LocalDateTime ngayGioKetThuc_localDateTime = LocalDateTime.parse(ngayGioKetThuc, formatter);
 
                 CaTruc caTruc = new CaTruc(maNhanVien, ngayGioBatDau_localDateTime, ngayGioKetThuc_localDateTime);
-                System.out.printf(caTruc.toString());
                 danhSachTruc.add(caTruc);
             }
             ps.close();
@@ -131,7 +123,6 @@ public class CaTruc_DAO {
             ps.setString(2, date.toString());
             ps.setString(3, lastOfDay.toString());
             ResultSet rs = ps.executeQuery();
-            System.out.println(rs);
             while (rs.next()) {
                 String maNhanVien = rs.getString("maNV");
                 String ngayGioBatDau = rs.getString("ngayGioBatDau").replace(".0", "");

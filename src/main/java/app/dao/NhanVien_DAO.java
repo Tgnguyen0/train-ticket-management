@@ -99,7 +99,6 @@ public class NhanVien_DAO {
                 String matKhau = rs.getString("MatKhau");
                 st.close();
                 connection.close();
-                System.out.println(matKhau);
                 return matKhau.trim();
             }
             st.close();
@@ -215,6 +214,51 @@ public class NhanVien_DAO {
         return dsnv;
     }
 
+    public static void capNhatChiTietNhanVien(NhanVien nv) {
+        try {
+            Connection c = KetNoiCoSoDuLieu.ketNoiDB_KhangVersion();
+            if (c == null) {
+                return;
+            }
+            String sql = "UPDATE NhanVien SET TenNV = ?, NgaySinh = ?, DiaChi = ?, SoDT = ?, GioiTinh = ?, VaiTro = ? WHERE MaNV = ?";
+            PreparedStatement ps = c.prepareStatement(sql);
+            ps.setString(1, nv.getTenNV());
+            ps.setDate(2, java.sql.Date.valueOf(nv.getNgaySinh()));
+            ps.setString(3, nv.getDiaChi());
+            ps.setString(4, nv.getSoDT());
+            ps.setString(5, nv.getGioiTinh().getValue());
+            ps.setString(6, nv.getVaiTro());
+            ps.setString(7, nv.getMaNV());
+            ps.executeUpdate();
+            ps.close();
+            c.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static int thuHoiTaiKhoan(String maNV) {
+        int kq = 0;
+
+        try {
+            Connection c = KetNoiCoSoDuLieu.ketNoiDB_KhangVersion();
+            if (c == null) {
+                return 0;
+            }
+            String sql = "UPDATE NhanVien set TenDangNhap = ? WHERE MaNV = ?";
+            PreparedStatement ps = c.prepareStatement(sql);
+            ps.setString(1, "Đã thu hồi");
+            ps.setString(2, maNV);
+            kq = ps.executeUpdate();
+            ps.close();
+            c.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return kq;
+    }
+
+
     public void NhanVien_DAO() {
         dsnv = new ArrayList<NhanVien>();
     }
@@ -306,7 +350,7 @@ public class NhanVien_DAO {
             Connection connection = KetNoiCoSoDuLieu.ketNoiDB_KhangVersion();
 
             // Bước 2: tạo ra đối tượng statement
-            String sql = "SELECT * FROM NhanVien WHERE TenDangNhap = ?";
+            String sql = "SELECT * FROM NhanVien WHERE MaNV = ?";
             PreparedStatement st = connection.prepareStatement(sql);
             st.setString(1, username);
 
