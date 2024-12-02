@@ -2,6 +2,7 @@ package app.dieu_khien;
 
 import app.dao.NhanVien_DAO;
 import app.giao_dien.TrangDoiMatKhau;
+import app.giao_dien.TrangKetCa;
 import app.giao_dien.TrangNhanVien;
 import app.thuc_the.GIOI_TINH;
 import app.thuc_the.NhanVien;
@@ -27,7 +28,21 @@ public class HanhDong_TrangNhanVien implements ActionListener {
             this.capNhatThongTin();
         } else if (e.getActionCommand().equals("Đổi mật khẩu")) {
             this.doiMatKhau();
+        } else if (e.getActionCommand().equals("Kết ca")) {
+            this.ketCa();
         }
+    }
+
+    private void ketCa() {
+        int luaChon = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn kết ca?", "Xác nhận", JOptionPane.YES_NO_OPTION);
+        if(luaChon == JOptionPane.NO_OPTION) {
+            return;
+        } else if ( luaChon == JOptionPane.CLOSED_OPTION) {
+            return;
+        }
+        TrangKetCa trangKetCa = new TrangKetCa();
+        trangKetCa.setVisible(true);
+
     }
 
     private void doiMatKhau() {
@@ -43,6 +58,8 @@ public class HanhDong_TrangNhanVien implements ActionListener {
         int luaChon = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn cập nhật thông tin?", "Xác nhận", JOptionPane.YES_NO_OPTION);
         if(luaChon == JOptionPane.NO_OPTION) {
             return;
+        } else if ( luaChon == JOptionPane.CLOSED_OPTION) {
+            return;
         }
         String ma = trangNhanVien.lable_hienMaNV.getText();
         Date date = trangNhanVien.dateChooser_ngaySinh.getDate();
@@ -52,10 +69,8 @@ public class HanhDong_TrangNhanVien implements ActionListener {
             gt = GIOI_TINH.NU;
         }
         NhanVien nv = new NhanVien(ma, ten, ngaySinh, diaChi, sdt, gt);
-        if(NhanVien_DAO.update(nv)) {
+        NhanVien_DAO.update(nv);
             JOptionPane.showMessageDialog(null, "Cập nhật thông tin thành công");
-        } else {
-            JOptionPane.showMessageDialog(null, "Cập nhật thông tin thất bại");
-        }
+
     }
 }

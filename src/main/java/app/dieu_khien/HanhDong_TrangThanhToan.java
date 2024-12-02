@@ -1,13 +1,29 @@
 package app.dieu_khien;
 
+import app.giao_dien.TrangDatVe;
+import app.giao_dien.TrangDinhHuong;
+import app.giao_dien.TrangHoaDon;
 import app.giao_dien.TrangThanhToan;
+import app.phan_tu_tuy_chinh.TaoMaQR;
 import app.thuc_the.DaiNgo;
+import app.thuc_the.HoaDon;
+import app.thuc_the.TRANG_THAI_GHE;
 import app.thuc_the.Ve;
 
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import javax.swing.border.LineBorder;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.image.BufferedImage;
+import java.awt.image.ImageObserver;
+import java.awt.image.ImageProducer;
+import java.io.ByteArrayOutputStream;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class HanhDong_TrangThanhToan implements ActionListener, MouseListener {
     TrangThanhToan trangThanhToan;
@@ -24,33 +40,124 @@ public class HanhDong_TrangThanhToan implements ActionListener, MouseListener {
         if (e.getSource() == this.trangThanhToan.radioChuyenKhoan) {
             this.trangThanhToan.radioTienMat.setSelected(false);
         }
+
+        if (e.getSource() == this.trangThanhToan.ButtonThanhToan && this.trangThanhToan.radioTienMat.isSelected()) {
+            double thanhTien = Double.parseDouble(this.trangThanhToan.tfThanhTien.getText());
+            double tienNhan = Double.parseDouble(this.trangThanhToan.thanhTienNhan.getText());
+
+            if (thanhTien > tienNhan) {
+                hienThiThongBao("Tiền nhận phải lớn hơn tiền trả", "Lỗi nhận tiền", JOptionPane.ERROR_MESSAGE);
+
+                return;
+            }
+
+            double tienTra = tienNhan - thanhTien;
+
+            this.trangThanhToan.tfTraLai.setText(String.valueOf(tienTra));
+
+            double tongTien = 0;
+            for (int i = 0 ; i < this.trangThanhToan.danhSachVe.size() ; i++) {
+                tongTien += this.trangThanhToan.danhSachVe.get(i).getGiaVe() * (1 - (this.trangThanhToan.danhSachVe.get(i).getLoaiDoiTuong().equals("Người Lớn") ? 0.0 : 0.025));
+            }
+
+            String maNV = this.trangThanhToan.layMaNV();
+
+            HoaDon hd = new HoaDon(
+                    LocalDate.now(),
+                    thanhTien,
+                    this.trangThanhToan.dsKh.get(0).getMaKH(),
+                    maNV,
+                    this.trangThanhToan.danhSachVe.size(),
+                    tongTien,
+                    "Chưa In",
+                    this.trangThanhToan.daiNgo,
+                    0
+            );
+
+            // Lưu hóa đơn vào cơ sở dữ liệu
+            //this.trangThanhToan.hdDao.LuuHoaDon(hd);
+
+            // Cập nhật trạng thái ghế
+            /*for (int i = 0 ; i < this.trangThanhToan.dsGheDat.size() ; i++) {
+                this.trangThanhToan.gheDao.capNhatTrangThaiGhe(TRANG_THAI_GHE.Da_dat.getValue(), this.trangThanhToan.dsGheDat.get(i).getMaGhe());
+            }*/
+
+            hienThiThongBao("Thanh toán thành công", "Thông báo thành công", JOptionPane.INFORMATION_MESSAGE);
+
+            this.trangThanhToan.dispose();
+
+            for (int i = ((TrangDatVe) TrangDinhHuong.getTrangChua().getComponent(1)).moHinhBang.getRowCount() - 1; i >= 0; i--) {
+                ((TrangDatVe) TrangDinhHuong.getTrangChua().getComponent(1)).moHinhBang.removeRow(i);
+            }
+
+            ((TrangDatVe) TrangDinhHuong.getTrangChua().getComponent(1)).datThanhToan(true);
+            ((TrangDatVe) TrangDinhHuong.getTrangChua().getComponent(1)).thanhNhapNgayDi.setDate(null);
+            ((TrangDatVe) TrangDinhHuong.getTrangChua().getComponent(1)).thanhNhapGioDen.setText("");
+            ((TrangHoaDon) TrangDinhHuong.getTrangChua().getComponent(2)).datHoaDonDTao(hd);
+        }
+
+        if (e.getSource() == this.trangThanhToan.ButtonThanhToan && this.trangThanhToan.radioChuyenKhoan.isSelected()) {
+            double thanhTien = Double.parseDouble(this.trangThanhToan.tfThanhTien.getText());
+            //double tienNhan = Double.parseDouble(this.trangThanhToan.thanhTienNhan.getText());
+
+            //double tienTra = tienNhan - thanhTien;
+
+            //this.trangThanhToan.tfTraLai.setText(String.valueOf(tienTra));
+
+            double tongTien = 0;
+            for (int i = 0 ; i < this.trangThanhToan.danhSachVe.size() ; i++) {
+                tongTien += this.trangThanhToan.danhSachVe.get(i).getGiaVe() * (1 - (this.trangThanhToan.danhSachVe.get(i).getLoaiDoiTuong().equals("Người Lớn") ? 0.0 : 0.025));
+            }
+
+            String maNV = this.trangThanhToan.layMaNV();
+
+            HoaDon hd = new HoaDon(
+                    LocalDate.now(),
+                    thanhTien,
+                    this.trangThanhToan.dsKh.get(0).getMaKH(),
+                    maNV,
+                    this.trangThanhToan.danhSachVe.size(),
+                    tongTien,
+                    "Chưa In",
+                    this.trangThanhToan.daiNgo,
+                    0
+            );
+
+            // Tạo thông tin thanh toán
+            String thongTinThanhToan = "Toi Tai Khoan:\n"
+                    + "CONG TY CO PHAN DUONG SAT SAI GON\n"
+                    + "ABCBank\n"
+                    + "0123456789\n"
+                    + "Thanh Tien: " + this.trangThanhToan.tfThanhTien.getText() + "\n"
+                    + "Loi Nhan: T.Toan QR - tai Ga Go Vap GV - " + this.trangThanhToan.tfThanhTien.getText() + " - Ngay " + LocalDateTime.now();
+
+            // Hiển thị mã QR
+            hienThiMaQR(thongTinThanhToan, "Thanh toán qua QR");
+
+            /*this.trangThanhToan.hdDao.LuuHoaDon(hd);
+
+            for (int i = 0 ; i < this.trangThanhToan.dsGheDat.size() ; i++) {
+                this.trangThanhToan.gheDao.capNhatTrangThaiGhe(TRANG_THAI_GHE.Da_dat.getValue(), this.trangThanhToan.dsGheDat.get(i).getMaGhe());
+            }*/
+
+            hienThiThongBao("Thanh toán thành công", "Thông báo thành công", JOptionPane.INFORMATION_MESSAGE);
+
+            this.trangThanhToan.dispose();
+
+            for (int i = ((TrangDatVe) TrangDinhHuong.getTrangChua().getComponent(1)).moHinhBang.getRowCount() - 1; i >= 0; i--) {
+                ((TrangDatVe) TrangDinhHuong.getTrangChua().getComponent(1)).moHinhBang.removeRow(i);
+            }
+
+            ((TrangDatVe) TrangDinhHuong.getTrangChua().getComponent(1)).datThanhToan(true);
+            ((TrangDatVe) TrangDinhHuong.getTrangChua().getComponent(1)).thanhNhapNgayDi.setDate(null);
+            ((TrangDatVe) TrangDinhHuong.getTrangChua().getComponent(1)).thanhNhapGioDen.setText("");
+            ((TrangHoaDon) TrangDinhHuong.getTrangChua().getComponent(2)).datHoaDonDTao(hd);
+        }
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        /*for (int i = 0 ; i < this.trangThanhToan.danhSachVe.size() ; i++) {
-            tongTien += this.trangThanhToan.danhSachVe.get(i).getGiaVe();
-        }*/
-
         Ve ve = this.trangThanhToan.danhSachVe.get(this.trangThanhToan.danhSachVeThanhToan.getSelectedRow());
-        int soLuong = this.trangThanhToan.danhSachVe.size();
-        DaiNgo daiNgo = DaiNgo.GIAMGIAKHONGPHANTRAM;
-
-        if (4 <= soLuong && soLuong < 10) {
-            daiNgo = DaiNgo.GIAMGIANAMPHANTRAM;
-        }
-
-        if (10 <= soLuong && soLuong < 15) {
-            daiNgo = DaiNgo.GIAMGIAMUOIPHANTRAM;
-        }
-
-        if (15 <= soLuong) {
-            daiNgo = DaiNgo.GIAMGIAHAIMUOIPHANTRAM;
-        }
-
-        this.trangThanhToan.tfThanhTien.setText(String.valueOf(ve.getGiaVe()));
-
-        this.trangThanhToan.tfKhuyenMai.setText(daiNgo.toString());
 
         if (ve.getLoaiDoiTuong().equals("Người Lớn")) {
             this.trangThanhToan.tfVAT.setText("2.5%");
@@ -77,5 +184,85 @@ public class HanhDong_TrangThanhToan implements ActionListener, MouseListener {
     @Override
     public void mouseExited(MouseEvent e) {
 
+    }
+
+    private void hienThiThongBao(String chuThich, String tieuDe, int message) {
+        JLabel thongBao = new JLabel(chuThich);
+        thongBao.setFont(this.trangThanhToan.phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, 12));
+
+        JOptionPane hienThiLoi = new JOptionPane(thongBao, message);
+        hienThiLoi.setForeground(this.trangThanhToan.xanhBrandeis);
+
+        JDialog hoiThoai = hienThiLoi.createDialog(tieuDe);
+        ImageIcon bieuTuongTau = new ImageIcon("assets/icon.png");
+        hoiThoai.setIconImage(bieuTuongTau.getImage());
+        hoiThoai.setVisible(true);
+    }
+
+    private void hienThiMaQR(String thongTinThanhToan, String tieuDe) {
+        // Tạo nhãn công ty
+        JLabel tieuDeCongTy = new JLabel("Công ty cổ phần Đường Sắt Sài Gòn");
+        tieuDeCongTy.setFont(this.trangThanhToan.phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, 15));
+        tieuDeCongTy.setHorizontalAlignment(SwingConstants.CENTER);
+
+        // Tạo nhãn thông báo
+        JLabel thongBao = new JLabel("Hãy quét mã để thanh toán");
+        thongBao.setFont(this.trangThanhToan.phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, 15));
+        thongBao.setHorizontalAlignment(SwingConstants.CENTER);
+
+        // Tạo nhãn thông báo
+        JLabel tieuDeCamOn = new JLabel("Xin chân thành cám ơn quý khách !");
+        tieuDeCamOn.setFont(this.trangThanhToan.phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, 15));
+        tieuDeCamOn.setHorizontalAlignment(SwingConstants.CENTER);
+
+        try {
+            // Tạo ảnh QR từ thông tin thanh toán
+            BufferedImage maQR = new TaoMaQR().generateQRCodeImage(thongTinThanhToan);
+
+            // Tăng kích thước mã QR
+            int doDai = 400; // Chiều rộng mới
+            int doRong = 400; // Chiều cao mới
+            Image anhMaQR = maQR.getScaledInstance(doDai, doRong, Image.SCALE_SMOOTH);
+
+            // Chuyển thành ImageIcon để hiển thị
+            ImageIcon bieuTuongQR = new ImageIcon(anhMaQR);
+
+            // Tạo JLabel chứa mã QR
+            JLabel nhanMaQR = new JLabel();
+            nhanMaQR.setIcon(bieuTuongQR);
+            nhanMaQR.setBorder(new LineBorder(Color.BLACK));
+            nhanMaQR.setHorizontalAlignment(SwingConstants.CENTER);
+
+            JPanel trangChuaMa = new JPanel();
+            trangChuaMa.setLayout(new BorderLayout(0, 10)); // Khoảng cách giữa các thành phần
+            trangChuaMa.add(thongBao, BorderLayout.NORTH);
+            trangChuaMa.add(nhanMaQR);
+
+            // Tạo JPanel chứa cả thông báo và mã QR
+            JPanel trangChua = new JPanel();
+            trangChua.setLayout(new BorderLayout(10, 10)); // Khoảng cách giữa các thành phần
+            trangChua.add(tieuDeCongTy, BorderLayout.NORTH);
+            trangChua.add(trangChuaMa, BorderLayout.CENTER);
+            trangChua.add(tieuDeCamOn, BorderLayout.SOUTH);
+
+            trangChua.setPreferredSize(new Dimension(400, 400));
+
+            // Hiển thị trong JOptionPane
+            JOptionPane.showMessageDialog(
+                    null,
+                    trangChua,
+                    tieuDe,
+                    JOptionPane.PLAIN_MESSAGE
+            );
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(
+                    null,
+                    "Không thể tạo mã QR.",
+                    "Lỗi",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
     }
 }

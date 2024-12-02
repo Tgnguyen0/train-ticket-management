@@ -8,7 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class HanhDong_TrangCacTau implements ActionListener, MouseListener {
+public class HanhDong_TrangCacTau implements ActionListener, MouseListener, WindowListener {
     TrangCacTau trangSoDoChung;
 
     public HanhDong_TrangCacTau(TrangCacTau trangSoDoChung) {
@@ -36,7 +36,6 @@ public class HanhDong_TrangCacTau implements ActionListener, MouseListener {
         }
 
         if (e.getSource() == this.trangSoDoChung.nutTau1) {
-            System.out.println("nut Tau 1");
             this.trangSoDoChung.soHieuTauChon = this.trangSoDoChung.nutTau1.getActionCommand();
         }
 
@@ -58,6 +57,11 @@ public class HanhDong_TrangCacTau implements ActionListener, MouseListener {
         Object source = e.getSource();
 
         if (source == this.trangSoDoChung.nutTau1) {
+            if (!this.trangSoDoChung.nutTau1.isEnabled()) {
+                hienThiThongBao("Tàu không qua ga này vào ngày bạn chọn", "Lỗi lịch tàu", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
             // Đặt ảnh cho nút tau1 và đặt lại ảnh gốc cho các nút còn lại
             this.trangSoDoChung.nutTau1.datAnhDangChon();
 
@@ -81,6 +85,12 @@ public class HanhDong_TrangCacTau implements ActionListener, MouseListener {
         }
 
         if (source == this.trangSoDoChung.nutTau2) {
+
+            if (!this.trangSoDoChung.nutTau2.isEnabled()) {
+                hienThiThongBao("Tàu không qua ga này vào ngày bạn chọn", "Lỗi lịch tàu", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
             // Đặt ảnh cho nút tau2 và đặt lại ảnh gốc cho các nút còn lại
             this.trangSoDoChung.nutTau2.datAnhDangChon();
 
@@ -104,6 +114,11 @@ public class HanhDong_TrangCacTau implements ActionListener, MouseListener {
         }
 
         if (source == this.trangSoDoChung.nutTau3) {
+            if (!this.trangSoDoChung.nutTau3.isEnabled()) {
+                hienThiThongBao("Tàu không qua ga này vào ngày bạn chọn", "Lỗi lịch tàu", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
             // Đặt ảnh cho nút tau3 và đặt lại ảnh gốc cho các nút còn lại
             this.trangSoDoChung.nutTau3.datAnhDangChon();
 
@@ -127,6 +142,11 @@ public class HanhDong_TrangCacTau implements ActionListener, MouseListener {
         }
 
         if (source == this.trangSoDoChung.nutTau4) {
+            if (!this.trangSoDoChung.nutTau4.isEnabled()) {
+                hienThiThongBao("Tàu không qua ga này vào ngày bạn chọn", "Lỗi lịch tàu", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
             // Đặt ảnh cho nút tau4 và đặt lại ảnh gốc cho các nút còn lại
             this.trangSoDoChung.nutTau4.datAnhDangChon();
 
@@ -168,5 +188,66 @@ public class HanhDong_TrangCacTau implements ActionListener, MouseListener {
     @Override
     public void mouseExited(MouseEvent e) {
         // Không sử dụng
+    }
+
+    @Override
+    public void windowOpened(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowClosing(WindowEvent e) {
+        if (!this.trangSoDoChung.gheDao.layDSGheDat().isEmpty()) {
+            hienThiThongBao("Xác nhận ghế chọn thành công !", "Xác nhận thành công", JOptionPane.INFORMATION_MESSAGE);
+
+            e.getWindow().dispose();
+        } else {
+            //hienThiThongBao("Chưa có chọn ghế !", "Lỗi chọn ghế", JOptionPane.ERROR_MESSAGE);
+
+            //((javax.swing.JFrame) e.getWindow()).setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        }
+    }
+
+    @Override
+    public void windowClosed(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowIconified(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowActivated(WindowEvent e) {
+        if (!this.trangSoDoChung.nutTau1.isEnabled() && !this.trangSoDoChung.nutTau2.isEnabled() &&
+                !this.trangSoDoChung.nutTau3.isEnabled() && !this.trangSoDoChung.nutTau4.isEnabled()) {
+            e.getWindow().dispose();
+
+            hienThiThongBao("Ngày này không có tàu chạy qua !", "Lỗi chọn ngày", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {
+
+    }
+
+    private void hienThiThongBao(String chuThich, String tieuDe, int message) {
+        JLabel thongBao = new JLabel(chuThich);
+        thongBao.setFont(this.trangSoDoChung.phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, 12));
+
+        JOptionPane hienThiLoi = new JOptionPane(thongBao, message);
+        hienThiLoi.setForeground(this.trangSoDoChung.xanhBrandeis);
+
+        JDialog hoiThoai = hienThiLoi.createDialog(tieuDe);
+        ImageIcon bieuTuongTau = new ImageIcon("assets/icon.png");
+        hoiThoai.setIconImage(bieuTuongTau.getImage());
+        hoiThoai.setVisible(true);
     }
 }

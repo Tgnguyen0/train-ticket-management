@@ -977,8 +977,6 @@ public class TrangDanhSachVeTau extends JFrame{
         }
     }
 
-
-
     public void caiDatVoHieuHoaChoCacThanh(){
         this.textFieldMaVe.setEnabled(false);
         this.textFieldMaVe.setDisabledTextColor(Color.BLUE);

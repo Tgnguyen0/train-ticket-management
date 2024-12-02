@@ -4,6 +4,7 @@ import app.dao.HoaDon_DAO;
 import app.giao_dien.*;
 import app.phan_tu_tuy_chinh.TaoHoaDonFilePDF;
 import app.thuc_the.HoaDon;
+import app.thuc_the.KhachHang;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -54,6 +55,9 @@ public class HanhDong_TrangHoaDon implements ActionListener, MouseListener, Item
                     // Mở trang chi tiết hóa đơn với dữ liệu chính xác
                     TrangXemThuHoaDon xemThuHoaDon = new TrangXemThuHoaDon(hoaDon);
                     xemThuHoaDon.setVisible(true);
+                } else if (this.trangHoaDon.hdTao != null) {
+                    TrangXemThuHoaDon xemThuHoaDon = new TrangXemThuHoaDon(this.trangHoaDon.hdTao);
+                    xemThuHoaDon.setVisible(true);
                 } else {
                     JOptionPane.showMessageDialog(trangHoaDon, "Hóa đơn không tồn tại hoặc đã bị xóa!", "Lỗi", JOptionPane.ERROR_MESSAGE);
                 }
@@ -62,22 +66,25 @@ public class HanhDong_TrangHoaDon implements ActionListener, MouseListener, Item
             }
     }else if (source == this.trangHoaDon.buttonTimKiem) {
             String maHD = this.trangHoaDon.tfTimKiem.getText().trim();
-            String maKH = this.trangHoaDon.tfTimKiem.getText().trim();
+            String soDienThoai = this.trangHoaDon.tfTimKiem.getText().trim();
             // Kiểm tra xem có nhập mã hóa đơn hoặc mã khách hàng không
-            if (maHD.isEmpty() && maKH.isEmpty()) {
+            if (maHD.isEmpty() && soDienThoai.isEmpty()) {
                 UIManager.put("OptionPane.messageFont", new Font("Arial", Font.BOLD, 16)); // Đặt font chữ lớn hơn
 
                 JOptionPane.showMessageDialog(this.trangHoaDon, "Vui lòng nhập Mã Hóa Đơn hoặc Mã Khách Hàng để tìm kiếm", "Thông báo", JOptionPane.WARNING_MESSAGE);
                 return; // Kết thúc nếu không có dữ liệu
             }
-
             try {
-                ketQuaTimKiem = hoaDon_dao.TimKiemHoaDon(maHD, maKH);
+                ketQuaTimKiem = hoaDon_dao.TimKiemHoaDon(maHD, soDienThoai);
             } catch (SQLException ex) {
                 throw new RuntimeException(ex);
             }
 
 //            List<HoaDon> ketQuaTimKiem = hoaDon_dao.ChonTheoMaHD(maHD);
+
+            //
+            // List<HoaDon> ketQuaTimKiem = hoaDon_dao.ChonTheoMaHDHayMaKh(maHD, maKH);
+
 
             // Kiểm tra xem có tìm thấy hóa đơn nào không
             if (ketQuaTimKiem.isEmpty()) {
@@ -107,6 +114,20 @@ public class HanhDong_TrangHoaDon implements ActionListener, MouseListener, Item
             trangHoaDon.lamMoiDuLieu();
             UIManager.put("OptionPane.messageFont", new Font("Arial", Font.BOLD, 16)); // Đặt font chữ lớn hơn
             JOptionPane.showMessageDialog(this.trangHoaDon, "Làm mới dữ liệu thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+
+            Object[] duLieu = {
+                    this.trangHoaDon.tableDanhSach.getRowCount() + 1,
+                    this.trangHoaDon.hdTao.getMaHoaDon(),
+                    this.trangHoaDon.hdTao.getMaKhachHang(),
+                    this.trangHoaDon.hdTao.getThanhTien(),
+                    this.trangHoaDon.hdTao.getNgayLapHoaDon(),
+                    this.trangHoaDon.hdTao.getSoLuong(),
+                    this.trangHoaDon.hdTao.getTongTien(),
+                    this.trangHoaDon.hdTao.getTrangThai(),
+            };
+
+            this.trangHoaDon.model.addRow(duLieu);
+
         } else if (source == trangHoaDon.buttonInHoaDon) {
             int selectedRow = trangHoaDon.tableDanhSach.getSelectedRow();
             // Nếu không click chọn hóa đơn
@@ -132,6 +153,7 @@ public class HanhDong_TrangHoaDon implements ActionListener, MouseListener, Item
 
         // Tìm hóa đơn tương ứng từ cơ sở dữ liệu
         HoaDon hoaDon = null;
+        KhachHang khachHang = null;
         try {
             List<HoaDon> ketQua = hoaDon_dao.TimKiemHoaDon(maHoaDon, null); // Bạn có thể bỏ qua mã khách hàng nếu không cần thiết
             if (!ketQua.isEmpty()) {
@@ -150,7 +172,6 @@ public class HanhDong_TrangHoaDon implements ActionListener, MouseListener, Item
         // Gọi phương thức tạo PDF
         TaoHoaDonFilePDF.createInvoicePdf(hoaDon);
     }
-
 
     @Override
     public void itemStateChanged(ItemEvent e) {
@@ -182,3 +203,4 @@ public class HanhDong_TrangHoaDon implements ActionListener, MouseListener, Item
 
     }
 }
+

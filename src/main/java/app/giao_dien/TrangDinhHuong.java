@@ -37,6 +37,7 @@ public class TrangDinhHuong extends JFrame {
     public TrangHoaDon trangHoaDon;
     public TrangGioiThieu trangGioiThieu;
     public TrangKhachHang trangKhachHang;
+    public TrangChuaThongKeNhanVienTheoNam trangChuaThongKeTheoNam;
     public TrangNhanVien trangNhanVien;
     public TrangChuaThongKeNhanVienTheoThang trangChuaThongKeNhanVienTheoThang;
     public TrangChuaThongKeDoanhThuNhaGa trangChuaThongKeDoanhThuNhaGa;
@@ -119,7 +120,7 @@ public class TrangDinhHuong extends JFrame {
         JPanel thanhDinhHuong = new JPanel();
         thanhDinhHuong.setPreferredSize(new Dimension(1200, chieuRongNut));
         thanhDinhHuong.setBackground(new Color(trang.getRGB()));
-        thanhDinhHuong.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
+        thanhDinhHuong.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
         thanhDinhHuong.setBorder(this.vienDam);
 
         // Tạo Nút dẫn đến trang chủ
@@ -223,18 +224,6 @@ public class TrangDinhHuong extends JFrame {
         thanhNguoiDung.setLayout(new FlowLayout(FlowLayout.RIGHT, 0, 5));
 
         double doCaoTK = chieuRongNut * 0.8;
-
-        // Tạo Nút đến trang nhân viên
-        nutNhanVien = new NutAnh("assets/icon.png", doCaoTK, doCaoTK, "");
-        nutNhanVien.setPreferredSize(new Dimension((int) doCaoTK, (int) doCaoTK));
-
-        // Bỏ viền và focus của nút
-        nutNhanVien.setBorderPainted(false); // Bỏ viền của nút
-        nutNhanVien.setFocusPainted(false); // Bỏ viền khi click (focus)
-        nutNhanVien.setContentAreaFilled(false); // Bỏ fill màu mặc định của JButton (nếu cần)
-
-        nutNhanVien.addActionListener(this.hanhDong);
-        thanhNguoiDung.add(nutNhanVien);
 
         thanhDinhHuong.add(thanhNguoiDung);
 

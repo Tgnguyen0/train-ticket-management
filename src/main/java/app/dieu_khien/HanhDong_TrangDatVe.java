@@ -28,7 +28,6 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
 
     public HanhDong_TrangDatVe(TrangDatVe trangDatVe) {
         this.trangDatVe = trangDatVe;
-        this.dsVeDaDat = new ArrayList<>();
     }
 
     @Override
@@ -58,26 +57,33 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
         }
 
         if (source == this.trangDatVe.nutHienThiSoDoGhe) {
-            if (trangDatVe.thanhNhapNgayDi.getDate() != null) {
-                LocalDateTime ngayKhoiHanh = trangDatVe.thanhNhapNgayDi.getDate()
-                        .toInstant()
-                        .atZone(ZoneId.systemDefault())
-                        .toLocalDateTime();
-
-                this.maGa = this.trangDatVe.gaDao.ChonTheoTen( (String) this.trangDatVe.thanhCacDiemDi.getSelectedItem()).getMaGa();
-
-                List<LichCapBenGa> dsLich = this.trangDatVe.lichDao.ChonTheoNgayKHVaGa(ngayKhoiHanh, maGa);
-
-                for (int i = 0 ; i < dsLich.size() ; i++) {
-                    System.out.println(dsLich.get(i).getMaTau());
-                }
-
-                this.trangCacTau = new TrangCacTau(this.trangDatVe.layDSTau(), this.trangDatVe.layGheDao(), dsLich);
-                trangCacTau.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                trangCacTau.setVisible(true);
-            } else {
+            if (trangDatVe.thanhNhapNgayDi.getDate() == null) {
                 hienThiThongBao("Chưa chọn ngày khởi hành", "Lỗi chọn ngày", JOptionPane.ERROR_MESSAGE);
+                return;
             }
+
+            if (trangDatVe.layDSKhDatVe() == null) {
+                hienThiThongBao("Chưa có danh sách khách đặt vé", "Lỗi đặt vé", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            LocalDateTime ngayKhoiHanh = trangDatVe.thanhNhapNgayDi.getDate()
+                    .toInstant()
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalDateTime();
+
+            this.maGa = this.trangDatVe.gaDao.ChonTheoTen( (String) this.trangDatVe.thanhCacDiemDi.getSelectedItem()).getMaGa();
+
+            List<LichCapBenGa> dsLich = this.trangDatVe.lichDao.ChonTheoNgayKHVaGa(ngayKhoiHanh, maGa);
+            this.trangDatVe.layGheDao().datSoGheToiDa(this.trangDatVe.layDSKhDatVe().size());
+
+            /*for (int i = 0 ; i < dsLich.size() ; i++) {
+                System.out.println(dsLich.get(i).getMaTau());
+            }*/
+
+            trangCacTau = new TrangCacTau(this.trangDatVe.layDSTau(), this.trangDatVe.layGheDao(), dsLich);
+            trangCacTau.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            trangCacTau.setVisible(true);
         }
 
         if (this.trangCacTau != null && this.trangCacTau.laySoHieuTauChon() != null) {
@@ -102,8 +108,26 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
         }
 
         if (source == this.trangDatVe.nutXacNhan) {
+            if (this.trangDatVe.soHieuDaChon == null) {
+                hienThiThongBao("Chưa chọn số hiệu tàu", "Lỗi chọn ghế", JOptionPane.INFORMATION_MESSAGE);
+
+                return;
+            }
+
             // Lấy danh sách khách hàng đã đặt vé
             List<KhachHang> dsKhDatVe = this.trangDatVe.layDSKhDatVe();
+            // Lấy danh sách chỗ đã đặt
+            this.dsGhe = new ArrayList<>(this.trangDatVe.gheDao.layDSGheDat());
+
+            if (dsKhDatVe == null) {
+                hienThiThongBao("Chưa có thông tin khách hàng !", "Lỗi đặt véNV0173", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            if (dsGhe.isEmpty()) {
+                hienThiThongBao("Chưa có đặt ghế !", "Lỗi đặt ghế", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
 
             String hoTen = dsKhDatVe.get(bienSoTang).getTenKH(); // Lấy họ tên
             String sdt = dsKhDatVe.get(bienSoTang).getSoDT(); // lấy số điện thoại
@@ -114,6 +138,10 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
                 this.trangDatVe.thanhNhapHoTen.setText(dsKhDatVe.get(bienSoTang + 1).getTenKH());
                 this.trangDatVe.thanhNhapDienThoai.setText(dsKhDatVe.get(bienSoTang + 1).getSoDT());
                 this.trangDatVe.thanhNhapThuDienTu.setText(dsKhDatVe.get(bienSoTang + 1).getEmail());
+            } else if (bienSoTang + 1 == dsKhDatVe.size()) {
+                this.trangDatVe.thanhNhapHoTen.setText("");
+                this.trangDatVe.thanhNhapDienThoai.setText("");
+                this.trangDatVe.thanhNhapThuDienTu.setText("");
             }
 
             // Lấy giới tính
@@ -142,7 +170,6 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
                     .atZone(ZoneId.systemDefault())
                     .toLocalDateTime();*/
 
-            this.dsGhe = new ArrayList<>(this.trangDatVe.gheDao.layDSGheDat()); // lấy danh sách chỗ đã đặt
             Ghe daDat = this.trangDatVe.gheDao.traGheChon(); // lấy ghế đã đặt
 
             for (Ghe ghe: this.trangDatVe.gheDao.layDSGheDat()) {
@@ -213,33 +240,64 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
             this.trangDatVe.moHinhBang.addRow(duLieu);
 
             // Thêm vào danh sách vé đã đặt
-            this.dsVeDaDat.add(veDat);
+            this.trangDatVe.veDao.layDSVeDat().add(veDat);
+
+            for (int i = 0 ; i < this.trangDatVe.veDao.layDSVeDat().size(); i++) {
+                System.out.println(this.trangDatVe.veDao.layDSVeDat().get(i).getMaVe());
+            }
 
             // Tăng đơn vị
             this.bienSoTang++;
         }
 
         if (e.getSource() == this.trangDatVe.nutThanhToan) {
-            if (!this.dsVeDaDat.isEmpty()) {
-                //hienThiThongBao("Không có vé để thanh toán!", "Lỗi thanh toán", JOptionPane.INFORMATION_MESSAGE);
-
-                this.trangDatVe.veDao.themDSVe(this.dsVeDaDat);
-
-                TrangThanhToan trangThanhToan = new TrangThanhToan(this.trangDatVe.veDao.layDSVeDat(), this.trangDatVe.dsKHDatVe, this.dsGhe);
-                trangThanhToan.setVisible(true);
-            } else {
-                hienThiThongBao("Không có vé để thanh toán!", "Lỗi thanh toán", JOptionPane.ERROR_MESSAGE);
+            if (this.trangDatVe.layMaNV() == null) {
+                hienThiThongBao("Chưa có đăng nhập!", "Lỗi đăng nhập", JOptionPane.ERROR_MESSAGE);
+                return;
             }
+
+            if (this.trangDatVe.veDao.layDSVeDat().isEmpty()) {
+                hienThiThongBao("Danh sách vé rỗng!", "Lỗi đặt vé", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            if (this.trangDatVe.veDao.layDSVeDat().size() != this.trangDatVe.dsKHDatVe.size()) {
+                hienThiThongBao("Chưa đặt vé xong!", "Lỗi đặt vé", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            TrangThanhToan trangThanhToan = new TrangThanhToan(this.trangDatVe.veDao.layDSVeDat(), this.trangDatVe.dsKHDatVe, this.dsGhe);
+            trangThanhToan.setVisible(true);
+
+            trangThanhToan.datMaNV(this.trangDatVe.layMaNV());
+
+            /*for (int i = 0 ; i < this.trangDatVe.veDao.layDSVeDat().size() ; i++) {
+                this.trangDatVe.veDao.luuVe(this.trangDatVe.veDao.layDSVeDat().get(i));
+            }*/
         }
 
         if (e.getSource() == this.trangDatVe.nutInVe) {
-            if (!this.dsVeDaDat.isEmpty()) {
-                TrangInVe trangInVe = new TrangInVe(this.dsVeDaDat, this.trangDatVe.layDSKhDatVe(), this.dsGhe);
-                trangInVe.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                trangInVe.setVisible(true);
-            } else {
-                hienThiThongBao("Không có vé để in !", "Lỗi in vé", JOptionPane.ERROR_MESSAGE);
+            if (!this.trangDatVe.daThanhToan) {
+                hienThiThongBao("Chưa được in vé khi chưa thanh toán", "Lỗi thanh toán", JOptionPane.ERROR_MESSAGE);
+                return;
             }
+
+            List<Ve> dsVe = this.trangDatVe.veDao.layDSVeDat();
+
+            TrangInVe trangInVe = new TrangInVe(dsVe, this.trangDatVe.layDSKhDatVe(), this.dsGhe);
+            trangInVe.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            trangInVe.setVisible(true);
+
+            /*if (!trangInVe.isActive()) {
+                System.out.println("Hu xoa ds ve");
+                this.trangDatVe.veDao.xoaDSVeDat();
+                //this.dsVeDaDat.clear();
+                System.out.println("Hu xoa ds ghe");
+                this.trangDatVe.gheDao.xoaDSGheChon();
+            }*/
+
+            this.trangDatVe.daThanhToan = false;
+            bienSoTang = 0;
         }
     }
 

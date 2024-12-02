@@ -95,6 +95,9 @@ public class TrangDatVe extends JPanel {
     public List<KhachHang> dsKHDatVe;
     public JTable bangVeDangDat;
 
+    public String maNV;
+    public Boolean daThanhToan = false;
+
     public TrangDatVe() {
         this.tauDao = new Tau_DAO();
         this.gheDao = new Ghe_DAO();
@@ -133,6 +136,14 @@ public class TrangDatVe extends JPanel {
         add(trangDSVeDangDat, BorderLayout.SOUTH);
     }
 
+    public void datMaNV(String maNV) {
+        this.maNV = maNV;
+    }
+
+    public String layMaNV() {
+        return this.maNV;
+    }
+
     public List<Tau> layDSTau() {
         return this.dsTau;
     }
@@ -149,6 +160,10 @@ public class TrangDatVe extends JPanel {
 
     public List<KhachHang> layDSKhDatVe() {
         return this.dsKHDatVe;
+    }
+
+    public void datThanhToan(boolean daThanhToan) {
+        this.daThanhToan = daThanhToan;
     }
 
     private void taoDonThongTinVe() {
@@ -587,8 +602,8 @@ public class TrangDatVe extends JPanel {
         thanhCacLoaiDoiTuong.setBackground(trang);
         thanhCacLoaiDoiTuong.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, kichThuocChu));
         thanhCacLoaiDoiTuong.setFocusable(false);
-        thanhCacLoaiDoiTuong.addItem("Người lớn");
-        thanhCacLoaiDoiTuong.addItem("Trẻ em");
+        thanhCacLoaiDoiTuong.addItem("Người Lớn");
+        thanhCacLoaiDoiTuong.addItem("Trẻ Em");
         thanhCacLoaiDoiTuong.setPreferredSize(new Dimension(chieuDaiNut, chieuRongNut));
         thanhCacLoaiDoiTuong.setRenderer(new CustomComboBoxRenderer());
         thanhCacLoaiDoiTuong.addItemListener(mucDaChon);
@@ -705,12 +720,12 @@ public class TrangDatVe extends JPanel {
                 "Ngày khởi hành", "Tàu", "Giờ đi",
                 "Loại ghế", "Toa", "Vị trí"};
 
-        Object[][] duLieu = {
+        /*Object[][] duLieu = {
                 {"1", "V220101001", "Nguyễn Văn Tèo", "Người Lớn", "900000", "Sài Gòn", "Hà Nội", "2024-10-25", "2024-10-26", "VN7823", "17:00", "Ghế Giường 2", "VNTOA000046", "1"},
                 {"2", "V220101002", "Văn Toàn", "Người Lớn", "900000", "Sài Gòn", "Đồng Văn", "2024-10-25", "2024-9-3", "VN9029", "00:00", "Ghế Giường 6", "VNTOA000027", "17"},
-        };
+        };*/
 
-        this.moHinhBang = new DefaultTableModel(duLieu, tieuDeCot) {
+        this.moHinhBang = new DefaultTableModel(null, tieuDeCot) {
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;

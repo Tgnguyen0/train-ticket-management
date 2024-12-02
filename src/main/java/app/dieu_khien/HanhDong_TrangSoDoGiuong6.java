@@ -28,16 +28,15 @@ public class HanhDong_TrangSoDoGiuong6 implements ActionListener, MouseListener 
             if (this.trangSoDoGiuong6.giuongDao.layDSGheDat().contains(ghe)) {
                 this.trangSoDoGiuong6.giuongDao.xoaGhe(ghe);
                 nutGhe.setBackground(this.trangSoDoGiuong6.xanhBrandeis);
-            }
-            // Nếu ghế chưa chọn, thêm vào Set và đổi màu thành đỏ (giới hạn 10 ghế)
-            else {
-                if (this.trangSoDoGiuong6.giuongDao.layDSGheDat().size() < 10) {
-                    this.trangSoDoGiuong6.giuongDao.themGhe(ghe);
-                    this.trangSoDoGiuong6.giuongDao.datGheChon(ghe);
-                    nutGhe.setBackground(this.trangSoDoGiuong6.camNhuomDen);
-                } else {
-                    hienThiThongBao("Bạn chỉ có thể chọn tối đa 10 ghế.");
+            } else {
+                if (this.trangSoDoGiuong6.giuongDao.layDSGheDat().size() > this.trangSoDoGiuong6.giuongDao.laySoGheToiDa() - 1) {
+                    hienThiThongBao("Không được chọn quá số lượng khách đặt");
+                    return;
                 }
+
+                this.trangSoDoGiuong6.giuongDao.themGhe(ghe);
+                this.trangSoDoGiuong6.giuongDao.datGheChon(ghe);
+                nutGhe.setBackground(this.trangSoDoGiuong6.camNhuomDen);
             }
         } else {
             hienThiThongBao("Ghế đã đặt.");

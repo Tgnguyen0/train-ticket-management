@@ -1,8 +1,10 @@
 package app.dao;
 
 import app.giao_dien.TrangThongTinChiTietVeTau;
+import app.ket_noi_co_so_du_lieu.JDBCUtil;
 import app.ket_noi_co_so_du_lieu.KetNoiCoSoDuLieu;
 import app.thuc_the.DaiNgo;
+import app.thuc_the.HoaDon;
 import app.thuc_the.KhachHang;
 import app.thuc_the.Ve;
 import lombok.extern.slf4j.Slf4j;
@@ -25,28 +27,28 @@ import java.util.Map;
 @Slf4j
 public class Ve_DAO {
     // Các câu lệnh SQL
-    String NHAP_SQL = "INSERT INTO KhachHang (MaKH, TenKH, DiaChi, SoDT, Email, GioiTinh) values (?, ?, ?, ?, ?, ?)";
     String CAP_NHAT_SQL = "UPDATE TenKH=?, DiaChi=?, SoDT=?, Email=?, GioiTinh=? WHERE MaKH=?";
     String TAI_TAT_CA_SQL = "SELECT * FROM KhachHang";
     String CHON_THEO_MA_SQL = "SELECT * FROM KhachHang WHERE MaKH=?";
+    String LUU_VE_SQL = "INSERT INTO HoaDon(MaVe,NgayDatVe,GiaVe,MaKH,GaKhoiHanh,GaKetThuc,MaGhe,LoaiVe,LoaiDoiTuong,NgayKhoiHanh) VALUES (?,?,?,?,?,?,?,?,?,?)";
 
     Logger logger = LoggerFactory.getLogger(TrangThongTinChiTietVeTau.class);
     public Map<String, Map<String, Integer>> giaVeCoBan = Map.of(
             "Ghế Mềm", Map.of(
-                    "Trẻ em", 400,
-                    "Người lớn", 450
+                    "Trẻ Em", 400,
+                    "Người Lớn", 450
             ),
             "Giường Toa 4", Map.of(
-                    "Trẻ em", 550,
-                    "Người lớn", 600
+                    "Trẻ Em", 550,
+                    "Người Lớn", 600
             ),
             "Giường Toa 6", Map.of(
-                    "Trẻ em", 460,
-                    "Người lớn", 520
+                    "Trẻ Em", 460,
+                    "Người Lớn", 520
             ),
             "Giường Toa 2 VIP", Map.of(
-                    "Trẻ em", 750,
-                    "Người lớn", 800
+                    "Trẻ Em", 750,
+                    "Người Lớn", 800
             )
     );
 
@@ -68,6 +70,10 @@ public class Ve_DAO {
 
     public List<Ve> layDSVeDat() {
         return this.dsVeDat;
+    }
+
+    public void xoaDSVeDat() {
+        this.dsVeDat.clear();
     }
 
     // Tìm Kiếm khách hàng
@@ -228,6 +234,33 @@ public class Ve_DAO {
         return list;
     }
 
+    public void luuVe(Ve ve) {
+        luuSQL(
+                LUU_VE_SQL,
+                ve.getMaVe(),
+                ve.getNgayDatVe(),
+                ve.getGiaVe(),
+                ve.getMaKhachHang(),
+                ve.getGaKhoiHanh(),
+                ve.getGaKetThuc(),
+                ve.getMaGhe(),
+                ve.getLoaiVe(),
+                ve.getLoaiDoiTuong(),
+                ve.getNgayKhoiHanh()
+        );
+    }
+
+    public void luuSQL(String sql, Object... args) {
+        try {
+            try (PreparedStatement stmt = KetNoiCoSoDuLieu.layCauLenh(sql, args)) {
+                stmt.executeUpdate();
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            throw new RuntimeException(ex);
+        }
+    }
+
     public List<Ve> ChonTheoTuKhoa(String keyword) {
         String sql = "SELECT * FROM Ve WHERE TenKH LIKE ?";
         return this.ChonSQL(    sql, "%" + keyword + "%");
@@ -354,5 +387,23 @@ public class Ve_DAO {
             e.printStackTrace();
             System.out.println("Lỗi khi cập nhật vé trong cơ sở dữ liệu");
         }
+    }
+    // Hàm lấy Loại đối tượng vé của Khánh
+    public String layLoaiDoiTuongVe(String maKH) {
+        String loaiDoiTuong = null;
+        // Kết nối tới cơ sở dữ liệu và thực hiện truy vấn
+        String query = "SELECT * FROM Ve WHERE MaKH = ?";
+
+        try (Connection conn = JDBCUtil.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, maKH);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                loaiDoiTuong = rs.getString("LoaiDoiTuong"); // Lấy loai doi tượng từ cơ sở dữ liệu
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return loaiDoiTuong;
     }
 }

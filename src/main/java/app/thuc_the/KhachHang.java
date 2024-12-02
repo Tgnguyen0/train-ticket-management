@@ -1,8 +1,6 @@
 package app.thuc_the;
 
 import java.io.Serializable;
-import java.time.LocalDate;
-import java.util.Set;
 
 public class KhachHang implements Serializable {
     private String maKH;
@@ -37,7 +35,6 @@ public class KhachHang implements Serializable {
         this.email = email;
         this.setGioiTinh(gioiTinh);
     }
-
     public KhachHang(String maKH, String tenKH, String diaChi, String soDT, String email, GIOI_TINH gioiTinh) {
         this.maKH = maKH;
         this.tenKH = tenKH;

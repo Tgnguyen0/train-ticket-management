@@ -5,7 +5,7 @@ import app.ket_noi_co_so_du_lieu.JDBCUtil;
 import app.thuc_the.*;
 
 import java.sql.*;
-
+import app.giao_dien.TrangKetCa;
 import app.ket_noi_co_so_du_lieu.KetNoiCoSoDuLieu;
 import app.thuc_the.HoaDon;
 
@@ -19,16 +19,22 @@ import org.slf4j.LoggerFactory;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class HoaDon_DAO {
-    String CHON_15_SQL = "SELECT TOP 15 * FROM HoaDon ORDER BY NgayLap DESC;";
+    String CHON_15_SQL = "SELECT * FROM HoaDon ORDER BY NgayLap DESC;";
     String CHON_TAT_SQL = "SELECT * FROM HoaDon";
     String CHON_THEO_MAHD_SQL = "SELECT * FROM HoaDon WHERE MaHD =?";
     String CHON_THEO_MAKH_SQL = "SELECT * FROM HoaDon WHERE MaKH =?";
+    String LUU_HOA_DON_SQL = "INSERT INTO HoaDon(MaHD,NgayLap,MaNV,ThanhTien,MaKH,SoLuong,TongTien,TrangThai,DaiNgo,Thue) VALUES (?,?,?,?,?,?,?,?,?,?)";
+    String CAP_NHAT_TRANG_THAI_SQL = "UPDATE HoaDon SET TrangThai = ? WHERE MaHD = ?";
+    String CHON_THEO_MAHD_HAY_MAKH_SQL = "SELECT * FROM HoaDon WHERE MaHD =? OR MaKH =?";
 
     ArrayList<HoaDon> dshd;
 
@@ -85,48 +91,90 @@ public class HoaDon_DAO {
 
         return danhSachHoaDon;
     }
-    public List<HoaDon> TimKiemHoaDon (String maHD, String maKH) throws SQLException {
-            List<HoaDon> danhSachHoaDon = new ArrayList<>();
-            String sql = "SELECT * FROM HoaDon WHERE MaHD LIKE ? OR MaKH LIKE ?";
+//    public List<HoaDon> TimKiemHoaDon (String maHD, String maKH) throws SQLException {
+//            List<HoaDon> danhSachHoaDon = new ArrayList<>();
+//            String sql = "SELECT * FROM HoaDon WHERE MaHD LIKE ? OR MaKH LIKE ?";
+//
+//            try (Connection conn = JDBCUtil.getConnection();
+//                 PreparedStatement ps = conn.prepareStatement(sql)) {
+//                ps.setString(1, "%" + maHD + "%"); // Tìm kiếm theo mã hóa đơn
+//                ps.setString(2, "%" + maKH + "%"); // Tìm kiếm theo mã khách hàng
+//
+//                ResultSet rs = ps.executeQuery();
+//
+//                while (rs.next()) {
+//                    HoaDon hoaDon = new HoaDon();
+//                    // Giả sử bạn có các phương thức set tương ứng để gán giá trị cho các thuộc tính
+//                    hoaDon.setMaHoaDon(rs.getString("MaHD"));
+//                    hoaDon.setMaKhachHang(rs.getString("MaKH"));
+//                    hoaDon.setNgayLapHoaDon(rs.getDate("NgayLap").toLocalDate());
+//                    hoaDon.setMaNhanVien(rs.getString("MaNV"));
+//                    hoaDon.setThanhTien(rs.getFloat("ThanhTien"));
+//                    hoaDon.setSoLuong(rs.getInt("SoLuong"));
+//                    hoaDon.setTongTien(rs.getFloat("TongTien"));
+//                    hoaDon.setTrangThai(rs.getString("TrangThai"));
+//                    if(rs.getFloat("DaiNgo") == 0){
+//                        hoaDon.setDaiNgo(DaiNgo.KhongDaiNgo);
+//                    }
+//                    else if( rs.getFloat("DaiNgo") == 0.2  ){
+//                        hoaDon.setDaiNgo(DaiNgo.GIAMGIAHAIMUOIPHANTRAM);
+//                    }
+//                    else if( rs.getFloat("DaiNgo") == 0.1  ){
+//                        hoaDon.setDaiNgo(DaiNgo.GIAMGIAMUOIPHANTRAM);
+//                    }
+//                    else if( rs.getFloat("DaiNgo") == 0.05  ){
+//                        hoaDon.setDaiNgo(DaiNgo.GIAMGIANAMPHANTRAM);
+//                    }
+//                    hoaDon.setThue(rs.getFloat("Thue"));
+//                    danhSachHoaDon.add(hoaDon);
+//                }
+//            } catch (SQLException e) {
+//                e.printStackTrace();
+//            }
+//            return danhSachHoaDon;
+//        }
+    public List<HoaDon> TimKiemHoaDon (String maHD, String soDienThoai) throws SQLException {
+        List<HoaDon> danhSachHoaDon = new ArrayList<>();
+        String sql = "SELECT * FROM HoaDon o join KhachHang k on o.MaKH=k.MaKH WHERE o.MaHD LIKE ? OR k.SoDT LIKE ?";
 
-            try (Connection conn = JDBCUtil.getConnection();
-                 PreparedStatement ps = conn.prepareStatement(sql)) {
-                ps.setString(1, "%" + maHD + "%"); // Tìm kiếm theo mã hóa đơn
-                ps.setString(2, "%" + maKH + "%"); // Tìm kiếm theo mã khách hàng
+        try (Connection conn = JDBCUtil.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, "%" + maHD + "%"); // Tìm kiếm theo mã hóa đơn
+            ps.setString(2, "%" + soDienThoai + "%"); // Tìm kiếm theo mã khách hàng
 
-                ResultSet rs = ps.executeQuery();
+            ResultSet rs = ps.executeQuery();
 
-                while (rs.next()) {
-                    HoaDon hoaDon = new HoaDon();
-                    // Giả sử bạn có các phương thức set tương ứng để gán giá trị cho các thuộc tính
-                    hoaDon.setMaHoaDon(rs.getString("MaHD"));
-                    hoaDon.setMaKhachHang(rs.getString("MaKH"));
-                    hoaDon.setNgayLapHoaDon(rs.getDate("NgayLap").toLocalDate());
-                    hoaDon.setMaNhanVien(rs.getString("MaNV"));
-                    hoaDon.setThanhTien(rs.getFloat("ThanhTien"));
-                    hoaDon.setSoLuong(rs.getInt("SoLuong"));
-                    hoaDon.setTongTien(rs.getFloat("TongTien"));
-                    hoaDon.setTrangThai(rs.getString("TrangThai"));
-                    if(rs.getFloat("DaiNgo") == 0){
-                        hoaDon.setDaiNgo(DaiNgo.KhongDaiNgo);
-                    }
-                    else if( rs.getFloat("DaiNgo") == 0.2  ){
-                        hoaDon.setDaiNgo(DaiNgo.GIAMGIAHAIMUOIPHANTRAM);
-                    }
-                    else if( rs.getFloat("DaiNgo") == 0.1  ){
-                        hoaDon.setDaiNgo(DaiNgo.GIAMGIAMUOIPHANTRAM);
-                    }
-                    else if( rs.getFloat("DaiNgo") == 0.05  ){
-                        hoaDon.setDaiNgo(DaiNgo.GIAMGIANAMPHANTRAM);
-                    }
-                    hoaDon.setThue(rs.getFloat("Thue"));
-                    danhSachHoaDon.add(hoaDon);
+            while (rs.next()) {
+                HoaDon hoaDon = new HoaDon();
+                // Giả sử bạn có các phương thức set tương ứng để gán giá trị cho các thuộc tính
+                hoaDon.setMaHoaDon(rs.getString("MaHD"));
+                hoaDon.setMaKhachHang(rs.getString("MaKH"));
+                hoaDon.setNgayLapHoaDon(rs.getDate("NgayLap").toLocalDate());
+                hoaDon.setMaNhanVien(rs.getString("MaNV"));
+                hoaDon.setThanhTien(rs.getFloat("ThanhTien"));
+                hoaDon.setSoLuong(rs.getInt("SoLuong"));
+                hoaDon.setTongTien(rs.getFloat("TongTien"));
+                hoaDon.setTrangThai(rs.getString("TrangThai"));
+                if(rs.getFloat("DaiNgo") == 0){
+                    hoaDon.setDaiNgo(DaiNgo.KhongDaiNgo);
                 }
-            } catch (SQLException e) {
-                e.printStackTrace();
+                else if( rs.getFloat("DaiNgo") == 0.2  ){
+                    hoaDon.setDaiNgo(DaiNgo.GIAMGIAHAIMUOIPHANTRAM);
+                }
+                else if( rs.getFloat("DaiNgo") == 0.1  ){
+                    hoaDon.setDaiNgo(DaiNgo.GIAMGIAMUOIPHANTRAM);
+                }
+                else if( rs.getFloat("DaiNgo") == 0.05  ){
+                    hoaDon.setDaiNgo(DaiNgo.GIAMGIANAMPHANTRAM);
+                }
+                hoaDon.setThue(rs.getFloat("Thue"));
+                danhSachHoaDon.add(hoaDon);
             }
-            return danhSachHoaDon;
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+        return danhSachHoaDon;
+    }
     public List<HoaDon> ChonTheoMaHD(String maHD) {
         List<HoaDon> ds = this.chonSql(CHON_THEO_MAHD_SQL, maHD);
         return ds;
@@ -135,6 +183,11 @@ public class HoaDon_DAO {
     public HoaDon ChonTheoMaKH(String maKH){
         List<HoaDon> ds = this.chonSql(CHON_THEO_MAKH_SQL, maKH);
         return ds.size() > 0 ? ds.get(0) : null;
+    }
+
+    public List<HoaDon> ChonTheoMaHDHayMaKh(String maHD, String maKH) {
+        List<HoaDon> ds = this.chonSql(CHON_THEO_MAHD_HAY_MAKH_SQL, maHD, maKH);
+        return ds;
     }
 
     public List<HoaDon> chonTatCa() {
@@ -176,6 +229,43 @@ public class HoaDon_DAO {
         return ds;
     }
 
+    public void LuuHoaDon(HoaDon hd) {
+        LuuSQL(
+                LUU_HOA_DON_SQL,
+                hd.getMaHoaDon(),
+                hd.getNgayLapHoaDon(),
+                hd.getMaNhanVien(),
+                hd.getThanhTien(),
+                hd.getMaKhachHang(),
+                hd.getSoLuong(),
+                hd.getTongTien(),
+                hd.getTrangThai(),
+                hd.getDaiNgo().getValue(),
+                hd.getThue()
+        );
+    }
+
+    public void LuuSQL(String sql, Object... args) {
+        try {
+            try (PreparedStatement stmt = KetNoiCoSoDuLieu.layCauLenh(sql, args)) {
+                stmt.executeUpdate();
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            throw new RuntimeException(ex);
+        }
+    }
+
+    public void capNhatTrangThai(HoaDon hd) {
+        try {
+            KetNoiCoSoDuLieu.capNhat(CAP_NHAT_TRANG_THAI_SQL,
+                    hd.getTrangThai(),
+                    hd.getMaHoaDon()
+            );
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     public static ArrayList<String> layToanBoNamTuHoaDon(){
         ArrayList<String> namList = new ArrayList<>();
@@ -409,6 +499,137 @@ public class HoaDon_DAO {
             e.printStackTrace();
         }
         return  danhSachDoanhThu;
+    }
+
+    public static double layTongTienHeThong() {
+        Connection c;
+        try {
+            c = KetNoiCoSoDuLieu.ketNoiDB_KhangVersion();
+            if (c == null) {
+                System.out.println("Ket noi that bai");
+                return 0.0;
+            }
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            LocalDateTime dauNgay = LocalDate.now().atStartOfDay();
+            String formattedDateTime_start = dauNgay.format(formatter);
+            LocalDateTime ngayGioKetThuc = TrangKetCa.ngayGioKetThuc;
+            String formattedDateTime_end = ngayGioKetThuc.format(formatter);
+
+            String sql = "SELECT SUM(ThanhTien) AS tongTienHeThong FROM [dbo].[HoaDon] WHERE NgayLap BETWEEN ? AND ?; ";
+            PreparedStatement ps = c.prepareStatement(sql);
+            ps.setString(1, formattedDateTime_start);
+            ps.setString(2, formattedDateTime_end);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                double tongTienHeThong = rs.getDouble("tongTienHeThong");
+                System.out.printf("Thanh cong!Tong tien he thong: %f", tongTienHeThong);
+                return tongTienHeThong;
+            }
+            ps.close();
+            c.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.printf("Tong tien he thong: %f", 0.0);
+        }
+        return 0.0;
+    }
+    public static double layTongVAT(){
+        Connection c;
+        try {
+            c = KetNoiCoSoDuLieu.ketNoiDB_KhangVersion();
+            if (c == null) {
+                System.out.println("Ket noi that bai");
+                return 0.0;
+            }
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            LocalDateTime dauNgay = LocalDate.now().atStartOfDay();
+            String formattedDateTime_start = dauNgay.format(formatter);
+            LocalDateTime ngayGioKetThuc = TrangKetCa.ngayGioKetThuc;
+            String formattedDateTime_end = ngayGioKetThuc.format(formatter);
+
+            String sql = "SELECT SUM((TongTien*Thue)) AS tongVAT FROM [dbo].[HoaDon] WHERE NgayLap BETWEEN ? AND ?; ";
+            PreparedStatement ps = c.prepareStatement(sql);
+            ps.setString(1, formattedDateTime_start);
+            ps.setString(2, formattedDateTime_end);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                double tongVAT = rs.getDouble("tongVAT");
+                System.out.printf("Thanh cong!Tong VAT: %f", tongVAT);
+                return tongVAT;
+            }
+            ps.close();
+            c.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.printf("Tong VAT: %f", 0.0);
+        }
+        return 0.0;
+    }
+    public static double layTongGiamGia(){
+        Connection c;
+        try {
+            c = KetNoiCoSoDuLieu.ketNoiDB_KhangVersion();
+            if (c == null) {
+                System.out.println("Ket noi that bai");
+                return 0.0;
+            }
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            LocalDateTime dauNgay = LocalDate.now().atStartOfDay();
+            String formattedDateTime_start = dauNgay.format(formatter);
+            LocalDateTime ngayGioKetThuc = TrangKetCa.ngayGioKetThuc;
+            String formattedDateTime_end = ngayGioKetThuc.format(formatter);
+
+            String sql = "SELECT SUM((TongTien*DaiNgo)) AS tongGiamGia FROM [dbo].[HoaDon] WHERE NgayLap BETWEEN ? AND ?; ";
+            PreparedStatement ps = c.prepareStatement(sql);
+            ps.setString(1, formattedDateTime_start);
+            ps.setString(2, formattedDateTime_end);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                double tongGiamGia = rs.getDouble("tongGiamGia");
+                System.out.printf("ThanhCong! Tong giam gia: %f", tongGiamGia);
+                return tongGiamGia;
+            }
+            ps.close();
+            c.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.printf("Tong giam gia: %f", 0.0);}
+        return 0.0;
+    }
+    public static int laySoHoaDon(){
+        Connection c;
+        try {
+            c = KetNoiCoSoDuLieu.ketNoiDB_KhangVersion();
+            if (c == null) {
+                System.out.println("Ket noi that bai");
+                return 0;
+            }
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            LocalDateTime dauNgay = LocalDate.now().atStartOfDay();
+            String formattedDateTime_start = dauNgay.format(formatter);
+            LocalDateTime ngayGioKetThuc = TrangKetCa.ngayGioKetThuc;
+            String formattedDateTime_end = ngayGioKetThuc.format(formatter);
+
+            String sql = "SELECT COUNT(MaHD) AS tongHoaDon FROM [dbo].[HoaDon] WHERE NgayLap BETWEEN ? AND ?; ";
+            PreparedStatement ps = c.prepareStatement(sql);
+            ps.setString(1, formattedDateTime_start);
+            ps.setString(2, formattedDateTime_end);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                int tongHoaDon = rs.getInt("tongHoaDon");
+                System.out.printf("ThanhCong! Tong hoa don: %d", tongHoaDon);
+                return tongHoaDon;
+            }
+            ps.close();
+            c.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.printf("Tong hoa don: %d", 0);}
+        return 0;
     }
 }
 
