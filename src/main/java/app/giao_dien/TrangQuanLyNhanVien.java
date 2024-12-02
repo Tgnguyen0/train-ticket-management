@@ -40,6 +40,7 @@ public class TrangQuanLyNhanVien extends JFrame {
     public JTextField textField_SDT;
     public JTextField textField_timTen;
     public JTextField textField_timSDT;
+    public static String maNV;
 
 
     /**
@@ -49,7 +50,7 @@ public class TrangQuanLyNhanVien extends JFrame {
     public TrangQuanLyNhanVien() {
 
         setTitle("Quản lý nhân viên");
-        setSize(1043, 882);
+        setSize(1043, 810);
         setLocationRelativeTo(null);
 
 
@@ -106,7 +107,7 @@ public class TrangQuanLyNhanVien extends JFrame {
         textField_HoTen.setColumns(15);
 
         label_hienThiMaNV = new JLabel("<mã nhân viên>");
-        label_hienThiMaNV.setBounds(162, 34, 152, 22);
+        label_hienThiMaNV.setBounds(162, 34, 200, 22);
         panel_thongTinNV.add(label_hienThiMaNV);
         label_hienThiMaNV.setFont(new Font("Tahoma", Font.PLAIN, 18));
 
@@ -289,7 +290,7 @@ public class TrangQuanLyNhanVien extends JFrame {
         return true;
     }
     public static boolean regexDiaChi(String diaChi){
-        String regex = "^([\\p{L}0-9\\s,.-]+)?$";
+        String regex = "^([\\p{L}0-9\\s,./-]+)?$";
 
         if(!diaChi.matches(regex)){
             JOptionPane.showMessageDialog(null, "Địa chỉ không được có ký tự đặc biệt!");

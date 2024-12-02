@@ -38,6 +38,7 @@ public class TrangNhanVien extends JPanel {
     public DefaultTableModel tableModel;
 
 
+
     /**
      * Create the panel.
      */

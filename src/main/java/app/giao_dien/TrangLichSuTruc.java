@@ -1,23 +1,38 @@
 package app.giao_dien;
 
+import app.dao.CaTruc_DAO;
+import app.dieu_khien.HanhDong_TrangLichSuTruc;
+import app.thuc_the.CaTruc;
+import com.toedter.calendar.JDateChooser;
+
 import java.awt.EventQueue;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.JLabel;
 import java.awt.Font;
-import javax.swing.SwingConstants;
-import javax.swing.JSeparator;
-import javax.swing.JTable;
+
+import java.util.ArrayList;
+
 import javax.swing.border.TitledBorder;
 
 public class TrangLichSuTruc extends JFrame {
 
     private static final long serialVersionUID = 1L;
+    public final JDateChooser dateChooser;
+    public final JButton btn_xemToanBo;
+    public JTable table;
+    private final JLabel label_hienTenNV;
+    public final JLabel label_hienMaNV;
+    public JLabel label_hienTongGiamGia;
+    public JLabel label_hienTongVAT;
+    public JLabel label_hienChenhLech;
+    public JLabel label_hienTongThucThu;
+    public JLabel label_hienTongTienHT;
+    public JLabel label_hienTongHD;
+    public JLabel label_hienTienCaTruoc;
     private JPanel contentPane;
+
 
     /**
      * Launch the application.
@@ -39,7 +54,7 @@ public class TrangLichSuTruc extends JFrame {
      * Create the frame.
      */
     public TrangLichSuTruc() {
-        setSize(1120, 848);
+        setSize(1120, 810);
         setLocationRelativeTo(null);
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -59,10 +74,10 @@ public class TrangLichSuTruc extends JFrame {
         contentPane.add(label_maNV);
 
         JSeparator separator = new JSeparator();
-        separator.setBounds(5, 64, 1101, 2);
+        separator.setBounds(5, 64, 1101, 4);
         contentPane.add(separator);
 
-        JLabel label_hienMaNV = new JLabel("<<mã nhân viên>>");
+        label_hienMaNV = new JLabel("<<mã nhân viên>>");
         label_hienMaNV.setFont(new Font("Tahoma", Font.PLAIN, 25));
         label_hienMaNV.setBounds(169, 76, 221, 31);
         contentPane.add(label_hienMaNV);
@@ -72,12 +87,12 @@ public class TrangLichSuTruc extends JFrame {
         label_tenNV.setBounds(467, 76, 163, 31);
         contentPane.add(label_tenNV);
 
-        JLabel label_hienTenNV = new JLabel("<<tên nhân viên>>");
+        label_hienTenNV = new JLabel("<<tên nhân viên>>");
         label_hienTenNV.setFont(new Font("Tahoma", Font.PLAIN, 25));
-        label_hienTenNV.setBounds(640, 76, 222, 31);
+        label_hienTenNV.setBounds(640, 76, 300, 31);
         contentPane.add(label_hienTenNV);
 
-        JTable table = new JTable();
+        table = new JTable();
 
         table.setModel(new DefaultTableModel(
                 new Object[][] {
@@ -96,7 +111,7 @@ public class TrangLichSuTruc extends JFrame {
         table.setBounds(0, 0, 1, 1);
 
         JScrollPane scrollPane_table = new JScrollPane(table);
-        scrollPane_table.setBounds(5, 489, 1101, 322);
+        scrollPane_table.setBounds(5, 489, 1101, 280);
         contentPane.add(scrollPane_table);
 
         JPanel panel_chiTietCaTruc = new JPanel();
@@ -110,7 +125,7 @@ public class TrangLichSuTruc extends JFrame {
         panel_chiTietCaTruc.add(labe_tongHD);
         labe_tongHD.setFont(new Font("Tahoma", Font.PLAIN, 25));
 
-        JLabel label_hienTongHD = new JLabel("<<Tổng hoá đơn>>");
+        label_hienTongHD = new JLabel("<<Tổng hoá đơn>>");
         label_hienTongHD.setBounds(182, 34, 226, 31);
         panel_chiTietCaTruc.add(label_hienTongHD);
         label_hienTongHD.setFont(new Font("Tahoma", Font.PLAIN, 25));
@@ -120,7 +135,7 @@ public class TrangLichSuTruc extends JFrame {
         panel_chiTietCaTruc.add(label_tongTienCaTruoc);
         label_tongTienCaTruoc.setFont(new Font("Tahoma", Font.PLAIN, 25));
 
-        JLabel label_hienTienCaTruoc = new JLabel("<<Tổng tiền ca trước>>");
+        label_hienTienCaTruoc = new JLabel("<<Tổng tiền ca trước>>");
         label_hienTienCaTruoc.setBounds(235, 75, 274, 31);
         panel_chiTietCaTruc.add(label_hienTienCaTruoc);
         label_hienTienCaTruoc.setFont(new Font("Tahoma", Font.PLAIN, 25));
@@ -130,7 +145,7 @@ public class TrangLichSuTruc extends JFrame {
         panel_chiTietCaTruc.add(label_tongTienHT);
         label_tongTienHT.setFont(new Font("Tahoma", Font.PLAIN, 25));
 
-        JLabel label_hienTongTienHT = new JLabel("<<Tổng tiền hệ thống>>");
+        label_hienTongTienHT = new JLabel("<<Tổng tiền hệ thống>>");
         label_hienTongTienHT.setBounds(235, 116, 282, 31);
         panel_chiTietCaTruc.add(label_hienTongTienHT);
         label_hienTongTienHT.setFont(new Font("Tahoma", Font.PLAIN, 25));
@@ -140,7 +155,7 @@ public class TrangLichSuTruc extends JFrame {
         panel_chiTietCaTruc.add(label_tongTienThucThu);
         label_tongTienThucThu.setFont(new Font("Tahoma", Font.PLAIN, 25));
 
-        JLabel label_hienTongThucThu = new JLabel("<<Tổng tiền thực thu>>");
+        label_hienTongThucThu = new JLabel("<<Tổng tiền thực thu>>");
         label_hienTongThucThu.setBounds(235, 157, 282, 31);
         panel_chiTietCaTruc.add(label_hienTongThucThu);
         label_hienTongThucThu.setFont(new Font("Tahoma", Font.PLAIN, 25));
@@ -150,7 +165,7 @@ public class TrangLichSuTruc extends JFrame {
         panel_chiTietCaTruc.add(label_chenhLech);
         label_chenhLech.setFont(new Font("Tahoma", Font.PLAIN, 30));
 
-        JLabel label_hienChenhLech = new JLabel("<<Chênh lệch>>");
+        label_hienChenhLech = new JLabel("<<Chênh lệch>>");
         label_hienChenhLech.setBounds(235, 227, 238, 37);
         panel_chiTietCaTruc.add(label_hienChenhLech);
         label_hienChenhLech.setFont(new Font("Tahoma", Font.PLAIN, 30));
@@ -160,7 +175,7 @@ public class TrangLichSuTruc extends JFrame {
         panel_chiTietCaTruc.add(label_tongVAT);
         label_tongVAT.setFont(new Font("Tahoma", Font.PLAIN, 25));
 
-        JLabel label_hienTongVAT = new JLabel("<<Tổng tiền thuế>>");
+        label_hienTongVAT = new JLabel("<<Tổng tiền thuế>>");
         label_hienTongVAT.setBounds(787, 34, 274, 31);
         panel_chiTietCaTruc.add(label_hienTongVAT);
         label_hienTongVAT.setFont(new Font("Tahoma", Font.PLAIN, 25));
@@ -170,9 +185,40 @@ public class TrangLichSuTruc extends JFrame {
         panel_chiTietCaTruc.add(label_tongGiamGia);
         label_tongGiamGia.setFont(new Font("Tahoma", Font.PLAIN, 25));
 
-        JLabel label_hienTongGiamGia = new JLabel("<<Tổng giảm giá>>");
+        label_hienTongGiamGia = new JLabel("<<Tổng giảm giá>>");
         label_hienTongGiamGia.setBounds(787, 75, 230, 31);
         panel_chiTietCaTruc.add(label_hienTongGiamGia);
         label_hienTongGiamGia.setFont(new Font("Tahoma", Font.PLAIN, 25));
+
+        dateChooser = new JDateChooser();
+        dateChooser.setBounds(815, 449, 291, 31);
+        contentPane.add(dateChooser);
+
+        btn_xemToanBo = new JButton("Xem toàn bộ");
+        btn_xemToanBo.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        btn_xemToanBo.setBounds(658, 449, 147, 33);
+        contentPane.add(btn_xemToanBo);
+
+        //---------------------ADD EVENT---------------------
+        HanhDong_TrangLichSuTruc hd = new HanhDong_TrangLichSuTruc(this);
+        table.addMouseListener(hd);
+        dateChooser.addPropertyChangeListener(hd);
+        btn_xemToanBo.addMouseListener(hd);
     }
+    public void hienDanhSachTruc(String maNV) {
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        model.setRowCount(0);
+        ArrayList<CaTruc> danhSachCaTruc = CaTruc_DAO.layDanhSachTruc(maNV);
+        for (int i = 0; i < danhSachCaTruc.size(); i++) {
+            CaTruc ct = danhSachCaTruc.get(i);
+            model.addRow(new Object[]{
+                    i + 1, ct.getMaCaTruc(), ct.getNgayGioBatDau(), ct.getNgayGioKetThuc()
+            });
+        }
+    }
+    public void datMaVaTenNhanVien(String maNV, String tenNV) {
+        label_hienTenNV.setText(tenNV);
+        label_hienMaNV.setText(maNV);
+    }
+
 }
