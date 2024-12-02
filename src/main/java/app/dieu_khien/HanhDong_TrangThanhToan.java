@@ -78,10 +78,16 @@ public class HanhDong_TrangThanhToan implements ActionListener, MouseListener {
             // Lưu hóa đơn vào cơ sở dữ liệu
             //this.trangThanhToan.hdDao.LuuHoaDon(hd);
 
-            for (Ve ve : this.trangThanhToan.danhSachVe) {
-                ChiTietHoaDon cthd = new ChiTietHoaDon(hd.getMaHoaDon(), ve.getMaVe());
+            // Lưu vé vào Database
+            /*for (Ve ve : this.trangThanhToan.danhSachVe) {
+                ((TrangDatVe) TrangDinhHuong.getTrangChua().getComponent(1)).veDao.luuVe(ve);
+            }*/
+
+            // Lưu chi tiết hóa đơn
+            /*for (Ve ve : this.trangThanhToan.danhSachVe) {
+                ChiTietHoaDon cthd = new ChiTietHoaDon(ve.getMaVe(), hd.getMaHoaDon());
                 ChiTietHoaDon_DAO.themCTHD(cthd);
-            }
+            }*/
 
             // Cập nhật trạng thái ghế
             /*for (int i = 0 ; i < this.trangThanhToan.dsGheDat.size() ; i++) {
@@ -145,9 +151,22 @@ public class HanhDong_TrangThanhToan implements ActionListener, MouseListener {
             // Hiển thị mã QR với thông tin thanh toán mới khỏi tạo
             hienThiMaQR(thongTinThanhToan, "Thanh toán qua QR");
 
-            /*this.trangThanhToan.hdDao.LuuHoaDon(hd);
+            // Lưu hóa đơn vào cơ sở dữ liệu
+            //this.trangThanhToan.hdDao.LuuHoaDon(hd);
 
-            for (int i = 0 ; i < this.trangThanhToan.dsGheDat.size() ; i++) {
+            // Lưu vé vào Database
+            /*for (Ve ve : this.trangThanhToan.danhSachVe) {
+                ((TrangDatVe) TrangDinhHuong.getTrangChua().getComponent(1)).veDao.luuVe(ve);
+            }*/
+
+            // Lưu chi tiết hóa đơn
+            /*for (Ve ve : this.trangThanhToan.danhSachVe) {
+                ChiTietHoaDon cthd = new ChiTietHoaDon(ve.getMaVe(), hd.getMaHoaDon());
+                ChiTietHoaDon_DAO.themCTHD(cthd);
+            }*/
+
+            // Cập nhật trạng thái ghế
+            /*for (int i = 0 ; i < this.trangThanhToan.dsGheDat.size() ; i++) {
                 this.trangThanhToan.gheDao.capNhatTrangThaiGhe(TRANG_THAI_GHE.Da_dat.getValue(), this.trangThanhToan.dsGheDat.get(i).getMaGhe());
             }*/
 
