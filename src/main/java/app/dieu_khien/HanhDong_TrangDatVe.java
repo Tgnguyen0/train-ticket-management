@@ -281,11 +281,6 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
 
             // Thiết lập mã nhân viên tạo vé
             trangThanhToan.datMaNV(this.trangDatVe.layMaNV());
-
-            // Lưu vé vào Database
-            for (int i = 0 ; i < this.trangDatVe.veDao.layDSVeDat().size() ; i++) {
-                this.trangDatVe.veDao.luuVe(this.trangDatVe.veDao.layDSVeDat().get(i));
-            }
         }
 
         // Nếu là chọn nút in vé
