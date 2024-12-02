@@ -5,6 +5,7 @@ import app.dao.NhanVien_DAO;
 import app.giao_dien.TrangDoiMatKhau;
 import app.giao_dien.TrangKetCa;
 import app.giao_dien.TrangNhanVien;
+import app.giao_dien.TrangQuanLyNhanVien;
 import app.thuc_the.CaTruc;
 import app.thuc_the.GIOI_TINH;
 import app.thuc_the.NhanVien;
@@ -39,7 +40,18 @@ public class HanhDong_TrangNhanVien implements ActionListener, PropertyChangeLis
             this.doiMatKhau();
         } else if (e.getActionCommand().equals("Kết ca")) {
             this.ketCa();
+        } else if (o == trangNhanVien.btn_quanLyNV) {
+            if (TrangNhanVien.label_nhanVien.getText().equals("NHÂN VIÊN")) {
+                JOptionPane.showMessageDialog(null, "Chỉ quản lý mới có quyền truy cập");
+                return;
+            }
+            this.quanLyNhanVien();
         }
+    }
+
+    private void quanLyNhanVien() {
+        TrangQuanLyNhanVien trangQuanLyNhanVien = new TrangQuanLyNhanVien();
+        trangQuanLyNhanVien.setVisible(true);
     }
 
 
@@ -62,6 +74,18 @@ public class HanhDong_TrangNhanVien implements ActionListener, PropertyChangeLis
 
     private void capNhatThongTin() {
         String ten = trangNhanVien.textField_hoTen.getText();
+        ten = ten.trim().replaceAll("\\s+", " ");
+        String[] words = ten.split(" ");
+        StringBuilder tenTuInHoa = new StringBuilder();
+
+        // Lặp qua từng từ trong chuỗi
+        for (String word : words) {
+            if (word.length() > 0) {
+                // In hoa chữ cái đầu và nối phần còn lại
+                tenTuInHoa.append(Character.toUpperCase(word.charAt(0)))
+                        .append(word.substring(1).toLowerCase()).append(" ");
+            }
+        }
         String sdt = trangNhanVien.textField_sdt.getText();
         String diaChi = trangNhanVien.textArea_diaChi.getText();
         trangNhanVien.regexCapNhat(ten, sdt, diaChi);
@@ -81,10 +105,13 @@ public class HanhDong_TrangNhanVien implements ActionListener, PropertyChangeLis
         if (trangNhanVien.comboBox_gt.getSelectedItem().equals("Nữ")) {
             gt = GIOI_TINH.NU;
         }
-        NhanVien nv = new NhanVien(ma, ten, ngaySinh, diaChi, sdt, gt);
+        NhanVien nv = new NhanVien(ma, tenTuInHoa.toString(), ngaySinh, diaChi, sdt, gt);
         NhanVien_DAO.update(nv);
         JOptionPane.showMessageDialog(null, "Cập nhật thông tin thành công");
-
+        trangNhanVien.textField_hoTen.setText(nv.getTenNV());
+        trangNhanVien.textField_sdt.setText(nv.getSoDT());
+        trangNhanVien.textArea_diaChi.setText(nv.getDiaChi());
+        
     }
 
     @Override

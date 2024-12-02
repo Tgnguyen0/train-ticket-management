@@ -38,6 +38,12 @@ public class HanhDong_TrangDangNhap implements ActionListener, MouseListener {
 
         if (source == this.trangDangNhap.nutDangNhap) {
             String username = this.trangDangNhap.truongTen.getText();
+            username = username.trim();
+            String twoLettersOfUsername = username.substring(0, 2);
+            if(!twoLettersOfUsername.equals("NV")){
+                JOptionPane.showMessageDialog(this.trangDangNhap, "Tên đăng nhập không hợp lệ", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
             String password = new String(this.trangDangNhap.truongMatKhau.getPassword());
             if(NhanVien_DAO.login(username, password)) {
                 maNV = username;
@@ -78,7 +84,7 @@ public class HanhDong_TrangDangNhap implements ActionListener, MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        throw new UnsupportedOperationException("Unimplemented method 'mouseClicked'");
+
     }
 
     @Override
@@ -91,7 +97,7 @@ public class HanhDong_TrangDangNhap implements ActionListener, MouseListener {
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        throw new UnsupportedOperationException("Unimplemented method 'mouseClicked'");
+
     }
 
     @Override

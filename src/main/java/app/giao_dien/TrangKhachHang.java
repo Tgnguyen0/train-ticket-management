@@ -237,6 +237,8 @@ public class TrangKhachHang extends JPanel {
 
         table.setFont(new Font("Tahoma", Font.PLAIN, 15));
         table.setBounds(0, 0, 1, 1);
+        //khong cho chinh sua noi dung trong bang
+        table.setDefaultEditor(Object.class, null);
 
         JScrollPane scrollPane = new JScrollPane(table);
         panel_table.add(scrollPane);
@@ -327,6 +329,7 @@ public class TrangKhachHang extends JPanel {
         }
         ListSelectionModel selectionModel = this.table.getSelectionModel();
         selectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
     }
     public JTable clearTable(JTable table){
         DefaultTableModel model = (DefaultTableModel) table.getModel();
