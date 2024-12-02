@@ -2,6 +2,7 @@ package app.giao_dien;
 
 
 
+import app.dao.Ve_DAO;
 import app.dieu_khien.HanhDong_TrangDanhSachVe;
 import app.phan_tu_tuy_chinh.CustomCellRenderer;
 import app.phan_tu_tuy_chinh.CustomHeaderRenderer;
@@ -18,17 +19,26 @@ import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumnModel;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.MouseListener;
 
+import java.sql.SQLException;
+import java.text.DecimalFormat;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
-public class TrangDanhSachVeTau extends JFrame{
+public class TrangDanhSachVeTau extends JPanel{
 
     public javax.swing.JButton buttonHuyVe;
     public javax.swing.JButton buttonInVe;
     public javax.swing.JButton buttonLamMoi;
     public javax.swing.JButton buttonThongTinChiTiet;
+    public javax.swing.JButton buttonToanBoDanhSachVe;
     public javax.swing.JLabel giaVe;
     public javax.swing.JLabel ngayDatVe;
     public javax.swing.JLabel ngayKhoiHanh;
@@ -82,13 +92,18 @@ public class TrangDanhSachVeTau extends JFrame{
     public Color xanhBrandeis = new Color(0, 112, 255);
     public  Color trang = new Color(255, 255, 255);
     public Border gachChanDam = BorderFactory.createMatteBorder(0, 0, 1, 0, xanhBrandeis);
-
+    String Message_Not_Found = "Không Thể Tìm Thấy Đúng Mã Vé Đã Cung Cấp";
     //public static final Logger logger = LoggerFactory.getLogger(TrangDanhSachVeTau.class);
     /*
         các thuộc tính xử lý hành động
      */
     ActionListener ac ;
     MouseListener mouse ;
+
+    /*
+        tạo thuộc tính nhận định xác nhận hay chưa
+     */
+    public  boolean xacNhan = false;
     Logger logger = LoggerFactory.getLogger(TrangDanhSachVeTau.class);
 
     public TrangDanhSachVeTau(){
@@ -100,10 +115,12 @@ public class TrangDanhSachVeTau extends JFrame{
 //        this.setResizable(false);
 //        this.pack();
 //        this.setLocationRelativeTo(null);
-
-        this.setSize(1286, 684); // Đặt kích thước cụ thể cho cửa sổ
-        this.setResizable(false);
-        this.setLocationRelativeTo(null);
+//        ImageIcon icon = new ImageIcon("assets/icon.png");
+//        setIconImage(icon.getImage());
+//        setTitle("Quản Lý Danh Sách Vé Tàu");
+    //    this.setSize(1286, 684); // Đặt kích thước cụ thể cho cửa sổ
+//        this.setResizable(false);
+//        this.setLocationRelativeTo(null);
         trangChua_TieuDe = new javax.swing.JPanel();
         tieuDe = new javax.swing.JLabel();
         trangChua_ThanhTimKiem = new javax.swing.JPanel();
@@ -154,9 +171,9 @@ public class TrangDanhSachVeTau extends JFrame{
         buttonLamMoi = new javax.swing.JButton();
         buttonHuyVe = new javax.swing.JButton();
         buttonInVe = new javax.swing.JButton();
+        buttonToanBoDanhSachVe = new javax.swing.JButton();
         trangChua_ButtonThongTinChiTiet = new javax.swing.JPanel();
         buttonThongTinChiTiet = new javax.swing.JButton();
-
 
 
         // config trang chứa tiêu đề
@@ -224,12 +241,13 @@ public class TrangDanhSachVeTau extends JFrame{
         buttonInVe.addActionListener(ac);
         timKiem.addActionListener(ac);
         buttonThongTinChiTiet.addActionListener(ac);
+        buttonToanBoDanhSachVe.addActionListener(ac);
         this.setVisible(true);
     }
 
     public void thietLap_TrangChuaTieuDe() {
-        tieuDe.setText("                                                            Danh Sach Bán Vé Tàu");
-
+        tieuDe.setText("         Danh Sách Vé Tàu");
+        tieuDe.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.BOLD, 23));
         javax.swing.GroupLayout trangChua_TieuDeLayout = new javax.swing.GroupLayout(trangChua_TieuDe);
         trangChua_TieuDe.setLayout(trangChua_TieuDeLayout);
         trangChua_TieuDeLayout.setHorizontalGroup(
@@ -249,12 +267,35 @@ public class TrangDanhSachVeTau extends JFrame{
     }
     public void thietLap_TrangChuaThanhTimKiem(){
         timKiemVe.setText("Tìm Kiếm vé ");
-
+        timKiemVe.setFont(new Font("Arial", Font.BOLD, 15));
         thanhTimKiem.setText("Tìm kiếm theo mã vé");
-
+        thanhTimKiem.setFont(new Font("Arial", Font.PLAIN, 13));
         timKiem.setText("Tìm Kiếm");
+        timKiem.setFont(new Font("Arial", Font.BOLD, 12));
         timKiem.setBackground(xanhBrandeis);
         timKiem.setForeground(trang);
+        // Lắng nghe sự kiện focus của JTextField
+        thanhTimKiem.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (thanhTimKiem.getText().equals("Tìm kiếm theo mã vé")) {
+                    thanhTimKiem.setText(""); // Xóa placeholder khi được chọn
+                    thanhTimKiem.setForeground(xanhBrandeis); // Đổi màu chữ khi người dùng nhập
+                } else {
+                    thanhTimKiem.setForeground(Color.BLUE); // Đổi màu chữ khi đã có mã nhập
+                }
+                thanhTimKiem.selectAll(); // Tự động bôi đen khi được chọn
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (thanhTimKiem.getText().isEmpty()) {
+                    thanhTimKiem.setText("Tìm kiếm theo mã vé");
+                    thanhTimKiem.setForeground(Color.GRAY); // Đặt lại màu chữ mờ khi rời khỏi và trống
+                }
+            }
+        });
+
         javax.swing.GroupLayout trangChua_ThanhTimKiemLayout = new javax.swing.GroupLayout(trangChua_ThanhTimKiem);
         trangChua_ThanhTimKiem.setLayout(trangChua_ThanhTimKiemLayout);
         trangChua_ThanhTimKiemLayout.setHorizontalGroup(
@@ -288,8 +329,12 @@ public class TrangDanhSachVeTau extends JFrame{
         trangChua_MaVe.setRequestFocusEnabled(false);
 
         tieuDe_MaVe.setText("Mã Vé:");
+        tieuDe_MaVe.setFont(new Font("Arial", Font.PLAIN, 14));
 
         textFieldMaVe.setText("");
+        textFieldMaVe.setText("");
+        textFieldMaVe.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.BOLD, 13));
+        textFieldMaVe.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, xanhBrandeis));
 
         javax.swing.GroupLayout trangChua_MaVeLayout = new javax.swing.GroupLayout(trangChua_MaVe);
         trangChua_MaVe.setLayout(trangChua_MaVeLayout);
@@ -317,8 +362,12 @@ public class TrangDanhSachVeTau extends JFrame{
         trangChua_MaKhachHang.setRequestFocusEnabled(false);
 
         tieuDe_MaKhachHang.setText("Mã Khách Hàng:");
+        tieuDe_MaKhachHang.setFont(new Font("Arial", Font.PLAIN, 14));
 
         textFieldMaKhachHang.setText("");
+        textFieldMaKhachHang.setText("");
+        textFieldMaKhachHang.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.BOLD, 13));
+        textFieldMaKhachHang.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, xanhBrandeis));
 
         javax.swing.GroupLayout trangChua_MaKhachHangLayout = new javax.swing.GroupLayout(trangChua_MaKhachHang);
         trangChua_MaKhachHang.setLayout(trangChua_MaKhachHangLayout);
@@ -345,8 +394,12 @@ public class TrangDanhSachVeTau extends JFrame{
         trangChua_MaGhe.setPreferredSize(new java.awt.Dimension(370, 75));
 
         tieuDe_MaGhe.setText("Mã Ghế:");
+        tieuDe_MaGhe.setFont(new Font("Arial", Font.PLAIN, 14));
 
         textFieldMaGhe.setText("");
+        textFieldMaGhe.setText("");
+        textFieldMaGhe.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.BOLD, 13));
+        textFieldMaGhe.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, xanhBrandeis));
 
         javax.swing.GroupLayout trangChua_MaGheLayout = new javax.swing.GroupLayout(trangChua_MaGhe);
         trangChua_MaGhe.setLayout(trangChua_MaGheLayout);
@@ -401,8 +454,12 @@ public class TrangDanhSachVeTau extends JFrame{
         trangChua_DiemDi.setRequestFocusEnabled(false);
 
         tieuDe_DiemDi.setText("Điểm Đi:");
+        tieuDe_DiemDi.setFont(new Font("Arial", Font.PLAIN, 14));
 
         textFieldDiemDi.setText("");
+        textFieldDiemDi.setText("");
+        textFieldDiemDi.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.BOLD, 13));
+        textFieldDiemDi.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, xanhBrandeis));
 
         javax.swing.GroupLayout trangChua_DiemDiLayout = new javax.swing.GroupLayout(trangChua_DiemDi);
         trangChua_DiemDi.setLayout(trangChua_DiemDiLayout);
@@ -431,9 +488,12 @@ public class TrangDanhSachVeTau extends JFrame{
         trangChua_DiemDen.setRequestFocusEnabled(false);
 
         tieuDe_DiemDen.setText("Điểm Đến:");
+        tieuDe_DiemDen.setFont(new Font("Arial", Font.PLAIN, 14));
 
         textFieldDiemDen.setText("");
-
+        textFieldDiemDen.setText("");
+        textFieldDiemDen.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.BOLD, 13));
+        textFieldDiemDen.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, xanhBrandeis));
 
         javax.swing.GroupLayout trangChua_DiemDenLayout = new javax.swing.GroupLayout(trangChua_DiemDen);
         trangChua_DiemDen.setLayout(trangChua_DiemDenLayout);
@@ -461,8 +521,12 @@ public class TrangDanhSachVeTau extends JFrame{
         trangChua_LoaiVe.setRequestFocusEnabled(false);
 
         tieuDe_LoaiVe.setText("Loại Ghế:");
+        tieuDe_LoaiVe.setFont(new Font("Arial", Font.PLAIN, 14));
 
         textFieldLoaiVe.setText("");
+        textFieldLoaiVe.setText("");
+        textFieldLoaiVe.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.BOLD, 13));
+        textFieldLoaiVe.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, xanhBrandeis));
 
         javax.swing.GroupLayout trangChua_LoaiVeLayout = new javax.swing.GroupLayout(trangChua_LoaiVe);
         trangChua_LoaiVe.setLayout(trangChua_LoaiVeLayout);
@@ -491,8 +555,12 @@ public class TrangDanhSachVeTau extends JFrame{
         trangChua_DoiTuong.setRequestFocusEnabled(false);
 
         tieuDe_DoiTuong.setText("Đối Tượng:");
+        tieuDe_DoiTuong.setFont(new Font("Arial", Font.PLAIN, 14));
 
         textFieldDoiTuong.setText("");
+        textFieldDoiTuong.setText("");
+        textFieldDoiTuong.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.BOLD, 13));
+        textFieldDoiTuong.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, xanhBrandeis));
 
         javax.swing.GroupLayout trangChua_DoiTuongLayout = new javax.swing.GroupLayout(trangChua_DoiTuong);
         trangChua_DoiTuong.setLayout(trangChua_DoiTuongLayout);
@@ -547,6 +615,12 @@ public class TrangDanhSachVeTau extends JFrame{
     }
     public void thietLap_TrangChuaNgayDatVe(){
         tieuDeNgayDatVe.setText("Ngày Đặt Vé:");
+        tieuDeNgayDatVe.setFont(new Font("Arial", Font.PLAIN, 14));
+
+        ngayDatVe.setText("");
+        ngayDatVe.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.BOLD, 13));
+        ngayDatVe.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, xanhBrandeis));
+        ngayDatVe.setForeground(Color.BLUE);
 
         javax.swing.GroupLayout trangChua_NgayDatVeLayout = new javax.swing.GroupLayout(trangChua_NgayDatVe);
         trangChua_NgayDatVe.setLayout(trangChua_NgayDatVeLayout);
@@ -571,7 +645,12 @@ public class TrangDanhSachVeTau extends JFrame{
     }
     public void thietLap_NgayKhoiHanh(){
         tieuDeNgayKhoiHanh.setText("Ngày Khởi Hành");
+        tieuDeNgayKhoiHanh.setFont(new Font("Arial", Font.PLAIN, 14));
 
+        ngayKhoiHanh.setText("");
+        ngayKhoiHanh.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.BOLD, 13));
+        ngayKhoiHanh.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, xanhBrandeis));
+        ngayKhoiHanh.setForeground(Color.BLUE);
         javax.swing.GroupLayout trangChua_NgayKhoiHanhLayout = new javax.swing.GroupLayout(trangChua_NgayKhoiHanh);
         trangChua_NgayKhoiHanh.setLayout(trangChua_NgayKhoiHanhLayout);
         trangChua_NgayKhoiHanhLayout.setHorizontalGroup(
@@ -621,8 +700,12 @@ public class TrangDanhSachVeTau extends JFrame{
     public void thietLap_TrangChuaGiaVe(){
        // trangChua_GiaVe.setBackground(new java.awt.Color(0, 153, 153));
         tieuDeGiaVe.setText("Giá vé:");
+        tieuDeGiaVe.setFont(new Font("Arial", Font.PLAIN, 14));
 
         giaVe.setText("");
+        giaVe.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.BOLD, 13));
+        giaVe.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, xanhBrandeis));
+        giaVe.setForeground(Color.BLUE);
 
         javax.swing.GroupLayout trangChua_GiaVeLayout = new javax.swing.GroupLayout(trangChua_GiaVe);
         trangChua_GiaVe.setLayout(trangChua_GiaVeLayout);
@@ -715,7 +798,7 @@ public class TrangDanhSachVeTau extends JFrame{
         table.setModel(model);
         table.getTableHeader().setReorderingAllowed(false);
         table.setRowHeight(30);
-        table.setFont((new PhongChuMoi()).layPhongRobotoMonoReg(Font.PLAIN, 12));
+        table.setFont((new PhongChuMoi()).layPhongRobotoMonoReg(Font.PLAIN, 13));
 
 // Cấu hình renderer cho phần header
         JTableHeader header = table.getTableHeader();
@@ -725,30 +808,6 @@ public class TrangDanhSachVeTau extends JFrame{
 // Cấu hình renderer cho các ô trong bảng
         table.setDefaultRenderer(Object.class, new CustomCellRenderer());
 
-        // cấu hình kích thước cho ô STT
-        TableColumnModel columnModel = table.getColumnModel();
-//        columnModel.getColumn(0).setPreferredWidth(100); // Chiều rộng mong muốn
-//        columnModel.getColumn(0).setMinWidth(100);       // Chiều rộng nhỏ nhất
-//        columnModel.getColumn(0).setMaxWidth(100);
-//        columnModel.getColumn(1).setPreferredWidth(1000); // Chiều rộng mong muốn
-//        columnModel.getColumn(1).setMinWidth(100);       // Chiều rộng nhỏ nhất
-//        columnModel.getColumn(1).setMaxWidth(100);
-//        columnModel.getColumn(2).setPreferredWidth(100); // Chiều rộng mong muốn
-//        columnModel.getColumn(2).setMinWidth(100);       // Chiều rộng nhỏ nhất
-//        columnModel.getColumn(2).setMaxWidth(100);
-//        columnModel.getColumn(3).setPreferredWidth(100); // Chiều rộng mong muốn
-//        columnModel.getColumn(3).setMinWidth(100);       // Chiều rộng nhỏ nhất
-//        columnModel.getColumn(3).setMaxWidth(100);
-//        columnModel.getColumn(4).setPreferredWidth(100); // Chiều rộng mong muốn
-//        columnModel.getColumn(4).setMinWidth(100);       // Chiều rộng nhỏ nhất
-//        columnModel.getColumn(4).setMaxWidth(100);
-//        columnModel.getColumn(5).setPreferredWidth(100); // Chiều rộng mong muốn
-//        columnModel.getColumn(5).setMinWidth(100);       // Chiều rộng nhỏ nhất
-//        columnModel.getColumn(5).setMaxWidth(100);
-//        columnModel.getColumn(6).setPreferredWidth(100); // Chiều rộng mong muốn
-//        columnModel.getColumn(6).setMinWidth(100);       // Chiều rộng nhỏ nhất
-//        columnModel.getColumn(6).setMaxWidth(100);
-// Cấu hình scrollpane
         scrollPane.setViewportView(table);
         scrollPane.setBorder(BorderFactory.createLineBorder(new Color(0, 112, 255)));
 
@@ -770,7 +829,7 @@ public class TrangDanhSachVeTau extends JFrame{
                 trangChua_TableDanhSachLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(trangChua_TableDanhSachLayout.createSequentialGroup()
                                 .addContainerGap()
-                                .addComponent(scrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(scrollPane, 275, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -780,17 +839,25 @@ public class TrangDanhSachVeTau extends JFrame{
         buttonLamMoi.setText("Làm Mới");
         buttonLamMoi.setBackground(xanhBrandeis);
         buttonLamMoi.setForeground(Color.WHITE);
+        buttonLamMoi.setFont(new Font("Arial", Font.BOLD, 14));
+
 
 
         buttonHuyVe.setText("Hủy Vé");
         buttonHuyVe.setBackground(xanhBrandeis);
         buttonHuyVe.setForeground(Color.WHITE);
+        buttonHuyVe.setFont(new Font("Arial", Font.BOLD, 14));
 
 
         buttonInVe.setText("In Vé");
         buttonInVe.setBackground(xanhBrandeis);
         buttonInVe.setForeground(Color.WHITE);
+        buttonInVe.setFont(new Font("Arial", Font.BOLD, 14));
 
+        buttonToanBoDanhSachVe.setText("<html> &nbsp;Toàn Bộ <br> Danh Sách </html>");
+        buttonToanBoDanhSachVe.setBackground(xanhBrandeis);
+        buttonToanBoDanhSachVe.setForeground(Color.WHITE);
+        buttonToanBoDanhSachVe.setFont(new Font("Arial", Font.BOLD, 14));
 
         javax.swing.GroupLayout trangChua_CacCongCuChinhSuaLayout = new javax.swing.GroupLayout(trangChua_CacCongCuChinhSua);
         trangChua_CacCongCuChinhSua.setLayout(trangChua_CacCongCuChinhSuaLayout);
@@ -799,25 +866,23 @@ public class TrangDanhSachVeTau extends JFrame{
                         .addGroup(trangChua_CacCongCuChinhSuaLayout.createSequentialGroup()
                                 .addContainerGap()
                                 .addGroup(trangChua_CacCongCuChinhSuaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(trangChua_CacCongCuChinhSuaLayout.createSequentialGroup()
-                                                .addComponent(buttonLamMoi, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(0, 0, Short.MAX_VALUE))
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, trangChua_CacCongCuChinhSuaLayout.createSequentialGroup()
-                                                .addGap(0, 0, Short.MAX_VALUE)
-                                                .addGroup(trangChua_CacCongCuChinhSuaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addComponent(buttonHuyVe, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(buttonInVe, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                .addContainerGap())
+                                        .addComponent(buttonLamMoi, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(buttonToanBoDanhSachVe, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(buttonHuyVe, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(buttonInVe, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addContainerGap(10, Short.MAX_VALUE))
         );
         trangChua_CacCongCuChinhSuaLayout.setVerticalGroup(
                 trangChua_CacCongCuChinhSuaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, trangChua_CacCongCuChinhSuaLayout.createSequentialGroup()
-                                .addGap(32, 32, 32)
+                                .addGap(15, 15, 15)
                                 .addComponent(buttonLamMoi, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(37, 37, 37)
+                                .addGap(18, 18, 18)
                                 .addComponent(buttonHuyVe, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(35, 35, 35)
+                                .addGap(20, 20, 20)
                                 .addComponent(buttonInVe, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(buttonToanBoDanhSachVe, 60, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }
@@ -867,7 +932,7 @@ public class TrangDanhSachVeTau extends JFrame{
                 trangChua_ButtonThongTinChiTietLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(trangChua_ButtonThongTinChiTietLayout.createSequentialGroup()
                                 .addContainerGap()
-                                .addComponent(buttonThongTinChiTiet, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(buttonThongTinChiTiet, 260, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addContainerGap(19, Short.MAX_VALUE))
         );
     }
@@ -918,40 +983,41 @@ public class TrangDanhSachVeTau extends JFrame{
                                         .addComponent(trangChua_CongCu, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
         );
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+
+// Căn ngang
         layout.setHorizontalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(layout.createSequentialGroup()
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addGroup(layout.createSequentialGroup()
-                                                                .addGap(275, 275, 275)
-                                                                .addComponent(trangChua_TieuDe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                        .addGroup(layout.createSequentialGroup()
-                                                                .addContainerGap()
-                                                                .addComponent(trangChua_DanhSachVe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                                .addGap(0, 0, Short.MAX_VALUE))
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                                .addGap(0, 0, Short.MAX_VALUE)
-                                                .addComponent(trangChua_ThanhTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addComponent(trangChua_ThongTinChiTiet, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1280, Short.MAX_VALUE))
-                                .addContainerGap())
+                                .addGap(0, 0, Short.MAX_VALUE) // Căn giữa các thành phần
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                                        .addComponent(trangChua_TieuDe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(trangChua_ThongTinChiTiet, javax.swing.GroupLayout.PREFERRED_SIZE, 1280, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(trangChua_DanhSachVe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(trangChua_ThanhTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap()) // Đặt `ThanhTimKiem` sang phải
         );
+
+// Căn dọc
         layout.setVerticalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addContainerGap()
                                 .addComponent(trangChua_TieuDe, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(trangChua_ThanhTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(trangChua_ThanhTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE) // Hiển thị `ThanhTimKiem`
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(trangChua_ThongTinChiTiet, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(trangChua_DanhSachVe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(trangChua_DanhSachVe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        pack();
+
+//        pack();
     }
     public void lamMoiCacThanh(){
         this.textFieldMaVe.setText("");
@@ -966,15 +1032,143 @@ public class TrangDanhSachVeTau extends JFrame{
         this.giaVe.setText("");
     }
 
-    public void dayDuLieuVaoBang(List<Ve> dsVe){
-        this.model.setRowCount(0);
-        this.lamMoiCacThanh();
-        for (Ve ve: dsVe) {
-            Object[] data = {ve.getMaVe()+"",ve.getGaKhoiHanh()+"",
-                    ve.getGaKetThuc()+"", ve.getLoaiDoiTuong()+"", ve.getGiaVe()+"",
-                    ve.getNgayDatVe()+"", ve.getNgayKhoiHanh()};
-            this.model.addRow(data);
-        }
+    public void dayDuLieuVaoBang(){
+        // Hiển thị trạng thái "Đang tải dữ liệu..."
+        model.setRowCount(0);
+        model.addRow(new Object[]{"Đang tải dữ liệu, vui lòng chờ..."});
+
+        // Sử dụng SwingWorker để tải dữ liệu trong luồng nền
+        new SwingWorker<List<Ve>, Void>() {
+            @Override
+            protected List<Ve> doInBackground() throws Exception {
+                // Lấy toàn bộ dữ liệu từ cơ sở dữ liệu
+                return Ve_DAO.layToanBoVe();
+            }
+
+            @Override
+            protected void done() {
+                try {
+                    // Xóa dòng trạng thái
+                    model.setRowCount(0);
+
+                    // Lấy kết quả từ doInBackground()
+                    List<Ve> dsVe = get();
+
+                    // Định dạng tiền tệ
+                    DecimalFormat df = new DecimalFormat("#,###.##");
+
+                    // định dạng thời gian
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+
+                    // Thêm dữ liệu vào bảng
+                    for (Ve ve : dsVe) {
+                        Object[] data = {
+                                ve.getMaVe(),
+                                ve.getGaKhoiHanh(),
+                                ve.getGaKetThuc(),
+                                ve.getLoaiDoiTuong(),
+                                df.format(ve.getGiaVe()),
+                                formatter.format(ve.getNgayDatVe()),
+                                formatter.format(ve.getNgayKhoiHanh())
+                        };
+                        model.addRow(data);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    // Hiển thị thông báo lỗi nếu có
+                    JOptionPane.showMessageDialog(null, "Lỗi khi tải dữ liệu: " + e.getMessage());
+                }
+            }
+        }.execute(); // Thực thi SwingWorker
+    }
+
+    public void timKiem_ThemMaVe(String maVe){
+
+        List<Ve> danhSachVe = null;
+            danhSachVe = Ve_DAO.layVe_DuaVaoMaVe(maVe);
+            // Kiểm tra nếu danhSachVe là null
+            if (danhSachVe == null || danhSachVe.isEmpty()) {
+                JOptionPane.showMessageDialog(null, Message_Not_Found );
+            } else {
+                DecimalFormat df = new DecimalFormat("#,###.##");
+                this.model.setRowCount(0);
+                this.lamMoiCacThanh();
+                for (Ve ve: danhSachVe) {
+                    Object[] data = {ve.getMaVe()+"",ve.getGaKhoiHanh()+"",
+                            ve.getGaKetThuc()+"", ve.getLoaiDoiTuong()+"", df.format(ve.getGiaVe()),
+                            ve.getNgayDatVe()+"", ve.getNgayKhoiHanh()};
+                    this.model.addRow(data);
+                }
+            }
+    }
+
+    public void huyVe_TheoMa(String maVe){
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+
+            LocalDateTime ngayKhoiHanh_Ve = Ve_DAO.getNgayKhoiHanh_DuaVaoMaVe(maVe);
+           // logger.info(ngayKhoiHanh_Ve.toString());
+
+            String maGhe = this.textFieldMaGhe.getText();
+
+            //LocalDateTime gioKhoiHanhTau = Ve_DAO.getNgayKhoiHanhCuaTau_DuaVaoMaGhe(maGhe, "Sài Gòn");
+           // logger.info(ngayKhoiHanh_Ve.toString());
+
+            LocalDateTime dateCurrent = LocalDateTime.now();
+             //if(gioKhoiHanhTau != null){
+                // tính khoảng cách 2 localdatetime
+                Duration duration = Duration.between(dateCurrent, ngayKhoiHanh_Ve);
+                logger.info(duration.toHours()+"");
+
+                if (duration.toHours() >= 24) {
+                    new TrangChiTietHoaDon(maVe, this).setVisible(true);
+                    //logger.info(this.xacNhan+"");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Hủy Vé Không Thành Công!","Cảnh Báo!!!!!" ,JOptionPane.ERROR_MESSAGE);
+                }
+
+    }
+
+    public void hienThiThongTinVe_TrenCacThanhJtextField(){
+        int location = this.table.getSelectedRow();
+        String maVe = (String) this.model.getValueAt(location, 0);
+        List<Ve> danhSachVe = new ArrayList<>();
+            danhSachVe = Ve_DAO.layVe_DuaVaoMaVe(maVe);
+            Ve ve = danhSachVe.get(0);
+
+            this.textFieldMaVe.setText(ve.getMaVe());
+            this.textFieldMaVe.setDisabledTextColor(Color.BLUE);
+            this.textFieldMaVe.setEnabled(false);
+
+            this.textFieldMaKhachHang.setText(ve.getMaKhachHang());
+            this.textFieldMaKhachHang.setDisabledTextColor(Color.BLUE);
+            this.textFieldMaKhachHang.setEnabled(false);
+
+            this.textFieldMaGhe.setText(ve.getMaGhe());
+            this.textFieldMaGhe.setDisabledTextColor(Color.BLUE);
+            this.textFieldMaGhe.setEnabled(false);
+
+            this.textFieldDiemDi.setText(ve.getGaKhoiHanh());
+            this.textFieldDiemDi.setDisabledTextColor(Color.BLUE);
+            this.textFieldDiemDi.setEnabled(false);
+
+            this.textFieldDiemDen.setText(ve.getGaKetThuc());
+            this.textFieldDiemDen.setDisabledTextColor(Color.BLUE);
+            this.textFieldDiemDen.setEnabled(false);
+
+            this.textFieldLoaiVe.setText(ve.getLoaiVe());
+            this.textFieldLoaiVe.setDisabledTextColor(Color.BLUE);
+            this.textFieldLoaiVe.setEnabled(false);
+
+            this.textFieldDoiTuong.setText(ve.getLoaiDoiTuong());
+            this.textFieldDoiTuong.setDisabledTextColor(Color.BLUE);
+            this.textFieldDoiTuong.setEnabled(false);
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+            this.ngayDatVe.setText(formatter.format(ve.getNgayDatVe()));
+
+            this.ngayKhoiHanh.setText(formatter.format(ve.getNgayKhoiHanh()));
+            DecimalFormat df = new DecimalFormat("#,###.##");
+            this.giaVe.setText(df.format(ve.getGiaVe())+" VNĐ");
     }
 
     public void caiDatVoHieuHoaChoCacThanh(){
@@ -993,35 +1187,10 @@ public class TrangDanhSachVeTau extends JFrame{
         this.textFieldDoiTuong.setEnabled(false);
         this.textFieldDoiTuong.setDisabledTextColor(Color.BLUE);
     }
+
     public static   void moGiaoDienDanhSach(){
         new TrangDanhSachVeTau().setVisible(true);
     }
-    public static void main(String[] args) {
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TrangDanhSachVeTau.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TrangDanhSachVeTau.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TrangDanhSachVeTau.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TrangDanhSachVeTau.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new TrangDanhSachVeTau().setVisible(true);
-            }
-        });
-    }
-
 }
+
+

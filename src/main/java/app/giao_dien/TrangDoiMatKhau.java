@@ -1,6 +1,7 @@
 package app.giao_dien;
 
 import app.dao.NhanVien_DAO;
+import app.dieu_khien.HanhDong_TrangDangNhap;
 
 import java.awt.EventQueue;
 
@@ -20,9 +21,6 @@ public class TrangDoiMatKhau extends JFrame {
     private JPasswordField passwordField_mkCu;
     private JPasswordField passwordField_mkMoi;
     private JPasswordField passwordField_xacNhanMK;
-    public String mkCu;
-    public String mkMoi;
-    public String xacNhanMK;
 
     /**
      * Launch the application.
@@ -103,11 +101,9 @@ public class TrangDoiMatKhau extends JFrame {
 
         btn_xacNhan.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                mkCu = new String(passwordField_mkCu.getPassword());
-                mkCu.trim();
-                mkMoi = new String(passwordField_mkMoi.getPassword());
-                xacNhanMK = new String(passwordField_xacNhanMK.getPassword());
-                System.out.printf(TrangDangNhap.tenDangNhap);
+                String mkCu = String.valueOf(passwordField_mkCu.getPassword());
+                String mkMoi = String.valueOf(passwordField_mkMoi.getPassword());
+                String xacNhanMK = String.valueOf(passwordField_xacNhanMK.getPassword());
                 if (mkCu.equals("") || mkMoi.equals("") || xacNhanMK.equals("")) {
                     JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ thông tin", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                     return;
@@ -116,20 +112,16 @@ public class TrangDoiMatKhau extends JFrame {
                     JOptionPane.showMessageDialog(null, "Mật khẩu mới không trùng khớp", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                     return;
                 }
-                if (!mkCu.equals(NhanVien_DAO.layMatKhau(TrangDangNhap.tenDangNhap))) {
+                if (mkCu.equals(NhanVien_DAO.layMatKhau(TrangNhanVien.label_nhanVien.getText()))){
                     JOptionPane.showMessageDialog(null, "Mật khẩu cũ không đúng", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                     return;
                 }
-                if (NhanVien_DAO.doiMatKhau(mkMoi, TrangDangNhap.tenDangNhap)) {
+                if (NhanVien_DAO.doiMatKhau(mkMoi, HanhDong_TrangDangNhap.maNV)) {
                     JOptionPane.showMessageDialog(null, "Đổi mật khẩu thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                     dispose();
-                } else {
-                    JOptionPane.showMessageDialog(null, "Đổi mật khẩu thất bại", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                 }
             }
         });
-
     }
-
-
 }
+

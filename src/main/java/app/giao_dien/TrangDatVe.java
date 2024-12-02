@@ -92,13 +92,17 @@ public class TrangDatVe extends JPanel {
     public List<Tau> dsTau;
     public List<NhaGa> dsGa;
     public String soHieuDaChon;
+<<<<<<< HEAD
     public List<KhachHang> dsKHDatVe;
     public JTable bangVeDangDat;
 
+=======
+    public static List<KhachHang> dsKHDatVe;
+>>>>>>> d5a76343418706fccedc20d51ff9b6b1d013b45c
     public String maNV;
     public Boolean daThanhToan = false;
-
-    public TrangDatVe() {
+    public TrangDinhHuong trangDinhHuong;
+    public TrangDatVe(TrangDinhHuong mainFrame) {
         this.tauDao = new Tau_DAO();
         this.gheDao = new Ghe_DAO();
         this.gaDao = new Ga_DAO();
@@ -111,6 +115,7 @@ public class TrangDatVe extends JPanel {
         setPreferredSize(new Dimension(1200, 600));
         setLayout(new BorderLayout());
         setFont(this.phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, 13));
+        this.trangDinhHuong = mainFrame;
 
         trangDonDatVe = new JPanel();
         trangDonDatVe.setPreferredSize(new Dimension(1200, 500));
@@ -155,7 +160,7 @@ public class TrangDatVe extends JPanel {
     }
 
     public void datDSKhDatVe(List<KhachHang> ds) {
-        this.dsKHDatVe = ds;
+        dsKHDatVe = ds;
     }
 
     public List<KhachHang> layDSKhDatVe() {
@@ -164,6 +169,14 @@ public class TrangDatVe extends JPanel {
 
     public void datThanhToan(boolean daThanhToan) {
         this.daThanhToan = daThanhToan;
+    }
+
+    public void datSoHieuDaChon(String soHieu) {
+        this.soHieuDaChon = soHieu;
+    }
+
+    public String laySoHieuDaChon() {
+        return this.soHieuDaChon;
     }
 
     private void taoDonThongTinVe() {

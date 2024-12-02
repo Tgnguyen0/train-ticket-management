@@ -1,21 +1,30 @@
 package app.dieu_khien;
 
+import app.dao.CaTruc_DAO;
 import app.dao.NhanVien_DAO;
 import app.giao_dien.TrangDoiMatKhau;
 import app.giao_dien.TrangKetCa;
 import app.giao_dien.TrangNhanVien;
+import app.giao_dien.TrangQuanLyNhanVien;
+import app.thuc_the.CaTruc;
 import app.thuc_the.GIOI_TINH;
 import app.thuc_the.NhanVien;
+import com.lowagie.text.Table;
 
 import javax.swing.*;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
 
-public class HanhDong_TrangNhanVien implements ActionListener {
+public class HanhDong_TrangNhanVien implements ActionListener, PropertyChangeListener {
     private TrangNhanVien trangNhanVien;
 
     public HanhDong_TrangNhanVien(TrangNhanVien trangNhanVien) {
@@ -24,20 +33,33 @@ public class HanhDong_TrangNhanVien implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getActionCommand().equals("Cập nhật thông tin")) {
+        Object o = e.getSource();
+        if (e.getActionCommand().equals("Cập nhật thông tin")) {
             this.capNhatThongTin();
         } else if (e.getActionCommand().equals("Đổi mật khẩu")) {
             this.doiMatKhau();
         } else if (e.getActionCommand().equals("Kết ca")) {
             this.ketCa();
+        } else if (o == trangNhanVien.btn_quanLyNV) {
+            if (TrangNhanVien.label_nhanVien.getText().equals("NHÂN VIÊN")) {
+                JOptionPane.showMessageDialog(null, "Chỉ quản lý mới có quyền truy cập");
+                return;
+            }
+            this.quanLyNhanVien();
         }
     }
 
+    private void quanLyNhanVien() {
+        TrangQuanLyNhanVien trangQuanLyNhanVien = new TrangQuanLyNhanVien();
+        trangQuanLyNhanVien.setVisible(true);
+    }
+
+
     private void ketCa() {
         int luaChon = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn kết ca?", "Xác nhận", JOptionPane.YES_NO_OPTION);
-        if(luaChon == JOptionPane.NO_OPTION) {
+        if (luaChon == JOptionPane.NO_OPTION) {
             return;
-        } else if ( luaChon == JOptionPane.CLOSED_OPTION) {
+        } else if (luaChon == JOptionPane.CLOSED_OPTION) {
             return;
         }
         TrangKetCa trangKetCa = new TrangKetCa();
@@ -52,25 +74,64 @@ public class HanhDong_TrangNhanVien implements ActionListener {
 
     private void capNhatThongTin() {
         String ten = trangNhanVien.textField_hoTen.getText();
+        ten = ten.trim().replaceAll("\\s+", " ");
+        String[] words = ten.split(" ");
+        StringBuilder tenTuInHoa = new StringBuilder();
+
+        // Lặp qua từng từ trong chuỗi
+        for (String word : words) {
+            if (word.length() > 0) {
+                // In hoa chữ cái đầu và nối phần còn lại
+                tenTuInHoa.append(Character.toUpperCase(word.charAt(0)))
+                        .append(word.substring(1).toLowerCase()).append(" ");
+            }
+        }
         String sdt = trangNhanVien.textField_sdt.getText();
         String diaChi = trangNhanVien.textArea_diaChi.getText();
         trangNhanVien.regexCapNhat(ten, sdt, diaChi);
-        int luaChon = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn cập nhật thông tin?", "Xác nhận", JOptionPane.YES_NO_OPTION);
-        if(luaChon == JOptionPane.NO_OPTION) {
+        if (!trangNhanVien.regex_birthDay()) {
             return;
-        } else if ( luaChon == JOptionPane.CLOSED_OPTION) {
+        }
+        int luaChon = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn cập nhật thông tin?", "Xác nhận", JOptionPane.YES_NO_OPTION);
+        if (luaChon == JOptionPane.NO_OPTION) {
+            return;
+        } else if (luaChon == JOptionPane.CLOSED_OPTION) {
             return;
         }
         String ma = trangNhanVien.lable_hienMaNV.getText();
         Date date = trangNhanVien.dateChooser_ngaySinh.getDate();
         LocalDate ngaySinh = LocalDate.of(date.getYear() + 1900, date.getMonth() + 1, date.getDate());
         GIOI_TINH gt = GIOI_TINH.NAM;
-        if(trangNhanVien.comboBox_gt.getSelectedItem().equals("Nữ")) {
+        if (trangNhanVien.comboBox_gt.getSelectedItem().equals("Nữ")) {
             gt = GIOI_TINH.NU;
         }
-        NhanVien nv = new NhanVien(ma, ten, ngaySinh, diaChi, sdt, gt);
+        NhanVien nv = new NhanVien(ma, tenTuInHoa.toString(), ngaySinh, diaChi, sdt, gt);
         NhanVien_DAO.update(nv);
-            JOptionPane.showMessageDialog(null, "Cập nhật thông tin thành công");
+        JOptionPane.showMessageDialog(null, "Cập nhật thông tin thành công");
+        trangNhanVien.textField_hoTen.setText(nv.getTenNV());
+        trangNhanVien.textField_sdt.setText(nv.getSoDT());
+        trangNhanVien.textArea_diaChi.setText(nv.getDiaChi());
+        
+    }
 
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        Object newValue = evt.getNewValue();
+        if (newValue instanceof Date) {
+            LocalDateTime date = ((Date) newValue).toInstant()
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalDateTime();
+            if (date != null) {
+                this.hienLichSuTruc(date, trangNhanVien.lable_hienMaNV.getText());
+            }
+        }
+    }
+
+    private void hienLichSuTruc(LocalDateTime date, String maNV) {
+        ArrayList<CaTruc> dsCaTruc = CaTruc_DAO.layCaTrucTheoNgay(date, maNV);
+        trangNhanVien.tableModel.setRowCount(0);
+        for (CaTruc ct : dsCaTruc) {
+            trangNhanVien.tableModel.addRow(new Object[]{ct.getNgayGioBatDau(), ct.getNgayGioKetThuc()});
+        }
     }
 }

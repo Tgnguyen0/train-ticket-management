@@ -15,26 +15,28 @@ import java.awt.GridLayout;
 import javax.swing.border.TitledBorder;
 import javax.swing.border.EtchedBorder;
 import java.awt.Color;
-import java.sql.Date;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+
 import java.util.ArrayList;
+import java.util.Date;
 import javax.swing.table.DefaultTableModel;
 
 public class TrangNhanVien extends JPanel {
 
     private static final long serialVersionUID = 1L;
-    public static String tenNV;
-    public JLabel label_nhanVien;
+    public final JButton btn_quanLyNV;
+    public JDateChooser dateChooser_ngayTruc;
+    public static JLabel label_nhanVien;
     public JLabel lable_hienMaNV;
     public JTextArea textArea_diaChi;
     public JTable table;
-
     public JComboBox comboBox_gt;
     public JLabel label_hienGioVaoTruc;
     public JDateChooser dateChooser_ngaySinh;
-
     public JTextField textField_hoTen;
     public JTextField textField_sdt;
+    public DefaultTableModel tableModel;
+
 
 
     /**
@@ -116,7 +118,7 @@ public class TrangNhanVien extends JPanel {
         comboBox_gt.setBounds(156, 265, 78, 31);
         panel_thongTinNV.add(comboBox_gt);
         comboBox_gt.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        comboBox_gt.setModel(new DefaultComboBoxModel(new String[] {"Nam", "Nữ"}));
+        comboBox_gt.setModel(new DefaultComboBoxModel(new String[]{"Nam", "Nữ"}));
 
         JLabel label_diaChi = new JLabel("Địa chỉ:");
         label_diaChi.setBounds(58, 332, 68, 25);
@@ -142,7 +144,6 @@ public class TrangNhanVien extends JPanel {
         label_hienGioVaoTruc.setBounds(152, 0, 200, 31);
         panel_time.add(label_hienGioVaoTruc);
         label_hienGioVaoTruc.setFont(new Font("Tahoma", Font.PLAIN, 20));
-
 
 
         JPanel panel_Table = new JPanel();
@@ -171,7 +172,8 @@ public class TrangNhanVien extends JPanel {
         JScrollPane scrollPane = new JScrollPane(table);
         panel_table.add(scrollPane);
 
-        JDateChooser dateChooser_1 = new JDateChooser();
+        dateChooser_ngayTruc = new JDateChooser();
+
 
         JPanel panel_menu = new JPanel();
         panel_menu.setBounds(0, 0, 71, 701);
@@ -194,7 +196,7 @@ public class TrangNhanVien extends JPanel {
         btn_capNhatThongTin.setFont(new Font("Tahoma", Font.PLAIN, 17));
         panel_buttonGroup.add(btn_capNhatThongTin);
 
-        JButton btn_quanLyNV = new JButton("Quản lý nhân viên");
+        btn_quanLyNV = new JButton("Quản lý nhân viên");
         btn_quanLyNV.setFont(new Font("Tahoma", Font.PLAIN, 17));
         panel_buttonGroup.add(btn_quanLyNV);
 
@@ -210,7 +212,7 @@ public class TrangNhanVien extends JPanel {
         panel_table.setBounds(0, 0, 647, 347);
         panel_table.add(panel_timeChooser, BorderLayout.NORTH);
         panel_timeChooser.setLayout(new GridLayout(0, 1, 0, 0));
-        panel_timeChooser.add(dateChooser_1);
+        panel_timeChooser.add(dateChooser_ngayTruc);
 
         JPanel panel_2 = new JPanel();
         panel_2.setBackground(new Color(224, 247, 250));
@@ -248,7 +250,7 @@ public class TrangNhanVien extends JPanel {
 
         comboBox_gt.setBackground(new Color(232, 245, 253)); // #E8F5FD
 
-        dateChooser_1.setBackground(new Color(232, 245, 253)); // #E8F5FD
+        dateChooser_ngayTruc.setBackground(new Color(232, 245, 253)); // #E8F5FD
         table.setBackground(new Color(232, 245, 253)); // #E8F5FD
 
         table.setBackground(new Color(232, 245, 253)); // #E8F5FD
@@ -263,9 +265,8 @@ public class TrangNhanVien extends JPanel {
         dateChooser_ngaySinh.setForeground(new Color(144, 202, 249));
         dateChooser_ngaySinh.setBackground(new Color(232, 245, 253)); // #E8F5FD
 
-        hienLichSuTrucLenBang();
-
-
+        tableModel = (DefaultTableModel) table.getModel();
+        hienLichSuTruc();
 
 // ADD ACTION LISTENER
         HanhDong_TrangNhanVien hanhDong_trangNhanVien = new HanhDong_TrangNhanVien(this);
@@ -273,51 +274,63 @@ public class TrangNhanVien extends JPanel {
         btn_doiMK.addActionListener(hanhDong_trangNhanVien);
         btn_ketCa.addActionListener(hanhDong_trangNhanVien);
         btn_quanLyNV.addActionListener(hanhDong_trangNhanVien);
+        dateChooser_ngayTruc.addPropertyChangeListener(hanhDong_trangNhanVien);
     }
 
-
-
-    public void regexCapNhat(String ten,String sdt, String diaChi){
-        if(!regexTen(ten) || !regexSDT(sdt) || !regexDiaChi(diaChi)){
+    public void regexCapNhat(String ten, String sdt, String diaChi) {
+        if (!regexTen(ten) || !regexSDT(sdt) || !regexDiaChi(diaChi)) {
         }
     }
 
-    public static boolean regexTen(String ten){
+    public static boolean regexTen(String ten) {
         String regex = "^[\\p{L}]+(?:\\s+[\\p{L}'-]+)+$";
         //xoa khoang trang thua giua cac tu
 
 
-        if(!ten.matches(regex)){
+        if (!ten.matches(regex)) {
             JOptionPane.showMessageDialog(null, "Tên không được có ký tự đặc biệt, số hoặc chỉ có một từ!");
             return false;
         }
         return true;
     }
-    public static boolean regexDiaChi(String diaChi){
+
+    public static boolean regexDiaChi(String diaChi) {
         String regex = "^([\\p{L}0-9\\s,./-]+)?$";
-        if(!diaChi.matches(regex)){
+        if (!diaChi.matches(regex)) {
             JOptionPane.showMessageDialog(null, "Địa chỉ không được có ký tự đặc biệt!");
             return false;
         }
         return true;
     }
-    public static boolean regexSDT(String sdt){
+
+    public static boolean regexSDT(String sdt) {
         String regex = "^[0-9]{10}$";
-        if(!sdt.matches(regex)){
+        if (!sdt.matches(regex)) {
             JOptionPane.showMessageDialog(null, "Số điện thoại phải đủ 10 số và không có ký tự đặc biệt!");
             return false;
         }
         return true;
     }
-    public void hienLichSuTrucLenBang(){
 
-        ArrayList<CaTruc> dsCaTruc = CaTruc_DAO.layDanhSachTruc(HanhDong_TrangDangNhap.maNV);
-        DefaultTableModel model = (DefaultTableModel) table.getModel();
-        model.setRowCount(0);
-        for (CaTruc caTruc : dsCaTruc) {
-            model.addRow(new Object[]{caTruc.getNgayGioBatDau(), caTruc.getNgayGioKetThuc()});
+    public boolean regex_birthDay() {
+        Date date = dateChooser_ngaySinh.getDate();
+        LocalDate ngaySinh = LocalDate.of(date.getYear() + 1900, date.getMonth() + 1, date.getDate());
+        LocalDate ngayHienTai = LocalDate.now();
+        // phai tren 18 tuoi
+        if (ngayHienTai.getYear() - ngaySinh.getYear() < 18) {
+            JOptionPane.showMessageDialog(null, "Nhân viên phải trên 18 tuổi");
+            return false;
         }
-
+        return true;
     }
-
+    private void hienLichSuTruc () {
+        tableModel.setRowCount(0);
+        ArrayList<CaTruc> dsCaTruc = CaTruc_DAO.layDanhSachTruc(HanhDong_TrangDangNhap.maNV);
+        for (CaTruc caTruc : dsCaTruc) {
+            this.tableModel.addRow(new Object[]{
+                    caTruc.getNgayGioBatDau(),
+                    caTruc.getNgayGioKetThuc()
+            });
+        }
+    }
 }

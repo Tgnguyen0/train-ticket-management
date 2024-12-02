@@ -5,6 +5,7 @@ import app.giao_dien.*;
 import app.phan_tu_tuy_chinh.TaoVeBangFilePDF;
 import app.thuc_the.*;
 import com.toedter.calendar.JDateChooser;
+import java.time.temporal.ChronoUnit;
 
 import javax.swing.*;
 import java.awt.*;
@@ -25,6 +26,8 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
     public List<Ve> dsVeDaDat;
     public List<Ghe> dsGhe;
     public String maGa;
+    public boolean khonglonHonHoacBangNgayHienTai;
+    public boolean khongQuaBaNgaySoVoiHienTai;
 
     public HanhDong_TrangDatVe(TrangDatVe trangDatVe) {
         this.trangDatVe = trangDatVe;
@@ -53,10 +56,22 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
         }
 
         if (source == this.trangDatVe.nutDSVe) {
-            TrangDanhSachVeTau.moGiaoDienDanhSach();
+           // TrangDanhSachVeTau.moGiaoDienDanhSach();
+            CardLayout cardLayout = (CardLayout) this.trangDatVe.trangDinhHuong.getTrangChua().getLayout();
+            cardLayout.show(this.trangDatVe.trangDinhHuong.getTrangChua(), "Trang Danh Sach Ve");
         }
 
         if (source == this.trangDatVe.nutHienThiSoDoGhe) {
+            if (khonglonHonHoacBangNgayHienTai) {
+                hienThiThongBao("Ngày đi phải sau Ngày hiện tại.", "Lỗi chọn ngày đi", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            if (khongQuaBaNgaySoVoiHienTai) {
+                hienThiThongBao("Ngày đi không được cách quá 2 ngày so với ngày hiện tại.", "Lỗi chọn ngày đi", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
             if (trangDatVe.thanhNhapNgayDi.getDate() == null) {
                 hienThiThongBao("Chưa chọn ngày khởi hành", "Lỗi chọn ngày", JOptionPane.ERROR_MESSAGE);
                 return;
@@ -84,54 +99,41 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
             trangCacTau = new TrangCacTau(this.trangDatVe.layDSTau(), this.trangDatVe.layGheDao(), dsLich);
             trangCacTau.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             trangCacTau.setVisible(true);
-        }
 
-        if (this.trangCacTau != null && this.trangCacTau.laySoHieuTauChon() != null) {
-            this.trangDatVe.soHieuDaChon = this.trangCacTau.laySoHieuTauChon();
+            if (this.trangDatVe.soHieuDaChon != null) {
+                trangCacTau.datSoHieuTauChon(this.trangDatVe.soHieuDaChon);
+            }
 
-            LocalDateTime ngayKhoiHanh = this.trangDatVe.thanhNhapNgayDi.getDate()       // Lấy ngày khởi hành
-                    .toInstant()
-                    .atZone(ZoneId.systemDefault())
-                    .toLocalDateTime();
-
-            // Lấy lịch tàu đó
-            LichCapBenGa lich = this.trangDatVe.lichDao.ChonTheoSoHieuNgayKHVaGa(
-                    this.trangDatVe.soHieuDaChon,
-                    ngayKhoiHanh,
-                    this.maGa
-            );
-
-            this.trangDatVe.thanhNhapGioDen.setText(lich.getGioKhoiHanh().getHour() +
-                    ":" + lich.getGioKhoiHanh().getMinute());
-        } else {
-            this.trangDatVe.soHieuDaChon = null;
+            trangCacTau.datMaGa(maGa);
         }
 
         if (source == this.trangDatVe.nutXacNhan) {
-            if (this.trangDatVe.soHieuDaChon == null) {
-                hienThiThongBao("Chưa chọn số hiệu tàu", "Lỗi chọn ghế", JOptionPane.INFORMATION_MESSAGE);
-
-                return;
-            }
-
             // Lấy danh sách khách hàng đã đặt vé
             List<KhachHang> dsKhDatVe = this.trangDatVe.layDSKhDatVe();
             // Lấy danh sách chỗ đã đặt
             this.dsGhe = new ArrayList<>(this.trangDatVe.gheDao.layDSGheDat());
 
+            // Phải đăng nhập mới cho đặt vé
+            if (this.trangDatVe.layMaNV() == null) {
+                hienThiThongBao("Chưa có đăng nhập!", "Lỗi đăng nhập", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // Phải có danh sách khách đặt vé
             if (dsKhDatVe == null) {
                 hienThiThongBao("Chưa có thông tin khách hàng !", "Lỗi đặt véNV0173", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
+            // Phải đặt ghế trước đã rồi mới đặt vé
             if (dsGhe.isEmpty()) {
                 hienThiThongBao("Chưa có đặt ghế !", "Lỗi đặt ghế", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
             String hoTen = dsKhDatVe.get(bienSoTang).getTenKH(); // Lấy họ tên
-            String sdt = dsKhDatVe.get(bienSoTang).getSoDT(); // lấy số điện thoại
-            String email = dsKhDatVe.get(bienSoTang).getEmail(); // lấy email
+            //String sdt = dsKhDatVe.get(bienSoTang).getSoDT(); // lấy số điện thoại
+            //String email = dsKhDatVe.get(bienSoTang).getEmail(); // lấy email
 
             // Đặt cho khách hàng tiếp theo
             if (bienSoTang + 1 < dsKhDatVe.size()) {  // Thay đổi ở đây
@@ -172,9 +174,10 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
 
             Ghe daDat = this.trangDatVe.gheDao.traGheChon(); // lấy ghế đã đặt
 
-            for (Ghe ghe: this.trangDatVe.gheDao.layDSGheDat()) {
+            // Nhớ là để comment khi không dùng nữa 🤡
+            /*for (Ghe ghe: this.trangDatVe.gheDao.layDSGheDat()) {
                 System.out.println("dsChoDaDat: " + ghe.getMaGhe());
-            }
+            }*/
 
             String soHieuTau = this.trangDatVe.soHieuDaChon; // Lấy số hiệu tàu đã chọn
             LichCapBenGa lich = this.trangDatVe.lichDao.ChonTheoSoHieuNgayKHVaGa(soHieuTau, ngayKhoiHanh, maGa); // Lấy lịch tàu đó
@@ -203,6 +206,7 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
                     daDat.getLoaiGhe().toString()                                 // Loại ghế
             );
 
+            // Nhớ là để comment khi không dùng nữa 🤡
             /*System.out.println(
                     ve.getMaVe() + " " +
                             ve.getLoaiDoiTuong() + " " +
@@ -242,48 +246,55 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
             // Thêm vào danh sách vé đã đặt
             this.trangDatVe.veDao.layDSVeDat().add(veDat);
 
-            for (int i = 0 ; i < this.trangDatVe.veDao.layDSVeDat().size(); i++) {
+            // Nhớ là để comment khi không dùng nữa 🤡
+            /*for (int i = 0 ; i < this.trangDatVe.veDao.layDSVeDat().size(); i++) {
                 System.out.println(this.trangDatVe.veDao.layDSVeDat().get(i).getMaVe());
-            }
+            }*/
 
             // Tăng đơn vị
             this.bienSoTang++;
         }
 
         if (e.getSource() == this.trangDatVe.nutThanhToan) {
+
+            // Phải đăng nhập mới cho thanh toán vé
             if (this.trangDatVe.layMaNV() == null) {
                 hienThiThongBao("Chưa có đăng nhập!", "Lỗi đăng nhập", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
+            // Nếu danh sách vé rỗng
             if (this.trangDatVe.veDao.layDSVeDat().isEmpty()) {
                 hienThiThongBao("Danh sách vé rỗng!", "Lỗi đặt vé", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
+            // Thông báo không cho thanh toán nếu chưa đặt vé xong
             if (this.trangDatVe.veDao.layDSVeDat().size() != this.trangDatVe.dsKHDatVe.size()) {
                 hienThiThongBao("Chưa đặt vé xong!", "Lỗi đặt vé", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
+            // Khởi tạo trang thanh toán
             TrangThanhToan trangThanhToan = new TrangThanhToan(this.trangDatVe.veDao.layDSVeDat(), this.trangDatVe.dsKHDatVe, this.dsGhe);
             trangThanhToan.setVisible(true);
 
+            // Thiết lập mã nhân viên tạo vé
             trangThanhToan.datMaNV(this.trangDatVe.layMaNV());
-
-            /*for (int i = 0 ; i < this.trangDatVe.veDao.layDSVeDat().size() ; i++) {
-                this.trangDatVe.veDao.luuVe(this.trangDatVe.veDao.layDSVeDat().get(i));
-            }*/
         }
 
+        // Nếu là chọn nút in vé
         if (e.getSource() == this.trangDatVe.nutInVe) {
+            // Thông báo nếu chưa thanh toán vé và thoát
             if (!this.trangDatVe.daThanhToan) {
                 hienThiThongBao("Chưa được in vé khi chưa thanh toán", "Lỗi thanh toán", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
+            // Lấy danh sách vé đặt
             List<Ve> dsVe = this.trangDatVe.veDao.layDSVeDat();
 
+            // Khởi tạo trang in vé với các giá trị truyền vào
             TrangInVe trangInVe = new TrangInVe(dsVe, this.trangDatVe.layDSKhDatVe(), this.dsGhe);
             trangInVe.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             trangInVe.setVisible(true);
@@ -304,8 +315,9 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
     @Override
     public void itemStateChanged(ItemEvent e) {
         if (e.getStateChange() == ItemEvent.SELECTED) {
-            String loaiGheDaChon = (String) e.getItem();
+            //String loaiGheDaChon = (String) e.getItem();
 
+            // Kiểm tra việc chọn điểm đi và điểm đến
             if (this.trangDatVe.thanhCacDiemDen.getSelectedItem().equals(this.trangDatVe.thanhCacDiemDi.getSelectedItem())) {
                 hienThiThongBao("Điểm đi và điểm đến không được trùng", "Lỗi chọn địa điểm", JOptionPane.ERROR_MESSAGE);
             }
@@ -347,10 +359,10 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
 
         // Kiểm tra thay đổi thực sự của ngày
         if (evt.getOldValue() != evt.getNewValue()) {
-            LocalDate ngayDi = layNgay(this.trangDatVe.thanhNhapNgayDi); // Lấy ngày đi tại thời điểm thay đổi
+            //LocalDate ngayDi = layNgay(this.trangDatVe.thanhNhapNgayDi); // Lấy ngày đi tại thời điểm thay đổi
             //LocalDate ngayTroVe = layNgay(this.trangDatVe.thanhNhapNgayTroVe); // Lấy ngày trở về tại thời điểm thay đổi
 
-            // Check for departure date validation
+            // Kiểm tra ngày đi hợp lệ
             if (source == this.trangDatVe.thanhNhapNgayDi.getDateEditor() /*&&
                     this.trangDatVe.nutLuaChonKhuHoi.isSelected()*/) {
                 kiemTraNgayDi();
@@ -365,15 +377,32 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
     }
 
     private void kiemTraNgayDi() {
-        LocalDate ngayDi = layNgay(this.trangDatVe.thanhNhapNgayDi);
-        LocalDate ngayHienTai = LocalDate.now();
+        LocalDate ngayDi = layNgay(this.trangDatVe.thanhNhapNgayDi); // Lấy ngày đi từ JDateChooser
+        LocalDate ngayHienTai = LocalDate.now(); // Ngày hiện tại
 
+        // Kiểm tra nếu ngày đi không hợp lệ (trước ngày hiện tại)
         if (!ngayDi.isAfter(ngayHienTai) && !ngayDi.equals(ngayHienTai)) {
             if (!isErrorDialogVisible) {
                 hienThiThongBao("Ngày đi phải sau Ngày hiện tại.", "Lỗi chọn ngày đi", JOptionPane.ERROR_MESSAGE);
-                isErrorDialogVisible = true;
+                isErrorDialogVisible = true; // Để tránh hiện lên nhiều lần
             }
-        } else {
+
+            khonglonHonHoacBangNgayHienTai = true; // Đặt nếu ngày chọn là trước ngày hiện tại
+        }
+        // Kiểm tra nếu ngày đi cách quá 2 ngày
+        else if (ChronoUnit.DAYS.between(ngayHienTai, ngayDi) > 2) {
+            if (!isErrorDialogVisible) {
+                hienThiThongBao("Ngày đi không được cách quá 2 ngày so với ngày hiện tại.", "Lỗi chọn ngày đi", JOptionPane.ERROR_MESSAGE);
+                isErrorDialogVisible = true; // Để tránh hiện lên nhiều lần
+            }
+
+            khongQuaBaNgaySoVoiHienTai = true; // Đặt nếu ngày chọn không quá 3 ngày
+        }
+        // Ngày đi hợp lệ
+        else {
+            // Giữ nguyên mặc định
+            khonglonHonHoacBangNgayHienTai = false;
+            khongQuaBaNgaySoVoiHienTai = false;
             isErrorDialogVisible = false;
         }
     }
@@ -393,12 +422,15 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
     }*/
 
     private void hienThiThongBao(String chuThich, String tieuDe, int message) {
+        // Khởi tạo JLabel
         JLabel thongBao = new JLabel(chuThich);
         thongBao.setFont(this.trangDatVe.phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, 12));
 
+        // Khởi tạo JOptionPane
         JOptionPane hienThiLoi = new JOptionPane(thongBao, message);
         hienThiLoi.setForeground(this.trangDatVe.xanhBrandeis);
 
+        // Khởi tạo JDialog
         JDialog hoiThoai = hienThiLoi.createDialog(tieuDe);
         ImageIcon bieuTuongTau = new ImageIcon("assets/icon.png");
         hoiThoai.setIconImage(bieuTuongTau.getImage());

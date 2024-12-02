@@ -19,6 +19,7 @@ public class CaTruc {
     public CaTruc() {
     }
 
+
     public CaTruc(String maNhanVien, LocalDateTime ngayGioBatDau, LocalDateTime ngayGioKetThuc, int tongHoaDon, double tongTienCaTruoc, double tongTienHoaDon, double tongTienThucThu, double thatThoat, double tongVAT, double tongTienGiamGia) {
         this.maNhanVien = maNhanVien;
         this.ngayGioBatDau = ngayGioBatDau;

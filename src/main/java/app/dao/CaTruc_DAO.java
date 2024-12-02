@@ -3,11 +3,11 @@ package app.dao;
 import app.ket_noi_co_so_du_lieu.KetNoiCoSoDuLieu;
 import app.thuc_the.CaTruc;
 
-import javax.swing.text.DateFormatter;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class CaTruc_DAO {
     public static double layTienCaTruoc(){
@@ -29,13 +29,13 @@ public class CaTruc_DAO {
                 System.out.println("No data found.");
                 // Handle the case when no data is available
             }
-            System.out.printf("Tien ca truoc: %f", tienCaTruoc);
+
             ps.close();
             c.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        System.out.printf("Tien ca truoc: %f", tienCaTruoc);
+
         return tienCaTruoc;
     }
 
@@ -65,7 +65,6 @@ public class CaTruc_DAO {
             ps.close();
             c.close();
             if (kq > 0) {
-                System.out.println("Them thanh cong");
                 return true;
             }
 
@@ -76,7 +75,6 @@ public class CaTruc_DAO {
     }
 
     public static ArrayList<CaTruc> layDanhSachTruc(String maNV) {
-        System.out.println(maNV);
         ArrayList<CaTruc> danhSachTruc = new ArrayList<>();
         Connection c = null;
         try {
@@ -89,22 +87,22 @@ public class CaTruc_DAO {
             PreparedStatement ps = c.prepareStatement(sql);
             ps.setString(1, maNV);
             ResultSet rs = ps.executeQuery();
-            System.out.println(rs);
             while (rs.next()) {
-                System.out.println(1);
+
+                String maCaTruc = rs.getString("maCa");
                 String maNhanVien = rs.getString("maNV");
-                System.out.println(2);
                 String ngayGioBatDau = rs.getString("ngayGioBatDau").replace(".0", "");
                 String ngayGioKetThuc = rs.getString("ngayGioKetCa").replace(".0", "");
-                System.out.println(4);
-                System.out.println(ngayGioKetThuc);
-
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
                 LocalDateTime ngayGioBatDau_localDateTime = LocalDateTime.parse(ngayGioBatDau, formatter);
                 LocalDateTime ngayGioKetThuc_localDateTime = LocalDateTime.parse(ngayGioKetThuc, formatter);
 
-                CaTruc caTruc = new CaTruc(maNhanVien, ngayGioBatDau_localDateTime, ngayGioKetThuc_localDateTime);
-                System.out.printf(caTruc.toString());
+                CaTruc caTruc = new CaTruc();
+                caTruc.setMaCaTruc(maCaTruc);
+                caTruc.setMaNhanVien(maNhanVien);
+                caTruc.setNgayGioBatDau(ngayGioBatDau_localDateTime);
+                caTruc.setNgayGioKetThuc(ngayGioKetThuc_localDateTime);
+
                 danhSachTruc.add(caTruc);
             }
             ps.close();
@@ -115,6 +113,55 @@ public class CaTruc_DAO {
         }
         return null;
 
+    }
+    public static ArrayList<CaTruc> layCaTrucTheoNgay (LocalDateTime date, String maNV){
+        ArrayList<CaTruc> danhSachTruc = new ArrayList<>();
+        Connection c = null;
+        LocalDateTime lastOfDay = date.withHour(23).withMinute(59).withSecond(59);
+        try {
+            c = KetNoiCoSoDuLieu.ketNoiDB_KhangVersion();
+            if (c == null) {
+                System.out.println("Ket noi that bai");
+                return null;
+            }
+            String sql = "SELECT * FROM [dbo].[CaTruc] " +
+                    "WHERE maNV = ? " +
+                    "AND ngayGioBatDau >= ? " +
+                    "AND ngayGioBatDau <= ? " +
+                    "ORDER BY maCa DESC;";
+
+            LocalDateTime startOfDay = date.withHour(0).withMinute(0).withSecond(0);
+            LocalDateTime endOfDay = date.withHour(23).withMinute(59).withSecond(59);
+            PreparedStatement ps = c.prepareStatement(sql);
+            ps.setString(1, maNV);
+            ps.setTimestamp(2, Timestamp.valueOf(startOfDay));
+            ps.setTimestamp(3, Timestamp.valueOf(endOfDay));
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                String maNhanVien = rs.getString("maNV");
+                String maCaTruc = rs.getString("maCa");
+                String ngayGioBatDau = rs.getString("ngayGioBatDau").replace(".0", "");
+                String ngayGioKetThuc = rs.getString("ngayGioKetCa").replace(".0", "");
+
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                LocalDateTime ngayGioBatDau_localDateTime = LocalDateTime.parse(ngayGioBatDau, formatter);
+                LocalDateTime ngayGioKetThuc_localDateTime = LocalDateTime.parse(ngayGioKetThuc, formatter);
+
+                CaTruc caTruc = new CaTruc();
+                caTruc.setMaCaTruc(maCaTruc);
+                caTruc.setMaNhanVien(maNhanVien);
+                caTruc.setNgayGioBatDau(ngayGioBatDau_localDateTime);
+                caTruc.setNgayGioKetThuc(ngayGioKetThuc_localDateTime);
+
+                danhSachTruc.add(caTruc);
+            }
+            ps.close();
+            c.close();
+            return danhSachTruc;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public static CaTruc layCaTrucTheoMaNV(String maNhanVien) {
@@ -158,5 +205,46 @@ public class CaTruc_DAO {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static CaTruc layThongTinCaTruc(String maCaTruc) {
+        CaTruc caTruc = new CaTruc();
+        try {
+            Connection c = KetNoiCoSoDuLieu.ketNoiDB_KhangVersion();
+            if (c == null) {
+                System.out.println("Ket noi that bai");
+                return null;
+            }
+            String sql = "SELECT * FROM [dbo].[CaTruc] WHERE maCa = ?;";
+            PreparedStatement ps = c.prepareStatement(sql);
+            ps.setString(1, maCaTruc);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                String maNV = rs.getString("maNV");
+                String ngayGioBatDau = rs.getString("ngayGioBatDau").replace(".0", "");
+                String ngayGioKetThuc = rs.getString("ngayGioKetCa").replace(".0", "");
+
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                LocalDateTime ngayGioBatDau_localDateTime = LocalDateTime.parse(ngayGioBatDau, formatter);
+                LocalDateTime ngayGioKetThuc_localDateTime = LocalDateTime.parse(ngayGioKetThuc, formatter);
+
+                int tongHoaDon = rs.getInt("tongHoaDon");
+                double tongTienCaTruoc = rs.getDouble("tongTienCaTruoc");
+                double tongTienHoaDon = rs.getDouble("tongTienHoaDon");
+                double tongTienThucThu = rs.getDouble("tongTienThucThu");
+                double thatThoat = rs.getDouble("thatThoat");
+                double tongVAT = rs.getDouble("tongVAT");
+                double tongTienGiamGia = rs.getDouble("tongTienGiamGia");
+
+                caTruc = new CaTruc(maCaTruc, maNV, ngayGioBatDau_localDateTime, ngayGioKetThuc_localDateTime, tongHoaDon, tongTienCaTruoc, tongTienHoaDon, tongTienThucThu, thatThoat, tongVAT, tongTienGiamGia);
+
+            }
+            ps.close();
+            c.close();
+            return caTruc;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return caTruc;
     }
 }

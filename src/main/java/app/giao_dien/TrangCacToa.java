@@ -129,9 +129,18 @@ public class TrangCacToa extends JPanel {
         thanhDinhHuong.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 0));
 
         for (int i = 12 ; i > 0 ; i--) {
-            JButton nutToa = taoNutToa(i);
+            NutAnh nutToa = taoNutToa(i);
             nutToa.setActionCommand(String.valueOf(i));
             thanhDinhHuong.add(nutToa);
+
+            if (!this.gheDao.layDSGheDat().isEmpty()) {
+
+                for (Ghe ghe : this.gheDao.layDSGheDat()) {
+                    if (ghe.getMaToa().equals(dsToa.get(i - 1).getMaToa())) {
+                        nutToa.datAnhDangChon();
+                    }
+                }
+            }
         }
 
         /*this.nutToa12 = taoNutToa(12);
@@ -354,6 +363,11 @@ public class TrangCacToa extends JPanel {
             String tenToa = toa.getTenToa();
             String maToa = toa.getMaToa();
             List<Ghe> gheList = gheDao.ChonTheoMaToaTatCa(maToa);
+
+            System.out.println("Ma toa: " + maToa);
+            for (int j = 0 ; j < gheList.size() ; j++) {
+                System.out.println("ma ghe: " + gheList.get(j).getMaGhe() + "so ghe: " + gheList.get(j).getSoGhe() + "trang thai: " + gheList.get(j).getTrangThai());
+            }
 
             JPanel trangSoDo;
             if (0 <= i && i <= 3) {

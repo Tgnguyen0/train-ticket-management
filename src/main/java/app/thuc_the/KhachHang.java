@@ -10,7 +10,6 @@ public class KhachHang implements Serializable {
     private String email;
     private GIOI_TINH gioiTinh;
 
-
     /*
         cần kiểm tra lại phần truyền dữ liệu khách hàng vào
      */
@@ -23,7 +22,6 @@ public class KhachHang implements Serializable {
 //        this.email = email;
 //        this.setGioiTinh(gioiTinh);
 //    }
-
 
     public KhachHang() {
     }

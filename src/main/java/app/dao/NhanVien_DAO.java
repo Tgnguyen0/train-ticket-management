@@ -100,7 +100,6 @@ public class NhanVien_DAO {
                 String matKhau = rs.getString("MatKhau");
                 st.close();
                 connection.close();
-                System.out.println(matKhau);
                 return matKhau.trim();
             }
             st.close();
@@ -140,6 +139,126 @@ public class NhanVien_DAO {
         return false;
 
     }
+
+    public static ArrayList<NhanVien> timKiemTheoSDT(String soDienThoai) {
+        ArrayList<NhanVien> dsnv = null;
+        try {
+            Connection c = KetNoiCoSoDuLieu.ketNoiDB_KhangVersion();
+            if (c == null) {
+                return null;
+            }
+            String sql = "SELECT * FROM NhanVien WHERE SoDT = ?";
+            PreparedStatement ps = c.prepareStatement(sql);
+            ps.setString(1, soDienThoai);
+            ResultSet rs = ps.executeQuery();
+            dsnv = new ArrayList<>();
+            while (rs.next()) {
+                NhanVien nv = new NhanVien();
+                nv.setMaNV(rs.getString("MaNV"));
+                nv.setTenNV(rs.getString("TenNV"));
+                nv.setNgaySinh(rs.getDate("NgaySinh").toLocalDate());
+                nv.setDiaChi(rs.getString("DiaChi"));
+                nv.setSoDT(rs.getString("SoDT"));
+                GIOI_TINH gt = GIOI_TINH.NAM;
+                if (!rs.getString("GioiTinh").equals("Nam")) {
+                    gt = GIOI_TINH.NU;
+                }
+                nv.setGioiTinh(gt);
+                nv.setVaiTro(rs.getString("VaiTro"));
+                dsnv.add(nv);
+            }
+            rs.close();
+            ps.close();
+            c.close();
+            return dsnv;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return dsnv;
+    }
+
+    public static ArrayList<NhanVien> timKiemTheoTenVaSDT(String ten, String soDienThoai) {
+        ArrayList<NhanVien> dsnv = null;
+        try {
+            Connection c = KetNoiCoSoDuLieu.ketNoiDB_KhangVersion();
+            if (c == null) {
+                return null;
+            }
+            String sql = "SELECT * FROM NhanVien WHERE TenNV like ? AND SoDT = ?";
+            PreparedStatement ps = c.prepareStatement(sql);
+            ps.setString(1, "%" + ten + "%");
+            ps.setString(2, soDienThoai);
+            ResultSet rs = ps.executeQuery();
+            dsnv = new ArrayList<>();
+            while (rs.next()) {
+                NhanVien nv = new NhanVien();
+                nv.setMaNV(rs.getString("MaNV"));
+                nv.setTenNV(rs.getString("TenNV"));
+                nv.setNgaySinh(rs.getDate("NgaySinh").toLocalDate());
+                nv.setDiaChi(rs.getString("DiaChi"));
+                nv.setSoDT(rs.getString("SoDT"));
+                GIOI_TINH gt = GIOI_TINH.NAM;
+                if (!rs.getString("GioiTinh").equals("Nam")) {
+                    gt = GIOI_TINH.NU;
+                }
+                nv.setGioiTinh(gt);
+                nv.setVaiTro(rs.getString("VaiTro"));
+                dsnv.add(nv);
+            }
+            rs.close();
+            ps.close();
+            c.close();
+            return dsnv;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return dsnv;
+    }
+
+    public static void capNhatChiTietNhanVien(NhanVien nv) {
+        try {
+            Connection c = KetNoiCoSoDuLieu.ketNoiDB_KhangVersion();
+            if (c == null) {
+                return;
+            }
+            String sql = "UPDATE NhanVien SET TenNV = ?, NgaySinh = ?, DiaChi = ?, SoDT = ?, GioiTinh = ?, VaiTro = ? WHERE MaNV = ?";
+            PreparedStatement ps = c.prepareStatement(sql);
+            ps.setString(1, nv.getTenNV());
+            ps.setDate(2, java.sql.Date.valueOf(nv.getNgaySinh()));
+            ps.setString(3, nv.getDiaChi());
+            ps.setString(4, nv.getSoDT());
+            ps.setString(5, nv.getGioiTinh().getValue());
+            ps.setString(6, nv.getVaiTro());
+            ps.setString(7, nv.getMaNV());
+            ps.executeUpdate();
+            ps.close();
+            c.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static int thuHoiTaiKhoan(String maNV) {
+        int kq = 0;
+
+        try {
+            Connection c = KetNoiCoSoDuLieu.ketNoiDB_KhangVersion();
+            if (c == null) {
+                return 0;
+            }
+            String sql = "UPDATE NhanVien set TenDangNhap = ? WHERE MaNV = ?";
+            PreparedStatement ps = c.prepareStatement(sql);
+            ps.setString(1, "Đã thu hồi");
+            ps.setString(2, maNV);
+            kq = ps.executeUpdate();
+            ps.close();
+            c.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return kq;
+    }
+
 
     public void NhanVien_DAO() {
         dsnv = new ArrayList<NhanVien>();
@@ -243,13 +362,13 @@ public class NhanVien_DAO {
     }
 
     public static NhanVien layThongTinNV(String username) {
-        NhanVien nv = null;
+        NhanVien nv = new NhanVien();
         try {
             // Bước 1: tạo kết nối đến CSDL
             Connection connection = KetNoiCoSoDuLieu.ketNoiDB_KhangVersion();
 
             // Bước 2: tạo ra đối tượng statement
-            String sql = "SELECT * FROM NhanVien WHERE TenDangNhap = ?";
+            String sql = "SELECT * FROM NhanVien WHERE MaNV = ?";
             PreparedStatement st = connection.prepareStatement(sql);
             st.setString(1, username);
 
@@ -260,14 +379,24 @@ public class NhanVien_DAO {
                 String tenNV = rs.getString("TenNV");
                 String diaChi = rs.getString("DiaChi");
                 String soDT = rs.getString("SoDT");
+                String tenDangNhap = rs.getString("TenDangNhap");
                 LocalDate ngaySinh = rs.getDate("NgaySinh").toLocalDate();
                 GIOI_TINH gt = GIOI_TINH.NAM;
                 if (!rs.getString("GioiTinh").equals("Nam")) {
                     gt = GIOI_TINH.NU;
                 }
+                String vaiTro = rs.getString("VaiTro");
                 st.close();
                 connection.close();
-                return nv = new NhanVien(maNV, tenNV, ngaySinh, diaChi, soDT, gt);
+                nv.setMaNV(maNV);
+                nv.setTenNV(tenNV);
+                nv.setDiaChi(diaChi);
+                nv.setSoDT(soDT);
+                nv.setTenDangNhap(tenDangNhap);
+                nv.setNgaySinh(ngaySinh);
+                nv.setGioiTinh(gt);
+                nv.setVaiTro(vaiTro);
+                return nv;
             }
             st.close();
             connection.close();
@@ -280,7 +409,7 @@ public class NhanVien_DAO {
 
     }
 
-    public static NhanVien layNhanVienTheo_TenNhanVien(String tenNhanVienRequest){
+    public static NhanVien layNhanVienTheo_TenNhanVien(String tenNhanVienRequest) {
         NhanVien nhanVien = null;
         String sql = "SELECT * FROM NhanVien WHERE TenNV = ?";
 
@@ -297,10 +426,9 @@ public class NhanVien_DAO {
                 nhanVien.setNgaySinh(resultSet.getDate("NgaySinh").toLocalDate());
                 nhanVien.setDiaChi(resultSet.getString("DiaChi"));
                 nhanVien.setSoDT(resultSet.getString("SoDT"));
-                if(resultSet.getString("GioiTinh").compareToIgnoreCase("Nam")==0){
+                if (resultSet.getString("GioiTinh").compareToIgnoreCase("Nam") == 0) {
                     nhanVien.setGioiTinh(GIOI_TINH.NAM);
-                }
-                else {
+                } else {
                     nhanVien.setGioiTinh(GIOI_TINH.NU);
                 }
                 nhanVien.setMatKhau(resultSet.getString("MatKhau"));
@@ -313,5 +441,102 @@ public class NhanVien_DAO {
         }
 
         return nhanVien;
+    }
+
+    public static int themNhanVien(NhanVien nv) {
+        int kq = 0;
+        try {
+            Connection c = KetNoiCoSoDuLieu.ketNoiDB_KhangVersion();
+            if (c == null) {
+                return 0;
+            }
+            String sql = "INSERT INTO NhanVien(TenNV, NgaySinh, DiaChi, SoDT, GioiTinh,VaiTro) VALUES( ?, ?, ?, ?, ?, ?)";
+            PreparedStatement ps = c.prepareStatement(sql);
+            ps.setString(1, nv.getTenNV());
+            ps.setDate(2, java.sql.Date.valueOf(nv.getNgaySinh()));
+            ps.setString(3, nv.getDiaChi());
+            ps.setString(4, nv.getSoDT());
+            ps.setString(5, nv.getGioiTinh().getValue());
+            ps.setString(6, nv.getVaiTro());
+            kq = ps.executeUpdate();
+            ps.close();
+            c.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return kq;
+    }
+
+    public static ArrayList<NhanVien> layDSNV() {
+        ArrayList<NhanVien> dsnv = null;
+        try {
+            Connection c = KetNoiCoSoDuLieu.ketNoiDB_KhangVersion();
+            if (c == null) {
+                return null;
+            }
+            String sql = "SELECT * FROM NhanVien order by TenNV";
+            PreparedStatement ps = c.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            dsnv = new ArrayList<>();
+            while (rs.next()) {
+                NhanVien nv = new NhanVien();
+                nv.setMaNV(rs.getString("MaNV"));
+                nv.setTenNV(rs.getString("TenNV"));
+                nv.setNgaySinh(rs.getDate("NgaySinh").toLocalDate());
+                nv.setDiaChi(rs.getString("DiaChi"));
+                nv.setSoDT(rs.getString("SoDT"));
+                GIOI_TINH gt = GIOI_TINH.NAM;
+                if (!rs.getString("GioiTinh").equals("Nam")) {
+                    gt = GIOI_TINH.NU;
+                }
+                nv.setGioiTinh(gt);
+                nv.setVaiTro(rs.getString("VaiTro"));
+                dsnv.add(nv);
+            }
+            rs.close();
+            ps.close();
+            c.close();
+            return dsnv;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return dsnv;
+    }
+
+    public static ArrayList<NhanVien> timTenNhanVien(String ten) {
+        ArrayList<NhanVien> dsnv = null;
+        try {
+            Connection c = KetNoiCoSoDuLieu.ketNoiDB_KhangVersion();
+            if (c == null) {
+                return null;
+            }
+            String sql = "SELECT * FROM NhanVien WHERE TenNV LIKE ?";
+            PreparedStatement ps = c.prepareStatement(sql);
+            ps.setString(1, "%" + ten + "%");
+            ResultSet rs = ps.executeQuery();
+            dsnv = new ArrayList<>();
+            while (rs.next()) {
+                NhanVien nv = new NhanVien();
+                nv.setMaNV(rs.getString("MaNV"));
+                nv.setTenNV(rs.getString("TenNV"));
+                nv.setNgaySinh(rs.getDate("NgaySinh").toLocalDate());
+                nv.setDiaChi(rs.getString("DiaChi"));
+                nv.setSoDT(rs.getString("SoDT"));
+                GIOI_TINH gt = GIOI_TINH.NAM;
+                if (!rs.getString("GioiTinh").equals("Nam")) {
+                    gt = GIOI_TINH.NU;
+                }
+                nv.setGioiTinh(gt);
+                nv.setVaiTro(rs.getString("VaiTro"));
+                dsnv.add(nv);
+            }
+            rs.close();
+            ps.close();
+            c.close();
+            return dsnv;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return dsnv;
     }
 }

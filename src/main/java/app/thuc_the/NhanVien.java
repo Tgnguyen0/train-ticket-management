@@ -14,6 +14,16 @@ public class NhanVien {
     private GIOI_TINH gioiTinh;
     private String matKhau;
     private String vaiTro;
+    private String tenDangNhap;
+
+    public NhanVien(String tenNV, LocalDate ngaySinh, String diaChi, String soDT, GIOI_TINH gioiTinh, String vaiTro) {
+        this.tenNV = tenNV;
+        this.ngaySinh = ngaySinh;
+        this.diaChi = diaChi;
+        this.soDT = soDT;
+        this.gioiTinh = gioiTinh;
+        this.vaiTro = vaiTro;
+    }
 
     public NhanVien(String maNV, String tenNV, LocalDate ngaySinh, String diaChi, String soDT, GIOI_TINH gioiTinh, String matKhau, String vaiTro) {
         this.maNV = maNV;
@@ -23,6 +33,16 @@ public class NhanVien {
         this.soDT = soDT;
         this.gioiTinh = gioiTinh;
         this.matKhau = matKhau;
+        this.vaiTro = vaiTro;
+    }
+
+    public NhanVien(String maNV, String tenNV, LocalDate ngaySinh, String diaChi, String soDT, GIOI_TINH gioiTinh, String vaiTro) {
+        this.maNV = maNV;
+        this.tenNV = tenNV;
+        this.ngaySinh = ngaySinh;
+        this.diaChi = diaChi;
+        this.soDT = soDT;
+        this.gioiTinh = gioiTinh;
         this.vaiTro = vaiTro;
     }
 
@@ -52,6 +72,14 @@ public class NhanVien {
 
         return maNV;
     }*/
+
+    public String getTenDangNhap() {
+        return tenDangNhap;
+    }
+
+    public void setTenDangNhap(String tenDangNhap) {
+        this.tenDangNhap = tenDangNhap;
+    }
 
     public void setMaNV(String maNV) {
         this.maNV = maNV;

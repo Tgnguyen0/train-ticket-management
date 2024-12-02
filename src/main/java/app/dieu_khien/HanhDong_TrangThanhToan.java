@@ -1,14 +1,12 @@
 package app.dieu_khien;
 
+import app.dao.ChiTietHoaDon_DAO;
 import app.giao_dien.TrangDatVe;
 import app.giao_dien.TrangDinhHuong;
 import app.giao_dien.TrangHoaDon;
 import app.giao_dien.TrangThanhToan;
 import app.phan_tu_tuy_chinh.TaoMaQR;
-import app.thuc_the.DaiNgo;
-import app.thuc_the.HoaDon;
-import app.thuc_the.TRANG_THAI_GHE;
-import app.thuc_the.Ve;
+import app.thuc_the.*;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -33,14 +31,17 @@ public class HanhDong_TrangThanhToan implements ActionListener, MouseListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        // Nếu chọn tiền mặt thì radioChuyenKhoan bỏ chọn
         if (e.getSource() == this.trangThanhToan.radioTienMat) {
             this.trangThanhToan.radioChuyenKhoan.setSelected(false);
         }
 
+        // Nếu chọn chuyển khoản thì radioTienMat bỏ chọn
         if (e.getSource() == this.trangThanhToan.radioChuyenKhoan) {
             this.trangThanhToan.radioTienMat.setSelected(false);
         }
 
+        // Nếu chọn tiền mặt và bấm nút thanh toán
         if (e.getSource() == this.trangThanhToan.ButtonThanhToan && this.trangThanhToan.radioTienMat.isSelected()) {
             double thanhTien = Double.parseDouble(this.trangThanhToan.tfThanhTien.getText());
             double tienNhan = Double.parseDouble(this.trangThanhToan.thanhTienNhan.getText());
@@ -77,6 +78,17 @@ public class HanhDong_TrangThanhToan implements ActionListener, MouseListener {
             // Lưu hóa đơn vào cơ sở dữ liệu
             //this.trangThanhToan.hdDao.LuuHoaDon(hd);
 
+            // Lưu vé vào Database
+            /*for (Ve ve : this.trangThanhToan.danhSachVe) {
+                ((TrangDatVe) TrangDinhHuong.getTrangChua().getComponent(1)).veDao.luuVe(ve);
+            }*/
+
+            // Lưu chi tiết hóa đơn
+            /*for (Ve ve : this.trangThanhToan.danhSachVe) {
+                ChiTietHoaDon cthd = new ChiTietHoaDon(ve.getMaVe(), hd.getMaHoaDon());
+                ChiTietHoaDon_DAO.themCTHD(cthd);
+            }*/
+
             // Cập nhật trạng thái ghế
             /*for (int i = 0 ; i < this.trangThanhToan.dsGheDat.size() ; i++) {
                 this.trangThanhToan.gheDao.capNhatTrangThaiGhe(TRANG_THAI_GHE.Da_dat.getValue(), this.trangThanhToan.dsGheDat.get(i).getMaGhe());
@@ -96,7 +108,9 @@ public class HanhDong_TrangThanhToan implements ActionListener, MouseListener {
             ((TrangHoaDon) TrangDinhHuong.getTrangChua().getComponent(2)).datHoaDonDTao(hd);
         }
 
+        // Nếu chọn chuyển khoản và bấm nút thanh toán
         if (e.getSource() == this.trangThanhToan.ButtonThanhToan && this.trangThanhToan.radioChuyenKhoan.isSelected()) {
+            // Lấy thành tiền
             double thanhTien = Double.parseDouble(this.trangThanhToan.tfThanhTien.getText());
             //double tienNhan = Double.parseDouble(this.trangThanhToan.thanhTienNhan.getText());
 
@@ -104,13 +118,16 @@ public class HanhDong_TrangThanhToan implements ActionListener, MouseListener {
 
             //this.trangThanhToan.tfTraLai.setText(String.valueOf(tienTra));
 
+            // Tính toán tổng tiền các vé
             double tongTien = 0;
             for (int i = 0 ; i < this.trangThanhToan.danhSachVe.size() ; i++) {
                 tongTien += this.trangThanhToan.danhSachVe.get(i).getGiaVe() * (1 - (this.trangThanhToan.danhSachVe.get(i).getLoaiDoiTuong().equals("Người Lớn") ? 0.0 : 0.025));
             }
 
+            // Lấy mã nhân viên
             String maNV = this.trangThanhToan.layMaNV();
 
+            // Khởi tạo hóa đơn
             HoaDon hd = new HoaDon(
                     LocalDate.now(),
                     thanhTien,
@@ -131,26 +148,49 @@ public class HanhDong_TrangThanhToan implements ActionListener, MouseListener {
                     + "Thanh Tien: " + this.trangThanhToan.tfThanhTien.getText() + "\n"
                     + "Loi Nhan: T.Toan QR - tai Ga Go Vap GV - " + this.trangThanhToan.tfThanhTien.getText() + " - Ngay " + LocalDateTime.now();
 
-            // Hiển thị mã QR
+            // Hiển thị mã QR với thông tin thanh toán mới khỏi tạo
             hienThiMaQR(thongTinThanhToan, "Thanh toán qua QR");
 
-            /*this.trangThanhToan.hdDao.LuuHoaDon(hd);
+            // Lưu hóa đơn vào cơ sở dữ liệu
+            //this.trangThanhToan.hdDao.LuuHoaDon(hd);
 
-            for (int i = 0 ; i < this.trangThanhToan.dsGheDat.size() ; i++) {
+            // Lưu vé vào Database
+            /*for (Ve ve : this.trangThanhToan.danhSachVe) {
+                ((TrangDatVe) TrangDinhHuong.getTrangChua().getComponent(1)).veDao.luuVe(ve);
+            }*/
+
+            // Lưu chi tiết hóa đơn
+            /*for (Ve ve : this.trangThanhToan.danhSachVe) {
+                ChiTietHoaDon cthd = new ChiTietHoaDon(ve.getMaVe(), hd.getMaHoaDon());
+                ChiTietHoaDon_DAO.themCTHD(cthd);
+            }*/
+
+            // Cập nhật trạng thái ghế
+            /*for (int i = 0 ; i < this.trangThanhToan.dsGheDat.size() ; i++) {
                 this.trangThanhToan.gheDao.capNhatTrangThaiGhe(TRANG_THAI_GHE.Da_dat.getValue(), this.trangThanhToan.dsGheDat.get(i).getMaGhe());
             }*/
 
+            // Hiển thị thông báo khởi tạo thành công
             hienThiThongBao("Thanh toán thành công", "Thông báo thành công", JOptionPane.INFORMATION_MESSAGE);
 
+            // Tắt trangThanhToan
             this.trangThanhToan.dispose();
 
+            // Xóa dòng trong bảng
             for (int i = ((TrangDatVe) TrangDinhHuong.getTrangChua().getComponent(1)).moHinhBang.getRowCount() - 1; i >= 0; i--) {
                 ((TrangDatVe) TrangDinhHuong.getTrangChua().getComponent(1)).moHinhBang.removeRow(i);
             }
 
+            // Đặt thanh toán thành công để in vé được
             ((TrangDatVe) TrangDinhHuong.getTrangChua().getComponent(1)).datThanhToan(true);
+
+            // Xóa ngày đặt
             ((TrangDatVe) TrangDinhHuong.getTrangChua().getComponent(1)).thanhNhapNgayDi.setDate(null);
+
+            // Xóa giờ đi
             ((TrangDatVe) TrangDinhHuong.getTrangChua().getComponent(1)).thanhNhapGioDen.setText("");
+
+            // Đặt hóa đơn bên trangHoaDon
             ((TrangHoaDon) TrangDinhHuong.getTrangChua().getComponent(2)).datHoaDonDTao(hd);
         }
     }
@@ -199,6 +239,7 @@ public class HanhDong_TrangThanhToan implements ActionListener, MouseListener {
         hoiThoai.setVisible(true);
     }
 
+    // Hiển thị mã QR
     private void hienThiMaQR(String thongTinThanhToan, String tieuDe) {
         // Tạo nhãn công ty
         JLabel tieuDeCongTy = new JLabel("Công ty cổ phần Đường Sắt Sài Gòn");
