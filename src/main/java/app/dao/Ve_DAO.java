@@ -427,7 +427,6 @@ public class Ve_DAO {
             System.out.println("Lỗi khi cập nhật vé trong cơ sở dữ liệu");
         }
     }
-<<<<<<< HEAD
     // Hàm lấy Loại đối tượng vé của Khánh
     public String layLoaiDoiTuongVe(String maKH) {
         String loaiDoiTuong = null;
@@ -445,8 +444,7 @@ public class Ve_DAO {
             e.printStackTrace();
         }
         return loaiDoiTuong;
-=======
-
+    }
     public static void xoaVe(String maVe){
         String sql = "delete Ve where MaVe = ? ";
 
@@ -468,6 +466,5 @@ public class Ve_DAO {
             e.printStackTrace();
             System.out.println("Lỗi khi cập nhật vé trong cơ sở dữ liệu");
         }
->>>>>>> d5a76343418706fccedc20d51ff9b6b1d013b45c
     }
 }

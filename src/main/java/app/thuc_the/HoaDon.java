@@ -60,9 +60,6 @@ public class HoaDon {
 
         return maHoaDon;
     }
-    public void setMaHoaDon(String maHoaDon){
-        this.maHoaDon = maHoaDon;
-    }
 
     public void setMaHoaDon(String maHoaDon) {
         this.maHoaDon = maHoaDon;

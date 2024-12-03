@@ -10,7 +10,6 @@ import app.ket_noi_co_so_du_lieu.KetNoiCoSoDuLieu;
 import app.thuc_the.DaiNgo;
 import app.thuc_the.HoaDon;
 
-<<<<<<< HEAD
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -21,10 +20,8 @@ import org.slf4j.LoggerFactory;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 
-=======
 import javax.swing.*;
 import java.sql.*;
->>>>>>> d5a76343418706fccedc20d51ff9b6b1d013b45c
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -43,15 +40,11 @@ public class HoaDon_DAO {
     String CHON_THEO_MAHD_HAY_MAKH_SQL = "SELECT * FROM HoaDon WHERE MaHD =? OR MaKH =?";
 
     ArrayList<HoaDon> dshd;
-<<<<<<< HEAD
 
     Logger logger  = LoggerFactory.getLogger(TrangChuaThongKeDoanhThuNhaGa.class);
 
-
-
-=======
     //Logger logger = LoggerFactory.getLogger(TrangChuaThongKeDoanhThuNhaGa.class);
->>>>>>> d5a76343418706fccedc20d51ff9b6b1d013b45c
+
 
     public HoaDon_DAO() {
         dshd = new ArrayList<HoaDon>();
@@ -101,48 +94,6 @@ public class HoaDon_DAO {
 
         return danhSachHoaDon;
     }
-//    public List<HoaDon> TimKiemHoaDon (String maHD, String maKH) throws SQLException {
-//            List<HoaDon> danhSachHoaDon = new ArrayList<>();
-//            String sql = "SELECT * FROM HoaDon WHERE MaHD LIKE ? OR MaKH LIKE ?";
-//
-//            try (Connection conn = JDBCUtil.getConnection();
-//                 PreparedStatement ps = conn.prepareStatement(sql)) {
-//                ps.setString(1, "%" + maHD + "%"); // Tìm kiếm theo mã hóa đơn
-//                ps.setString(2, "%" + maKH + "%"); // Tìm kiếm theo mã khách hàng
-//
-//                ResultSet rs = ps.executeQuery();
-//
-//                while (rs.next()) {
-//                    HoaDon hoaDon = new HoaDon();
-//                    // Giả sử bạn có các phương thức set tương ứng để gán giá trị cho các thuộc tính
-//                    hoaDon.setMaHoaDon(rs.getString("MaHD"));
-//                    hoaDon.setMaKhachHang(rs.getString("MaKH"));
-//                    hoaDon.setNgayLapHoaDon(rs.getDate("NgayLap").toLocalDate());
-//                    hoaDon.setMaNhanVien(rs.getString("MaNV"));
-//                    hoaDon.setThanhTien(rs.getFloat("ThanhTien"));
-//                    hoaDon.setSoLuong(rs.getInt("SoLuong"));
-//                    hoaDon.setTongTien(rs.getFloat("TongTien"));
-//                    hoaDon.setTrangThai(rs.getString("TrangThai"));
-//                    if(rs.getFloat("DaiNgo") == 0){
-//                        hoaDon.setDaiNgo(DaiNgo.KhongDaiNgo);
-//                    }
-//                    else if( rs.getFloat("DaiNgo") == 0.2  ){
-//                        hoaDon.setDaiNgo(DaiNgo.GIAMGIAHAIMUOIPHANTRAM);
-//                    }
-//                    else if( rs.getFloat("DaiNgo") == 0.1  ){
-//                        hoaDon.setDaiNgo(DaiNgo.GIAMGIAMUOIPHANTRAM);
-//                    }
-//                    else if( rs.getFloat("DaiNgo") == 0.05  ){
-//                        hoaDon.setDaiNgo(DaiNgo.GIAMGIANAMPHANTRAM);
-//                    }
-//                    hoaDon.setThue(rs.getFloat("Thue"));
-//                    danhSachHoaDon.add(hoaDon);
-//                }
-//            } catch (SQLException e) {
-//                e.printStackTrace();
-//            }
-//            return danhSachHoaDon;
-//        }
     public List<HoaDon> TimKiemHoaDon (String maHD, String soDienThoai) throws SQLException {
         List<HoaDon> danhSachHoaDon = new ArrayList<>();
         String sql = "SELECT * FROM HoaDon o join KhachHang k on o.MaKH=k.MaKH WHERE o.MaHD LIKE ? OR k.SoDT LIKE ?";
@@ -150,7 +101,7 @@ public class HoaDon_DAO {
         try (Connection conn = JDBCUtil.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, "%" + maHD + "%"); // Tìm kiếm theo mã hóa đơn
-            ps.setString(2, "%" + soDienThoai + "%"); // Tìm kiếm theo mã khách hàng
+            ps.setString(2, "%" + soDienThoai + "%"); // Tìm kiếm theo so dien thoại
 
             ResultSet rs = ps.executeQuery();
 

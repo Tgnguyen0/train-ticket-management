@@ -82,7 +82,6 @@ public class TrangThanhToan extends JDialog {
         for (int i = 0 ; i < this.danhSachVe.size() ; i++) {
             this.tongTien += this.danhSachVe.get(i).getGiaVe() * (1 - (this.danhSachVe.get(i).getLoaiDoiTuong().equals("Người Lớn") ? 0.0 : 0.025));
         }
-
         hienThi();
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);

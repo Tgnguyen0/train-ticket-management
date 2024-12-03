@@ -92,13 +92,10 @@ public class TrangDatVe extends JPanel {
     public List<Tau> dsTau;
     public List<NhaGa> dsGa;
     public String soHieuDaChon;
-<<<<<<< HEAD
-    public List<KhachHang> dsKHDatVe;
+//    public List<KhachHang> dsKHDatVe;
     public JTable bangVeDangDat;
 
-=======
     public static List<KhachHang> dsKHDatVe;
->>>>>>> d5a76343418706fccedc20d51ff9b6b1d013b45c
     public String maNV;
     public Boolean daThanhToan = false;
     public TrangDinhHuong trangDinhHuong;
