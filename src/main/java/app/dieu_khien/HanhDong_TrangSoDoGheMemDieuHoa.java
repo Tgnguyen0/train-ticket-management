@@ -37,7 +37,7 @@ public class HanhDong_TrangSoDoGheMemDieuHoa implements ActionListener, MouseLis
         if (ghe.getTrangThai() == TRANG_THAI_GHE.Trong) {
             // Nếu ghế đã chọn rồi, bỏ chọn (xóa khỏi Set và đổi màu lại)
             if (this.trangSoDoGheMemDieuHoa.gheDao.layDSGheDat().contains(ghe)) {
-                this.trangSoDoGheMemDieuHoa.gheDao.layDSGheDat().remove(ghe);
+                this.trangSoDoGheMemDieuHoa.gheDao.xoaGhe(ghe);
 
                 /*if (!this.trangSoDoGheMemDieuHoa.gheDao.layDSGheDat().isEmpty()) {
                     for (Ghe gheTest : this.trangSoDoGheMemDieuHoa.gheDao.layDSGheDat()) {
