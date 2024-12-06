@@ -53,6 +53,7 @@ public class TrangChiTietHoaDon extends JFrame {
     private Ve ve;
     private HoaDon hoaDon;
     Logger logger = LoggerFactory.getLogger(TrangChiTietHoaDon.class);
+
     public TrangChiTietHoaDon(String maVe, TrangDanhSachVeTau trangDanhSachVeTau){
         trangChua_TieuDe = new javax.swing.JPanel();
         label_TieuDe = new javax.swing.JLabel();

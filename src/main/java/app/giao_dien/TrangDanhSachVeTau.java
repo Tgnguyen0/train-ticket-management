@@ -32,7 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
-public class TrangDanhSachVeTau extends JPanel{
+public class TrangDanhSachVeTau extends JPanel {
 
     public javax.swing.JButton buttonHuyVe;
     public javax.swing.JButton buttonInVe;
@@ -97,7 +97,7 @@ public class TrangDanhSachVeTau extends JPanel{
     /*
         các thuộc tính xử lý hành động
      */
-    ActionListener ac ;
+    public ActionListener ac ;
     MouseListener mouse ;
 
     /*

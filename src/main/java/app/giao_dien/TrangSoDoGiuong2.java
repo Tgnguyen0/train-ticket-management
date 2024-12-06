@@ -146,7 +146,7 @@ public class TrangSoDoGiuong2 extends JPanel {
 
                 // Kiểm tra nếu ghế này có trong danh sách đã đặt
                 for (Ghe gheDaDat : dsGiuongDaDat) {
-                    if (gheDaDat.getSoGhe().equals(String.valueOf(j - 1 + doTang * 2)) &&
+                    if (gheDaDat.getSoGhe().equals(String.valueOf(j + doTang * 2)) &&
                             this.maToa.equals(gheDaDat.getMaToa())) {
                         giuong.setBackground(camNhuomDen);
                         break; // Nếu tìm thấy ghế đã đặt, ngừng kiểm tra
