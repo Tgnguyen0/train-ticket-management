@@ -1,11 +1,13 @@
 package app.dieu_khien;
 
-import app.giao_dien.TrangCacTau;
-import app.giao_dien.TrangDatVe;
-import app.giao_dien.TrangDinhHuong;
+import app.dao.Tau_DAO;
+import app.dao.Toa_DAO;
+import app.giao_dien.*;
 import app.phan_tu_tuy_chinh.NutAnh;
 import app.thuc_the.Ghe;
 import app.thuc_the.LichCapBenGa;
+import app.thuc_the.TRANG_THAI_GHE;
+import app.thuc_the.Toa;
 
 import javax.swing.*;
 import java.awt.*;
@@ -204,22 +206,44 @@ public class HanhDong_TrangCacTau implements ActionListener, MouseListener, Wind
     public void windowClosing(WindowEvent e) {
         if (!this.trangSoDoChung.gheDao.layDSGheDat().isEmpty()) {
             hienThiThongBao("Xác nhận ghế chọn thành công !", "Xác nhận thành công", JOptionPane.INFORMATION_MESSAGE);
-            ((TrangDatVe) TrangDinhHuong.getTrangChua().getComponent(1)).datSoHieuDaChon(this.trangSoDoChung.soHieuTauChon);
+            if (this.trangSoDoChung.trangGoc instanceof TrangDatVe) {
+                ((TrangDatVe) this.trangSoDoChung.trangGoc).datSoHieuDaChon(this.trangSoDoChung.soHieuTauChon);
 
-            LocalDateTime ngayKhoiHanh = ((TrangDatVe) TrangDinhHuong.getTrangChua().getComponent(1)).thanhNhapNgayDi.getDate()       // Lấy ngày khởi hành
-                    .toInstant()
-                    .atZone(ZoneId.systemDefault())
-                    .toLocalDateTime();
+                LocalDateTime ngayKhoiHanh = ((TrangDatVe) this.trangSoDoChung.trangGoc).thanhNhapNgayDi.getDate()       // Lấy ngày khởi hành
+                        .toInstant()
+                        .atZone(ZoneId.systemDefault())
+                        .toLocalDateTime();
 
-            // Lấy lịch tàu đó
-            LichCapBenGa lich = ((TrangDatVe) TrangDinhHuong.getTrangChua().getComponent(1)).lichDao.ChonTheoSoHieuNgayKHVaGa(
-                    this.trangSoDoChung.soHieuTauChon,
-                    ngayKhoiHanh,
-                    this.trangSoDoChung.maGa
-            );
+                // Lấy lịch tàu đó
+                LichCapBenGa lich = ((TrangDatVe) this.trangSoDoChung.trangGoc).lichDao.ChonTheoSoHieuNgayKHVaGa(
+                        this.trangSoDoChung.soHieuTauChon,
+                        ngayKhoiHanh,
+                        this.trangSoDoChung.maGa
+                );
 
-            ((TrangDatVe) TrangDinhHuong.getTrangChua().getComponent(1)).thanhNhapGioDen.setText(lich.getGioKhoiHanh().getHour() +
-                    ":" + lich.getGioKhoiHanh().getMinute());
+                ((TrangDatVe) this.trangSoDoChung.trangGoc).thanhNhapGioDen.setText(lich.getGioKhoiHanh().getHour() +
+                        ":" + lich.getGioKhoiHanh().getMinute());
+            }
+
+            if (this.trangSoDoChung.trangKhung instanceof TrangThongTinChiTietVeTau) {
+
+                for (Ghe ghe : this.trangSoDoChung.gheDao.layDSGheDat()) {
+
+                    // Cập nhật lại số của ghế đã đặt
+                    ((TrangThongTinChiTietVeTau) this.trangSoDoChung.trangKhung).textFieldGhe.setText(ghe.getSoGhe());
+
+                    // Cập nhật lại loại ghế đã đặt
+                    ((TrangThongTinChiTietVeTau) this.trangSoDoChung.trangKhung).textFieldLoaiVe.setText(ghe.getLoaiGhe().toString());
+
+                    Toa toa = this.trangSoDoChung.toaDao.ChonTheoMa(ghe.getMaToa());
+
+                    // Cập nhật lại tên toa của ghế đã đặt
+                    ((TrangThongTinChiTietVeTau) this.trangSoDoChung.trangKhung).textFieldToa.setText(toa.getTenToa());
+
+                    // Cập nhật lại số hiệu tàu mà toa thuộc về mà có ghế đã đặt
+                    ((TrangThongTinChiTietVeTau) this.trangSoDoChung.trangKhung).textFieldSoHieu.setText(toa.getMaTau());
+                }
+            }
 
             e.getWindow().dispose();
         } else {
