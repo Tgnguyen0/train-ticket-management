@@ -84,6 +84,8 @@ public class TrangChuaThongKeNhanVienTheoThang extends JPanel {
     ActionListener ac ;
     MouseListener mouse ;
     public BieuDoCot bieuDoCot;
+    public JButton buttonTienThuongNhanVien;
+
     public TrangChuaThongKeNhanVienTheoThang(TrangDinhHuong mainFrame){
         trangChuaThongTinNhanVien = new JPanel();
         trangChuaCacThongTinThongKe = new  JPanel();
@@ -217,6 +219,7 @@ public class TrangChuaThongKeNhanVienTheoThang extends JPanel {
         this.buttonThongKeDoanhThu.addActionListener(ac);
         this.buttonThongKeTheoNamNhanVien.addActionListener(ac);
         this.buttonThongKe.addActionListener(ac);
+        this.buttonTienThuongNhanVien.addActionListener(ac);
     }
 
 
@@ -790,37 +793,49 @@ public class TrangChuaThongKeNhanVienTheoThang extends JPanel {
         );
     }
     public void thietLap_TrangChuaNutChuyenTrang(){
-        buttonThongKeDoanhThu.setText("<html>&nbsp;&nbsp;&nbsp;Thống Kê<br>Doanh Thu Nhà Ga</html>");
+        buttonThongKeDoanhThu.setText("<html>Thống Kê Doanh Thu Nhà Ga</html>");
         buttonThongKeDoanhThu.setBackground(this.xanhBrandeis);
         buttonThongKeDoanhThu.setForeground(this.trang);
         buttonThongKeDoanhThu.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.BOLD, 14));
-        buttonThongKeTheoNamNhanVien.setText("<html>Thống Kê Doanh Thu  <br> Nhân Viên Theo Năm</html>");
+
+        buttonThongKeTheoNamNhanVien.setText("<html>Thống Kê Doanh Thu Nhân Viên Theo Năm</html>");
         buttonThongKeTheoNamNhanVien.setBackground(this.xanhBrandeis);
         buttonThongKeTheoNamNhanVien.setForeground(this.trang);
         buttonThongKeTheoNamNhanVien.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.BOLD, 14));
 
+        // Tạo button làm mới
+        buttonTienThuongNhanVien = new JButton("<html>Tiền Thưởng Nhân Viên</html>");
+        buttonTienThuongNhanVien.setBackground(this.xanhBrandeis);
+        buttonTienThuongNhanVien.setForeground(this.trang);
+        buttonTienThuongNhanVien.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.BOLD, 14));
+
+        trangChuaNutChuyenDoiTrang.setPreferredSize(new java.awt.Dimension(600, 400));
+
         javax.swing.GroupLayout trangChuaCacNutChuyenTrangLayout = new javax.swing.GroupLayout(trangChuaNutChuyenDoiTrang);
         trangChuaNutChuyenDoiTrang.setLayout(trangChuaCacNutChuyenTrangLayout);
+
+// HorizontalGroup
         trangChuaCacNutChuyenTrangLayout.setHorizontalGroup(
-                trangChuaCacNutChuyenTrangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(trangChuaCacNutChuyenTrangLayout.createSequentialGroup()
-                                .addGap(97, 97, 97)
-                                .addComponent(buttonThongKeDoanhThu,180, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(20, 20, 20) // 20px gap between buttons
-                                .addComponent(buttonThongKeTheoNamNhanVien, 180, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(54, Short.MAX_VALUE))
+                trangChuaCacNutChuyenTrangLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE) // Khoảng cách linh hoạt bên trái
+                        .addGroup(trangChuaCacNutChuyenTrangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                                .addComponent(buttonThongKeDoanhThu, 350, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(buttonThongKeTheoNamNhanVien,350, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(buttonTienThuongNhanVien, 350, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        )
+                        .addGap(0, 0, Short.MAX_VALUE) // Khoảng cách linh hoạt bên phải
         );
+
+// VerticalGroup
         trangChuaCacNutChuyenTrangLayout.setVerticalGroup(
-                trangChuaCacNutChuyenTrangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, trangChuaCacNutChuyenTrangLayout.createSequentialGroup()
-                                .addContainerGap(50, Short.MAX_VALUE)
-                                .addComponent(buttonThongKeDoanhThu, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(38, 38, 38))
-                        .addGroup(trangChuaCacNutChuyenTrangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(trangChuaCacNutChuyenTrangLayout.createSequentialGroup()
-                                        .addGap(49, 49, 49)
-                                        .addComponent(buttonThongKeTheoNamNhanVien, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addContainerGap(39, Short.MAX_VALUE)))
+                trangChuaCacNutChuyenTrangLayout.createSequentialGroup()
+                        .addGap(100, 100, Short.MAX_VALUE) // Đẩy khoảng cách từ trên
+                        .addComponent(buttonThongKeDoanhThu, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20) // Khoảng cách giữa các button
+                        .addComponent(buttonThongKeTheoNamNhanVien, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20) // Khoảng cách giữa các button
+                        .addComponent(buttonTienThuongNhanVien, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(100, 100, Short.MAX_VALUE) // Đẩy khoảng cách dưới
         );
     }
     public void thietLap_TrangChuaThongTinThongKe(){
@@ -955,6 +970,13 @@ public class TrangChuaThongKeNhanVienTheoThang extends JPanel {
         );
         this.trangChuaBieuDoCot.revalidate();
         this.trangChuaBieuDoCot.repaint();
+    }
+
+    public void tinhTienThuongNhanVien(){
+        int thang = Integer.parseInt((String) this.danhSachThang.getSelectedItem());
+        int nam = Integer.parseInt((String) this.danhSachNam.getSelectedItem());
+        Map<String, Double> danhSachDoanhThuNhanVien = HoaDon_DAO.layDanhSachDoanhThuCuaNhanVienUuTuTheo_Thang_Nam(nam, thang);
+        new TrangThongKeTienThuong(danhSachDoanhThuNhanVien, nam, thang, this.getClass()).setVisible(true);
     }
 
 }

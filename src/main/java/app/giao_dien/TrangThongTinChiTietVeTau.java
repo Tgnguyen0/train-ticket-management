@@ -82,6 +82,8 @@ public class TrangThongTinChiTietVeTau extends JFrame {
     public TrangThongTinChiTietVeTau(String maVe, String loaiVe, String diemDi, String diemDen, LocalDateTime ngayKhoiHanh,
                                      String ngayTroVe, String tenKhachHang, String soHieu, String tenToa,
                                      Ghe ghe, LocalDateTime ngayDatVe, String doiTuong, String giaVe){
+        ImageIcon icon = new ImageIcon("assets/icon.png");
+        setIconImage(icon.getImage());
         this.setSize(724, 331); // Đặt kích thước cụ thể cho cửa sổ
         setResizable(false);
         setLocationRelativeTo(null);

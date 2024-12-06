@@ -364,6 +364,11 @@ public class TrangCacToa extends JPanel {
             String maToa = toa.getMaToa();
             List<Ghe> gheList = gheDao.ChonTheoMaToaTatCa(maToa);
 
+            System.out.println("Ma toa: " + maToa);
+            for (int j = 0 ; j < gheList.size() ; j++) {
+                System.out.println("ma ghe: " + gheList.get(j).getMaGhe() + "so ghe: " + gheList.get(j).getSoGhe() + "trang thai: " + gheList.get(j).getTrangThai());
+            }
+
             JPanel trangSoDo;
             if (0 <= i && i <= 3) {
                 trangSoDo = new TrangSoDoGheMem(gheList, gheDao, tenToa, maToa);

@@ -29,7 +29,7 @@ public class Ve_DAO {
     String CAP_NHAT_SQL = "UPDATE TenKH=?, DiaChi=?, SoDT=?, Email=?, GioiTinh=? WHERE MaKH=?";
     String TAI_TAT_CA_SQL = "SELECT * FROM KhachHang";
     String CHON_THEO_MA_SQL = "SELECT * FROM KhachHang WHERE MaKH=?";
-    String LUU_VE_SQL = "INSERT INTO HoaDon(MaVe,NgayDatVe,GiaVe,MaKH,GaKhoiHanh,GaKetThuc,MaGhe,LoaiVe,LoaiDoiTuong,NgayKhoiHanh) VALUES (?,?,?,?,?,?,?,?,?,?)";
+    String LUU_VE_SQL = "INSERT INTO Ve(MaVe,NgayDatVe,GiaVe,MaKH,GaKhoiHanh,GaKetThuc,MaGhe,LoaiVe,LoaiDoiTuong,NgayKhoiHanh) VALUES (?,?,?,?,?,?,?,?,?,?)";
 
     Logger logger = LoggerFactory.getLogger(TrangThongTinChiTietVeTau.class);
     public Map<String, Map<String, Integer>> giaVeCoBan = Map.of(
