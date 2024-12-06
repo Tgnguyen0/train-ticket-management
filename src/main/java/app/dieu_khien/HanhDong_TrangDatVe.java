@@ -172,7 +172,15 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
                     .atZone(ZoneId.systemDefault())
                     .toLocalDateTime();*/
 
+            // Hoàn toàn vô dụng
             Ghe daDat = this.trangDatVe.gheDao.traGheChon(); // lấy ghế đã đặt
+
+            // Quan trọng !!!!
+            for (Ghe ghe : this.trangDatVe.gheDao.layDSGheDat()) {
+                if (ghe.getMaGhe() == this.trangDatVe.gheDao.layThuTuGheDat().get(bienSoTang)) {
+                    daDat = ghe;
+                }
+            }
 
             // Nhớ là để comment khi không dùng nữa 🤡
             /*for (Ghe ghe: this.trangDatVe.gheDao.layDSGheDat()) {

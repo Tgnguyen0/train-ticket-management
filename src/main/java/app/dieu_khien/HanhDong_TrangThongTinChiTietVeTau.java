@@ -68,13 +68,12 @@ public class HanhDong_TrangThongTinChiTietVeTau implements ActionListener, Mouse
                Toa toa = Toa_DAO.layToaTheoMaTau_TenToa(tenToa, soHieu);
 
                for (Ghe ghe : this.trangThongTinChiTietVeTau.gheDao.layDSGheDat()) {
-                   System.out.println("Có nhá");
                    this.trangThongTinChiTietVeTau.gheDao.capNhatTrangThaiGhe(TRANG_THAI_GHE.Da_dat.getValue(), ghe.getMaGhe());
 
                    Ve_DAO veDao = new Ve_DAO();
                    veDao.CapNhatVeCSDL(ghe.getMaGhe(), maVe);
 
-                   ((TrangDanhSachVeTau) this.trangThongTinChiTietVeTau.trangCha).textFieldMaGhe.setText(ghe.getSoGhe());
+                   ((TrangDanhSachVeTau) this.trangThongTinChiTietVeTau.trangCha).textFieldMaGhe.setText(ghe.getMaGhe());
 
                    ((TrangDanhSachVeTau) this.trangThongTinChiTietVeTau.trangCha).textFieldLoaiVe.setText(ghe.getLoaiGhe().toString());
                }
@@ -83,6 +82,8 @@ public class HanhDong_TrangThongTinChiTietVeTau implements ActionListener, Mouse
                       Double.parseDouble(giaVe), ghe.getMaGhe()).toString()));
                 veDao.capNhatVeTau(new Ve(maVe,LocalDateTime.parse(ngayKhoiHanh),LocalDateTime.parse(ngayDatVe),
                         Double.parseDouble(giaVe), ghe.getMaGhe()));*/
+
+               this.trangThongTinChiTietVeTau.gheDao.xoaDSGheChon();
 
                this.trangThongTinChiTietVeTau.dispose();
             }
