@@ -92,10 +92,11 @@ public class TrangDatVe extends JPanel {
     public List<Tau> dsTau;
     public List<NhaGa> dsGa;
     public String soHieuDaChon;
-    public static List<KhachHang> dsKHDatVe;
+    public List<KhachHang> dsKHDatVe;
     public String maNV;
     public Boolean daThanhToan = false;
     public TrangDinhHuong trangDinhHuong;
+
     public TrangDatVe(TrangDinhHuong mainFrame) {
         this.tauDao = new Tau_DAO();
         this.gheDao = new Ghe_DAO();
@@ -149,9 +150,9 @@ public class TrangDatVe extends JPanel {
 
     public Ghe_DAO layGheDao() { return this.gheDao; }
 
-    public void datGheDao(Ghe_DAO gheDao) {
+    /*public void datGheDao(Ghe_DAO gheDao) {
         this.gheDao = gheDao;
-    }
+    }*/
 
     public void datDSKhDatVe(List<KhachHang> ds) {
         dsKHDatVe = ds;
@@ -159,6 +160,10 @@ public class TrangDatVe extends JPanel {
 
     public List<KhachHang> layDSKhDatVe() {
         return this.dsKHDatVe;
+    }
+
+    public void lamMoiDSKhachDat() {
+        this.dsKHDatVe.clear();
     }
 
     public void datThanhToan(boolean daThanhToan) {
@@ -169,9 +174,9 @@ public class TrangDatVe extends JPanel {
         this.soHieuDaChon = soHieu;
     }
 
-    public String laySoHieuDaChon() {
+    /*public String laySoHieuDaChon() {
         return this.soHieuDaChon;
-    }
+    }*/
 
     private void taoDonThongTinVe() {
         JPanel trangChuaDonDat = new JPanel();

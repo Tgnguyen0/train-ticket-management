@@ -23,7 +23,7 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
     public TrangDatVe trangDatVe;
     public TrangCacTau trangCacTau;
     public int bienSoTang = 0;
-    public List<Ve> dsVeDaDat;
+    //public List<Ve> dsVeDaDat;
     public List<Ghe> dsGhe;
     public String maGa;
     public boolean khonglonHonHoacBangNgayHienTai;
@@ -96,7 +96,7 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
                 System.out.println(dsLich.get(i).getMaTau());
             }*/
 
-            trangCacTau = new TrangCacTau(this.trangDatVe.layDSTau(), this.trangDatVe.layGheDao(), dsLich);
+            trangCacTau = new TrangCacTau(this.trangDatVe, null, this.trangDatVe.layDSTau(), this.trangDatVe.layGheDao(), dsLich);
             trangCacTau.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             trangCacTau.setVisible(true);
 
@@ -276,11 +276,13 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
             }
 
             // Khởi tạo trang thanh toán
-            TrangThanhToan trangThanhToan = new TrangThanhToan(this.trangDatVe.veDao.layDSVeDat(), this.trangDatVe.dsKHDatVe, this.dsGhe);
+            TrangThanhToan trangThanhToan = new TrangThanhToan(this.trangDatVe, this.trangDatVe.veDao.layDSVeDat(), this.trangDatVe.dsKHDatVe, this.dsGhe);
             trangThanhToan.setVisible(true);
 
             // Thiết lập mã nhân viên tạo vé
             trangThanhToan.datMaNV(this.trangDatVe.layMaNV());
+
+            bienSoTang = 0;
         }
 
         // Nếu là chọn nút in vé
@@ -292,7 +294,7 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
             }
 
             // Lấy danh sách vé đặt
-            List<Ve> dsVe = this.trangDatVe.veDao.layDSVeDat();
+            List<Ve> dsVe = this.trangDatVe.veDao.layDSVeDaThanhToan();
 
             // Khởi tạo trang in vé với các giá trị truyền vào
             TrangInVe trangInVe = new TrangInVe(dsVe, this.trangDatVe.layDSKhDatVe(), this.dsGhe);
@@ -308,7 +310,8 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
             }*/
 
             this.trangDatVe.daThanhToan = false;
-            bienSoTang = 0;
+
+            //bienSoTang = 0;
         }
     }
 
