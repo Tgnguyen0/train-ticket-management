@@ -6,9 +6,9 @@ public class ChiTietHoaDon {
     String maHoaDon;
     String maVe;
 
-    public ChiTietHoaDon(String maHoaDon, String maVe) {
-        this.maHoaDon = maHoaDon;
+    public ChiTietHoaDon(String maVe, String maHoaDon) {
         this.maVe = maVe;
+        this.maHoaDon = maHoaDon;
     }
 
     public ChiTietHoaDon() {

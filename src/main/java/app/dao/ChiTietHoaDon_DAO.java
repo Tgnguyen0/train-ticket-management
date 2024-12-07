@@ -105,23 +105,25 @@ public class ChiTietHoaDon_DAO {
         }
     }
 
+    // Lưu chi tiết hóa đơn vào cơ sở dữ liệu
     public static void themCTHD(ChiTietHoaDon cthd) {
-        String sql = "INSERT INTO ChiTietHoaDon(MaHD,MaVe) VALUES (?,?)";
+        String sql = "INSERT INTO ChiTietHoaDon(MaVe,MaHD) VALUES (?,?)"; // câu lệnh sql để lưu
 
         LuuSQL(
                 sql,
-                cthd.getMaHoaDon(),
-                cthd.getMaVe()
+                cthd.getMaVe(),
+                cthd.getMaHoaDon()
         );
     }
 
+    // Tiến hành kết nối và lưu
     public static void LuuSQL(String sql, Object... args) {
         try {
             try (PreparedStatement stmt = KetNoiCoSoDuLieu.layCauLenh(sql, args)) {
                 stmt.executeUpdate();
             }
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            ex.printStackTrace(); // In ra nếu kết nối thất bại
             throw new RuntimeException(ex);
         }
     }
