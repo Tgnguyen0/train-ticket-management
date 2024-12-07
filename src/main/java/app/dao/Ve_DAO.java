@@ -26,10 +26,10 @@ import java.util.Map;
 @Slf4j
 public class Ve_DAO {
     // Các câu lệnh SQL
-    String CAP_NHAT_SQL = "UPDATE TenKH=?, DiaChi=?, SoDT=?, Email=?, GioiTinh=? WHERE MaKH=?";
+    String CAP_NHAT_SQL = "UPDATE Ve SET MaGhe=? WHERE MaVe=?";
     String TAI_TAT_CA_SQL = "SELECT * FROM KhachHang";
     String CHON_THEO_MA_SQL = "SELECT * FROM KhachHang WHERE MaKH=?";
-    String LUU_VE_SQL = "INSERT INTO HoaDon(MaVe,NgayDatVe,GiaVe,MaKH,GaKhoiHanh,GaKetThuc,MaGhe,LoaiVe,LoaiDoiTuong,NgayKhoiHanh) VALUES (?,?,?,?,?,?,?,?,?,?)";
+    String LUU_VE_SQL = "INSERT INTO Ve(MaVe,NgayDatVe,GiaVe,MaKH,GaKhoiHanh,GaKetThuc,MaGhe,LoaiVe,LoaiDoiTuong,NgayKhoiHanh) VALUES (?,?,?,?,?,?,?,?,?,?)";
 
     Logger logger = LoggerFactory.getLogger(TrangThongTinChiTietVeTau.class);
     public Map<String, Map<String, Integer>> giaVeCoBan = Map.of(
@@ -52,20 +52,22 @@ public class Ve_DAO {
     );
 
     List<Ve> dsVeDat; // Tránh thông tin bị trùng
+    List<Ve> dsVeDaThanhToan;
 
     // Khởi tạo danh sách Vé
     public Ve_DAO() {
+        this.dsVeDaThanhToan = new ArrayList<Ve>();
         this.dsVeDat = new ArrayList<Ve>();
     }
 
     // Thêm khách hàng
-    public boolean ThemVe(Ve ve) {
+    /*public boolean ThemVe(Ve ve) {
         return dsVeDat.add(ve);
-    }
+    }*/
 
-    public boolean themDSVe(List<Ve> dsVe) {
+    /*public boolean themDSVe(List<Ve> dsVe) {
         return dsVeDat.addAll(dsVe);
-    }
+    }*/
 
     public List<Ve> layDSVeDat() {
         return this.dsVeDat;
@@ -74,6 +76,15 @@ public class Ve_DAO {
     public void xoaDSVeDat() {
         this.dsVeDat.clear();
     }
+
+    public void datDSVeDaThanhToan(List<Ve> dsVe) {
+        this.dsVeDaThanhToan = new ArrayList<>(dsVe);
+    }
+
+    public List<Ve> layDSVeDaThanhToan() {
+        return this.dsVeDaThanhToan;
+    }
+
 
     // Tìm Kiếm khách hàng
     /*
@@ -145,24 +156,19 @@ public class Ve_DAO {
         return i;
     }
     */
-    public int CapNhatKhachHangCSDL(Ve ve) {
+    public int CapNhatVeCSDL(String maGhe, String maVe) {
         int i = 0;
 
         try {
             i = 1;
             KetNoiCoSoDuLieu.capNhat(
                     CAP_NHAT_SQL,
-                    ve.getNgayDatVe(),
-                    ve.getGiaVe(),
-//                    ve.getKhachHang().getMaKH(),
-//                    ve.getDaiNgo(),
-                    ve.getGaKhoiHanh(),
-                    ve.getGaKetThuc(),
-//                    ve.getGhe().getMaGhe(),
-                    ve.getLoaiVe(),
-                    ve.getLoaiDoiTuong(),
-                    ve.getNgayKhoiHanh(),
-                    ve.getMaVe()
+                    //ve.getGiaVe(),
+                    maGhe,
+                    //ve.getLoaiVe(),
+                    //ve.getLoaiDoiTuong(),
+                    //ve.getNgayKhoiHanh(),
+                    maVe
             );
         } catch (Exception e) {
             i = 0;

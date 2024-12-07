@@ -60,6 +60,7 @@ public class TrangThanhToan extends JDialog {
     public DaiNgo daiNgo;
     public Double tongTien;
     public String maNV;
+    public JPanel trangDatVe;
 
     public PhongChuMoi phongTuyChinh = new PhongChuMoi();
     public Color xanhBrandeis = new Color(0, 112, 255);
@@ -67,8 +68,9 @@ public class TrangThanhToan extends JDialog {
     public ActionListener hanhDong;
     public MouseListener thaoTacChuot;
 
-    public TrangThanhToan(List<Ve> dsVe, List<KhachHang> dsKh, List<Ghe> dsGhe) {
+    public TrangThanhToan(JPanel trangDatVe, List<Ve> dsVe, List<KhachHang> dsKh, List<Ghe> dsGhe) {
         super();
+        this.trangDatVe = trangDatVe;
         this.danhSachVe = dsVe;
         this.dsKh = dsKh;
         this.dsGheDat = dsGhe;

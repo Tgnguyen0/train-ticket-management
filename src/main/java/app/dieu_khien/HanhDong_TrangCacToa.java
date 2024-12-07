@@ -70,107 +70,73 @@ public class HanhDong_TrangCacToa implements ActionListener, MouseListener {
         if (source == this.trangCacToa.thanhDinhHuong.getComponent(0)) {
             ( (NutAnh) this.trangCacToa.thanhDinhHuong.getComponent(0)).datAnhDangChon();
 
-            for (int i = 1; i < 12 ; i++) {
-                ( (NutAnh) this.trangCacToa.thanhDinhHuong.getComponent(i)).datAnhMacDinh();
-            }
+            datAnhMacDinhChoNut(0);
         }
 
         if (source == this.trangCacToa.thanhDinhHuong.getComponent(1)) {
             ( (NutAnh) this.trangCacToa.thanhDinhHuong.getComponent(1)).datAnhDangChon();
 
-            for (int i = 0; i < 12 ; i++) {
-                if (i != 1)
-                ( (NutAnh) this.trangCacToa.thanhDinhHuong.getComponent(i)).datAnhMacDinh();
-            }
+            datAnhMacDinhChoNut(1);
         }
 
         if (source == this.trangCacToa.thanhDinhHuong.getComponent(2)) {
             ( (NutAnh) this.trangCacToa.thanhDinhHuong.getComponent(2)).datAnhDangChon();
 
-            for (int i = 0; i < 12 ; i++) {
-                if (i != 2)
-                    ( (NutAnh) this.trangCacToa.thanhDinhHuong.getComponent(i)).datAnhMacDinh();
-            }
+            datAnhMacDinhChoNut(2);
         }
 
         if (source == this.trangCacToa.thanhDinhHuong.getComponent(3)) {
             ( (NutAnh) this.trangCacToa.thanhDinhHuong.getComponent(3)).datAnhDangChon();
 
-            for (int i = 0; i < 12 ; i++) {
-                if (i != 3)
-                    ( (NutAnh) this.trangCacToa.thanhDinhHuong.getComponent(i)).datAnhMacDinh();
-            }
+            datAnhMacDinhChoNut(3);
         }
 
         if (source == this.trangCacToa.thanhDinhHuong.getComponent(4)) {
             ( (NutAnh) this.trangCacToa.thanhDinhHuong.getComponent(4)).datAnhDangChon();
 
-            for (int i = 0; i < 12 ; i++) {
-                if (i != 4)
-                    ( (NutAnh) this.trangCacToa.thanhDinhHuong.getComponent(i)).datAnhMacDinh();
-            }
+            datAnhMacDinhChoNut(4);
         }
 
         if (source == this.trangCacToa.thanhDinhHuong.getComponent(5)) {
             ( (NutAnh) this.trangCacToa.thanhDinhHuong.getComponent(5)).datAnhDangChon();
 
-            for (int i = 0; i < 12 ; i++) {
-                if (i != 5)
-                    ( (NutAnh) this.trangCacToa.thanhDinhHuong.getComponent(i)).datAnhMacDinh();
-            }
+            datAnhMacDinhChoNut(5);
         }
 
         if (source == this.trangCacToa.thanhDinhHuong.getComponent(6)) {
             ( (NutAnh) this.trangCacToa.thanhDinhHuong.getComponent(6)).datAnhDangChon();
 
-            for (int i = 0; i < 12 ; i++) {
-                if (i != 6)
-                    ( (NutAnh) this.trangCacToa.thanhDinhHuong.getComponent(i)).datAnhMacDinh();
-            }
+            datAnhMacDinhChoNut(6);
         }
 
         if (source == this.trangCacToa.thanhDinhHuong.getComponent(7)) {
             ( (NutAnh) this.trangCacToa.thanhDinhHuong.getComponent(7)).datAnhDangChon();
 
-            for (int i = 0; i < 12 ; i++) {
-                if (i != 7)
-                    ( (NutAnh) this.trangCacToa.thanhDinhHuong.getComponent(i)).datAnhMacDinh();
-            }
+            datAnhMacDinhChoNut(7);
         }
 
         if (source == this.trangCacToa.thanhDinhHuong.getComponent(8)) {
             ( (NutAnh) this.trangCacToa.thanhDinhHuong.getComponent(8)).datAnhDangChon();
 
-            for (int i = 0; i < 12 ; i++) {
-                if (i != 8)
-                    ( (NutAnh) this.trangCacToa.thanhDinhHuong.getComponent(i)).datAnhMacDinh();
-            }
+            datAnhMacDinhChoNut(8);
         }
 
         if (source == this.trangCacToa.thanhDinhHuong.getComponent(9)) {
             ( (NutAnh) this.trangCacToa.thanhDinhHuong.getComponent(9)).datAnhDangChon();
 
-            for (int i = 0; i < 12 ; i++) {
-                if (i != 9)
-                    ( (NutAnh) this.trangCacToa.thanhDinhHuong.getComponent(i)).datAnhMacDinh();
-            }
+            datAnhMacDinhChoNut(9);
         }
 
         if (source == this.trangCacToa.thanhDinhHuong.getComponent(10)) {
             ( (NutAnh) this.trangCacToa.thanhDinhHuong.getComponent(10)).datAnhDangChon();
 
-            for (int i = 0; i < 12 ; i++) {
-                if (i != 10)
-                    ( (NutAnh) this.trangCacToa.thanhDinhHuong.getComponent(i)).datAnhMacDinh();
-            }
+            datAnhMacDinhChoNut(10);
         }
 
         if (source == this.trangCacToa.thanhDinhHuong.getComponent(11)) {
             ((NutAnh) this.trangCacToa.thanhDinhHuong.getComponent(11)).datAnhDangChon();
 
-            for (int i = 0; i < 11 ; i++) {
-                ( (NutAnh) this.trangCacToa.thanhDinhHuong.getComponent(i)).datAnhMacDinh();
-            }
+            datAnhMacDinhChoNut(11);
         }
 
         /*if (source == this.trangCacToa.nutToa1) {
@@ -365,6 +331,13 @@ public class HanhDong_TrangCacToa implements ActionListener, MouseListener {
             this.trangCacToa.nutToa10.datAnhMacDinh();
             this.trangCacToa.nutToa11.datAnhMacDinh();
         }*/
+    }
+
+    public void datAnhMacDinhChoNut(int koDatCho) {
+        for (int i = 0; i < 12 ; i++) {
+            if (i != koDatCho)
+                ( (NutAnh) this.trangCacToa.thanhDinhHuong.getComponent(i)).datAnhMacDinh();
+        }
     }
 
     @Override

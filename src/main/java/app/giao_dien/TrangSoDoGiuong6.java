@@ -171,19 +171,19 @@ public class TrangSoDoGiuong6 extends JPanel {
             benGiuongLe.setPreferredSize(new Dimension(50, 180));
             benGiuongLe.setBackground(trang);
 
-            dsGiuong.get(0).setTrangThai(TRANG_THAI_GHE.Da_dat);
-            dsGiuong.get(7).setTrangThai(TRANG_THAI_GHE.Da_dat);
+            //dsGiuong.get(0).setTrangThai(TRANG_THAI_GHE.Da_dat);
+            //dsGiuong.get(7).setTrangThai(TRANG_THAI_GHE.Da_dat);
             for (int j = 6 ; j >= 1; j--) {
                 JButton giuong = new JButton(String.valueOf(j + doTang * 6));
                 giuong.setPreferredSize(new Dimension(chieuDaiNut,chieuRongNut));
 
-                /*if (dsGiuong.get(j - 1 + doTang * 6).getTrangThai() == TRANG_THAI_GHE.Trong) {
+                if (dsGiuong.get(j - 1 + doTang * 6).getTrangThai() == TRANG_THAI_GHE.Trong) {
                     giuong.setBackground(xanhBrandeis);
                 } else {
                     giuong.setBackground(doDo);
                 }
 
-                if (!giuongDao.layDSGheDat().isEmpty()) {
+                /*if (!giuongDao.layDSGheDat().isEmpty()) {
                     for (int k = 0 ; k < dsGiuongDaDat.size() ; k++) {
                         if (dsGiuongDaDat.get(k).getSoGhe().equals(String.valueOf(j - 1 + doTang * 6)) &&
                                 this.maToa.equals(dsGiuongDaDat.get(k).getMaToa())) {
@@ -192,7 +192,15 @@ public class TrangSoDoGiuong6 extends JPanel {
                     }
                 }*/
 
-                giuong.setBackground(xanhBrandeis);
+                for (Ghe gheDaDat : dsGiuongDaDat) {
+                    if (gheDaDat.getSoGhe().equals(String.valueOf(j + doTang * 6)) &&
+                            this.maToa.equals(gheDaDat.getMaToa())) {
+                        giuong.setBackground(camNhuomDen);
+                        break; // Nếu tìm thấy ghế đã đặt, ngừng kiểm tra
+                    }
+                }
+
+                //giuong.setBackground(xanhBrandeis);
                 giuong.setForeground(trang);
                 giuong.setFocusPainted(false); // Bỏ viền khi click (focus)
                 giuong.setBorderPainted(false);

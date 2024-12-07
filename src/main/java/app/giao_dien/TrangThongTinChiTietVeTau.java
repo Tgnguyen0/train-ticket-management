@@ -8,6 +8,7 @@ import app.dieu_khien.HanhDong_TrangThongTinChiTietVeTau;
 import app.phong_chu_moi.PhongChuMoi;
 import app.thuc_the.Ghe;
 import app.thuc_the.NhaGa;
+import app.thuc_the.TRANG_THAI_GHE;
 import com.toedter.calendar.JDateChooser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -67,19 +68,20 @@ public class TrangThongTinChiTietVeTau extends JFrame {
     public javax.swing.JPanel trangChuaThongTinVeChiTiet;
     public javax.swing.JPanel trangChuaViTriGhe;
     public javax.swing.JPanel trangChuaGiaVe;
+    public javax.swing.JPanel trangCha;
     public ActionListener ac;
     public MouseListener mouse;
 
     public Ga_DAO gaDao;
     public LichCapBenGa_DAO lichDao;
     public Ghe_DAO gheDao;
-    public Ghe ghe;
+    //public Ghe ghe;
     public List<NhaGa> dsGa;
     public Color xanhBrandeis = new Color(0, 112, 255);
 
     Logger logger = LoggerFactory.getLogger(TrangThongTinChiTietVeTau.class);
 
-    public TrangThongTinChiTietVeTau(String maVe, String loaiVe, String diemDi, String diemDen, LocalDateTime ngayKhoiHanh,
+    public TrangThongTinChiTietVeTau(JPanel trang, String maVe, String loaiVe, String diemDi, String diemDen, LocalDateTime ngayKhoiHanh,
                                      String ngayTroVe, String tenKhachHang, String soHieu, String tenToa,
                                      Ghe ghe, LocalDateTime ngayDatVe, String doiTuong, String giaVe){
         this.setSize(724, 331); // Đặt kích thước cụ thể cho cửa sổ
@@ -87,10 +89,16 @@ public class TrangThongTinChiTietVeTau extends JFrame {
         setLocationRelativeTo(null);
         this.lichDao = new LichCapBenGa_DAO(); // Lấy LichCapBenGa_DAO
         this.gaDao = new Ga_DAO(); // Lấy Ga_DAO
+
+        /* Quan trọng */
+        //this.ghe = ghe;
+        this.trangCha = trang; // Để setText cho TrangDanhSachVe
         this.gheDao = new Ghe_DAO(); // Khởi tạo ghế dao
+        gheDao.capNhatTrangThaiGhe(TRANG_THAI_GHE.Trong.getValue(), ghe.getMaGhe());
+        ghe.setTrangThai(TRANG_THAI_GHE.Trong); // Chỉnh về trạng thái trống
         gheDao.themGhe(ghe); // Thêm ghe đã có vào dsGheDat
+
         dsGa = this.gaDao.ChonTatCa(); // Lấy danh sách nhà ga
-        this.ghe = ghe;
         this.ac = new HanhDong_TrangThongTinChiTietVeTau(this);
         this.mouse = new HanhDong_TrangThongTinChiTietVeTau(this);
 
