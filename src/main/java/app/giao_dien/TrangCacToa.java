@@ -110,7 +110,7 @@ public class TrangCacToa extends JPanel {
         this.gheToa11 = gheDao.ChonTheoMaToaTatCa(dsToa.get(10).getMaToa());
         this.gheToa12 = gheDao.ChonTheoMaToaTatCa(dsToa.get(11).getMaToa());*/
 
-        setLayout(new BorderLayout());
+        setLayout(new FlowLayout(FlowLayout.CENTER));
         setPreferredSize(new Dimension(1200, 800));
 
         // Thêm ActionListener và MouseListener cho các nút
@@ -124,7 +124,7 @@ public class TrangCacToa extends JPanel {
 
     public void taoThanhDinhHuongTau() {
         thanhDinhHuong = new JPanel();
-        thanhDinhHuong.setPreferredSize(new Dimension(1200, chieuRongNut + 40));
+        thanhDinhHuong.setPreferredSize(new Dimension(1200, chieuRongNut + 20));
         thanhDinhHuong.setBackground(trang);
         thanhDinhHuong.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 0));
 
@@ -210,12 +210,11 @@ public class TrangCacToa extends JPanel {
                 chieuDaiNut,                                 // Chiều dài của nút
                 chieuRongNut,                                // Chiều rộng của nút
                 viTriChu,                                    // Vị trí của chữ trên nút
-                this.soHieu,                                 // Thông tin số hiệu tàu
+                this.soHieu.substring(2),          // Thông tin số hiệu tàu
                 6                                            // Kích thước chữ (hoặc tham số tùy chỉnh khác)
         );
 
         nutTau.setPreferredSize(new Dimension(chieuDaiNut, chieuRongNut + 100));
-        nutTau.chinhKichThuocJlabel(chieuDaiNut + 1000, chieuRongNut + 1000);
         nutTau.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, charSize));
         nutTau.setForeground(xanhBrandeis);
         nutTau.setBackground(trang);
@@ -225,9 +224,10 @@ public class TrangCacToa extends JPanel {
         nutTau.datViTriChu(SwingConstants.LEFT);
         nutTau.addMouseListener(this.thaoTacChuot);
         nutTau.addActionListener(this.hanhDong);
+        nutTau.chinhKichThuocJlabel(chieuDaiNut + 1000, chieuRongNut + 1000);
         thanhDinhHuong.add(nutTau);
 
-        add(thanhDinhHuong, BorderLayout.NORTH);
+        add(thanhDinhHuong);
     }
 
     public NutAnh taoNutToa(int position) {
@@ -260,14 +260,14 @@ public class TrangCacToa extends JPanel {
     public void taoTrangHuongDan() {
         JPanel trangHuongDan = new JPanel();
         trangHuongDan.setLayout(new FlowLayout(FlowLayout.CENTER));
-        trangHuongDan.setPreferredSize(new Dimension(1200, 40));
+        trangHuongDan.setPreferredSize(new Dimension(1200, 47));
         trangHuongDan.setBackground(trang);
 
-        String[] duongDanAnh = {
+        /*String[] duongDanAnh = {
                 "assets/toa-tau-con-ve.png",
                 "assets/toa-tau-dang-chon.png",
                 "assets/toa-tau-het-ve.png"
-        };
+        };*/
 
         try {
             Image anhToaTauConVe, anhToaTauDangChon, anhToaTauHetVe;
@@ -288,10 +288,11 @@ public class TrangCacToa extends JPanel {
             themBieuTuongVaTieuDe(trangHuongDan, bieuTuongTauDangChon, "Toa tàu đang chọn");
             themBieuTuongVaTieuDe(trangHuongDan, bieuTuongTauHetVe, "Toa tàu hết vé");
 
-            add(trangHuongDan, BorderLayout.CENTER);
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        add(trangHuongDan);
     }
 
     private void themBieuTuongVaTieuDe(JPanel trangHienTai, ImageIcon bieuTuong, String cau) {
@@ -364,7 +365,7 @@ public class TrangCacToa extends JPanel {
 
     public void taoTrangChua() {
         this.trangChua = new JPanel();
-        this.trangChua.setPreferredSize(new Dimension(1200, 425));
+        this.trangChua.setPreferredSize(new Dimension(1200, 275));
         this.trangChua.setLayout(new CardLayout());
 
         for (int i = 0; i < dsToa.size(); i++) {
@@ -394,6 +395,6 @@ public class TrangCacToa extends JPanel {
             }
         }
 
-        this.add(this.trangChua, BorderLayout.SOUTH);
+        this.add(this.trangChua);
     }
 }

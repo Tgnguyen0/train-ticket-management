@@ -74,7 +74,6 @@ public class TrangSoDoGiuong4 extends JPanel {
 
         taoTieuDeTang();
         taoTrangChuaSoDoGhe();
-        taoTrangHuongDan();
 
         add(trangChuaTieuDeVaSoDo, BorderLayout.CENTER);
     }
@@ -82,11 +81,11 @@ public class TrangSoDoGiuong4 extends JPanel {
     public void taoTrangTieuDe() {
         JPanel trangTieuDe = new JPanel();
         trangTieuDe.setLayout(new FlowLayout(FlowLayout.CENTER));
-        trangTieuDe.setPreferredSize(new Dimension(1000, 40));
+        trangTieuDe.setPreferredSize(new Dimension(1000, 32));
         trangTieuDe.setBackground(trang);
 
         JLabel tieuDe = new JLabel("Sơ đồ toa giường 2 tầng " + this.tenToa, SwingConstants.CENTER);
-        tieuDe.setPreferredSize(new Dimension(900, 40));
+        tieuDe.setPreferredSize(new Dimension(900, 32));
         tieuDe.setForeground(xanhBrandeis);
         tieuDe.setBackground(trang);
         tieuDe.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.BOLD, 18));
@@ -206,44 +205,5 @@ public class TrangSoDoGiuong4 extends JPanel {
         }
 
         return trangSoDoGiuong;
-    }
-
-    public void taoTrangHuongDan() {
-        JPanel trangHuongDan = new JPanel();
-        trangHuongDan.setLayout(new FlowLayout(FlowLayout.CENTER));
-        trangHuongDan.setPreferredSize(new Dimension(1200, 140));
-        trangHuongDan.setBackground(trang);
-
-        themBieuTuongVaTieuDe(trangHuongDan, "Giường Trống", xanhBrandeis);
-        themBieuTuongVaTieuDe(trangHuongDan, "Giường đã mua", doDo);
-        themBieuTuongVaTieuDe(trangHuongDan, "Ghế chọn", camNhuomDen);
-
-        add(trangHuongDan, BorderLayout.SOUTH);
-    }
-
-    private void themBieuTuongVaTieuDe(JPanel trangHienTai, String cau, Color mau) {
-        JPanel trangChuaTieuDeVaBieuTuong = new JPanel();
-        trangChuaTieuDeVaBieuTuong.setPreferredSize(new Dimension(250, chieuRongNut));
-        trangChuaTieuDeVaBieuTuong.setBackground(trang);
-        trangChuaTieuDeVaBieuTuong.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 0));
-
-        JButton nutBieuTuong = new JButton("");
-        nutBieuTuong.setPreferredSize(new Dimension(chieuDaiNut, chieuRongNut)); // Thiết lập kích thước nút
-        nutBieuTuong.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, 12));
-        nutBieuTuong.setBackground(mau); // Đặt màu nền
-        nutBieuTuong.setForeground(trang); // Đặt màu chữ
-        nutBieuTuong.setFocusPainted(false); // Bỏ viền khi click (focus)
-        nutBieuTuong.setBorderPainted(false);
-
-        JLabel tieuDe = new JLabel(cau, SwingConstants.LEFT);
-        tieuDe.setPreferredSize(new Dimension(140, chieuRongNut));
-        tieuDe.setForeground(xanhBrandeis);
-        tieuDe.setBackground(trang);
-        tieuDe.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.BOLD, 12));
-
-        trangChuaTieuDeVaBieuTuong.add(nutBieuTuong);
-        trangChuaTieuDeVaBieuTuong.add(tieuDe);
-
-        trangHienTai.add(trangChuaTieuDeVaBieuTuong);
     }
 }

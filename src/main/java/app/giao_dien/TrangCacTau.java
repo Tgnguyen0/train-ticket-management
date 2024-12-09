@@ -28,6 +28,7 @@ public class TrangCacTau extends JFrame {
     public NutAnh nutTau2;
     public NutAnh nutTau3;
     public NutAnh nutTau4;
+    public JButton nutXacNhan;
 
     /*public TrangCacToa trangCacToa1;
     public TrangCacToa trangCacToa2;
@@ -41,6 +42,8 @@ public class TrangCacTau extends JFrame {
     public Color trang = new Color(255, 255, 255);
     public Color xanhBrandeis = new Color(0, 112, 255);
     public Color xanhNhat = new Color(66, 186, 255);
+    public Color camNhuomDen = new Color(253, 126, 20);
+    public Color doDo = new Color(220, 53, 69);
     public PhongChuMoi phongTuyChinh = new PhongChuMoi();
     public int charSize = 13;
     public int chieuDaiNut = 200;
@@ -113,7 +116,7 @@ public class TrangCacTau extends JFrame {
         //setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         setResizable(true);
-        setLayout(new BorderLayout());
+        setLayout(new FlowLayout(FlowLayout.CENTER));
 
         // Thêm ActionListener và MouseListener cho các nút
         this.hanhDong = new HanhDong_TrangCacTau(this);
@@ -124,6 +127,8 @@ public class TrangCacTau extends JFrame {
 
         taoThanhDinhHuongToa();
         taoTrangChua();
+        taoTrangHuongDan();
+        taoThanhXacNhan();
     }
 
     public void taoThanhDinhHuongToa() {
@@ -138,15 +143,19 @@ public class TrangCacTau extends JFrame {
             switch (maTau) {
                 case "VN5234":
                     coHieuTauCoQuaGa.set(0, true);
+                    //this.coQuaGaTau1 = true;
                     break;
                 case "VN5947":
                     coHieuTauCoQuaGa.set(1, true);
+                    //this.coQuaGaTau2 = true;
                     break;
                 case "VN7283":
                     coHieuTauCoQuaGa.set(2, true);
+                    //this.coQuaGaTau3 = true;
                     break;
                 case "VN9029":
                     coHieuTauCoQuaGa.set(3, true);
+                    //this.coQuaGaTau4 = true;
                     break;
             }
         }
@@ -321,20 +330,20 @@ public class TrangCacTau extends JFrame {
     public void taoTrangChua() {
         // Khởi tạo trang chứa các trang khác
         this.trangChua = new JPanel();
-        this.trangChua.setPreferredSize(new Dimension(1200, 600));
+        this.trangChua.setPreferredSize(new Dimension(1200, 390));
         this.trangChua.setLayout(new CardLayout());
 
         /*this.dsToa1 = toaDao.ChonTheoSoHieuTatCa(this.dsTau.get(0).getSoHieu());
         this.dsToa2 = toaDao.ChonTheoSoHieuTatCa(this.dsTau.get(1).getSoHieu());
         this.dsToa3 = toaDao.ChonTheoSoHieuTatCa(this.dsTau.get(2).getSoHieu());
-        this.dsToa4 = toaDao.ChonTheoSoHieuTatCa(this.dsTau.get(3).getSoHieu());*/
+        this.dsToa4 = toaDao.ChonTheoSoHieuTatCa(this.dsTau.get(3).getSoHieu());
 
-        /*if (coQuaGaTau1) this.trangCacToa1 = new TrangCacToa(1, this.dsTau.get(0).getSoHieu(), toaDao.ChonTheoSoHieuTatCa(this.dsTau.get(0).getSoHieu()), this.gheDao);
+        if (coQuaGaTau1) this.trangCacToa1 = new TrangCacToa(1, this.dsTau.get(0).getSoHieu(), toaDao.ChonTheoSoHieuTatCa(this.dsTau.get(0).getSoHieu()), this.gheDao);
         if (coQuaGaTau2) this.trangCacToa2 = new TrangCacToa(2, this.dsTau.get(1).getSoHieu(), toaDao.ChonTheoSoHieuTatCa(this.dsTau.get(1).getSoHieu()), this.gheDao);
         if (coQuaGaTau3) this.trangCacToa3 = new TrangCacToa(3, this.dsTau.get(2).getSoHieu(), toaDao.ChonTheoSoHieuTatCa(this.dsTau.get(2).getSoHieu()), this.gheDao);
-        if (coQuaGaTau4) this.trangCacToa4 = new TrangCacToa(4, this.dsTau.get(3).getSoHieu(), toaDao.ChonTheoSoHieuTatCa(this.dsTau.get(3).getSoHieu()), this.gheDao);*/
+        if (coQuaGaTau4) this.trangCacToa4 = new TrangCacToa(4, this.dsTau.get(3).getSoHieu(), toaDao.ChonTheoSoHieuTatCa(this.dsTau.get(3).getSoHieu()), this.gheDao);
 
-        /*if (coQuaGaTau1) this.trangChua.add(trangCacToa1, "Cac toa cua tau 1");
+        if (coQuaGaTau1) this.trangChua.add(trangCacToa1, "Cac toa cua tau 1");
         if (coQuaGaTau2) this.trangChua.add(trangCacToa2, "Cac toa cua tau 2");
         if (coQuaGaTau3) this.trangChua.add(trangCacToa3, "Cac toa cua tau 3");
         if (coQuaGaTau4) this.trangChua.add(trangCacToa4, "Cac toa cua tau 4");*/
@@ -344,17 +353,17 @@ public class TrangCacTau extends JFrame {
         add(this.trangChua);
     }
 
-    public String laySoHieuTauChon() {
+    /*public String laySoHieuTauChon() {
         return this.soHieuTauChon;
-    }
+    }*/
 
-    public void datSoHieuTauChon(String soHieu) {
+    /*public void datSoHieuTauChon(String soHieu) {
         this.soHieuTauChon = soHieu;
-    }
+    }*/
 
-    public String layMaGa() {
+    /*public String layMaGa() {
         return this.maGa;
-    }
+    }*/
 
     public void datMaGa(String maGa) {
         this.maGa = maGa;
@@ -364,19 +373,72 @@ public class TrangCacTau extends JFrame {
         for (int i = 0; i < coHieuTauCoQuaGa.size(); i++) {
             if (coHieuTauCoQuaGa.get(i)) {
                 TrangCacToa trangCacToa = new TrangCacToa(
-                        i + 1,
+                        (i + 1),
                         this.dsTau.get(i).getSoHieu(),
                         toaDao.ChonTheoSoHieuTatCa(this.dsTau.get(i).getSoHieu()),
                         this.gheDao
                 );
 
-                dsTrangCacToa.add(trangCacToa);
-
-                this.trangChua.add(dsTrangCacToa.get(i), "Cac toa cua tau " + i + 1);
+                this.trangChua.add(trangCacToa, "Cac toa cua tau " + (i + 1));
             } else {
-                dsTrangCacToa.add(null); // Optional: maintain alignment in the list
+                dsTrangCacToa.add(null);
             }
         }
+    }
+
+    public void taoTrangHuongDan() {
+        JPanel trangHuongDan = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        trangHuongDan.setPreferredSize(new Dimension(1200, 60));
+        trangHuongDan.setBackground(trang);
+
+        themBieuTuongVaTieuDe(trangHuongDan, "Chỗ còn trống", xanhBrandeis);
+        themBieuTuongVaTieuDe(trangHuongDan, "Chỗ đã mua", doDo);
+        themBieuTuongVaTieuDe(trangHuongDan, "Chỗ đang chọn", camNhuomDen);
+
+        add(trangHuongDan);
+    }
+
+    private void themBieuTuongVaTieuDe(JPanel trangHienTai, String cau, Color mau) {
+        JPanel trangChuaTieuDeVaBieuTuong = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 0));
+        trangChuaTieuDeVaBieuTuong.setPreferredSize(new Dimension(250, 50));
+        trangChuaTieuDeVaBieuTuong.setBackground(trang);
+
+        JButton nutBieuTuong = new JButton("");
+        nutBieuTuong.setPreferredSize(new Dimension(50, 50));
+        nutBieuTuong.setBackground(mau);
+        nutBieuTuong.setForeground(trang);
+        nutBieuTuong.setFocusPainted(false);
+        nutBieuTuong.setBorderPainted(false);
+
+        JLabel tieuDe = new JLabel(cau, SwingConstants.LEFT);
+        tieuDe.setPreferredSize(new Dimension(140, 50));
+        tieuDe.setForeground(xanhBrandeis);
+        tieuDe.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, charSize));
+
+        trangChuaTieuDeVaBieuTuong.add(nutBieuTuong);
+        trangChuaTieuDeVaBieuTuong.add(tieuDe);
+
+        trangHienTai.add(trangChuaTieuDeVaBieuTuong);
+    }
+
+    public void taoThanhXacNhan() {
+        JPanel thanhXacNhan = new JPanel();
+        thanhXacNhan.setPreferredSize(new Dimension(1520, 50));
+        thanhXacNhan.setBackground(trang);
+        thanhXacNhan.setLayout(new FlowLayout(FlowLayout.RIGHT));
+
+        this.nutXacNhan = new JButton("Xác nhận");
+        this.nutXacNhan.setPreferredSize(new Dimension(100, 40));
+        this.nutXacNhan.setBackground(xanhBrandeis);
+        this.nutXacNhan.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, 13));
+        this.nutXacNhan.setForeground(trang);
+        this.nutXacNhan.setFocusPainted(false);
+        this.nutXacNhan.setBorderPainted(false);
+        this.nutXacNhan.addActionListener(hanhDong);
+
+        thanhXacNhan.add(nutXacNhan);
+
+        add(thanhXacNhan);
     }
 
     /*public static void main(String[] args) {

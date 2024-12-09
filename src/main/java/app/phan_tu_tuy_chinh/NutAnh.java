@@ -53,7 +53,7 @@ public class NutAnh extends JButton {
         this.add(label);
     }
 
-    public NutAnh(String duongDanMacDinh, double doCao, double doRong, String textLabel) {
+    /*public NutAnh(String duongDanMacDinh, double doCao, double doRong, String textLabel) {
         this.doDai = doCao;
         this.doRong = doRong;
         this.label = new JLabel(textLabel);
@@ -77,7 +77,7 @@ public class NutAnh extends JButton {
 
         // Thêm label vào nút
         this.add(label);
-    }
+    }*/
 
     public void datViTriChu(int position) {
         label.setHorizontalAlignment(position);
@@ -115,7 +115,7 @@ public class NutAnh extends JButton {
         this.label.setPreferredSize(new Dimension(chieuDai, chieuRong));
     }
 
-    public void kichHoat(boolean choPhep) {
+    /*public void kichHoat(boolean choPhep) {
         this.setEnabled(choPhep);
-    }
+    }*/
 }
