@@ -86,6 +86,8 @@ public class TrangChuaThongKeDoanhThuNhaGa extends JPanel {
     public BieuDoCot barChartExample;
     public Color xanhBrandeis = new Color(0, 112, 255);
     public  Color trang = new Color(255, 255, 255);
+    public JButton buttonDuDoanDoanhThu;
+
     public TrangChuaThongKeDoanhThuNhaGa(TrangDinhHuong mainFrame){
         this.trangDinhHuong = mainFrame;
         trangChuaThongKeDoanhThuThang = new JPanel();
@@ -301,7 +303,7 @@ public class TrangChuaThongKeDoanhThuNhaGa extends JPanel {
         );
     }
     public void thietLap_TrangChuaNutThongKeThang(){
-        buttonThongKeThang.setText("Thống Kê:");
+        buttonThongKeThang.setText("Thống Kê");
         buttonThongKeThang.setForeground(this.trang);
         buttonThongKeThang.setBackground(this.xanhBrandeis);
         buttonThongKeThang.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.BOLD, 14));
@@ -373,8 +375,8 @@ public class TrangChuaThongKeDoanhThuNhaGa extends JPanel {
         trangChuaDoanhThuLayout.setVerticalGroup(
                 trangChuaDoanhThuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(trangChuaDoanhThuLayout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(scrollPaneTrangChuaDoanhThuThang, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(15, 15, 15)
+                                .addComponent(scrollPaneTrangChuaDoanhThuThang, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }
@@ -484,6 +486,12 @@ public class TrangChuaThongKeDoanhThuNhaGa extends JPanel {
         buttonThongKeDoanhThuNamCuaNhanVien.setBackground(this.xanhBrandeis);
         buttonThongKeDoanhThuNamCuaNhanVien.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.BOLD, 14));
 
+        buttonDuDoanDoanhThu = new JButton();
+        buttonDuDoanDoanhThu.setText("Dự Đoán Doanh Thu");
+        buttonDuDoanDoanhThu.setForeground(this.trang);
+        buttonDuDoanDoanhThu.setBackground(this.xanhBrandeis);
+        buttonDuDoanDoanhThu.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.BOLD, 14));
+
         javax.swing.GroupLayout trangChuaButtonChuyenTrangLayout = new javax.swing.GroupLayout(trangChuaButtonChuyenTrang);
         trangChuaButtonChuyenTrang.setLayout(trangChuaButtonChuyenTrangLayout);
         trangChuaButtonChuyenTrangLayout.setHorizontalGroup(
@@ -491,8 +499,9 @@ public class TrangChuaThongKeDoanhThuNhaGa extends JPanel {
                         .addGroup(trangChuaButtonChuyenTrangLayout.createSequentialGroup()
                                 .addGap(48, 48, 48)
                                 .addGroup(trangChuaButtonChuyenTrangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(buttonThongKeDoanhThuThangCuaNhanVien, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
-                                        .addComponent(buttonThongKeDoanhThuNamCuaNhanVien, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addComponent(buttonThongKeDoanhThuThangCuaNhanVien, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                                        .addComponent(buttonThongKeDoanhThuNamCuaNhanVien, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(buttonDuDoanDoanhThu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         trangChuaButtonChuyenTrangLayout.setVerticalGroup(
@@ -500,8 +509,11 @@ public class TrangChuaThongKeDoanhThuNhaGa extends JPanel {
                         .addGroup(trangChuaButtonChuyenTrangLayout.createSequentialGroup()
                                 .addComponent(buttonThongKeDoanhThuThangCuaNhanVien, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(buttonThongKeDoanhThuNamCuaNhanVien, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE))
+                                .addComponent(buttonThongKeDoanhThuNamCuaNhanVien, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(buttonDuDoanDoanhThu, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
+
 
     }
     public void thietLap_TrangChuaDoanhThuThang(){
@@ -924,6 +936,11 @@ public class TrangChuaThongKeDoanhThuNhaGa extends JPanel {
         }
     }
 
+    public void duDoanDoanhThuCuaNhaGa(){
+            Map<Integer, Double> doanhThuNhaGa = HoaDon_DAO.layDoanhThuTungNam();
+            TrangDuDoanDoanhThu.thietLapDuDoanDoanhThu(doanhThuNhaGa);
+    }
+
     public void themHanhDongChoCacChucNang(){
         this.ac = new HanhDong_TrangThongKeDoanhThuNhaGa(this);
         this.mouse = new HanhDong_TrangThongKeDoanhThuNhaGa(this);
@@ -932,6 +949,7 @@ public class TrangChuaThongKeDoanhThuNhaGa extends JPanel {
         this.buttonThongKeNam.addActionListener(ac);
         this.buttonThongKeDoanhThuNamCuaNhanVien.addActionListener(ac);
         this.buttonThongKeDoanhThuThangCuaNhanVien.addActionListener(ac);
+        this.buttonDuDoanDoanhThu.addActionListener(ac);
     }
 
 }

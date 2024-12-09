@@ -253,23 +253,23 @@ public class TrangThanhToan extends JDialog {
 
             Object[] duLieu = {
                     String.valueOf(i + 1),                                                         // Thứ tự
-                    //this.danhSachVe.get(i).getMaVe(),                                                // Mã vé
+                    this.danhSachVe.get(i).getMaVe(),                                                // Mã vé
                     kh.getTenKH(),                                                                   // Họ tên khách hàng
                     this.danhSachVe.get(i).getLoaiDoiTuong(),                                        // Loại đối tượng
-                    //(int) this.danhSachVe.get(i).getGiaVe(),                                         // Giá vé
-                    /*this.danhSachVe.get(i).getGaKhoiHanh(),                                          // Ga xuất phát
+                    (int) this.danhSachVe.get(i).getGiaVe(),                                         // Giá vé
+                    this.danhSachVe.get(i).getGaKhoiHanh(),                                          // Ga xuất phát
                     this.danhSachVe.get(i).getGaKetThuc(),                                           // Ga đích
                     this.danhSachVe.get(i).getNgayDatVe().getYear() + "-" +
                         this.danhSachVe.get(i).getNgayDatVe().getMonth().getValue() + "-" +
                             this.danhSachVe.get(i).getNgayDatVe().getDayOfMonth(),                                           // Ngày đặt vé
                     this.danhSachVe.get(i).getNgayKhoiHanh().getYear() + "-" +                       // Ngày khởi hành
                             this.danhSachVe.get(i).getNgayKhoiHanh().getMonth().getValue() + "-" +
-                                this.danhSachVe.get(i).getNgayKhoiHanh().getDayOfMonth(),*/
+                                this.danhSachVe.get(i).getNgayKhoiHanh().getDayOfMonth(),
                     toa.getSoHieu(),                                                                 // Số hiệu tàu
-                    /*this.danhSachVe.get(i).getNgayKhoiHanh().toLocalTime().getHour() + ":" +         // Giờ xuất phát
-                            this.danhSachVe.get(i).getNgayKhoiHanh().toLocalTime().getMinute(),*/
+                    this.danhSachVe.get(i).getNgayKhoiHanh().toLocalTime().getHour() + ":" +         // Giờ xuất phát
+                            this.danhSachVe.get(i).getNgayKhoiHanh().toLocalTime().getMinute(),
                     toa.getTenToa(),
-                    ghe.getLoaiGhe().toString(), //ghe.getMaToa(),                                    // Loại ghế                           // Mã toa
+                    ghe.getLoaiGhe().toString(), ghe.getMaToa(),                                    // Loại ghế                           // Mã toa
                     ghe.getSoGhe(),                                                                   // Số ghế
                     (int) this.danhSachVe.get(i).getGiaVe(),
             };
@@ -565,22 +565,22 @@ public class TrangThanhToan extends JDialog {
         // TODO add your handling code here:
     }
 
-//    private void hienThiDanhSachVe(List<Ve>danhSachVe) {
-//        model.setRowCount(0); // Xóa dữ liệu cũ nếu có
-//
-//        int stt = 1; // Biến đếm cho số thứ tự
-//
-//        // Thêm từng Ve trong danhSachVe vào model
-//        for (Ve ve : danhSachVe) {
-//            model.addRow(new Object[]{
-//                    stt, // Số thứ tự tự động tăng
-//                    ve.getMaKhachHang(),
-//                    ve.getLoaiDoiTuong(),
-//                    ve.getLoaiVe(),
-//                    ve.getMaGhe(),
-//                    ve.getGiaVe()
-//            });
-//            stt++; // Tăng số thứ tự lên 1 cho dòng tiếp theo
-//        }
-//    }
+    private void hienThiDanhSachVe(List<Ve>danhSachVe) {
+        model.setRowCount(0); // Xóa dữ liệu cũ nếu có
+
+        int stt = 1; // Biến đếm cho số thứ tự
+
+        // Thêm từng Ve trong danhSachVe vào model
+        for (Ve ve : danhSachVe) {
+            model.addRow(new Object[]{
+                    stt, // Số thứ tự tự động tăng
+                    ve.getMaKhachHang(),
+                    ve.getLoaiDoiTuong(),
+                    ve.getLoaiVe(),
+                    ve.getMaGhe(),
+                    ve.getGiaVe()
+            });
+            stt++; // Tăng số thứ tự lên 1 cho dòng tiếp theo
+        }
+    }
 }

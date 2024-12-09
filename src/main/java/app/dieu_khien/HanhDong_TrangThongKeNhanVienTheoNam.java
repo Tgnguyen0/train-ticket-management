@@ -32,6 +32,9 @@ public class HanhDong_TrangThongKeNhanVienTheoNam implements ActionListener, Mou
             CardLayout cardLayout = (CardLayout) this.trangChuaThongKeNhanVienTheoNam.trangDinhHuong.getTrangChua().getLayout();
             cardLayout.show(this.trangChuaThongKeNhanVienTheoNam.trangDinhHuong.getTrangChua(), "Trang Thong Ke");
         }
+        else if(e.getSource() == this.trangChuaThongKeNhanVienTheoNam.buttonTienThuongNhanVien){
+            this.trangChuaThongKeNhanVienTheoNam.tienThuongNhanVien();
+        }
     }
 
     @Override

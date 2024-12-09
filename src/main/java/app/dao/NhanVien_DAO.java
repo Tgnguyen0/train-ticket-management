@@ -425,6 +425,39 @@ public class NhanVien_DAO {
 
         return nhanVien;
     }
+    public static NhanVien layNhanVienTheo_MaNhanVien(String maNhanVienRequest) {
+        NhanVien nhanVien = null;
+        String sql = "SELECT * FROM NhanVien WHERE MaNV = ?";
+
+        try (Connection connection = KetNoiCoSoDuLieu.ketNoiDB_HinhDB();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setString(1, maNhanVienRequest);  // Set the TenNV parameter
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                nhanVien = new NhanVien();
+                nhanVien.setMaNV(resultSet.getString("MaNV"));
+                nhanVien.setTenNV(resultSet.getString("TenNV"));
+                nhanVien.setNgaySinh(resultSet.getDate("NgaySinh").toLocalDate());
+                nhanVien.setDiaChi(resultSet.getString("DiaChi"));
+                nhanVien.setSoDT(resultSet.getString("SoDT"));
+                if (resultSet.getString("GioiTinh").compareToIgnoreCase("Nam") == 0) {
+                    nhanVien.setGioiTinh(GIOI_TINH.NAM);
+                } else {
+                    nhanVien.setGioiTinh(GIOI_TINH.NU);
+                }
+                nhanVien.setMatKhau(resultSet.getString("MatKhau"));
+                nhanVien.setVaiTro(resultSet.getString("VaiTro"));
+                nhanVien.setVaiTro(resultSet.getString("TenDangNhap"));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return nhanVien;
+    }
 
     public static int themNhanVien(NhanVien nv) {
         int kq = 0;

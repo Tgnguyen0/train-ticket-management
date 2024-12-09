@@ -72,6 +72,11 @@ public class HanhDong_TrangThongTinChiTietVeTau implements ActionListener, Mouse
 
                    Ve_DAO veDao = new Ve_DAO();
                    veDao.CapNhatVeCSDL(ghe.getMaGhe(), maVe);
+                   /*
+                        cập nhật lại mã vế đã bị thay thế về lại trạng thái Trống
+                    */
+                     Ghe_DAO.capNhatTrangThaiGhe_VeTrangThaiTrong(this.trangThongTinChiTietVeTau.maGhe_Old);
+                    // Ghe_DAO.capNhatTrangThaiGhe_VeTrangDaDat(this.trangThongTinChiTietVeTau.tex)
 
                    ((TrangDanhSachVeTau) this.trangThongTinChiTietVeTau.trangCha).textFieldMaGhe.setText(ghe.getMaGhe());
 
