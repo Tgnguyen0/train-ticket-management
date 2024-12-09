@@ -67,7 +67,8 @@ public class HanhDong_TrangDanhSachVe implements ActionListener, MouseListener {
             String maVe = this.trangDanhSachVeTau.textFieldMaVe.getText();
             String maKhachHang = this.trangDanhSachVeTau.textFieldMaKhachHang.getText();
             KhachHang_DAO khachHangDao = new KhachHang_DAO();
-            KhachHang khachHang = khachHangDao.layKhachHangMuaVeTheoMaKhachHang(maKhachHang);
+            KhachHang khachHang= new KhachHang();
+            khachHang = khachHangDao.layKhachHangMuaVeTheoMaKhachHang(maKhachHang);
             String tenKhachHang = khachHang.getTenKH();
             String maGhe = this.trangDanhSachVeTau.textFieldMaGhe.getText();
 
