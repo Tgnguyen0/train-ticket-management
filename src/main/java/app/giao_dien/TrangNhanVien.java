@@ -45,7 +45,7 @@ public class TrangNhanVien extends JPanel {
     public TrangNhanVien() {
         setSize(1515, 701);
         setLayout(new BorderLayout(0, 0));
-        this.setBackground(new Color(224, 247, 250)); // #E0F7FA
+        this.setBackground(Color.WHITE); // #E0F7FA
 
         label_nhanVien = new JLabel("NHÂN VIÊN");
         label_nhanVien.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
@@ -54,7 +54,7 @@ public class TrangNhanVien extends JPanel {
         add(label_nhanVien, BorderLayout.NORTH);
 
         JPanel panel = new JPanel();
-        panel.setBackground(new Color(224, 247, 250));
+        panel.setBackground(Color.WHITE);
         add(panel, BorderLayout.CENTER);
         panel.setLayout(null);
 
@@ -130,7 +130,7 @@ public class TrangNhanVien extends JPanel {
         panel_thongTinNV.add(textArea_diaChi);
 
         JPanel panel_time = new JPanel();
-        panel_time.setBackground(new Color(224, 247, 250));
+        panel_time.setBackground(Color.WHITE);
         panel_time.setBounds(963, 10, 364, 66);
         panel.add(panel_time);
         panel_time.setLayout(null);
@@ -154,7 +154,7 @@ public class TrangNhanVien extends JPanel {
         JPanel panel_table = new JPanel();
         panel_table.setBounds(0, 0, 647, 347);
         panel_Table.add(panel_table);
-        panel_table.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(173, 216, 230), new Color(0, 51, 102)), "L\u1ECACH S\u1EEC TR\u1EF0C", TitledBorder.LEFT, TitledBorder.TOP, null, new Color(33, 150, 243)));
+        panel_table.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, Color.WHITE, new Color(0, 51, 102)), "L\u1ECACH S\u1EEC TR\u1EF0C", TitledBorder.LEFT, TitledBorder.TOP, null, new Color(33, 150, 243)));
         panel_table.setLayout(new BorderLayout(0, 0));
         panel.setBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(144, 202, 249), new Color(66, 165, 245)));
 
@@ -177,13 +177,13 @@ public class TrangNhanVien extends JPanel {
 
         JPanel panel_menu = new JPanel();
         panel_menu.setBounds(0, 0, 71, 701);
-        panel_menu.setBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(173, 216, 230), new Color(0, 51, 102)));
-        panel_menu.setBackground(new Color(173, 216, 230));
+        panel_menu.setBorder(new EtchedBorder(EtchedBorder.LOWERED, Color.WHITE, new Color(0, 51, 102)));
+        panel_menu.setBackground(Color.WHITE);
         add(panel_menu, BorderLayout.WEST);
         panel_menu.setLayout(new GridLayout(2, 1, 0, 0));
 
         JPanel panel_buttonGroup = new JPanel();
-        panel_buttonGroup.setBackground(new Color(224, 247, 250));
+        panel_buttonGroup.setBackground(Color.WHITE);
         panel_menu.add(panel_buttonGroup);
         panel_buttonGroup.setLayout(new GridLayout(0, 1, 40, 20));
 
@@ -215,16 +215,16 @@ public class TrangNhanVien extends JPanel {
         panel_timeChooser.add(dateChooser_ngayTruc);
 
         JPanel panel_2 = new JPanel();
-        panel_2.setBackground(new Color(224, 247, 250));
+        panel_2.setBackground(Color.WHITE);
         panel_menu.add(panel_2);
 
-        panel_Table.setBackground(new Color(224, 247, 250)); // #E0F7FA
-        panel_table.setBackground(new Color(224, 247, 250)); // #E0F7FA
-        panel_thongTinNV.setBackground(new Color(224, 247, 250)); // #E0F7FA
-        panel_time.setBackground(new Color(224, 247, 250)); // #E0F7FA
-        panel_menu.setBackground(new Color(224, 247, 250)); // #E0F7FA
-        panel_buttonGroup.setBackground(new Color(224, 247, 250)); // #E0F7FA
-        panel_2.setBackground(new Color(224, 247, 250)); // #E0F7FA
+        panel_Table.setBackground(Color.WHITE); // #E0F7FA
+        panel_table.setBackground(Color.WHITE); // #E0F7FA
+        panel_thongTinNV.setBackground(Color.WHITE); // #E0F7FA
+        panel_time.setBackground(Color.WHITE); // #E0F7FA
+        panel_menu.setBackground(Color.WHITE); // #E0F7FA
+        panel_buttonGroup.setBackground(Color.WHITE); // #E0F7FA
+        panel_2.setBackground(Color.WHITE); // #E0F7FA
 
         panel_menu.setBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(144, 202, 249), new Color(66, 165, 245))); // #90CAF9, #42A5F5
 
@@ -244,29 +244,30 @@ public class TrangNhanVien extends JPanel {
         btn_ketCa.setBackground(new Color(100, 181, 246)); // #64B5F6
         btn_ketCa.setForeground(Color.WHITE);
 
-        textField_hoTen.setBackground(new Color(232, 245, 253)); // #E8F5FD
-        textField_sdt.setBackground(new Color(232, 245, 253)); // #E8F5FD
-        this.textArea_diaChi.setBackground(new Color(232, 245, 253)); // #E8F5FD
+        textField_hoTen.setBackground(Color.WHITE); // #E8F5FD
+        textField_sdt.setBackground(Color.WHITE); // #E8F5FD
+        this.textArea_diaChi.setBackground(Color.WHITE); // #E8F5FD
 
-        comboBox_gt.setBackground(new Color(232, 245, 253)); // #E8F5FD
+        comboBox_gt.setBackground(Color.WHITE); // #E8F5FD
 
-        dateChooser_ngayTruc.setBackground(new Color(232, 245, 253)); // #E8F5FD
-        table.setBackground(new Color(232, 245, 253)); // #E8F5FD
+        dateChooser_ngayTruc.setBackground(Color.WHITE); // #E8F5FD
+        table.setBackground(Color.WHITE); // #E8F5FD
 
-        table.setBackground(new Color(232, 245, 253)); // #E8F5FD
+        table.setBackground(Color.WHITE); // #E8F5FD
         table.getTableHeader().setBackground(new Color(144, 202, 249)); // #90CAF9
 
         table.getTableHeader().setFont(new Font("Tahoma", Font.PLAIN, 16)); // Font đậm hơn cho tiêu đề
         scrollPane.setBorder(BorderFactory.createLineBorder(new Color(144, 202, 249))); // #90CAF9
         table.setSelectionBackground(new Color(179, 229, 252)); // #B3E5FC khi chọn hàng
-        table.setGridColor(new Color(224, 247, 250)); // #E0F7FA cho đường viền giữa các ô
+        table.setGridColor(Color.WHITE); // #E0F7FA cho đường viền giữa các ô
 
         dateChooser_ngaySinh.setFont(new Font("Tahoma", Font.PLAIN, 15));
         dateChooser_ngaySinh.setForeground(new Color(144, 202, 249));
-        dateChooser_ngaySinh.setBackground(new Color(232, 245, 253)); // #E8F5FD
+        dateChooser_ngaySinh.setBackground(Color.WHITE); // #E8F5FD
 
         tableModel = (DefaultTableModel) table.getModel();
         hienLichSuTruc();
+        table.setDefaultEditor(Object.class, null);
 
 // ADD ACTION LISTENER
         HanhDong_TrangNhanVien hanhDong_trangNhanVien = new HanhDong_TrangNhanVien(this);
@@ -325,6 +326,7 @@ public class TrangNhanVien extends JPanel {
     }
     private void hienLichSuTruc () {
         tableModel.setRowCount(0);
+
         ArrayList<CaTruc> dsCaTruc = CaTruc_DAO.layDanhSachTruc(HanhDong_TrangDangNhap.maNV);
         for (CaTruc caTruc : dsCaTruc) {
             this.tableModel.addRow(new Object[]{

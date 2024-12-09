@@ -168,16 +168,22 @@ public class TrangKhachHang extends JPanel {
         JButton btn_capNhat = new JButton("Cập nhật");
         btn_capNhat.setFont(new Font("Tahoma", Font.PLAIN, 20));
         btn_capNhat.setBounds(10, 10, 115, 33);
+        btn_capNhat.setForeground(new Color(255, 255, 255));
+        btn_capNhat.setBackground(new Color(0, 128, 255));
         panel_thongTinKH.add(btn_capNhat);
 
         JButton btn_lamMoi = new JButton("Làm mới");
         btn_lamMoi.setFont(new Font("Tahoma", Font.PLAIN, 20));
         btn_lamMoi.setBounds(135, 10, 115, 33);
+        btn_lamMoi.setForeground(new Color(255, 255, 255));
+        btn_lamMoi.setBackground(new Color(0, 128, 255));
         panel_thongTinKH.add(btn_lamMoi);
 
         JButton btn_themKH = new JButton("Thêm khách hàng");
         btn_themKH.setFont(new Font("Tahoma", Font.PLAIN, 20));
         btn_themKH.setBounds(10, 269, 191, 33);
+        btn_themKH.setForeground(new Color(255, 255, 255));
+        btn_themKH.setBackground(new Color(0, 128, 255));
         panel_thongTinKH.add(btn_themKH);
 
         table_hangCho = new JTable();
@@ -203,16 +209,22 @@ public class TrangKhachHang extends JPanel {
         JButton btn_themHangCho = new JButton("Thêm vào hàng chờ");
         btn_themHangCho.setFont(new Font("Tahoma", Font.PLAIN, 20));
         btn_themHangCho.setBounds(211, 269, 209, 33);
+        btn_themHangCho.setForeground(new Color(255, 255, 255));
+        btn_themHangCho.setBackground(new Color(0, 128, 255));
         panel_thongTinKH.add(btn_themHangCho);
 
         JButton btn_datVe = new JButton("Đặt vé");
         btn_datVe.setFont(new Font("Tahoma", Font.PLAIN, 20));
         btn_datVe.setBounds(1123, 269, 115, 33);
+        btn_datVe.setForeground(new Color(255, 255, 255));
+        btn_datVe.setBackground(new Color(0, 128, 255));
         panel_thongTinKH.add(btn_datVe);
 
         JButton btn_xoaKhoiHangCho = new JButton("Xoá khỏi hàng");
         btn_xoaKhoiHangCho.setFont(new Font("Tahoma", Font.PLAIN, 20));
         btn_xoaKhoiHangCho.setBounds(1248, 269, 159, 33);
+        btn_xoaKhoiHangCho.setForeground(new Color(255, 255, 255));
+        btn_xoaKhoiHangCho.setBackground(new Color(0, 128, 255));
         panel_thongTinKH.add(btn_xoaKhoiHangCho);
 
         JPanel panel_table = new JPanel();
@@ -239,6 +251,7 @@ public class TrangKhachHang extends JPanel {
         table.setBounds(0, 0, 1, 1);
         //khong cho chinh sua noi dung trong bang
         table.setDefaultEditor(Object.class, null);
+        table_hangCho.setDefaultEditor(Object.class, null);
 
         JScrollPane scrollPane = new JScrollPane(table);
         panel_table.add(scrollPane);
@@ -292,9 +305,13 @@ public class TrangKhachHang extends JPanel {
         JButton btn_lamTrongDanhSach = new JButton("Làm trống danh sách");
         panel.add(btn_lamTrongDanhSach);
         btn_lamTrongDanhSach.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        btn_lamTrongDanhSach.setForeground(new Color(255, 255, 255));
+        btn_lamTrongDanhSach.setBackground(new Color(0, 128, 255));
 
         JButton btn_xemToanBo = new JButton("Xem toàn bộ");
         btn_xemToanBo.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        btn_xemToanBo.setForeground(new Color(255, 255, 255));
+        btn_xemToanBo.setBackground(new Color(0, 128, 255));
         panel.add(btn_xemToanBo);
 
         btn_tim.addActionListener( hanhDong_trangKhachHang);
@@ -345,23 +362,6 @@ public class TrangKhachHang extends JPanel {
         hienDanhSachKhachHangRaBang(this.dsKH);
     }
 
-//    public void chonKhachHang() {
-//        int row = table.getSelectedRow();
-//        if (row == -1) {
-//            JOptionPane.showMessageDialog(null, "Vui lòng chọn khách hàng trong bảng!");
-//        } else {
-//            label_hienThiMaKH.setText(table.getValueAt(row, 1).toString());
-//            textField_HoTen.setText(table.getValueAt(row, 2).toString());
-//            textField_SDT.setText(table.getValueAt(row, 3).toString());
-//            if(table.getValueAt(row, 4).toString().equals("Nam")){
-//                comboBox_gioiTinh.setSelectedIndex(0);
-//            } else {
-//                comboBox_gioiTinh.setSelectedIndex(1);
-//            }
-//            textField_email.setText(table.getValueAt(row, 5).toString());
-//            textArea_diaChi.setText(table.getValueAt(row, 6).toString());
-//        }
-//    }
 
     public static boolean regexSDT(String sdt){
         String regex = "^[0-9]{10}$";

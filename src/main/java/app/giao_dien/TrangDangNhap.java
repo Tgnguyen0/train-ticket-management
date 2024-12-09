@@ -134,7 +134,8 @@ public class TrangDangNhap extends JFrame {
         truongMatKhau.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, 12));
         truongMatKhau.setBorder(duongVien);
         giua.add(truongMatKhau);
-
+        truongMatKhau.addActionListener(hanhDong);
+        
         // Cách dòng hoàn chỉnh
         JPanel cachDong3 = new JPanel();
         cachDong3.setPreferredSize(new Dimension(550, 15));
