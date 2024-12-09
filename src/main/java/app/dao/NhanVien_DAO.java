@@ -259,7 +259,6 @@ public class NhanVien_DAO {
         return kq;
     }
 
-
     public void NhanVien_DAO() {
         dsnv = new ArrayList<NhanVien>();
     }
@@ -301,7 +300,7 @@ public class NhanVien_DAO {
         return list;
     }
 
-    public List<NhanVien> selectByKeyword(String keyword) {
+    /*public List<NhanVien> selectByKeyword(String keyword) {
         String sql = "SELECT * FROM NhanVien WHERE HoTen LIKE ?";
         return this.ChonSql(sql, "%" + keyword + "%");
     }
@@ -313,7 +312,7 @@ public class NhanVien_DAO {
         } else {
 
         }
-    }
+    }*/
     // Hàm lấy tên Nhân Viên
     public String layTenNhanVien(String maNV) {
         String tenNV = null;

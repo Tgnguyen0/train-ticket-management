@@ -27,7 +27,7 @@ public class TaoHoaDonFilePDF {
         try {
 //            // Đường dẫn lưu file vào ổ D:\
             Document document = new Document();
-            String qrCodePath = "D:\\HoaDon\\QRCode_" + hoaDon.getMaHoaDon() + ".png";
+            String qrCodePath = "hoá đơn được tạo/" + hoaDon.getMaHoaDon() + ".png";
 
             // Tạo mã QR chứa thông tin hóa đơn
             String qrContent = "Ngày Lập : " + hoaDon.getNgayLapHoaDon() +
@@ -44,7 +44,7 @@ public class TaoHoaDonFilePDF {
 
             QRHoaDon.generateQRCode(qrContent, qrCodePath);
 
-            String filePath = "D:\\HoaDon\\HoaDon" + hoaDon.getMaHoaDon() + ".pdf";
+            String filePath = "hoá đơn được tạo/" + hoaDon.getMaHoaDon() + ".pdf";
 //            // Khởi tạo tài liệu PDF
 //            String filePath = "hoá đơn được tạo/" + hoaDon.getMaHoaDon() + ".pdf";
 
@@ -60,7 +60,7 @@ public class TaoHoaDonFilePDF {
             Font fontItalic = new Font(bf, 12, Font.ITALIC);
 
             // Phần 1: Logo và tiêu đề "Hóa Đơn"
-            Image logo = Image.getInstance("D:\\logo.png"); // Đường dẫn đến file logo
+            Image logo = Image.getInstance("assets/logo.png"); // Đường dẫn đến file logo
             logo.scaleToFit(100, 100);
             logo.setAlignment(Element.ALIGN_CENTER);
             document.add(logo);

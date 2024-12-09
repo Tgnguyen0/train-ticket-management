@@ -58,9 +58,11 @@ public class TrangDatVe extends JPanel {
     public JTextArea thanhNhapGhiChu;
     public JTextField thanhNhapTongTien;
     public JComboBox<String> thanhCacLoaiDoiTuong;
+    public JTable bangVeDangDat;
     public JButton nutThanhToan;
     public JButton nutInVe;
     public JButton nutXacNhan;
+    public JButton nutXoaVe;
     public JPanel trangDonDatVe;
     public JPanel trangDSVeDangDat;
     public DefaultTableModel moHinhBang;
@@ -93,7 +95,7 @@ public class TrangDatVe extends JPanel {
     public List<NhaGa> dsGa;
     public String soHieuDaChon;
 //    public List<KhachHang> dsKHDatVe;
-    public JTable bangVeDangDat;
+    //public JTable bangVeDangDat;
 
     public static List<KhachHang> dsKHDatVe;
 
@@ -166,18 +168,21 @@ public class TrangDatVe extends JPanel {
         return this.dsKHDatVe;
     }
 
-    public void lamMoiDSKhachDat() {
+    // Không sử dụng
+    /*public void lamMoiDSKhachDat() {
         this.dsKHDatVe.clear();
-    }
+    }*/
 
     public void datThanhToan(boolean daThanhToan) {
         this.daThanhToan = daThanhToan;
     }
 
-    public void datSoHieuDaChon(String soHieu) {
+    // Không sử dụng
+    /*public void datSoHieuDaChon(String soHieu) {
         this.soHieuDaChon = soHieu;
-    }
+    }*/
 
+    // Không sử dụng
     /*public String laySoHieuDaChon() {
         return this.soHieuDaChon;
     }*/
@@ -653,7 +658,8 @@ public class TrangDatVe extends JPanel {
 
         JPanel phanXuLyVe = new JPanel();
         phanXuLyVe.setBackground(trang);
-        phanXuLyVe.setPreferredSize(new Dimension(500, 50));
+        phanXuLyVe.setPreferredSize(new Dimension(600, 50));
+        //phanXuLyVe.setPreferredSize(new Dimension(500, 50));
         phanXuLyVe.setLayout(new FlowLayout(FlowLayout.CENTER, 30, 10));
         donThongTinKH.add(phanXuLyVe);
 
@@ -702,6 +708,16 @@ public class TrangDatVe extends JPanel {
         nutInVe.addMouseListener(thaoTacChuot);
         // Bỏ fill màu mặc định của JButton (nếu cần)
         phanXuLyVe.add(nutInVe);
+
+        nutXoaVe = new JButton("Xóa vé");
+        nutXoaVe.setPreferredSize(new Dimension(100, chieuRongNut));
+        nutXoaVe.setFont(phongTuyChinh.layPhongRobotoMonoReg(2, kichThuocChu));
+        nutXoaVe.setForeground(trang);
+        nutXoaVe.setBackground(xanhBrandeis);
+        nutXoaVe.setFocusPainted(false); // Bỏ viền khi click (focus)
+        nutXoaVe.addActionListener(hanhDong);
+        nutXoaVe.addMouseListener(thaoTacChuot);
+        phanXuLyVe.add(nutXoaVe);
 
         trangDonDatVe.add(trangChuaDonTT);
     }
@@ -831,8 +847,8 @@ public class TrangDatVe extends JPanel {
         this.nutDSVe = new JButton("Danh Sách Vé");
         this.nutDSVe.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.BOLD, 14));
         this.nutDSVe.setPreferredSize(new Dimension(150, chieuRongNut));
-        this.nutDSVe.setForeground(new Color(trang.getRGB()));
-        this.nutDSVe.setBackground(new Color(xanhBrandeis.getRGB()));
+        this.nutDSVe.setForeground(trang);
+        this.nutDSVe.setBackground(xanhBrandeis);
         this.nutDSVe.setFocusPainted(false); // Bỏ viền khi click (focus)
         this.nutDSVe.setBorderPainted(false); // Bỏ viền của nút
         this.nutDSVe.addActionListener(hanhDong);

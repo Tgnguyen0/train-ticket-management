@@ -1,6 +1,9 @@
 package app.dieu_khien;
 
+import app.dao.Ghe_DAO;
 import app.dao.KhachHang_DAO;
+import app.dao.Tau_DAO;
+import app.dao.Toa_DAO;
 import app.giao_dien.*;
 import app.phan_tu_tuy_chinh.TaoVeBangFilePDF;
 import app.thuc_the.*;
@@ -100,9 +103,9 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
             trangCacTau.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             trangCacTau.setVisible(true);
 
-            if (this.trangDatVe.soHieuDaChon != null) {
+            /*if (this.trangDatVe.soHieuDaChon != null) {
                 trangCacTau.datSoHieuTauChon(this.trangDatVe.soHieuDaChon);
-            }
+            }*/
 
             trangCacTau.datMaGa(maGa);
         }
@@ -172,7 +175,6 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
                     .atZone(ZoneId.systemDefault())
                     .toLocalDateTime();*/
 
-            // Hoàn toàn vô dụng
             Ghe daDat = this.trangDatVe.gheDao.traGheChon(); // lấy ghế đã đặt
 
             // Quan trọng !!!!
@@ -187,12 +189,12 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
                 System.out.println("dsChoDaDat: " + ghe.getMaGhe());
             }*/
 
-            String soHieuTau = this.trangDatVe.soHieuDaChon; // Lấy số hiệu tàu đã chọn
-            LichCapBenGa lich = this.trangDatVe.lichDao.ChonTheoSoHieuNgayKHVaGa(soHieuTau, ngayKhoiHanh, maGa); // Lấy lịch tàu đó
-
             String maToa = daDat.getMaToa(); // Lấy mã toa
             String soGhe = daDat.getSoGhe(); // Lấy số ghế
             String loaiDoiTuong = (String) this.trangDatVe.thanhCacLoaiDoiTuong.getSelectedItem(); // Lấy loại đối tượng
+
+            String soHieuTau = Toa_DAO.layToaTheoMaToa(maToa).getSoHieu(); // Lấy số hiệu tàu đã chọn
+            LichCapBenGa lich = this.trangDatVe.lichDao.ChonTheoSoHieuNgayKHVaGa(soHieuTau, ngayKhoiHanh, maGa); // Lấy lịch tàu đó
 
             // Tính toán giá vé
             int khoangCach = this.trangDatVe.gaDao.luocDoKhoangCach.get(diemDen) - // khoảng cách giữa ga xuất phát và ga đích
@@ -320,6 +322,15 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
             this.trangDatVe.daThanhToan = false;
 
             //bienSoTang = 0;
+        }
+
+        if (e.getSource() == this.trangDatVe.nutXoaVe) {
+            if (this.trangDatVe.bangVeDangDat.getSelectedRow() == -1) {
+                hienThiThongBao("Chưa chọn vé để xóa", "Lỗi chọn vé", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            String maVe = (String) this.trangDatVe.moHinhBang.getValueAt(this.trangDatVe.bangVeDangDat.getSelectedRow(), 1);
         }
     }
 

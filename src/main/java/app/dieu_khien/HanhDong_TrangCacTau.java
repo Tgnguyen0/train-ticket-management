@@ -57,6 +57,56 @@ public class HanhDong_TrangCacTau implements ActionListener, MouseListener, Wind
         if (e.getSource() == this.trangSoDoChung.nutTau4) {
             this.trangSoDoChung.soHieuTauChon = this.trangSoDoChung.nutTau4.getActionCommand();
         }
+
+        if (e.getSource() == this.trangSoDoChung.nutXacNhan) {
+            if (!this.trangSoDoChung.gheDao.layDSGheDat().isEmpty()) {
+                hienThiThongBao("Xác nhận ghế chọn thành công !", "Xác nhận thành công", JOptionPane.INFORMATION_MESSAGE);
+                if (this.trangSoDoChung.trangGoc instanceof TrangDatVe) {
+                    //((TrangDatVe) this.trangSoDoChung.trangGoc).datSoHieuDaChon(this.trangSoDoChung.soHieuTauChon);
+
+                    LocalDateTime ngayKhoiHanh = ((TrangDatVe) this.trangSoDoChung.trangGoc).thanhNhapNgayDi.getDate()       // Lấy ngày khởi hành
+                            .toInstant()
+                            .atZone(ZoneId.systemDefault())
+                            .toLocalDateTime();
+
+                    // Lấy lịch tàu đó
+                    LichCapBenGa lich = ((TrangDatVe) this.trangSoDoChung.trangGoc).lichDao.ChonTheoSoHieuNgayKHVaGa(
+                            this.trangSoDoChung.soHieuTauChon,
+                            ngayKhoiHanh,
+                            this.trangSoDoChung.maGa
+                    );
+
+                    ((TrangDatVe) this.trangSoDoChung.trangGoc).thanhNhapGioDen.setText(lich.getGioKhoiHanh().getHour() +
+                            ":" + lich.getGioKhoiHanh().getMinute());
+                }
+
+                if (this.trangSoDoChung.trangKhung instanceof TrangThongTinChiTietVeTau) {
+
+                    for (Ghe ghe : this.trangSoDoChung.gheDao.layDSGheDat()) {
+
+                        // Cập nhật lại số của ghế đã đặt
+                        ((TrangThongTinChiTietVeTau) this.trangSoDoChung.trangKhung).textFieldGhe.setText(ghe.getSoGhe());
+
+                        // Cập nhật lại loại ghế đã đặt
+                        ((TrangThongTinChiTietVeTau) this.trangSoDoChung.trangKhung).textFieldLoaiVe.setText(ghe.getLoaiGhe().toString());
+
+                        Toa toa = this.trangSoDoChung.toaDao.ChonTheoMa(ghe.getMaToa());
+
+                        // Cập nhật lại tên toa của ghế đã đặt
+                        ((TrangThongTinChiTietVeTau) this.trangSoDoChung.trangKhung).textFieldToa.setText(toa.getTenToa());
+
+                        // Cập nhật lại số hiệu tàu mà toa thuộc về mà có ghế đã đặt
+                        ((TrangThongTinChiTietVeTau) this.trangSoDoChung.trangKhung).textFieldSoHieu.setText(toa.getMaTau());
+                    }
+                }
+            } else {
+                //hienThiThongBao("Chưa có chọn ghế !", "Lỗi chọn ghế", JOptionPane.ERROR_MESSAGE);
+
+                //((javax.swing.JFrame) e.getWindow()).setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+            }
+
+            this.trangSoDoChung.dispose();
+        }
     }
 
     @Override
@@ -204,52 +254,35 @@ public class HanhDong_TrangCacTau implements ActionListener, MouseListener, Wind
 
     @Override
     public void windowClosing(WindowEvent e) {
-        if (!this.trangSoDoChung.gheDao.layDSGheDat().isEmpty()) {
-            hienThiThongBao("Xác nhận ghế chọn thành công !", "Xác nhận thành công", JOptionPane.INFORMATION_MESSAGE);
-            if (this.trangSoDoChung.trangGoc instanceof TrangDatVe) {
-                ((TrangDatVe) this.trangSoDoChung.trangGoc).datSoHieuDaChon(this.trangSoDoChung.soHieuTauChon);
+        // Tạo JLabel đầu tiên
+        JLabel tieuDe1 = new JLabel("Bạn có chắc chắn muốn đóng cửa sổ không?");
+        tieuDe1.setFont(this.trangSoDoChung.phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, 13)); // Cài đặt font nếu cần
 
-                LocalDateTime ngayKhoiHanh = ((TrangDatVe) this.trangSoDoChung.trangGoc).thanhNhapNgayDi.getDate()       // Lấy ngày khởi hành
-                        .toInstant()
-                        .atZone(ZoneId.systemDefault())
-                        .toLocalDateTime();
+        // Tạo JLabel thứ hai với màu đỏ
+        JLabel tieuDe2 = new JLabel("Vì các ghế bạn chọn sẽ không được lưu!");
+        tieuDe2.setFont(this.trangSoDoChung.phongTuyChinh.layPhongRobotoMonoReg(Font.BOLD, 13)); // Font in đậm
+        tieuDe2.setForeground(Color.RED); // Màu đỏ
 
-                // Lấy lịch tàu đó
-                LichCapBenGa lich = ((TrangDatVe) this.trangSoDoChung.trangGoc).lichDao.ChonTheoSoHieuNgayKHVaGa(
-                        this.trangSoDoChung.soHieuTauChon,
-                        ngayKhoiHanh,
-                        this.trangSoDoChung.maGa
-                );
+        // Tạo JPanel và thêm 2 JLabel vào
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS)); // Xếp các thành phần theo chiều dọc
+        panel.add(tieuDe1);
+        panel.add(tieuDe2);
 
-                ((TrangDatVe) this.trangSoDoChung.trangGoc).thanhNhapGioDen.setText(lich.getGioKhoiHanh().getHour() +
-                        ":" + lich.getGioKhoiHanh().getMinute());
-            }
+        // Hiển thị JOptionPane với JPanel tùy chỉnh
+        int xacNhan = JOptionPane.showConfirmDialog(
+                null,
+                panel,
+                "Xác nhận thoát",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.INFORMATION_MESSAGE
+        );
 
-            if (this.trangSoDoChung.trangKhung instanceof TrangThongTinChiTietVeTau) {
-
-                for (Ghe ghe : this.trangSoDoChung.gheDao.layDSGheDat()) {
-
-                    // Cập nhật lại số của ghế đã đặt
-                    ((TrangThongTinChiTietVeTau) this.trangSoDoChung.trangKhung).textFieldGhe.setText(ghe.getSoGhe());
-
-                    // Cập nhật lại loại ghế đã đặt
-                    ((TrangThongTinChiTietVeTau) this.trangSoDoChung.trangKhung).textFieldLoaiVe.setText(ghe.getLoaiGhe().toString());
-
-                    Toa toa = this.trangSoDoChung.toaDao.ChonTheoMa(ghe.getMaToa());
-
-                    // Cập nhật lại tên toa của ghế đã đặt
-                    ((TrangThongTinChiTietVeTau) this.trangSoDoChung.trangKhung).textFieldToa.setText(toa.getTenToa());
-
-                    // Cập nhật lại số hiệu tàu mà toa thuộc về mà có ghế đã đặt
-                    ((TrangThongTinChiTietVeTau) this.trangSoDoChung.trangKhung).textFieldSoHieu.setText(toa.getMaTau());
-                }
-            }
-
-            e.getWindow().dispose();
+        // Xử lý phản hồi
+        if (xacNhan == JOptionPane.YES_OPTION) {
+            ((JFrame) e.getWindow()).dispose();
         } else {
-            //hienThiThongBao("Chưa có chọn ghế !", "Lỗi chọn ghế", JOptionPane.ERROR_MESSAGE);
-
-            //((javax.swing.JFrame) e.getWindow()).setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+            ((JFrame) e.getWindow()).setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         }
     }
 

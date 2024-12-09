@@ -84,11 +84,11 @@ public class TrangThanhToan extends JDialog {
         for (int i = 0 ; i < this.danhSachVe.size() ; i++) {
             this.tongTien += this.danhSachVe.get(i).getGiaVe() * (1 - (this.danhSachVe.get(i).getLoaiDoiTuong().equals("Người Lớn") ? 0.0 : 0.025));
         }
+
         hienThi();
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
-
     public void datMaNV(String maNV) {
         this.maNV = maNV;
     }
@@ -259,11 +259,11 @@ public class TrangThanhToan extends JDialog {
                     this.danhSachVe.get(i).getGaKhoiHanh(),                                          // Ga xuất phát
                     this.danhSachVe.get(i).getGaKetThuc(),                                           // Ga đích
                     this.danhSachVe.get(i).getNgayDatVe().getYear() + "-" +
-                        this.danhSachVe.get(i).getNgayDatVe().getMonth().getValue() + "-" +
+                            this.danhSachVe.get(i).getNgayDatVe().getMonth().getValue() + "-" +
                             this.danhSachVe.get(i).getNgayDatVe().getDayOfMonth(),                                           // Ngày đặt vé
                     this.danhSachVe.get(i).getNgayKhoiHanh().getYear() + "-" +                       // Ngày khởi hành
                             this.danhSachVe.get(i).getNgayKhoiHanh().getMonth().getValue() + "-" +
-                                this.danhSachVe.get(i).getNgayKhoiHanh().getDayOfMonth(),
+                            this.danhSachVe.get(i).getNgayKhoiHanh().getDayOfMonth(),
                     toa.getSoHieu(),                                                                 // Số hiệu tàu
                     this.danhSachVe.get(i).getNgayKhoiHanh().toLocalTime().getHour() + ":" +         // Giờ xuất phát
                             this.danhSachVe.get(i).getNgayKhoiHanh().toLocalTime().getMinute(),
@@ -310,7 +310,6 @@ public class TrangThanhToan extends JDialog {
 
         lbTongTien.setForeground(new java.awt.Color(0, 112, 255));
         lbTongTien.setText("Tổng Tiền:");
-
         lbKhuyenMai.setForeground(new java.awt.Color(0, 112, 255));
         lbKhuyenMai.setText("Khuyến Mãi:");
 
@@ -416,7 +415,12 @@ public class TrangThanhToan extends JDialog {
                                         .addGroup(PanelTongTienLayout.createSequentialGroup()
                                                 .addGroup(PanelTongTienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                                         .addComponent(thanhTienNhan, javax.swing.GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE))
-                                                .addGroup(PanelTongTienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false))))));
+                                                .addGroup(PanelTongTienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                ))
+                                        .addComponent(tfThanhTien, javax.swing.GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE)
+                                        .addComponent(tfTraLai, javax.swing.GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE))
+                                .addContainerGap(51, Short.MAX_VALUE))
+        );
         PanelTongTienLayout.setVerticalGroup(
                 PanelTongTienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(PanelTongTienLayout.createSequentialGroup()
@@ -441,7 +445,7 @@ public class TrangThanhToan extends JDialog {
                                         .addComponent(tfTraLai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(27, 27, 27))
         );
-;
+
         lbPhuongThucThanhToan.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lbPhuongThucThanhToan.setForeground(new java.awt.Color(0, 112, 255));
         lbPhuongThucThanhToan.setText("Chọn Phương Thức Thanh Toán:");
