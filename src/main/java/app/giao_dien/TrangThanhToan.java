@@ -84,7 +84,6 @@ public class TrangThanhToan extends JDialog {
         for (int i = 0 ; i < this.danhSachVe.size() ; i++) {
             this.tongTien += this.danhSachVe.get(i).getGiaVe() * (1 - (this.danhSachVe.get(i).getLoaiDoiTuong().equals("Người Lớn") ? 0.0 : 0.025));
         }
-
         hienThi();
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -417,12 +416,7 @@ public class TrangThanhToan extends JDialog {
                                         .addGroup(PanelTongTienLayout.createSequentialGroup()
                                                 .addGroup(PanelTongTienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                                         .addComponent(thanhTienNhan, javax.swing.GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE))
-                                                .addGroup(PanelTongTienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                        ))
-                                        .addComponent(tfThanhTien, javax.swing.GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE)
-                                        .addComponent(tfTraLai, javax.swing.GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE))
-                                .addContainerGap(51, Short.MAX_VALUE))
-        );
+                                                .addGroup(PanelTongTienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false))))));
         PanelTongTienLayout.setVerticalGroup(
                 PanelTongTienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(PanelTongTienLayout.createSequentialGroup()
@@ -440,14 +434,14 @@ public class TrangThanhToan extends JDialog {
                                                         .addComponent(thanhTienNhan))))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(PanelTongTienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        )
+                                )
                                 .addGap(18, 18, 18)
                                 .addGroup(PanelTongTienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(lnTraLai)
                                         .addComponent(tfTraLai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(27, 27, 27))
         );
-
+;
         lbPhuongThucThanhToan.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lbPhuongThucThanhToan.setForeground(new java.awt.Color(0, 112, 255));
         lbPhuongThucThanhToan.setText("Chọn Phương Thức Thanh Toán:");

@@ -1,5 +1,6 @@
 package app.dao;
 
+import app.ket_noi_co_so_du_lieu.JDBCUtil;
 import app.ket_noi_co_so_du_lieu.KetNoiCoSoDuLieu;
 import app.thuc_the.GIOI_TINH;
 import app.thuc_the.KhachHang;
@@ -313,7 +314,24 @@ public class NhanVien_DAO {
 
         }
     }
+    // Hàm lấy tên Nhân Viên
+    public String layTenNhanVien(String maNV) {
+        String tenNV = null;
+        // Kết nối tới cơ sở dữ liệu và thực hiện truy vấn
+        String query = "SELECT * FROM NhanVien WHERE maNV = ?"; // Giả sử bảng nhân viên có tên cột 'te  n'
 
+        try (Connection conn = JDBCUtil.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, maNV);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                tenNV = rs.getString("TenNV"); // Lấy tên nhân viên
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return tenNV;
+    }
     public static boolean login(String username, String password) {
         try {
             // Bước 1: tạo kết nối đến CSDL
