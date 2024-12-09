@@ -637,7 +637,7 @@ public class TrangChuaThongKeNhanVienTheoNam extends JPanel{
         buttonThongKeDoanhThu.setForeground(this.trang);
         buttonThongKeDoanhThu.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.BOLD, 14));
 
-        buttonThongKeTheoThangCuaNhanVien.setText("<html>Thống Kê Theo Tháng Nhân Viên </html>");
+        buttonThongKeTheoThangCuaNhanVien.setText("<html>Thống Kê Doanh Thu Nhân Viên Theo Tháng</html>");
         buttonThongKeTheoThangCuaNhanVien.setBackground(this.xanhBrandeis);
         buttonThongKeTheoThangCuaNhanVien.setForeground(this.trang);
         buttonThongKeTheoThangCuaNhanVien.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.BOLD, 14));
@@ -653,9 +653,9 @@ public class TrangChuaThongKeNhanVienTheoNam extends JPanel{
 // HorizontalGroup
         trangChuaCacNutChuyenTrangLayout.setHorizontalGroup(
                 trangChuaCacNutChuyenTrangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                        .addComponent(buttonThongKeDoanhThu, 300, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(buttonThongKeTheoThangCuaNhanVien, 300, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(buttonTienThuongNhanVien, 300, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(buttonThongKeDoanhThu, 400, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(buttonThongKeTheoThangCuaNhanVien, 400, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(buttonTienThuongNhanVien, 400, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
 // VerticalGroup

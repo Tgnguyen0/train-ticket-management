@@ -708,7 +708,7 @@ public class TrangChuaThongKeNhanVienTheoThang extends JPanel {
     }
 
     public void thietLap_TrangChuaThongKe(){
-        labelThongKe.setText("Thống Kê Doanh Thu");
+        labelThongKe.setText("Thống Kê Doanh Thu Của Nhân Viên Theo Tháng");
         labelThongKe.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.BOLD, 15));
 
         javax.swing.GroupLayout trangChuaThongKeLayout = new javax.swing.GroupLayout(trangChuaThongKe);
@@ -718,7 +718,7 @@ public class TrangChuaThongKeNhanVienTheoThang extends JPanel {
                         .addComponent(trangChuaBieuDoCot, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(trangChuaThongKeLayout.createSequentialGroup()
                                 .addGap(25, 25, 25)
-                                .addComponent(labelThongKe, javax.swing.GroupLayout.PREFERRED_SIZE, 481, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(labelThongKe, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         trangChuaThongKeLayout.setVerticalGroup(
@@ -819,9 +819,9 @@ public class TrangChuaThongKeNhanVienTheoThang extends JPanel {
                 trangChuaCacNutChuyenTrangLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE) // Khoảng cách linh hoạt bên trái
                         .addGroup(trangChuaCacNutChuyenTrangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                                .addComponent(buttonThongKeDoanhThu, 350, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(buttonThongKeTheoNamNhanVien,350, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(buttonTienThuongNhanVien, 350, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(buttonThongKeDoanhThu, 400, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(buttonThongKeTheoNamNhanVien,400, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(buttonTienThuongNhanVien, 400, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
                         )
                         .addGap(0, 0, Short.MAX_VALUE) // Khoảng cách linh hoạt bên phải
         );

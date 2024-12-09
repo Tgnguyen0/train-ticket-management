@@ -303,7 +303,7 @@ public class TrangChuaThongKeDoanhThuNhaGa extends JPanel {
         );
     }
     public void thietLap_TrangChuaNutThongKeThang(){
-        buttonThongKeThang.setText("Thống Kê:");
+        buttonThongKeThang.setText("Thống Kê");
         buttonThongKeThang.setForeground(this.trang);
         buttonThongKeThang.setBackground(this.xanhBrandeis);
         buttonThongKeThang.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.BOLD, 14));
@@ -375,8 +375,8 @@ public class TrangChuaThongKeDoanhThuNhaGa extends JPanel {
         trangChuaDoanhThuLayout.setVerticalGroup(
                 trangChuaDoanhThuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(trangChuaDoanhThuLayout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(scrollPaneTrangChuaDoanhThuThang, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(15, 15, 15)
+                                .addComponent(scrollPaneTrangChuaDoanhThuThang, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }

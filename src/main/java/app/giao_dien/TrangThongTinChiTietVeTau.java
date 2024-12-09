@@ -79,6 +79,7 @@ public class TrangThongTinChiTietVeTau extends JFrame {
     public List<NhaGa> dsGa;
     public Color xanhBrandeis = new Color(0, 112, 255);
 
+    public String maGhe_Old ;
     Logger logger = LoggerFactory.getLogger(TrangThongTinChiTietVeTau.class);
 
     public TrangThongTinChiTietVeTau(JPanel trang, String maVe, String loaiVe, String diemDi, String diemDen, LocalDateTime ngayKhoiHanh,
@@ -92,6 +93,8 @@ public class TrangThongTinChiTietVeTau extends JFrame {
         this.lichDao = new LichCapBenGa_DAO(); // Lấy LichCapBenGa_DAO
         this.gaDao = new Ga_DAO(); // Lấy Ga_DAO
 
+        // gắn mã ghế cũ
+        this.maGhe_Old = ghe.getMaGhe();
         /* Quan trọng */
         //this.ghe = ghe;
         this.trangCha = trang; // Để setText cho TrangDanhSachVe
