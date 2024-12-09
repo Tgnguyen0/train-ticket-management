@@ -267,6 +267,7 @@ public class TrangNhanVien extends JPanel {
 
         tableModel = (DefaultTableModel) table.getModel();
         hienLichSuTruc();
+        table.setDefaultEditor(Object.class, null);
 
 // ADD ACTION LISTENER
         HanhDong_TrangNhanVien hanhDong_trangNhanVien = new HanhDong_TrangNhanVien(this);
@@ -325,6 +326,7 @@ public class TrangNhanVien extends JPanel {
     }
     private void hienLichSuTruc () {
         tableModel.setRowCount(0);
+
         ArrayList<CaTruc> dsCaTruc = CaTruc_DAO.layDanhSachTruc(HanhDong_TrangDangNhap.maNV);
         for (CaTruc caTruc : dsCaTruc) {
             this.tableModel.addRow(new Object[]{

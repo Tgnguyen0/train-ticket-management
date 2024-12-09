@@ -33,9 +33,6 @@ public class CaTruc {
         this.tongTienGiamGia = tongTienGiamGia;
     }
 
-    public CaTruc(String maCaTruc) {
-        this.maCaTruc = maCaTruc;
-    }
 
     public CaTruc(String maCaTruc, String maNhanVien, LocalDateTime ngayGioBatDau, LocalDateTime ngayGioKetThuc, int tongHoaDon, double tongTienCaTruoc, double tongTienHoaDon, double tongTienThucThu, double thatThoat, double tongVAT, double tongTienGiamGia) {
         this.maCaTruc = maCaTruc;
@@ -68,11 +65,6 @@ public class CaTruc {
                 '}';
     }
 
-    public CaTruc(String maNhanVien, LocalDateTime ngayGioBatDau, LocalDateTime ngayGioKetThuc) {
-        this.maNhanVien = maNhanVien;
-        this.ngayGioBatDau = ngayGioBatDau;
-        this.ngayGioKetThuc = ngayGioKetThuc;
-    }
 
     public String getMaCaTruc() {
         return maCaTruc;
