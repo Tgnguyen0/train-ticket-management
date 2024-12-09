@@ -251,6 +251,7 @@ public class TrangKhachHang extends JPanel {
         table.setBounds(0, 0, 1, 1);
         //khong cho chinh sua noi dung trong bang
         table.setDefaultEditor(Object.class, null);
+        table_hangCho.setDefaultEditor(Object.class, null);
 
         JScrollPane scrollPane = new JScrollPane(table);
         panel_table.add(scrollPane);
@@ -361,23 +362,6 @@ public class TrangKhachHang extends JPanel {
         hienDanhSachKhachHangRaBang(this.dsKH);
     }
 
-//    public void chonKhachHang() {
-//        int row = table.getSelectedRow();
-//        if (row == -1) {
-//            JOptionPane.showMessageDialog(null, "Vui lòng chọn khách hàng trong bảng!");
-//        } else {
-//            label_hienThiMaKH.setText(table.getValueAt(row, 1).toString());
-//            textField_HoTen.setText(table.getValueAt(row, 2).toString());
-//            textField_SDT.setText(table.getValueAt(row, 3).toString());
-//            if(table.getValueAt(row, 4).toString().equals("Nam")){
-//                comboBox_gioiTinh.setSelectedIndex(0);
-//            } else {
-//                comboBox_gioiTinh.setSelectedIndex(1);
-//            }
-//            textField_email.setText(table.getValueAt(row, 5).toString());
-//            textArea_diaChi.setText(table.getValueAt(row, 6).toString());
-//        }
-//    }
 
     public static boolean regexSDT(String sdt){
         String regex = "^[0-9]{10}$";

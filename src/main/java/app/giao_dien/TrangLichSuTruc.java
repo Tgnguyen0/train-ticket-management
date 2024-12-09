@@ -204,6 +204,8 @@ public class TrangLichSuTruc extends JFrame {
         table.addMouseListener(hd);
         dateChooser.addPropertyChangeListener(hd);
         btn_xemToanBo.addMouseListener(hd);
+
+        table.setDefaultEditor(Object.class, null);
     }
     public void hienDanhSachTruc(String maNV) {
         DefaultTableModel model = (DefaultTableModel) table.getModel();
