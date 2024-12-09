@@ -11,6 +11,8 @@ import app.thuc_the.Tau;
 import app.thuc_the.Toa;
 
 import java.awt.event.*;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -19,16 +21,21 @@ import javax.swing.border.Border;
 import java.awt.*;
 
 public class TrangCacTau extends JFrame {
+    public JPanel trangGoc;
+    public JFrame trangKhung;
     public JPanel trangChua;
     public NutAnh nutTau1;
     public NutAnh nutTau2;
     public NutAnh nutTau3;
     public NutAnh nutTau4;
 
-    public TrangCacToa trangCacToa1;
+    /*public TrangCacToa trangCacToa1;
     public TrangCacToa trangCacToa2;
     public TrangCacToa trangCacToa3;
-    public TrangCacToa trangCacToa4;
+    public TrangCacToa trangCacToa4;*/
+
+    private List<TrangCacToa> dsTrangCacToa = new ArrayList<>();
+    private List<Boolean> coHieuTauCoQuaGa; // Store the coQuaGa flags dynamically
 
     /* Khởi tạo phông chữ màu sắc */
     public Color trang = new Color(255, 255, 255);
@@ -57,18 +64,21 @@ public class TrangCacTau extends JFrame {
     public List<LichCapBenGa> dsLichTau;
 
     public String soHieuTauChon;
-    public int soLuongKhachDat;
+    //public int soLuongKhachDat;
     public String maGa;
 
-    public boolean coQuaGaTau1 = false;
+    /*public boolean coQuaGaTau1 = false;
     public boolean coQuaGaTau2 = false;
     public boolean coQuaGaTau3 = false;
-    public boolean coQuaGaTau4 = false;
+    public boolean coQuaGaTau4 = false;*/
 
     // Function tạo GUI chính
-    public TrangCacTau(List<Tau> dsTau, Ghe_DAO gheDao, List<LichCapBenGa> dsLichTau) {
+    public TrangCacTau(JPanel trang, JFrame trangKhung,List<Tau> dsTau, Ghe_DAO gheDao, List<LichCapBenGa> dsLichTau) {
+        this.trangGoc = trang;
+        this.trangKhung = trangKhung;
         this.toaDao = new Toa_DAO();
         this.gheDao = gheDao;
+        this.coHieuTauCoQuaGa = new ArrayList<>(Collections.nCopies(4, false));
 
         this.dsTau = dsTau;
         this.dsLichTau = dsLichTau;
@@ -127,16 +137,16 @@ public class TrangCacTau extends JFrame {
 
             switch (maTau) {
                 case "VN5234":
-                    coQuaGaTau1 = true;
+                    coHieuTauCoQuaGa.set(0, true);
                     break;
                 case "VN5947":
-                    coQuaGaTau2 = true;
+                    coHieuTauCoQuaGa.set(1, true);
                     break;
                 case "VN7283":
-                    coQuaGaTau3 = true;
+                    coHieuTauCoQuaGa.set(2, true);
                     break;
                 case "VN9029":
-                    coQuaGaTau4 = true;
+                    coHieuTauCoQuaGa.set(3, true);
                     break;
             }
         }
@@ -169,7 +179,7 @@ public class TrangCacTau extends JFrame {
         nutTau1.setFocusPainted(false); // Bỏ viền khi click (focus)
         nutTau1.setContentAreaFilled(false); // Bỏ fill màu mặc định của JButton (nếu cần)
         nutTau1.setBorder(null);
-        nutTau1.setEnabled(coQuaGaTau1);
+        nutTau1.setEnabled(coHieuTauCoQuaGa.get(0));
 
         if (!nutTau1.isEnabled()) {
             nutTau1.datAnhVoHieu();
@@ -202,7 +212,7 @@ public class TrangCacTau extends JFrame {
         nutTau2.setFocusPainted(false); // Bỏ viền khi click (focus)
         nutTau2.setContentAreaFilled(false); // Bỏ fill màu mặc định của JButton (nếu cần)
         nutTau2.setBorder(null);
-        nutTau2.setEnabled(coQuaGaTau2);
+        nutTau2.setEnabled(coHieuTauCoQuaGa.get(1));
 
         if (!nutTau2.isEnabled()) {
             nutTau2.datAnhVoHieu();
@@ -235,7 +245,7 @@ public class TrangCacTau extends JFrame {
         nutTau3.setFocusPainted(false); // Bỏ viền khi click (focus)
         nutTau3.setContentAreaFilled(false); // Bỏ fill màu mặc định của JButton (nếu cần)
         nutTau3.setBorder(null);
-        nutTau3.setEnabled(coQuaGaTau3);
+        nutTau3.setEnabled(coHieuTauCoQuaGa.get(2));
 
         if (!nutTau3.isEnabled()) {
             nutTau3.datAnhVoHieu();
@@ -269,7 +279,7 @@ public class TrangCacTau extends JFrame {
         nutTau4.setFocusPainted(false); // Bỏ viền khi click (focus)
         nutTau4.setContentAreaFilled(false); // Bỏ fill màu mặc định của JButton (nếu cần)
         nutTau4.setBorder(null);
-        nutTau4.setEnabled(coQuaGaTau4);
+        nutTau4.setEnabled(coHieuTauCoQuaGa.get(3));
 
         if (!nutTau4.isEnabled()) {
             nutTau4.datAnhVoHieu();
@@ -319,15 +329,17 @@ public class TrangCacTau extends JFrame {
         this.dsToa3 = toaDao.ChonTheoSoHieuTatCa(this.dsTau.get(2).getSoHieu());
         this.dsToa4 = toaDao.ChonTheoSoHieuTatCa(this.dsTau.get(3).getSoHieu());*/
 
-        if (coQuaGaTau1) this.trangCacToa1 = new TrangCacToa(1, this.dsTau.get(0).getSoHieu(), toaDao.ChonTheoSoHieuTatCa(this.dsTau.get(0).getSoHieu()), this.gheDao);
+        /*if (coQuaGaTau1) this.trangCacToa1 = new TrangCacToa(1, this.dsTau.get(0).getSoHieu(), toaDao.ChonTheoSoHieuTatCa(this.dsTau.get(0).getSoHieu()), this.gheDao);
         if (coQuaGaTau2) this.trangCacToa2 = new TrangCacToa(2, this.dsTau.get(1).getSoHieu(), toaDao.ChonTheoSoHieuTatCa(this.dsTau.get(1).getSoHieu()), this.gheDao);
         if (coQuaGaTau3) this.trangCacToa3 = new TrangCacToa(3, this.dsTau.get(2).getSoHieu(), toaDao.ChonTheoSoHieuTatCa(this.dsTau.get(2).getSoHieu()), this.gheDao);
-        if (coQuaGaTau4) this.trangCacToa4 = new TrangCacToa(4, this.dsTau.get(3).getSoHieu(), toaDao.ChonTheoSoHieuTatCa(this.dsTau.get(3).getSoHieu()), this.gheDao);
+        if (coQuaGaTau4) this.trangCacToa4 = new TrangCacToa(4, this.dsTau.get(3).getSoHieu(), toaDao.ChonTheoSoHieuTatCa(this.dsTau.get(3).getSoHieu()), this.gheDao);*/
 
-        if (coQuaGaTau1) this.trangChua.add(trangCacToa1, "Cac toa cua tau 1");
+        /*if (coQuaGaTau1) this.trangChua.add(trangCacToa1, "Cac toa cua tau 1");
         if (coQuaGaTau2) this.trangChua.add(trangCacToa2, "Cac toa cua tau 2");
         if (coQuaGaTau3) this.trangChua.add(trangCacToa3, "Cac toa cua tau 3");
-        if (coQuaGaTau4) this.trangChua.add(trangCacToa4, "Cac toa cua tau 4");
+        if (coQuaGaTau4) this.trangChua.add(trangCacToa4, "Cac toa cua tau 4");*/
+
+        khoiTaoTrangCacToa();
 
         add(this.trangChua);
     }
@@ -346,6 +358,25 @@ public class TrangCacTau extends JFrame {
 
     public void datMaGa(String maGa) {
         this.maGa = maGa;
+    }
+
+    private void khoiTaoTrangCacToa() {
+        for (int i = 0; i < coHieuTauCoQuaGa.size(); i++) {
+            if (coHieuTauCoQuaGa.get(i)) {
+                TrangCacToa trangCacToa = new TrangCacToa(
+                        i + 1,
+                        this.dsTau.get(i).getSoHieu(),
+                        toaDao.ChonTheoSoHieuTatCa(this.dsTau.get(i).getSoHieu()),
+                        this.gheDao
+                );
+
+                dsTrangCacToa.add(trangCacToa);
+
+                this.trangChua.add(dsTrangCacToa.get(i), "Cac toa cua tau " + i + 1);
+            } else {
+                dsTrangCacToa.add(null); // Optional: maintain alignment in the list
+            }
+        }
     }
 
     /*public static void main(String[] args) {

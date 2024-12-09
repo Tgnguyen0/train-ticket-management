@@ -36,7 +36,7 @@ public class HanhDong_TrangDangNhap implements ActionListener, MouseListener {
 
         Object source = e.getSource();
 
-        if (source == this.trangDangNhap.nutDangNhap) {
+        if (source == this.trangDangNhap.nutDangNhap || source == this.trangDangNhap.truongMatKhau) {
             String username = this.trangDangNhap.truongTen.getText();
             username = username.trim();
             String twoLettersOfUsername = username.substring(0, 2);
@@ -79,6 +79,7 @@ public class HanhDong_TrangDangNhap implements ActionListener, MouseListener {
         if (source == this.trangDangNhap.nutDangXuat) {
             System.exit(0);
         }
+
     }
 
 

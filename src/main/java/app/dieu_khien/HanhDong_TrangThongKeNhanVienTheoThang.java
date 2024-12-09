@@ -32,6 +32,9 @@ public class HanhDong_TrangThongKeNhanVienTheoThang implements ActionListener, M
             this.trangChuaThongKeNhanVienTheoThang.trangChuaBieuDoCot.revalidate();
             this.trangChuaThongKeNhanVienTheoThang.trangChuaBieuDoCot.repaint();
         }
+        else if(e.getSource() == this.trangChuaThongKeNhanVienTheoThang.buttonTienThuongNhanVien){
+            this.trangChuaThongKeNhanVienTheoThang.tinhTienThuongNhanVien();
+        }
     }
 
     @Override

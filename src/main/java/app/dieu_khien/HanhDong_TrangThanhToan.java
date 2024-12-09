@@ -8,7 +8,6 @@ import app.giao_dien.TrangThanhToan;
 import app.phan_tu_tuy_chinh.TaoMaQR;
 import app.thuc_the.*;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
@@ -43,103 +42,49 @@ public class HanhDong_TrangThanhToan implements ActionListener, MouseListener {
 
         // Nếu chọn tiền mặt và bấm nút thanh toán
         if (e.getSource() == this.trangThanhToan.ButtonThanhToan && this.trangThanhToan.radioTienMat.isSelected()) {
-            double thanhTien = Double.parseDouble(this.trangThanhToan.tfThanhTien.getText());
-            double tienNhan = Double.parseDouble(this.trangThanhToan.thanhTienNhan.getText());
-
-            if (thanhTien > tienNhan) {
-                hienThiThongBao("Tiền nhận phải lớn hơn tiền trả", "Lỗi nhận tiền", JOptionPane.ERROR_MESSAGE);
-
-                return;
-            }
-
-            double tienTra = tienNhan - thanhTien;
-
-            this.trangThanhToan.tfTraLai.setText(String.valueOf(tienTra));
-
-            double tongTien = 0;
-            for (int i = 0 ; i < this.trangThanhToan.danhSachVe.size() ; i++) {
-                tongTien += this.trangThanhToan.danhSachVe.get(i).getGiaVe() * (1 - (this.trangThanhToan.danhSachVe.get(i).getLoaiDoiTuong().equals("Người Lớn") ? 0.0 : 0.025));
-            }
-
-            String maNV = this.trangThanhToan.layMaNV();
-
-            HoaDon hd = new HoaDon(
-                    LocalDate.now(),
-                    thanhTien,
-                    this.trangThanhToan.dsKh.get(0).getMaKH(),
-                    maNV,
-                    this.trangThanhToan.danhSachVe.size(),
-                    tongTien,
-                    "Chưa In",
-                    this.trangThanhToan.daiNgo,
-                    0
-            );
-
-            // Lưu hóa đơn vào cơ sở dữ liệu
-            //this.trangThanhToan.hdDao.LuuHoaDon(hd);
-
-            // Lưu vé vào Database
-            /*for (Ve ve : this.trangThanhToan.danhSachVe) {
-                ((TrangDatVe) TrangDinhHuong.getTrangChua().getComponent(1)).veDao.luuVe(ve);
-            }*/
-
-            // Lưu chi tiết hóa đơn
-            /*for (Ve ve : this.trangThanhToan.danhSachVe) {
-                ChiTietHoaDon cthd = new ChiTietHoaDon(ve.getMaVe(), hd.getMaHoaDon());
-                ChiTietHoaDon_DAO.themCTHD(cthd);
-            }*/
-
-            // Cập nhật trạng thái ghế
-            /*for (int i = 0 ; i < this.trangThanhToan.dsGheDat.size() ; i++) {
-                this.trangThanhToan.gheDao.capNhatTrangThaiGhe(TRANG_THAI_GHE.Da_dat.getValue(), this.trangThanhToan.dsGheDat.get(i).getMaGhe());
-            }*/
-
-            hienThiThongBao("Thanh toán thành công", "Thông báo thành công", JOptionPane.INFORMATION_MESSAGE);
-
-            this.trangThanhToan.dispose();
-
-            for (int i = ((TrangDatVe) TrangDinhHuong.getTrangChua().getComponent(1)).moHinhBang.getRowCount() - 1; i >= 0; i--) {
-                ((TrangDatVe) TrangDinhHuong.getTrangChua().getComponent(1)).moHinhBang.removeRow(i);
-            }
-
-            ((TrangDatVe) TrangDinhHuong.getTrangChua().getComponent(1)).datThanhToan(true);
-            ((TrangDatVe) TrangDinhHuong.getTrangChua().getComponent(1)).thanhNhapNgayDi.setDate(null);
-            ((TrangDatVe) TrangDinhHuong.getTrangChua().getComponent(1)).thanhNhapGioDen.setText("");
-            ((TrangHoaDon) TrangDinhHuong.getTrangChua().getComponent(2)).datHoaDonDTao(hd);
+            xuLyThanhToan(true);
         }
 
         // Nếu chọn chuyển khoản và bấm nút thanh toán
         if (e.getSource() == this.trangThanhToan.ButtonThanhToan && this.trangThanhToan.radioChuyenKhoan.isSelected()) {
-            // Lấy thành tiền
-            double thanhTien = Double.parseDouble(this.trangThanhToan.tfThanhTien.getText());
-            //double tienNhan = Double.parseDouble(this.trangThanhToan.thanhTienNhan.getText());
+            xuLyThanhToan(false);
+        }
+    }
 
-            //double tienTra = tienNhan - thanhTien;
+    public void xuLyThanhToan(boolean thanhToanTienMat) {
+        double thanhTien = Double.parseDouble(this.trangThanhToan.tfThanhTien.getText());
+        double tienNhan = Double.parseDouble(this.trangThanhToan.thanhTienNhan.getText());
 
-            //this.trangThanhToan.tfTraLai.setText(String.valueOf(tienTra));
+        if (thanhTien > tienNhan) {
+            hienThiThongBao("Tiền nhận phải lớn hơn tiền trả", "Lỗi nhận tiền", JOptionPane.ERROR_MESSAGE);
 
-            // Tính toán tổng tiền các vé
-            double tongTien = 0;
-            for (int i = 0 ; i < this.trangThanhToan.danhSachVe.size() ; i++) {
-                tongTien += this.trangThanhToan.danhSachVe.get(i).getGiaVe() * (1 - (this.trangThanhToan.danhSachVe.get(i).getLoaiDoiTuong().equals("Người Lớn") ? 0.0 : 0.025));
-            }
+            return;
+        }
 
-            // Lấy mã nhân viên
-            String maNV = this.trangThanhToan.layMaNV();
+        double tienTra = tienNhan - thanhTien;
 
-            // Khởi tạo hóa đơn
-            HoaDon hd = new HoaDon(
-                    LocalDate.now(),
-                    thanhTien,
-                    this.trangThanhToan.dsKh.get(0).getMaKH(),
-                    maNV,
-                    this.trangThanhToan.danhSachVe.size(),
-                    tongTien,
-                    "Chưa In",
-                    this.trangThanhToan.daiNgo,
-                    0
-            );
+        this.trangThanhToan.tfTraLai.setText(String.valueOf(tienTra));
 
+        double tongTien = 0;
+        for (int i = 0 ; i < this.trangThanhToan.danhSachVe.size() ; i++) {
+            tongTien += this.trangThanhToan.danhSachVe.get(i).getGiaVe() * (1 - (this.trangThanhToan.danhSachVe.get(i).getLoaiDoiTuong().equals("Người Lớn") ? 0.0 : 0.025));
+        }
+
+        String maNV = this.trangThanhToan.layMaNV();
+
+        HoaDon hd = new HoaDon(
+                LocalDate.now(),
+                thanhTien,
+                this.trangThanhToan.dsKh.get(0).getMaKH(),
+                maNV,
+                this.trangThanhToan.danhSachVe.size(),
+                tongTien,
+                "Chưa In",
+                this.trangThanhToan.daiNgo,
+                0
+        );
+
+        if (!thanhToanTienMat) {
             // Tạo thông tin thanh toán
             String thongTinThanhToan = "Toi Tai Khoan:\n"
                     + "CONG TY CO PHAN DUONG SAT SAI GON\n"
@@ -150,49 +95,57 @@ public class HanhDong_TrangThanhToan implements ActionListener, MouseListener {
 
             // Hiển thị mã QR với thông tin thanh toán mới khỏi tạo
             hienThiMaQR(thongTinThanhToan, "Thanh toán qua QR");
-
-            // Lưu hóa đơn vào cơ sở dữ liệu
-            //this.trangThanhToan.hdDao.LuuHoaDon(hd);
-
-            // Lưu vé vào Database
-            /*for (Ve ve : this.trangThanhToan.danhSachVe) {
-                ((TrangDatVe) TrangDinhHuong.getTrangChua().getComponent(1)).veDao.luuVe(ve);
-            }*/
-
-            // Lưu chi tiết hóa đơn
-            /*for (Ve ve : this.trangThanhToan.danhSachVe) {
-                ChiTietHoaDon cthd = new ChiTietHoaDon(ve.getMaVe(), hd.getMaHoaDon());
-                ChiTietHoaDon_DAO.themCTHD(cthd);
-            }*/
-
-            // Cập nhật trạng thái ghế
-            /*for (int i = 0 ; i < this.trangThanhToan.dsGheDat.size() ; i++) {
-                this.trangThanhToan.gheDao.capNhatTrangThaiGhe(TRANG_THAI_GHE.Da_dat.getValue(), this.trangThanhToan.dsGheDat.get(i).getMaGhe());
-            }*/
-
-            // Hiển thị thông báo khởi tạo thành công
-            hienThiThongBao("Thanh toán thành công", "Thông báo thành công", JOptionPane.INFORMATION_MESSAGE);
-
-            // Tắt trangThanhToan
-            this.trangThanhToan.dispose();
-
-            // Xóa dòng trong bảng
-            for (int i = ((TrangDatVe) TrangDinhHuong.getTrangChua().getComponent(1)).moHinhBang.getRowCount() - 1; i >= 0; i--) {
-                ((TrangDatVe) TrangDinhHuong.getTrangChua().getComponent(1)).moHinhBang.removeRow(i);
-            }
-
-            // Đặt thanh toán thành công để in vé được
-            ((TrangDatVe) TrangDinhHuong.getTrangChua().getComponent(1)).datThanhToan(true);
-
-            // Xóa ngày đặt
-            ((TrangDatVe) TrangDinhHuong.getTrangChua().getComponent(1)).thanhNhapNgayDi.setDate(null);
-
-            // Xóa giờ đi
-            ((TrangDatVe) TrangDinhHuong.getTrangChua().getComponent(1)).thanhNhapGioDen.setText("");
-
-            // Đặt hóa đơn bên trangHoaDon
-            ((TrangHoaDon) TrangDinhHuong.getTrangChua().getComponent(2)).datHoaDonDTao(hd);
         }
+
+        // Lưu hóa đơn vào cơ sở dữ liệu
+        this.trangThanhToan.hdDao.LuuHoaDon(hd);
+
+        // Lưu vé vào Database
+        for (Ve ve : this.trangThanhToan.danhSachVe) {
+            ((TrangDatVe) this.trangThanhToan.trangDatVe).veDao.luuVe(ve);
+        }
+
+        // Lưu chi tiết hóa đơn
+        for (Ve ve : this.trangThanhToan.danhSachVe) {
+            ChiTietHoaDon cthd = new ChiTietHoaDon(ve.getMaVe(), hd.getMaHoaDon());
+            ChiTietHoaDon_DAO.themCTHD(cthd);
+        }
+
+        // Cập nhật trạng thái ghế
+        for (int i = 0 ; i < this.trangThanhToan.dsGheDat.size() ; i++) {
+            this.trangThanhToan.gheDao.capNhatTrangThaiGhe(TRANG_THAI_GHE.Da_dat.getValue(), this.trangThanhToan.dsGheDat.get(i).getMaGhe());
+        }
+
+        // Thông báo thanh toán thành công và tiển trả lại
+        hienThiThongBao("<html>Thanh toán thành công<br><b>Tiền thối: " + tienTra + " VND</b></html>", "Thông báo thành công", JOptionPane.INFORMATION_MESSAGE);
+
+        this.trangThanhToan.dispose();
+
+        //Đã thanh toán thì mới cho in vé
+        ( (TrangDatVe) this.trangThanhToan.trangDatVe).veDao.datDSVeDaThanhToan(this.trangThanhToan.danhSachVe);
+
+        // Xóa danh sách vé đã đặt
+        ( (TrangDatVe) this.trangThanhToan.trangDatVe).veDao.xoaDSVeDat();
+
+        // Xóa dòng trong bảng danh sách vé
+        for (int i = ((TrangDatVe) this.trangThanhToan.trangDatVe).moHinhBang.getRowCount() - 1; i >= 0; i--) {
+            ((TrangDatVe) this.trangThanhToan.trangDatVe).moHinhBang.removeRow(i);
+        }
+
+        // Xóa danh sách ghế đã đặt
+        ((TrangDatVe) this.trangThanhToan.trangDatVe).gheDao.xoaDSGheChon();
+
+        // Đặt thanh toán thành công để in vé được
+        ((TrangDatVe) this.trangThanhToan.trangDatVe).datThanhToan(true);
+
+        // Xóa ngày đặt
+        ((TrangDatVe) this.trangThanhToan.trangDatVe).thanhNhapNgayDi.setDate(null);
+
+        // Xóa giờ đi
+        ((TrangDatVe) this.trangThanhToan.trangDatVe).thanhNhapGioDen.setText("");
+
+        // Đặt hóa đơn bên trangHoaDon
+        ((TrangHoaDon) TrangDinhHuong.getTrangChua().getComponent(2)).datHoaDonDTao(hd);
     }
 
     @Override

@@ -22,13 +22,11 @@ import java.sql.PreparedStatement;
 
 import javax.swing.*;
 import java.sql.*;
+import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class HoaDon_DAO {
     String CHON_15_SQL = "SELECT * FROM HoaDon ORDER BY NgayLap DESC;";
@@ -468,6 +466,33 @@ public class HoaDon_DAO {
         return  danhSachDoanhThu;
     }
 
+    // key của map này là mã Nhân Viên
+    public static Map<String, Double> layDoanhThuCuaTungNhanVienDuaVao_Nam(int nam){
+        Map<String, Double> danhSachDoanhThu = new HashMap<>();
+        String sql = "SELECT SUM(hd.ThanhTien) AS DoanhThu, nv.MaNV as MaNV " +
+                "FROM HoaDon hd " +
+                "JOIN NhanVien nv ON hd.MaNV = nv.MaNV " +
+                "WHERE YEAR(hd.NgayLap) = ? " +
+                "GROUP BY hd.MaNV, nv.MaNV";
+
+        try (Connection conn = KetNoiCoSoDuLieu.ketNoiDB_HinhDB();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, nam); // Set the year in the query
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    String tenNV = rs.getString("MaNV");
+                    double doanhThu = rs.getDouble("DoanhThu");
+                    danhSachDoanhThu.put(tenNV, doanhThu);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return  danhSachDoanhThu;
+    }
+
     public static Map<String, Double> layDoanhThuCuaNhanVienUuTuTheo_Nam(int nam){
         Map<String, Double> danhSachDoanhThu = new HashMap<>();
         String sql = "SELECT Top 3 SUM(hd.ThanhTien) AS DoanhThu, nv.TenNV " +
@@ -520,6 +545,55 @@ public class HoaDon_DAO {
         }
         return  danhSachDoanhThu;
     }
+    public static Map<String, Double> layDanhSachDoanhThuCuaNhanVienUuTuTheo_Thang_Nam(int nam, int thang) {
+        Map<String, Double> danhSachDoanhThu = new LinkedHashMap<>(); // Đổi sang LinkedHashMap để duy trì thứ tự
+        String sql = "SELECT SUM(hd.ThanhTien) AS DoanhThu, nv.MaNV " +
+                "FROM HoaDon hd " +
+                "JOIN NhanVien nv ON hd.MaNV = nv.MaNV " +
+                "WHERE YEAR(hd.NgayLap) = ? AND MONTH(hd.NgayLap) = ? " +
+                "GROUP BY nv.MaNV " +
+                "ORDER BY SUM(hd.ThanhTien) DESC"; // Đảm bảo ORDER BY trong SQL
+
+        try (Connection conn = KetNoiCoSoDuLieu.ketNoiDB_HinhDB();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, nam); // Set giá trị cho năm
+            stmt.setInt(2, thang); // Set giá trị cho tháng
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    String maNV = rs.getString("MaNV"); // Lấy mã nhân viên
+                    double doanhThu = rs.getDouble("DoanhThu"); // Lấy doanh thu
+                    danhSachDoanhThu.put(maNV, doanhThu); // Thêm vào LinkedHashMap
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return danhSachDoanhThu; // Trả về kết quả
+    }
+    public static Map<Integer, Double> layDoanhThuTungNam() {
+        Map<Integer, Double> danhSachDoanhThu = new LinkedHashMap<>(); // Đổi sang LinkedHashMap để duy trì thứ tự
+        String sql = "SELECT SUM(hd.ThanhTien) AS DoanhThu , YEAR(hd.NgayLap) as nam \n" +
+                "                FROM HoaDon hd \n" +
+                "                GROUP BY YEAR(hd.NgayLap)\n" +
+                "                order by YEAR(hd.NgayLap)  ASC"; // Đảm bảo ORDER BY trong SQL
+
+        try (Connection conn = KetNoiCoSoDuLieu.ketNoiDB_HinhDB();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    int nam = rs.getInt("nam"); // Lấy mã nhân viên
+                    double doanhThu = rs.getDouble("DoanhThu"); // Lấy doanh thu
+                    danhSachDoanhThu.put(nam, doanhThu); // Thêm vào LinkedHashMap
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return danhSachDoanhThu; // Trả về kết quả
+    }
 
     public static Map<String, Double> layDoanhThuCuaTungNhanVienTheo_Thang_Nam(int nam, int thang){
         Map<String, Double> danhSachDoanhThu = new HashMap<>();
@@ -570,8 +644,8 @@ public class HoaDon_DAO {
             // Thực thi câu lệnh
             int rowsUpdated = preparedStatement.executeUpdate();
             System.out.println("rowsUpdated: "+ rowsUpdated);
-
             if (rowsUpdated > 0 || rowsUpdated == -1) {
+
                 //System.out.println("Cập nhật thành công hóa đơn có mã: " + hoaDon.getMaHoaDon());
                 JOptionPane.showMessageDialog(null, "Cập nhật thành công hóa đơn có mã: " + hoaDon.getMaHoaDon());
             } else {

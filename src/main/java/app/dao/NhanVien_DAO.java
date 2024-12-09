@@ -362,7 +362,7 @@ public class NhanVien_DAO {
     }
 
     public static NhanVien layThongTinNV(String username) {
-        NhanVien nv = new NhanVien();
+        NhanVien nv = null;
         try {
             // Bước 1: tạo kết nối đến CSDL
             Connection connection = KetNoiCoSoDuLieu.ketNoiDB_KhangVersion();
@@ -388,6 +388,7 @@ public class NhanVien_DAO {
                 String vaiTro = rs.getString("VaiTro");
                 st.close();
                 connection.close();
+                nv = new NhanVien();
                 nv.setMaNV(maNV);
                 nv.setTenNV(tenNV);
                 nv.setDiaChi(diaChi);
@@ -417,6 +418,39 @@ public class NhanVien_DAO {
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setString(1, tenNhanVienRequest);  // Set the TenNV parameter
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                nhanVien = new NhanVien();
+                nhanVien.setMaNV(resultSet.getString("MaNV"));
+                nhanVien.setTenNV(resultSet.getString("TenNV"));
+                nhanVien.setNgaySinh(resultSet.getDate("NgaySinh").toLocalDate());
+                nhanVien.setDiaChi(resultSet.getString("DiaChi"));
+                nhanVien.setSoDT(resultSet.getString("SoDT"));
+                if (resultSet.getString("GioiTinh").compareToIgnoreCase("Nam") == 0) {
+                    nhanVien.setGioiTinh(GIOI_TINH.NAM);
+                } else {
+                    nhanVien.setGioiTinh(GIOI_TINH.NU);
+                }
+                nhanVien.setMatKhau(resultSet.getString("MatKhau"));
+                nhanVien.setVaiTro(resultSet.getString("VaiTro"));
+                nhanVien.setVaiTro(resultSet.getString("TenDangNhap"));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return nhanVien;
+    }
+    public static NhanVien layNhanVienTheo_MaNhanVien(String maNhanVienRequest) {
+        NhanVien nhanVien = null;
+        String sql = "SELECT * FROM NhanVien WHERE MaNV = ?";
+
+        try (Connection connection = KetNoiCoSoDuLieu.ketNoiDB_HinhDB();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setString(1, maNhanVienRequest);  // Set the TenNV parameter
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {

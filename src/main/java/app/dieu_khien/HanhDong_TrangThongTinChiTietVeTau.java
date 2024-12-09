@@ -2,6 +2,7 @@ package app.dieu_khien;
 
 import app.dao.*;
 import app.giao_dien.TrangCacTau;
+import app.giao_dien.TrangDanhSachVeTau;
 import app.giao_dien.TrangThongTinChiTietVeTau;
 import app.phan_tu_tuy_chinh.TaoVeBangFilePDF;
 import app.thuc_the.*;
@@ -57,19 +58,39 @@ public class HanhDong_TrangThongTinChiTietVeTau implements ActionListener, Mouse
         }
         else if (e.getSource() == this.trangThongTinChiTietVeTau.buttonXacNhan){
            if(JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn xác nhận không?\n Sau Khi xác nhận sẽ cập nhật lại thông tin vé ") == JOptionPane.YES_OPTION){
-                String maVe = this.trangThongTinChiTietVeTau.textFieldMaVe.getText();
-                //String ngayDatVe = this.trangThongTinChiTietVeTau.textFieldNgayDatVe.getText();
-                String giaVe = this.trangThongTinChiTietVeTau.textFieldGiaVe.getText();
-                String viTriGhe = this.trangThongTinChiTietVeTau.textFieldGhe.getText();
-                String soHieu = this.trangThongTinChiTietVeTau.textFieldSoHieu.getText();
-                String tenToa = this.trangThongTinChiTietVeTau.textFieldToa.getText();
-                Toa toa = Toa_DAO.layToaTheoMaTau_TenToa(tenToa, soHieu);
-                Ghe ghe = Ghe_DAO.layGheTheoMaToa_SoGhe(toa.getMaToa(), viTriGhe);
-                Ve_DAO veDao = new Ve_DAO();
+
+               String maVe = this.trangThongTinChiTietVeTau.textFieldMaVe.getText();
+               //String ngayDatVe = this.trangThongTinChiTietVeTau.textFieldNgayDatVe.getText();
+               String giaVe = this.trangThongTinChiTietVeTau.textFieldGiaVe.getText();
+               String viTriGhe = this.trangThongTinChiTietVeTau.textFieldGhe.getText();
+               String soHieu = this.trangThongTinChiTietVeTau.textFieldSoHieu.getText();
+               String tenToa = this.trangThongTinChiTietVeTau.textFieldToa.getText();
+               Toa toa = Toa_DAO.layToaTheoMaTau_TenToa(tenToa, soHieu);
+
+               for (Ghe ghe : this.trangThongTinChiTietVeTau.gheDao.layDSGheDat()) {
+                   this.trangThongTinChiTietVeTau.gheDao.capNhatTrangThaiGhe(TRANG_THAI_GHE.Da_dat.getValue(), ghe.getMaGhe());
+
+                   Ve_DAO veDao = new Ve_DAO();
+                   veDao.CapNhatVeCSDL(ghe.getMaGhe(), maVe);
+                   /*
+                        cập nhật lại mã vế đã bị thay thế về lại trạng thái Trống
+                    */
+                     Ghe_DAO.capNhatTrangThaiGhe_VeTrangThaiTrong(this.trangThongTinChiTietVeTau.maGhe_Old);
+                    // Ghe_DAO.capNhatTrangThaiGhe_VeTrangDaDat(this.trangThongTinChiTietVeTau.tex)
+
+                   ((TrangDanhSachVeTau) this.trangThongTinChiTietVeTau.trangCha).textFieldMaGhe.setText(ghe.getMaGhe());
+
+                   ((TrangDanhSachVeTau) this.trangThongTinChiTietVeTau.trangCha).textFieldLoaiVe.setText(ghe.getLoaiGhe().toString());
+               }
+
                 /*logger.info((new Ve(maVe,LocalDateTime.parse(ngayKhoiHanh),LocalDateTime.parse(ngayDatVe),
                       Double.parseDouble(giaVe), ghe.getMaGhe()).toString()));
                 veDao.capNhatVeTau(new Ve(maVe,LocalDateTime.parse(ngayKhoiHanh),LocalDateTime.parse(ngayDatVe),
                         Double.parseDouble(giaVe), ghe.getMaGhe()));*/
+
+               this.trangThongTinChiTietVeTau.gheDao.xoaDSGheChon();
+
+               this.trangThongTinChiTietVeTau.dispose();
             }
         }
 
@@ -89,7 +110,7 @@ public class HanhDong_TrangThongTinChiTietVeTau implements ActionListener, Mouse
             //System.out.println("So ghe: " + this.trangThongTinChiTietVeTau.gheDao.layDSGheDat().size());
 
             // Khởi tạo trang sơ đồ
-            this.trangCacTau = new TrangCacTau((new Tau_DAO()).chonTatCa(), this.trangThongTinChiTietVeTau.gheDao, dsLich);
+            this.trangCacTau = new TrangCacTau(null, this.trangThongTinChiTietVeTau, (new Tau_DAO()).chonTatCa(), this.trangThongTinChiTietVeTau.gheDao, dsLich);
             trangCacTau.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             trangCacTau.setVisible(true);
 
@@ -108,6 +129,7 @@ public class HanhDong_TrangThongTinChiTietVeTau implements ActionListener, Mouse
             //String ngayKhoiHanh = this.trangThongTinChiTietVeTau.textFieldNgayKhoiHanh.getText();
             String giaVe = this.trangThongTinChiTietVeTau.textFieldGiaVe.getText();
             String viTriGhe = this.trangThongTinChiTietVeTau.textFieldGhe.getText();
+
             /*if(JOptionPane.showConfirmDialog(null, "Xác Nhận In Vé ") == JOptionPane.YES_OPTION){
                 TaoVeBangFilePDF taoVeBangFilePDF = new TaoVeBangFilePDF();
                 taoVeBangFilePDF.generateTicketPDF("D:\\vetau.pdf", maVe,tenKhachHang, diemDi, diemDen, ngayDatVe,

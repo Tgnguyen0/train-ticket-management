@@ -30,6 +30,7 @@ import java.util.List;
 @Slf4j
 public class HanhDong_TrangDanhSachVe implements ActionListener, MouseListener {
     public Ve veChiTiet;
+    public TrangThongTinChiTietVeTau trang;
 
     String Message_Not_Found = "Không Thể Tìm Thấy Đúng Mã Vé Đã Cung Cấp";
     Logger logger = LoggerFactory.getLogger(TrangDanhSachVeTau.class);
@@ -46,8 +47,6 @@ public class HanhDong_TrangDanhSachVe implements ActionListener, MouseListener {
 //        trangDanhSachVeTau.dayDuLieuVaoBang(dsVe);
 
     }
-
-
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -85,8 +84,18 @@ public class HanhDong_TrangDanhSachVe implements ActionListener, MouseListener {
             String loaiVe = this.trangDanhSachVeTau.textFieldLoaiVe.getText();
             String doiTuong = this.trangDanhSachVeTau.textFieldDoiTuong.getText();
             String ngayDatVe = this.trangDanhSachVeTau.ngayDatVe.getText();
-            String ngayKhoiHanh = this.trangDanhSachVeTau.ngayKhoiHanh.getText();
             String giaVe = this.trangDanhSachVeTau.giaVe.getText();
+
+            //  Lấy ngày giờ cụ thể
+            Ve ve = (Ve_DAO.layVe_DuaVaoMaVe(maVe)).get(0);
+//            String ngayKhoiHanh = STR."\{ve.getNgayKhoiHanh().getYear()}-\{ve.getNgayKhoiHanh().getMonth().getValue()}-\{ve.getNgayKhoiHanh().getDayOfMonth()}";
+//            String gioKhoiHanh = STR."\{ve.getNgayKhoiHanh().getHour()}:\{ve.getNgayKhoiHanh().getMinute()}";
+            String ngayKhoiHanh = ve.getNgayKhoiHanh().getYear() + "-" +
+                    ve.getNgayKhoiHanh().getMonth().getValue() + "-" +
+                    ve.getNgayKhoiHanh().getDayOfMonth();
+
+            String gioKhoiHanh = ve.getNgayKhoiHanh().getHour() + ":" +
+                    ve.getNgayKhoiHanh().getMinute();
 
             if(JOptionPane.showConfirmDialog(null, "Xác Nhận In Vé ") == JOptionPane.YES_OPTION){
                 TaoVeBangFilePDF taoVeBangFilePDF = new TaoVeBangFilePDF();
@@ -101,7 +110,7 @@ public class HanhDong_TrangDanhSachVe implements ActionListener, MouseListener {
                         diemDen,
                         ngayDatVe,
                         ngayKhoiHanh,
-                        "10:00",
+                        gioKhoiHanh,
                         loaiVe,
                         maGhe,
                         doiTuong,
@@ -111,9 +120,18 @@ public class HanhDong_TrangDanhSachVe implements ActionListener, MouseListener {
                 JOptionPane.showMessageDialog(null, "In Vé Thành Công");
             }
         }
-        else if(e.getSource() == this.trangDanhSachVeTau.buttonThongTinChiTiet){
+        else if(e.getSource() == this.trangDanhSachVeTau.buttonThongTinChiTiet) {
             //logger.info("Đã chọn nút thông tin chi tiết ");
             String maVe = this.trangDanhSachVeTau.textFieldMaVe.getText();
+
+            if (this.trangDanhSachVeTau.table.getSelectedRow() == -1) {
+                JOptionPane.showMessageDialog(null, "Chưa chọn vé !");
+            }
+
+            if (this.trangDanhSachVeTau.table.getSelectedRow() != -1 && maVe.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Hãy nhấn để chọn lại vé");
+            }
+
             String maKhachHang = this.trangDanhSachVeTau.textFieldMaKhachHang.getText();
             KhachHang_DAO khachHangDao = new KhachHang_DAO();
             KhachHang khachHang = khachHangDao.layKhachHangMuaVeTheoMaKhachHang(maKhachHang);
@@ -141,7 +159,7 @@ public class HanhDong_TrangDanhSachVe implements ActionListener, MouseListener {
                 danhSachVe = Ve_DAO.layVe_DuaVaoMaVe(maVe);
                 Ve ve = danhSachVe.get(0);
 
-                new TrangThongTinChiTietVeTau(maVe, loaiVe, diemDi, diemDen, ve.getNgayKhoiHanh(),
+                new TrangThongTinChiTietVeTau(this.trangDanhSachVeTau, maVe, loaiVe, diemDi, diemDen, ve.getNgayKhoiHanh(),
                         "", tenKhachHang,toa.getMaTau(), toa.getTenToa(), ghe, ve.getNgayDatVe(), doiTuong, giaVe).setVisible(true);
         }
         else if(e.getSource() == this.trangDanhSachVeTau.buttonToanBoDanhSachVe){
