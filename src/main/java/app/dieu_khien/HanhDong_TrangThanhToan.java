@@ -98,23 +98,24 @@ public class HanhDong_TrangThanhToan implements ActionListener, MouseListener {
         }
 
         // Lưu hóa đơn vào cơ sở dữ liệu
-        //this.trangThanhToan.hdDao.LuuHoaDon(hd);
+        this.trangThanhToan.hdDao.LuuHoaDon(hd);
 
         // Lưu vé vào Database
-        /*for (Ve ve : this.trangThanhToan.danhSachVe) {
+        for (Ve ve : this.trangThanhToan.danhSachVe) {
             ((TrangDatVe) this.trangThanhToan.trangDatVe).veDao.luuVe(ve);
-        }*/
+        }
 
         // Lưu chi tiết hóa đơn
-        /*for (Ve ve : this.trangThanhToan.danhSachVe) {
+        for (Ve ve : this.trangThanhToan.danhSachVe) {
             ChiTietHoaDon cthd = new ChiTietHoaDon(ve.getMaVe(), hd.getMaHoaDon());
             ChiTietHoaDon_DAO.themCTHD(cthd);
-        }*/
+        }
 
         // Cập nhật trạng thái ghế
-        /*for (int i = 0 ; i < this.trangThanhToan.dsGheDat.size() ; i++) {
+        for (int i = 0 ; i < this.trangThanhToan.dsGheDat.size() ; i++) {
+            System.out.println(this.trangThanhToan.dsGheDat.get(i).getMaGhe());
             this.trangThanhToan.gheDao.capNhatTrangThaiGhe(TRANG_THAI_GHE.Da_dat.getValue(), this.trangThanhToan.dsGheDat.get(i).getMaGhe());
-        }*/
+        }
 
         // Thông báo thanh toán thành công và tiển trả lại
         hienThiThongBao("<html>Thanh toán thành công<br><b>Tiền thối: " + tienTra + " VND</b></html>", "Thông báo thành công", JOptionPane.INFORMATION_MESSAGE);

@@ -1,5 +1,6 @@
 package app.dao;
 
+import app.ket_noi_co_so_du_lieu.JDBCUtil;
 import app.ket_noi_co_so_du_lieu.KetNoiCoSoDuLieu;
 import app.thuc_the.GIOI_TINH;
 import app.thuc_the.KhachHang;
@@ -592,6 +593,42 @@ public class KhachHang_DAO {
             e.printStackTrace();
     }
         return list;
+    }
+    // Hàm lấy số điện thoại Khách Hàng của Khánh
+    public String laySoDT(String maKH) {
+        String soDT = null;
+        // Kết nối tới cơ sở dữ liệu và thực hiện truy vấn
+        String query = "SELECT * FROM KhachHang WHERE maKH = ?"; // Giả sử bảng nhân viên có tên cột 'te  n'
+
+        try (Connection conn = JDBCUtil.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, maKH);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                soDT = rs.getString("SoDT"); // Lấy tên nhân viên
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return soDT;
+    }
+    // Hàm lấy Tên Khách Hàng của Khánh
+    public String layTenKhachHang(String maKH) {
+        String tenKH = null;
+        // Kết nối tới cơ sở dữ liệu và thực hiện truy vấn
+        String query = "SELECT * FROM KhachHang WHERE maKH = ?"; // Giả sử bảng nhân viên có tên cột 'te  n'
+
+        try (Connection conn = JDBCUtil.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, maKH);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                tenKH = rs.getString("TenKH"); // Lấy tên nhân viên
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return tenKH;
     }
 }
 

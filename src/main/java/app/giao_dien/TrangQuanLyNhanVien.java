@@ -216,6 +216,7 @@ public class TrangQuanLyNhanVien extends JFrame {
         table.setBounds(0, 0, 1, 1);
         table.setDefaultEditor(Object.class, null);
 
+
         JScrollPane scrollPane_table = new JScrollPane(table);
         panel_table.add(scrollPane_table);
 

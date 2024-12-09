@@ -240,7 +240,7 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
                     veDat.getGaKetThuc(),                                           // Ga đích
                     LocalDate.now(),                                                // Ngày đặt vé
                     veDat.getNgayKhoiHanh().getYear() + "-" +                       // Ngày khởi hành
-                        veDat.getNgayKhoiHanh().getMonth().getValue() + "-" +
+                            veDat.getNgayKhoiHanh().getMonth().getValue() + "-" +
                             veDat.getNgayKhoiHanh().getDayOfMonth(),
                     soHieuTau,                                                      // Số hiệu tàu
                     veDat.getNgayKhoiHanh().toLocalTime().getHour() + ":" +         // Giờ xuất phát

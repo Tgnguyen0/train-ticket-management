@@ -1,5 +1,6 @@
 package app.dao;
 
+import app.ket_noi_co_so_du_lieu.JDBCUtil;
 import app.ket_noi_co_so_du_lieu.KetNoiCoSoDuLieu;
 import app.thuc_the.GIOI_TINH;
 import app.thuc_the.KhachHang;
@@ -258,7 +259,6 @@ public class NhanVien_DAO {
         return kq;
     }
 
-
     public void NhanVien_DAO() {
         dsnv = new ArrayList<NhanVien>();
     }
@@ -300,7 +300,7 @@ public class NhanVien_DAO {
         return list;
     }
 
-    public List<NhanVien> selectByKeyword(String keyword) {
+    /*public List<NhanVien> selectByKeyword(String keyword) {
         String sql = "SELECT * FROM NhanVien WHERE HoTen LIKE ?";
         return this.ChonSql(sql, "%" + keyword + "%");
     }
@@ -312,8 +312,25 @@ public class NhanVien_DAO {
         } else {
 
         }
-    }
+    }*/
+    // Hàm lấy tên Nhân Viên
+    public String layTenNhanVien(String maNV) {
+        String tenNV = null;
+        // Kết nối tới cơ sở dữ liệu và thực hiện truy vấn
+        String query = "SELECT * FROM NhanVien WHERE maNV = ?"; // Giả sử bảng nhân viên có tên cột 'te  n'
 
+        try (Connection conn = JDBCUtil.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, maNV);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                tenNV = rs.getString("TenNV"); // Lấy tên nhân viên
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return tenNV;
+    }
     public static boolean login(String username, String password) {
         try {
             // Bước 1: tạo kết nối đến CSDL
@@ -344,7 +361,7 @@ public class NhanVien_DAO {
     }
 
     public static NhanVien layThongTinNV(String username) {
-        NhanVien nv = new NhanVien();
+        NhanVien nv = null;
         try {
             // Bước 1: tạo kết nối đến CSDL
             Connection connection = KetNoiCoSoDuLieu.ketNoiDB_KhangVersion();
@@ -370,6 +387,7 @@ public class NhanVien_DAO {
                 String vaiTro = rs.getString("VaiTro");
                 st.close();
                 connection.close();
+                nv = new NhanVien();
                 nv.setMaNV(maNV);
                 nv.setTenNV(tenNV);
                 nv.setDiaChi(diaChi);
@@ -399,6 +417,39 @@ public class NhanVien_DAO {
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setString(1, tenNhanVienRequest);  // Set the TenNV parameter
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                nhanVien = new NhanVien();
+                nhanVien.setMaNV(resultSet.getString("MaNV"));
+                nhanVien.setTenNV(resultSet.getString("TenNV"));
+                nhanVien.setNgaySinh(resultSet.getDate("NgaySinh").toLocalDate());
+                nhanVien.setDiaChi(resultSet.getString("DiaChi"));
+                nhanVien.setSoDT(resultSet.getString("SoDT"));
+                if (resultSet.getString("GioiTinh").compareToIgnoreCase("Nam") == 0) {
+                    nhanVien.setGioiTinh(GIOI_TINH.NAM);
+                } else {
+                    nhanVien.setGioiTinh(GIOI_TINH.NU);
+                }
+                nhanVien.setMatKhau(resultSet.getString("MatKhau"));
+                nhanVien.setVaiTro(resultSet.getString("VaiTro"));
+                nhanVien.setVaiTro(resultSet.getString("TenDangNhap"));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return nhanVien;
+    }
+    public static NhanVien layNhanVienTheo_MaNhanVien(String maNhanVienRequest) {
+        NhanVien nhanVien = null;
+        String sql = "SELECT * FROM NhanVien WHERE MaNV = ?";
+
+        try (Connection connection = KetNoiCoSoDuLieu.ketNoiDB_HinhDB();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setString(1, maNhanVienRequest);  // Set the TenNV parameter
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {

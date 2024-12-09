@@ -286,4 +286,44 @@ public class Ghe_DAO {
         }
         return ghe;
     }
+
+    public static boolean capNhatTrangThaiGhe_VeTrangThaiTrong(String maGhe) {
+        String updateQuery = "UPDATE Ghe SET TrangThai = N'Trống' WHERE MaGhe = ?";
+        try {
+            Connection connection = KetNoiCoSoDuLieu.ketNoiDB_HinhDB();
+            PreparedStatement preparedStatement = connection.prepareStatement(updateQuery);
+
+            // Thiết lập giá trị cho câu lệnh SQL
+           // preparedStatement.setInt(1, ""); // Cập nhật trạng thái thành 1 (đã đặt)
+            preparedStatement.setString(1, maGhe);
+
+            // Thực thi câu lệnh
+//            int rowsAffected = preparedStatement.executeUpdate();
+//            return rowsAffected > 0; // Trả về true nếu có ít nhất một dòng được cập nhật
+        } catch (SQLException e) {
+            System.err.println("Lỗi khi cập nhật trạng thái ghế: " + e.getMessage());
+            return false;
+        }
+        return true;
+    }
+
+    public static boolean capNhatTrangThaiGhe_VeTrangDaDat(String maGhe) {
+        String updateQuery = "UPDATE Ghe SET TrangThai = N'Đã Đặt' WHERE MaGhe = ?";
+        try {
+            Connection connection = KetNoiCoSoDuLieu.ketNoiDB_HinhDB();
+            PreparedStatement preparedStatement = connection.prepareStatement(updateQuery);
+
+            // Thiết lập giá trị cho câu lệnh SQL
+            // preparedStatement.setInt(1, ""); // Cập nhật trạng thái thành 1 (đã đặt)
+            preparedStatement.setString(1, maGhe);
+
+            // Thực thi câu lệnh
+//            int rowsAffected = preparedStatement.executeUpdate();
+//            return rowsAffected > 0; // Trả về true nếu có ít nhất một dòng được cập nhật
+        } catch (SQLException e) {
+            System.err.println("Lỗi khi cập nhật trạng thái ghế: " + e.getMessage());
+            return false;
+        }
+        return true;
+    }
 }

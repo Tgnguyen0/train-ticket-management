@@ -1,6 +1,7 @@
 package app.dao;
 
 import app.giao_dien.TrangThongTinChiTietVeTau;
+import app.ket_noi_co_so_du_lieu.JDBCUtil;
 import app.ket_noi_co_so_du_lieu.KetNoiCoSoDuLieu;
 import app.thuc_the.DaiNgo;
 import app.thuc_the.HoaDon;
@@ -432,7 +433,24 @@ public class Ve_DAO {
             System.out.println("Lỗi khi cập nhật vé trong cơ sở dữ liệu");
         }
     }
+    // Hàm lấy Loại đối tượng vé của Khánh
+    public String layLoaiDoiTuongVe(String maKH) {
+        String loaiDoiTuong = null;
+        // Kết nối tới cơ sở dữ liệu và thực hiện truy vấn
+        String query = "SELECT * FROM Ve WHERE MaKH = ?";
 
+        try (Connection conn = JDBCUtil.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, maKH);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                loaiDoiTuong = rs.getString("LoaiDoiTuong"); // Lấy loai doi tượng từ cơ sở dữ liệu
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return loaiDoiTuong;
+    }
     public static void xoaVe(String maVe){
         String sql = "delete Ve where MaVe = ? ";
 

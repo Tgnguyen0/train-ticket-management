@@ -353,7 +353,7 @@ public class TrangChiTietHoaDon extends JFrame {
     }
     public void tinhTongTien(){
        // double tongTien = this.hoaDon.getTongTien();
-        double tongTien = this.ve.getGiaVe();
+        double tongTien = this.hoaDon.getThanhTien() - this.ve.getGiaVe();
         double thanhTien = 0;
         logger.info("Giá vé lúc đầu: "+ this.ve.getGiaVe());
         double tienPhat = 0;
@@ -367,22 +367,19 @@ public class TrangChiTietHoaDon extends JFrame {
             tienPhat = this.ve.getGiaVe() * 0.25;
         }
 
-        for(int i = 0; i < this.model.getRowCount(); i++){
-           tongTien += Double.parseDouble(this.model.getValueAt(i, 2)+"");
-        }
         Locale vietnam = new Locale("vi", "VN");
         NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(vietnam);
 
         thanhTien = this.tongTienSauKhuyenMai(tongTien);
         logger.info(tienPhat+"");
-        tongTien -= tienPhat;
+        thanhTien += tienPhat;
 
         this.hoaDon.setTongTien(tongTien);
         this.hoaDon.setThanhTien(thanhTien);
         this.hoaDon.setTrangThai("Chưa In");
         this.hoaDon.setNgayLapHoaDon(LocalDate.from(LocalDateTime.now()));
 
-        this.textField_TongTiien.setText(currencyFormatter.format(tongTien));
+        this.textField_TongTiien.setText(currencyFormatter.format(thanhTien));
         this.textField_TienKhachTra.setText(currencyFormatter.format(this.ve.getGiaVe() - tienPhat));
     }
 

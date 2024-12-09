@@ -41,6 +41,9 @@ public class HanhDong_TrangThongKeDoanhThuNhaGa extends MouseAdapter implements 
             CardLayout cardLayout = (CardLayout) this.trangChuaThongKeDoanhThuNhaGa.trangDinhHuong.getTrangChua().getLayout();
             cardLayout.show(this.trangChuaThongKeDoanhThuNhaGa.trangDinhHuong.getTrangChua(), "ThongKeDoanhThuTheoNam");
         }
+        else if(e.getSource() == this.trangChuaThongKeDoanhThuNhaGa.buttonDuDoanDoanhThu){
+            this.trangChuaThongKeDoanhThuNhaGa.duDoanDoanhThuCuaNhaGa();
+        }
     }
 
 

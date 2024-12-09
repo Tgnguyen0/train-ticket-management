@@ -69,11 +69,11 @@ public class Ve {
         String ngayTrongThang = String.format("%02d", LocalDateTime.now().getDayOfMonth());
         String thang = String.valueOf(LocalDateTime.now().getMonthValue());
         String nam = String.valueOf(LocalDateTime.now().getYear());
-        String giay = String.format("%03d", LocalDateTime.now().getSecond());
+        String giay = String.format("%02d", LocalDateTime.now().getSecond());
 
         nam = nam.substring(nam.length() - 2);
 
-        maVe = "V" + nam + thang + ngayTrongThang + giay;
+        maVe = "V" + nam + thang + ngayTrongThang + giay + (int)(Math.ceil(Math.random() * 9));;
 
         return maVe;
     }

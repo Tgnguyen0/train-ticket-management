@@ -1,19 +1,32 @@
 package app.dao;
 
+import app.giao_dien.TrangHoaDon;
+import app.ket_noi_co_so_du_lieu.JDBCUtil;
+import app.thuc_the.*;
+
+import java.sql.*;
 import app.giao_dien.TrangKetCa;
 import app.ket_noi_co_so_du_lieu.KetNoiCoSoDuLieu;
 import app.thuc_the.DaiNgo;
 import app.thuc_the.HoaDon;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import app.giao_dien.TrangChuaThongKeDoanhThuNhaGa;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+
 import javax.swing.*;
 import java.sql.*;
+import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class HoaDon_DAO {
     String CHON_15_SQL = "SELECT * FROM HoaDon ORDER BY NgayLap DESC;";
@@ -25,12 +38,102 @@ public class HoaDon_DAO {
     String CHON_THEO_MAHD_HAY_MAKH_SQL = "SELECT * FROM HoaDon WHERE MaHD =? OR MaKH =?";
 
     ArrayList<HoaDon> dshd;
+
+    Logger logger  = LoggerFactory.getLogger(TrangChuaThongKeDoanhThuNhaGa.class);
+
     //Logger logger = LoggerFactory.getLogger(TrangChuaThongKeDoanhThuNhaGa.class);
+
 
     public HoaDon_DAO() {
         dshd = new ArrayList<HoaDon>();
     }
 
+    public List<HoaDon> layDanhSachHoaDon() {
+        List<HoaDon> danhSachHoaDon = new ArrayList<>();
+        String sql = "SELECT TOP 15 *\n" +
+                "FROM HoaDon\n" +
+                "ORDER BY NgayLap DESC;\n";
+
+        try (Connection conn = JDBCUtil.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            while (rs.next()) {
+                HoaDon hd = new HoaDon();
+                hd.setMaHoaDon(rs.getString("MaHD"));
+                hd.setNgayLapHoaDon(rs.getDate("NgayLap").toLocalDate());
+                hd.setMaNhanVien(rs.getString("MaNV"));
+                hd.setThanhTien(rs.getFloat("ThanhTien"));
+                hd.setMaKhachHang(rs.getString("MaKH"));
+                hd.setSoLuong(rs.getInt("SoLuong"));
+                hd.setTongTien(rs.getFloat("TongTien"));
+                hd.setTrangThai(rs.getString("TrangThai"));
+                if(rs.getFloat("DaiNgo") == 0){
+                    hd.setDaiNgo(DaiNgo.KhongDaiNgo);
+                }
+                else if( rs.getFloat("DaiNgo") == 0.2  ){
+                    hd.setDaiNgo(DaiNgo.GIAMGIAHAIMUOIPHANTRAM);
+                }
+                else if( rs.getFloat("DaiNgo") == 0.1  ){
+                    hd.setDaiNgo(DaiNgo.GIAMGIAMUOIPHANTRAM);
+                }
+                else if( rs.getFloat("DaiNgo") == 0.05  ){
+                    hd.setDaiNgo(DaiNgo.GIAMGIANAMPHANTRAM);
+                }
+
+                //hd.setDaiNgo(rs.getFloat("DaiNgo"));
+                hd.setThue(rs.getFloat("Thue"));
+
+                danhSachHoaDon.add(hd);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return danhSachHoaDon;
+    }
+    public List<HoaDon> TimKiemHoaDon (String maHD, String soDienThoai) throws SQLException {
+        List<HoaDon> danhSachHoaDon = new ArrayList<>();
+        String sql = "SELECT * FROM HoaDon o join KhachHang k on o.MaKH=k.MaKH WHERE o.MaHD LIKE ? OR k.SoDT LIKE ?";
+
+        try (Connection conn = JDBCUtil.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, "%" + maHD + "%"); // Tìm kiếm theo mã hóa đơn
+            ps.setString(2, "%" + soDienThoai + "%"); // Tìm kiếm theo so dien thoại
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                HoaDon hoaDon = new HoaDon();
+                // Giả sử bạn có các phương thức set tương ứng để gán giá trị cho các thuộc tính
+                hoaDon.setMaHoaDon(rs.getString("MaHD"));
+                hoaDon.setMaKhachHang(rs.getString("MaKH"));
+                hoaDon.setNgayLapHoaDon(rs.getDate("NgayLap").toLocalDate());
+                hoaDon.setMaNhanVien(rs.getString("MaNV"));
+                hoaDon.setThanhTien(rs.getFloat("ThanhTien"));
+                hoaDon.setSoLuong(rs.getInt("SoLuong"));
+                hoaDon.setTongTien(rs.getFloat("TongTien"));
+                hoaDon.setTrangThai(rs.getString("TrangThai"));
+                if(rs.getFloat("DaiNgo") == 0){
+                    hoaDon.setDaiNgo(DaiNgo.KhongDaiNgo);
+                }
+                else if( rs.getFloat("DaiNgo") == 0.2  ){
+                    hoaDon.setDaiNgo(DaiNgo.GIAMGIAHAIMUOIPHANTRAM);
+                }
+                else if( rs.getFloat("DaiNgo") == 0.1  ){
+                    hoaDon.setDaiNgo(DaiNgo.GIAMGIAMUOIPHANTRAM);
+                }
+                else if( rs.getFloat("DaiNgo") == 0.05  ){
+                    hoaDon.setDaiNgo(DaiNgo.GIAMGIANAMPHANTRAM);
+                }
+                hoaDon.setThue(rs.getFloat("Thue"));
+                danhSachHoaDon.add(hoaDon);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return danhSachHoaDon;
+    }
     public List<HoaDon> ChonTheoMaHD(String maHD) {
         List<HoaDon> ds = this.chonSql(CHON_THEO_MAHD_SQL, maHD);
         return ds;
@@ -363,6 +466,33 @@ public class HoaDon_DAO {
         return  danhSachDoanhThu;
     }
 
+    // key của map này là mã Nhân Viên
+    public static Map<String, Double> layDoanhThuCuaTungNhanVienDuaVao_Nam(int nam){
+        Map<String, Double> danhSachDoanhThu = new HashMap<>();
+        String sql = "SELECT SUM(hd.ThanhTien) AS DoanhThu, nv.MaNV as MaNV " +
+                "FROM HoaDon hd " +
+                "JOIN NhanVien nv ON hd.MaNV = nv.MaNV " +
+                "WHERE YEAR(hd.NgayLap) = ? " +
+                "GROUP BY hd.MaNV, nv.MaNV";
+
+        try (Connection conn = KetNoiCoSoDuLieu.ketNoiDB_HinhDB();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, nam); // Set the year in the query
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    String tenNV = rs.getString("MaNV");
+                    double doanhThu = rs.getDouble("DoanhThu");
+                    danhSachDoanhThu.put(tenNV, doanhThu);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return  danhSachDoanhThu;
+    }
+
     public static Map<String, Double> layDoanhThuCuaNhanVienUuTuTheo_Nam(int nam){
         Map<String, Double> danhSachDoanhThu = new HashMap<>();
         String sql = "SELECT Top 3 SUM(hd.ThanhTien) AS DoanhThu, nv.TenNV " +
@@ -415,6 +545,56 @@ public class HoaDon_DAO {
         }
         return  danhSachDoanhThu;
     }
+    public static Map<String, Double> layDanhSachDoanhThuCuaNhanVienUuTuTheo_Thang_Nam(int nam, int thang) {
+        Map<String, Double> danhSachDoanhThu = new LinkedHashMap<>(); // Đổi sang LinkedHashMap để duy trì thứ tự
+        String sql = "SELECT SUM(hd.ThanhTien) AS DoanhThu, nv.MaNV " +
+                "FROM HoaDon hd " +
+                "JOIN NhanVien nv ON hd.MaNV = nv.MaNV " +
+                "WHERE YEAR(hd.NgayLap) = ? AND MONTH(hd.NgayLap) = ? " +
+                "GROUP BY nv.MaNV " +
+                "ORDER BY SUM(hd.ThanhTien) DESC"; // Đảm bảo ORDER BY trong SQL
+
+        try (Connection conn = KetNoiCoSoDuLieu.ketNoiDB_HinhDB();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, nam); // Set giá trị cho năm
+            stmt.setInt(2, thang); // Set giá trị cho tháng
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    String maNV = rs.getString("MaNV"); // Lấy mã nhân viên
+                    double doanhThu = rs.getDouble("DoanhThu"); // Lấy doanh thu
+                    danhSachDoanhThu.put(maNV, doanhThu); // Thêm vào LinkedHashMap
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return danhSachDoanhThu; // Trả về kết quả
+    }
+    public static Map<Integer, Double> layDoanhThuTungNam() {
+        Map<Integer, Double> danhSachDoanhThu = new LinkedHashMap<>(); // Đổi sang LinkedHashMap để duy trì thứ tự
+        String sql = "SELECT SUM(hd.ThanhTien) AS DoanhThu , YEAR(hd.NgayLap) as nam \n" +
+                "                FROM HoaDon hd \n" +
+                "                GROUP BY YEAR(hd.NgayLap)\n" +
+                "                order by YEAR(hd.NgayLap)  ASC"; // Đảm bảo ORDER BY trong SQL
+
+        try (Connection conn = KetNoiCoSoDuLieu.ketNoiDB_HinhDB();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    int nam = rs.getInt("nam"); // Lấy mã nhân viên
+                    double doanhThu = rs.getDouble("DoanhThu"); // Lấy doanh thu
+                    danhSachDoanhThu.put(nam, doanhThu); // Thêm vào LinkedHashMap
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return danhSachDoanhThu; // Trả về kết quả
+    }
+
     public static Map<String, Double> layDoanhThuCuaTungNhanVienTheo_Thang_Nam(int nam, int thang){
         Map<String, Double> danhSachDoanhThu = new HashMap<>();
         String sql = "SELECT SUM(hd.ThanhTien) AS DoanhThu, nv.TenNV " +
@@ -464,8 +644,8 @@ public class HoaDon_DAO {
             // Thực thi câu lệnh
             int rowsUpdated = preparedStatement.executeUpdate();
             System.out.println("rowsUpdated: "+ rowsUpdated);
-
             if (rowsUpdated > 0 || rowsUpdated == -1) {
+
                 //System.out.println("Cập nhật thành công hóa đơn có mã: " + hoaDon.getMaHoaDon());
                 JOptionPane.showMessageDialog(null, "Cập nhật thành công hóa đơn có mã: " + hoaDon.getMaHoaDon());
             } else {

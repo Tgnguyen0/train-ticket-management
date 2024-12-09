@@ -64,20 +64,20 @@ public class HanhDong_TrangCacTau implements ActionListener, MouseListener, Wind
                 if (this.trangSoDoChung.trangGoc instanceof TrangDatVe) {
                     //((TrangDatVe) this.trangSoDoChung.trangGoc).datSoHieuDaChon(this.trangSoDoChung.soHieuTauChon);
 
-                LocalDateTime ngayKhoiHanh = ((TrangDatVe) this.trangSoDoChung.trangGoc).thanhNhapNgayDi.getDate()       // Lấy ngày khởi hành
-                        .toInstant()
-                        .atZone(ZoneId.systemDefault())
-                        .toLocalDateTime();
+                    LocalDateTime ngayKhoiHanh = ((TrangDatVe) this.trangSoDoChung.trangGoc).thanhNhapNgayDi.getDate()       // Lấy ngày khởi hành
+                            .toInstant()
+                            .atZone(ZoneId.systemDefault())
+                            .toLocalDateTime();
 
-                // Lấy lịch tàu đó
-                LichCapBenGa lich = ((TrangDatVe) this.trangSoDoChung.trangGoc).lichDao.ChonTheoSoHieuNgayKHVaGa(
-                        this.trangSoDoChung.soHieuTauChon,
-                        ngayKhoiHanh,
-                        this.trangSoDoChung.maGa
-                );
+                    // Lấy lịch tàu đó
+                    LichCapBenGa lich = ((TrangDatVe) this.trangSoDoChung.trangGoc).lichDao.ChonTheoSoHieuNgayKHVaGa(
+                            this.trangSoDoChung.soHieuTauChon,
+                            ngayKhoiHanh,
+                            this.trangSoDoChung.maGa
+                    );
 
-                ((TrangDatVe) this.trangSoDoChung.trangGoc).thanhNhapGioDen.setText(lich.getGioKhoiHanh().getHour() +
-                        ":" + lich.getGioKhoiHanh().getMinute());
+                    ((TrangDatVe) this.trangSoDoChung.trangGoc).thanhNhapGioDen.setText(lich.getGioKhoiHanh().getHour() +
+                            ":" + lich.getGioKhoiHanh().getMinute());
                 }
 
                 if (this.trangSoDoChung.trangKhung instanceof TrangThongTinChiTietVeTau) {

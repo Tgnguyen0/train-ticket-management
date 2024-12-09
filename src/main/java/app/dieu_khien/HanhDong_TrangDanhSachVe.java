@@ -66,7 +66,8 @@ public class HanhDong_TrangDanhSachVe implements ActionListener, MouseListener {
             String maVe = this.trangDanhSachVeTau.textFieldMaVe.getText();
             String maKhachHang = this.trangDanhSachVeTau.textFieldMaKhachHang.getText();
             KhachHang_DAO khachHangDao = new KhachHang_DAO();
-            KhachHang khachHang = khachHangDao.layKhachHangMuaVeTheoMaKhachHang(maKhachHang);
+            KhachHang khachHang= new KhachHang();
+            khachHang = khachHangDao.layKhachHangMuaVeTheoMaKhachHang(maKhachHang);
             String tenKhachHang = khachHang.getTenKH();
             String maGhe = this.trangDanhSachVeTau.textFieldMaGhe.getText();
 
@@ -87,8 +88,14 @@ public class HanhDong_TrangDanhSachVe implements ActionListener, MouseListener {
 
             //  Lấy ngày giờ cụ thể
             Ve ve = (Ve_DAO.layVe_DuaVaoMaVe(maVe)).get(0);
-            String ngayKhoiHanh = STR."\{ve.getNgayKhoiHanh().getYear()}-\{ve.getNgayKhoiHanh().getMonth().getValue()}-\{ve.getNgayKhoiHanh().getDayOfMonth()}";
-            String gioKhoiHanh = STR."\{ve.getNgayKhoiHanh().getHour()}:\{ve.getNgayKhoiHanh().getMinute()}";
+//            String ngayKhoiHanh = STR."\{ve.getNgayKhoiHanh().getYear()}-\{ve.getNgayKhoiHanh().getMonth().getValue()}-\{ve.getNgayKhoiHanh().getDayOfMonth()}";
+//            String gioKhoiHanh = STR."\{ve.getNgayKhoiHanh().getHour()}:\{ve.getNgayKhoiHanh().getMinute()}";
+            String ngayKhoiHanh = ve.getNgayKhoiHanh().getYear() + "-" +
+                    ve.getNgayKhoiHanh().getMonth().getValue() + "-" +
+                    ve.getNgayKhoiHanh().getDayOfMonth();
+
+            String gioKhoiHanh = ve.getNgayKhoiHanh().getHour() + ":" +
+                    ve.getNgayKhoiHanh().getMinute();
 
             if(JOptionPane.showConfirmDialog(null, "Xác Nhận In Vé ") == JOptionPane.YES_OPTION){
                 TaoVeBangFilePDF taoVeBangFilePDF = new TaoVeBangFilePDF();

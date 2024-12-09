@@ -3,6 +3,7 @@ package app.giao_dien;
 import app.dao.HoaDon_DAO;
 import app.dao.NhanVien_DAO;
 import app.dieu_khien.HanhDong_TrangHoaDon;
+import app.phong_chu_moi.PhongChuMoi;
 import app.thuc_the.HoaDon;
 
 import javax.swing.*;
@@ -60,7 +61,8 @@ public class TrangHoaDon extends JPanel {
     public NhanVien_DAO nhanVien_dao;
     public HoaDon_DAO hoaDon_dao= new HoaDon_DAO();
     public DefaultTableModel model;
-    public HoaDon hdTao;
+    public HoaDon hdTao= new HoaDon();
+    public PhongChuMoi phongChuMoi= new PhongChuMoi();
 
     public TrangHoaDon() {
         initComponents();
@@ -121,9 +123,9 @@ public class TrangHoaDon extends JPanel {
         mucDaChon= new HanhDong_TrangHoaDon(this);
 
         // Tieu de của trang
-        lbDanhSachHoaDon.setFont(new java.awt.Font("Segoe UI", 3, 40)); // NOI18N
-        lbDanhSachHoaDon.setText("          DANH SÁCH HÓA ĐƠN");
-
+        //lbDanhSachHoaDon.setFont(new java.awt.Font("Segoe UI", 3, 40)); // NOI18N
+        lbDanhSachHoaDon.setText("    DANH SÁCH HÓA ĐƠN");
+        lbDanhSachHoaDon.setFont(phongChuMoi.layPhongRobotoMonoReg(1, 40));
         javax.swing.GroupLayout trangChua_TieuDeHoaDonLayout = new javax.swing.GroupLayout(trangChua_TieuDeHoaDon);
         trangChua_TieuDeHoaDon.setLayout(trangChua_TieuDeHoaDonLayout);
         trangChua_TieuDeHoaDonLayout.setHorizontalGroup(
@@ -144,8 +146,8 @@ public class TrangHoaDon extends JPanel {
         // Tìm kiếm hóa đơn
         LbTimKiem.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         LbTimKiem.setText("Tìm kiếm hóa đơn:");
-
-        lbtieuchi.setText("theo Mã hóa đơn hoặc Mã khách hàng");
+        lbtieuchi.setText("Mã hóa đơn - Số điện thoại khách hàng");
+        lbtieuchi.setFont(phongChuMoi.layPhongRobotoMonoReg(2, 10));
 
         javax.swing.GroupLayout trangChua_LbTimKiemLayout = new javax.swing.GroupLayout(trangChua_LbTimKiem);
         trangChua_LbTimKiem.setLayout(trangChua_LbTimKiemLayout);
@@ -308,11 +310,13 @@ public class TrangHoaDon extends JPanel {
                 JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
                 label.setBackground(new Color(0, 125, 255)); // Đặt màu nền mong muốn
                 label.setForeground(Color.WHITE); // Đặt màu chữ
-                label.setFont(new Font("Arial", Font.BOLD, 14)); // Đặt font và kích thước chữ
+//                label.setFont(new Font("Arial", Font.BOLD, 14)); // Đặt font và kích thước chữ
+                label.setFont(phongChuMoi.layPhongRobotoMonoReg(1, 12));
                 label.setOpaque(true); // Đảm bảo nền được tô màu
                 return label;
             }
         });
+        header.setReorderingAllowed(false);
 
         // Ẩn cột mã nhân viên
         tableDanhSach.getColumnModel().getColumn(8).setMinWidth(0);
@@ -351,25 +355,25 @@ public class TrangHoaDon extends JPanel {
 
         // Set các thông số cho các button Chi tiết
         buttonChiTiet.setBackground(new java.awt.Color(0, 112, 255));
-        buttonChiTiet.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        buttonChiTiet.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         buttonChiTiet.setForeground(new java.awt.Color(255, 255, 255));
         buttonChiTiet.setText("Chi Tiết");
 
         // Set các thông số cho các button In Hóa Đơn
         buttonInHoaDon.setBackground(new java.awt.Color(0, 112, 255));
-        buttonInHoaDon.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        buttonInHoaDon.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         buttonInHoaDon.setForeground(new java.awt.Color(255, 255, 255));
         buttonInHoaDon.setText("In Hóa Đơn");
 
         // Set các thông số cho các button Tìm Kiếm
         buttonTimKiem.setBackground(new java.awt.Color(0, 112, 255));
-        buttonTimKiem.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        buttonTimKiem.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         buttonTimKiem.setForeground(new java.awt.Color(255, 255, 255));
         buttonTimKiem.setText("Tìm Kiếm");
 
         // Set các thông số cho các button Làm Mới
         buttonLamMoi.setBackground(new java.awt.Color(0, 112, 255));
-        buttonLamMoi.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        buttonLamMoi.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         buttonLamMoi.setForeground(new java.awt.Color(255, 255, 255));
         buttonLamMoi.setText("Làm Mới");
 
@@ -385,31 +389,34 @@ public class TrangHoaDon extends JPanel {
         javax.swing.GroupLayout trangChua_ButtonLayout = new javax.swing.GroupLayout(trangChua_Button);
         trangChua_Button.setLayout(trangChua_ButtonLayout);
         trangChua_ButtonLayout.setHorizontalGroup(
-                trangChua_ButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                trangChua_ButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING) // Đẩy sang phải
                         .addGroup(trangChua_ButtonLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(trangChua_ButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(buttonChiTiet, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(buttonTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(trangChua_ButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(buttonInHoaDon, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(buttonLamMoi, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addContainerGap())
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE) // Căn sát bên phải
+                                .addGroup(trangChua_ButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addGroup(trangChua_ButtonLayout.createSequentialGroup()
+                                                .addComponent(buttonChiTiet, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(80, 80, 80) // Khoảng cách giữa buttonChiTiet và buttonInHoaDon
+                                                .addComponent(buttonInHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(trangChua_ButtonLayout.createSequentialGroup()
+                                                .addComponent(buttonTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(80, 80, 80) // Khoảng cách giữa buttonTimKiem và buttonLamMoi
+                                                .addComponent(buttonLamMoi, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addContainerGap(30, 30)) // Khoảng cách giữa cột cuối và biên phải
         );
         trangChua_ButtonLayout.setVerticalGroup(
                 trangChua_ButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, trangChua_ButtonLayout.createSequentialGroup()
+                        .addGroup(trangChua_ButtonLayout.createSequentialGroup()
                                 .addContainerGap()
                                 .addGroup(trangChua_ButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(buttonChiTiet, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(buttonInHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(48, 48, 48)
+                                        .addComponent(buttonChiTiet, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(buttonInHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(50, 50, 50) // Khoảng cách giữa hàng đầu và hàng thứ hai
                                 .addGroup(trangChua_ButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(buttonTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(buttonLamMoi, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addContainerGap(22, Short.MAX_VALUE))
+                                        .addComponent(buttonTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(buttonLamMoi, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)) // Khoảng cách cuối cùng
         );
+
 
         // Thông tin nhân viên  phụ trách
         lbMaNhanVien.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
@@ -417,6 +424,7 @@ public class TrangHoaDon extends JPanel {
 
         lbNhanVienPhuTrach.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         lbNhanVienPhuTrach.setText("Nhân viên phụ trách:");
+
 
         javax.swing.GroupLayout trangChua_ThongTinNhanVienLayout = new javax.swing.GroupLayout(trangChua_ThongTinNhanVien);
         trangChua_ThongTinNhanVien.setLayout(trangChua_ThongTinNhanVienLayout);
@@ -467,7 +475,7 @@ public class TrangHoaDon extends JPanel {
 
         luuY4.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
         luuY4.setForeground(new java.awt.Color(255, 255, 255));
-        luuY4.setText("4. Hỗ trợ khách hàng tìm kiếm hóa đơn theo mã hóa đơn hoặc mã khách hàng.");
+        luuY4.setText("4. Hỗ trợ tìm kiếm hóa đơn theo mã hóa đơn hoặc số điện thoại khách hàng.");
 
         javax.swing.GroupLayout trangChua_LuuYLayout = new javax.swing.GroupLayout(trangChua_LuuY);
         trangChua_LuuY.setLayout(trangChua_LuuYLayout);
@@ -576,9 +584,11 @@ public class TrangHoaDon extends JPanel {
         if (selectedRow != -1) {
             // Lấy mã nhân viên từ cột tương ứng trong JTable
             String maNV = (String) tableDanhSach.getValueAt(selectedRow, 8);
+            String maHD = (String) tableDanhSach.getValueAt(selectedRow, 1);
             // Đã tạo column này ở Jtable nhưng đã ẩn đi nên giờ tiện lấy
 
             tfMaNhanVien.setText(maNV);
+            tfTimKiem.setText(maHD);
 
             NhanVien_DAO nhanVienDao = new NhanVien_DAO();
             String tenNV = nhanVienDao.ChonTheoMa(maNV).getTenNV();
@@ -587,6 +597,7 @@ public class TrangHoaDon extends JPanel {
             // Không cho chỉnh sửa thông tin nhân viên
             tfMaNhanVien.setEditable(false);
             tfTenNhanVien.setEditable(false);
+            tfTimKiem.setEditable(true);
         } else {
             System.out.println("Không có hàng nào được chọn.");
         }

@@ -1,9 +1,13 @@
 package app.thuc_the;
 
+
+import lombok.Getter;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.Random;
+
 
 public class HoaDon {
     String maHoaDon;
@@ -17,17 +21,8 @@ public class HoaDon {
     DaiNgo daiNgo;
     float thue;
 
-    public HoaDon(String maHoaDon, LocalDate ngayLapHoaDon, double thanhTien, String maKhachHang, String maNhanVien, int soLuong, double tongTien, String trangThai, DaiNgo daiNgo, float thue) {
-        this.maHoaDon = maHoaDon;
-        this.ngayLapHoaDon = ngayLapHoaDon;
-        this.thanhTien = thanhTien;
-        this.maKhachHang = maKhachHang;
-        this.maNhanVien = maNhanVien;
-        this.soLuong = soLuong;
-        this.tongTien = tongTien;
-        this.trangThai = trangThai;
-        this.daiNgo = daiNgo;
-        this.thue = thue;
+    public KhachHang khachHang;
+    public HoaDon() {
     }
 
     public HoaDon(LocalDate ngayLapHoaDon, double thanhTien, String maKhachHang, String maNhanVien, int soLuong, double tongTien, String trangThai, DaiNgo daiNgo, float thue) {
@@ -43,12 +38,10 @@ public class HoaDon {
         this.thue = thue;
     }
 
-    public HoaDon() {
-    }
-
     public String getMaHoaDon() {
         return maHoaDon;
     }
+
 
     public void setMaHDTuCSDL(String maHoaDon) {
         this.maHoaDon = maHoaDon;
@@ -67,7 +60,8 @@ public class HoaDon {
 
         return maHoaDon;
     }
-    public void setMaHoaDon(String maHoaDon){
+
+    public void setMaHoaDon(String maHoaDon) {
         this.maHoaDon = maHoaDon;
     }
 
@@ -154,6 +148,7 @@ public class HoaDon {
     public int hashCode() {
         return Objects.hash(getMaHoaDon());
     }
+
 }
 
 
