@@ -134,12 +134,30 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
                 return;
             }
 
-            String hoTen = dsKhDatVe.get(bienSoTang).getTenKH(); // Lấy họ tên
+            System.out.println("Sai o day 1");
+
+            KhachHang kh = null;
+            for (int i = 0 ; i < dsKhDatVe.size() ; i++) {
+                if (dsKhDatVe.get(i).getMaKH().equals(this.trangDatVe.thanhChonKhachHang.getSelectedItem())) {
+                    kh = dsKhDatVe.get(i);
+                }
+            }
+
+            if (!this.trangDatVe.veDao.layDSVeDat().isEmpty()) {
+                for (int i = 0 ; i < this.trangDatVe.veDao.layDSVeDat().size() ; i++) {
+                    if (this.trangDatVe.veDao.layDSVeDat().get(i).getMaKhachHang().equals(kh.getMaKH())) {
+                        hienThiThongBao("Vé đã có khách hàng này!", "Lỗi đặt vé", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+                }
+            }
+
+            //String hoTen = dsKhDatVe.get(bienSoTang).getTenKH(); // Lấy họ tên
             //String sdt = dsKhDatVe.get(bienSoTang).getSoDT(); // lấy số điện thoại
             //String email = dsKhDatVe.get(bienSoTang).getEmail(); // lấy email
 
             // Đặt cho khách hàng tiếp theo
-            if (bienSoTang + 1 < dsKhDatVe.size()) {  // Thay đổi ở đây
+            /*if (bienSoTang + 1 < dsKhDatVe.size()) {  // Thay đổi ở đây
                 this.trangDatVe.thanhNhapHoTen.setText(dsKhDatVe.get(bienSoTang + 1).getTenKH());
                 this.trangDatVe.thanhNhapDienThoai.setText(dsKhDatVe.get(bienSoTang + 1).getSoDT());
                 this.trangDatVe.thanhNhapThuDienTu.setText(dsKhDatVe.get(bienSoTang + 1).getEmail());
@@ -147,10 +165,10 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
                 this.trangDatVe.thanhNhapHoTen.setText("");
                 this.trangDatVe.thanhNhapDienThoai.setText("");
                 this.trangDatVe.thanhNhapThuDienTu.setText("");
-            }
+            }*/
 
             // Lấy giới tính
-            GIOI_TINH gioiTinh = dsKhDatVe.get(bienSoTang).getGioiTinh();
+            /*GIOI_TINH gioiTinh = dsKhDatVe.get(bienSoTang).getGioiTinh();
 
             // Đặt cho các nút lựa chọn giới
             if (gioiTinh.getValue().equals("Nam")) {
@@ -159,7 +177,7 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
             } else {
                 this.trangDatVe.nutLuaChonNam.setSelected(false);
                 this.trangDatVe.nutLuaChonNu.setSelected(true);
-            }
+            }*/
 
             String diemDi = (String) trangDatVe.thanhCacDiemDi.getSelectedItem(); // Lấy ga xuất phát
             String diemDen = (String) trangDatVe.thanhCacDiemDen.getSelectedItem(); // Lấy ga đích
@@ -211,7 +229,7 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
                     diemDi,                                                       // Ga xuất phát
                     diemDen,                                                      // Ga đích
                     giaVe,                                                        // Giá vé
-                    this.trangDatVe.dsKHDatVe.get(bienSoTang).getMaKH(),          // Mã khách hàng
+                    kh.getMaKH(),// Mã khách hàng
                     daDat.getMaGhe(),                                             // Mã ghế
                     daDat.getLoaiGhe().toString()                                 // Loại ghế
             );
@@ -233,7 +251,7 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
             Object[] duLieu = {
                     String.valueOf(bienSoTang + 1),                               // Thứ tự
                     veDat.getMaVe(),                                                // Mã vé
-                    hoTen,                                                          // Họ tên khách hàng
+                    kh.getTenKH(),                                                          // Họ tên khách hàng
                     veDat.getLoaiDoiTuong(),                                        // Loại đối tượng
                     (int) veDat.getGiaVe(),                                         // Giá vé
                     veDat.getGaKhoiHanh(),                                          // Ga xuất phát
@@ -263,6 +281,7 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
 
             // Tăng đơn vị
             this.bienSoTang++;
+            System.out.println("Bien so tang SAU CUNG: " + this.bienSoTang);
         }
 
         if (e.getSource() == this.trangDatVe.nutThanhToan) {
@@ -331,6 +350,18 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
             }
 
             String maVe = (String) this.trangDatVe.moHinhBang.getValueAt(this.trangDatVe.bangVeDangDat.getSelectedRow(), 1);
+
+            for (int i = 0 ; i < this.trangDatVe.veDao.layDSVeDat().size() ; i++) {
+                if (maVe.equals(this.trangDatVe.veDao.layDSVeDat().get(i).getMaVe())) {
+                    this.trangDatVe.veDao.layDSVeDat().remove(this.trangDatVe.veDao.layDSVeDat().get(i));
+                }
+            }
+
+            this.trangDatVe.moHinhBang.removeRow(this.trangDatVe.bangVeDangDat.getSelectedRow());
+
+            this.bienSoTang--;
+
+            hienThiThongBao("Xóa vé đặt thành công !", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 
@@ -342,6 +373,27 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
             // Kiểm tra việc chọn điểm đi và điểm đến
             if (this.trangDatVe.thanhCacDiemDen.getSelectedItem().equals(this.trangDatVe.thanhCacDiemDi.getSelectedItem())) {
                 hienThiThongBao("Điểm đi và điểm đến không được trùng", "Lỗi chọn địa điểm", JOptionPane.ERROR_MESSAGE);
+            }
+
+            if (!this.trangDatVe.layDSKhDatVe().isEmpty()) {
+                for (int i = 0 ; i < this.trangDatVe.layDSKhDatVe().size() ; i++) {
+                    if (this.trangDatVe.thanhChonKhachHang.getSelectedItem().equals(this.trangDatVe.layDSKhDatVe().get(i).getMaKH())) {
+                        this.trangDatVe.thanhNhapHoTen.setText(this.trangDatVe.layDSKhDatVe().get(i).getTenKH());
+                        this.trangDatVe.thanhNhapDienThoai.setText(this.trangDatVe.layDSKhDatVe().get(i).getMaKH());
+
+                        GIOI_TINH gioiTinh = ((TrangDatVe) TrangDinhHuong.getTrangChua().getComponent(1)).dsKHDatVe.get(0).getGioiTinh();
+
+                        if (gioiTinh.getValue().equals("Nam")) {
+                            this.trangDatVe.nutLuaChonNam.setSelected(true);
+                            this.trangDatVe.nutLuaChonNu.setSelected(false);
+                        } else {
+                            this.trangDatVe.nutLuaChonNam.setSelected(false);
+                            this.trangDatVe.nutLuaChonNu.setSelected(true);
+                        }
+
+                        this.trangDatVe.thanhNhapThuDienTu.setText(this.trangDatVe.layDSKhDatVe().get(i).getEmail());
+                    }
+                }
             }
         }
     }

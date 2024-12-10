@@ -66,6 +66,7 @@ public class TrangDatVe extends JPanel {
     public JPanel trangDonDatVe;
     public JPanel trangDSVeDangDat;
     public DefaultTableModel moHinhBang;
+    public JComboBox<String> thanhChonKhachHang;
 
     /* Khoi Tao Phong Chu Mau Sac */
     public int kichThuocChu = 12;
@@ -239,6 +240,7 @@ public class TrangDatVe extends JPanel {
         }
 
         thanhCacDiemDi.setSelectedItem("Sài Gòn");
+        thanhCacDiemDi.setEditable(false);
         thanhCacDiemDi.addItemListener(mucDaChon);
         thanhCacDiemDi.setPreferredSize(new Dimension(chieuDaiNut, chieuRongNut));
         thanhCacDiemDi.setRenderer(new CustomComboBoxRenderer());
@@ -630,6 +632,22 @@ public class TrangDatVe extends JPanel {
         thanhCacLoaiDoiTuong.addItemListener(mucDaChon);
         phanThongTin.add(thanhCacLoaiDoiTuong);
 
+        JLabel tieuDeKhachHang = new JLabel("Khách Hàng:");
+        tieuDeKhachHang.setForeground(xanhBrandeis);
+        tieuDeKhachHang.setPreferredSize(new Dimension(chieuDaiNut, chieuRongNut));
+        tieuDeKhachHang.setFont(phongTuyChinh.layPhongRobotoMonoReg(2, kichThuocChu));
+        phanThongTin.add(tieuDeKhachHang);
+
+        thanhChonKhachHang = new JComboBox<>();
+        thanhChonKhachHang.setForeground(xanhBrandeis);
+        thanhChonKhachHang.setBackground(trang);
+        thanhChonKhachHang.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, kichThuocChu));
+        thanhChonKhachHang.setFocusable(false);
+        thanhChonKhachHang.setPreferredSize(new Dimension(chieuDaiNut, chieuRongNut));
+        thanhChonKhachHang.setRenderer(new CustomComboBoxRenderer());
+        thanhChonKhachHang.addItemListener(mucDaChon);
+        phanThongTin.add(thanhChonKhachHang);
+
         /*thanhLoaiDoiTuong = new JTextField();
         thanhLoaiDoiTuong.setForeground(xanhBrandeis);
         thanhLoaiDoiTuong.setBackground(trang);
@@ -717,6 +735,7 @@ public class TrangDatVe extends JPanel {
         nutXoaVe.setFocusPainted(false); // Bỏ viền khi click (focus)
         nutXoaVe.addActionListener(hanhDong);
         nutXoaVe.addMouseListener(thaoTacChuot);
+        nutXoaVe.addItemListener(mucDaChon);
         phanXuLyVe.add(nutXoaVe);
 
         trangDonDatVe.add(trangChuaDonTT);
