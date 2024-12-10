@@ -16,8 +16,10 @@ import javax.swing.border.TitledBorder;
 import javax.swing.border.EtchedBorder;
 import java.awt.Color;
 import java.io.Serial;
+import java.text.NumberFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 public class TrangKetCa extends JFrame {
 
@@ -33,7 +35,7 @@ public class TrangKetCa extends JFrame {
     public JLabel label_hienMaNV;
     public JLabel label_hienTongTienCaTruoc;
     public JLabel label_hienTongTienHeThong;
-    public  JLabel label_hienChechLech;
+    public  JLabel label_hienThatThoat;
     public  JButton btn_minus_1000;
     public  JButton btn_plus_1000;
     public  JButton btn_minus_2000;
@@ -66,23 +68,25 @@ public class TrangKetCa extends JFrame {
     public JTextField textField_1000;
     public JTextField textField_2000;
     public JTextField textField_chuyenKhoan;
+    public double tongTienHeThong = 0.0;
 
-    public Double tienThucThu = 0.0;
-    public Double tienChuyenKhoan = 0.0;
-    public int soTo1000 = 0;
-    public int soTo2000 = 0;
-    public int soTo5000 = 0;
-    public int soTo10000 = 0;
-    public int soTo20000 = 0;
-    public int soTo50000 = 0;
-    public int soTo100000 = 0;
-    public int soTo200000 = 0;
-    public int soTo500000 = 0;
-    public int tienMat = 0;
-    public Double tongTien = 0.0;
+    public long soTo1000 = 0;
+    public long soTo2000 = 0;
+    public long soTo5000 = 0;
+    public long soTo10000 = 0;
+    public long soTo20000 = 0;
+    public long soTo50000 = 0;
+    public long soTo100000 = 0;
+    public long soTo200000 = 0;
+    public long soTo500000 = 0;
+    public double tienMat = 0.0;
+    public double tongTien = 0.0;
 
     public static LocalDateTime ngayGioBatDau;
     public static LocalDateTime ngayGioKetThuc;
+    public double tienCaTruoc;
+    public double tongVAT;
+    public double tongGiamGia;
 
     /**
      * Launch the application.
@@ -433,15 +437,15 @@ public class TrangKetCa extends JFrame {
         btn_hoanTat.setBounds(10, 597, 149, 45);
         contentPane.add(btn_hoanTat);
 
-        JLabel label_chenhLech = new JLabel("Chênh lệch:");
-        label_chenhLech.setFont(new Font("Tahoma", Font.PLAIN, 30));
-        label_chenhLech.setBounds(10, 546, 159, 37);
-        contentPane.add(label_chenhLech);
+        JLabel label_thatThoat = new JLabel("Thất thoát:");
+        label_thatThoat.setFont(new Font("Tahoma", Font.PLAIN, 30));
+        label_thatThoat.setBounds(10, 546, 159, 37);
+        contentPane.add(label_thatThoat);
 
-        label_hienChechLech = new JLabel("0.0");
-        label_hienChechLech.setFont(new Font("Tahoma", Font.PLAIN, 30));
-        label_hienChechLech.setBounds(179, 546, 238, 37);
-        contentPane.add(label_hienChechLech);
+        label_hienThatThoat = new JLabel("0.0");
+        label_hienThatThoat.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        label_hienThatThoat.setBounds(179, 546, 238, 37);
+        contentPane.add(label_hienThatThoat);
 
         JLabel label_maNV = new JLabel("Mã nhân viên:");
         label_maNV.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -481,6 +485,15 @@ public class TrangKetCa extends JFrame {
         btn_plus_500000.addActionListener(hdTrangKetCa);
         btn_xacNhan.addActionListener(hdTrangKetCa);
         btn_hoanTat.addActionListener(hdTrangKetCa);
+        textField_1000.addActionListener(hdTrangKetCa);
+        textField_2000.addActionListener(hdTrangKetCa);
+        textField_5000.addActionListener(hdTrangKetCa);
+        textField_10000.addActionListener(hdTrangKetCa);
+        textField_20000.addActionListener(hdTrangKetCa);
+        textField_50000.addActionListener(hdTrangKetCa);
+        textField_100000.addActionListener(hdTrangKetCa);
+        textField_200000.addActionListener(hdTrangKetCa);
+        textField_500000.addActionListener(hdTrangKetCa);
 
         String gioVaoCa = HanhDong_TrangDangNhap.gioVaoTruc;
         ngayGioBatDau = HanhDong_TrangDangNhap.ngayGioBatDau;
@@ -499,8 +512,9 @@ public class TrangKetCa extends JFrame {
     }
 
     public void hienTienCaTruoc(){
-        double tienCaTruoc = CaTruc_DAO.layTienCaTruoc();
-        label_hienTongTienCaTruoc.setText(String.valueOf(tienCaTruoc));
+        tienCaTruoc = CaTruc_DAO.layTienCaTruoc();
+        String tienCaTruocVND = chuyenSangVND(tienCaTruoc);
+        label_hienTongTienCaTruoc.setText(tienCaTruocVND);
     }
     public void hienMaNV(){
         label_hienMaNV.setText(HanhDong_TrangDangNhap.maNV);
@@ -513,20 +527,28 @@ public class TrangKetCa extends JFrame {
         ngayGioKetThuc = now;
     }
     public void hienTongVAT(){
-        double tongVAT = HoaDon_DAO.layTongVAT();
-        label_hienTongVAT.setText(String.valueOf(tongVAT));
+        tongVAT = HoaDon_DAO.layTongVAT();
+        String tongVATVND = chuyenSangVND(tongVAT);
+        label_hienTongVAT.setText(tongVATVND);
     }
     public void hienTongGiamGia(){
-        double tongGiamGia = HoaDon_DAO.layTongGiamGia();
-        label_hienTongGiam.setText(String.valueOf(tongGiamGia));
+        tongGiamGia = HoaDon_DAO.layTongGiamGia();
+        String tongGiamGiaVND = chuyenSangVND(tongGiamGia);
+        label_hienTongGiam.setText(tongGiamGiaVND);
     }
     public void hienSoHoaDon(){
         int soHoaDon = HoaDon_DAO.laySoHoaDon();
         label_hienTongHoaDon.setText(String.valueOf(soHoaDon));
     }
     public void hienTongTienHeThong (){
-        double tongTienHeThong = HoaDon_DAO.layTongTienHeThong();
-        label_hienTongTienHeThong.setText(String.valueOf(tongTienHeThong));
+        tongTienHeThong = HoaDon_DAO.layTongTienHeThong();
+        String tongTienHeThongVND = chuyenSangVND(tongTienHeThong);
+        label_hienTongTienHeThong.setText(tongTienHeThongVND);
+    }
+    private String chuyenSangVND(double tien){
+        Locale localeVN = new Locale("vi", "VN");
+        NumberFormat currencyVN = NumberFormat.getCurrencyInstance(localeVN);
+        return currencyVN.format(tien);
     }
 
 }
