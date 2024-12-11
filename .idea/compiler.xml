@@ -10,9 +10,6 @@
         <module name="train_ticket_management_app" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="train_ticket_management_app" target="22" />
-    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">

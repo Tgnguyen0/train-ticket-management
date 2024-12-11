@@ -3,10 +3,12 @@ package app.giao_dien;
 import app.dao.HoaDon_DAO;
 import app.dao.NhanVien_DAO;
 import app.dieu_khien.HanhDong_TrangHoaDon;
+import app.phan_tu_tuy_chinh.CustomCellRenderer;
 import app.phong_chu_moi.PhongChuMoi;
 import app.thuc_the.HoaDon;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
@@ -20,6 +22,8 @@ import java.util.List;
  * @author Khanh
  */
 public class TrangHoaDon extends JPanel {
+    public PhongChuMoi phongTuyChinh = new PhongChuMoi();
+
     // Variables declaration - do not modify
     public javax.swing.JLabel LbTimKiem;
     public javax.swing.JLabel TieuDeLuuY;
@@ -62,7 +66,7 @@ public class TrangHoaDon extends JPanel {
     public HoaDon_DAO hoaDon_dao= new HoaDon_DAO();
     public DefaultTableModel model;
     public HoaDon hdTao= new HoaDon();
-    public PhongChuMoi phongChuMoi= new PhongChuMoi();
+    //public PhongChuMoi phongChuMoi= new PhongChuMoi();
 
     public TrangHoaDon() {
         initComponents();
@@ -87,9 +91,17 @@ public class TrangHoaDon extends JPanel {
         trangChua_timKiemHoaDon = new javax.swing.JPanel();
         trangChua_LbTimKiem = new javax.swing.JPanel();
         LbTimKiem = new javax.swing.JLabel();
+        LbTimKiem.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.BOLD, 18));
+
         lbtieuchi = new javax.swing.JLabel();
+
         trangChua_TFTimKiem = new javax.swing.JPanel();
+
         tfTimKiem = new javax.swing.JTextField();
+        tfTimKiem.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, 12));
+        Border vienDam = BorderFactory.createLineBorder(new Color(0, 112, 255));
+        tfTimKiem.setBorder(vienDam);
+
         trangChua_CacLuuY = new javax.swing.JPanel();
         trangChua_lbThongTin = new javax.swing.JPanel();
         lbThongTin = new javax.swing.JLabel();
@@ -100,6 +112,15 @@ public class TrangHoaDon extends JPanel {
         trangChua_DanhSachHoaDonTable = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tableDanhSach = new javax.swing.JTable();
+
+        tableDanhSach.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, 12));
+        tableDanhSach.setBackground(new Color(255, 255, 255));
+        tableDanhSach.setShowGrid(false);
+        tableDanhSach.setShowHorizontalLines(false);
+        tableDanhSach.setShowVerticalLines(false);
+        tableDanhSach.setDefaultRenderer(Object.class, new CustomCellRenderer());
+        tableDanhSach.setRowHeight(25);
+
         trangChua_Button = new javax.swing.JPanel();
         buttonChiTiet = new javax.swing.JButton();
         buttonInHoaDon = new javax.swing.JButton();
@@ -107,9 +128,20 @@ public class TrangHoaDon extends JPanel {
         buttonLamMoi = new javax.swing.JButton();
         trangChua_ThongTinNhanVien = new javax.swing.JPanel();
         lbNhanVienPhuTrach = new javax.swing.JLabel();
+        lbNhanVienPhuTrach.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.BOLD, 15));
+
+        Border gachChanDam = BorderFactory.createMatteBorder(0, 0, 1, 0, new Color(0, 112, 255));
         tfTenNhanVien = new javax.swing.JTextField();
+        tfTenNhanVien.setBorder(gachChanDam);
+        tfTenNhanVien.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, 15));
+
         lbMaNhanVien = new javax.swing.JLabel();
+        lbMaNhanVien.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.BOLD, 15));
+
         tfMaNhanVien = new javax.swing.JTextField();
+        tfMaNhanVien.setBorder(gachChanDam);
+        tfMaNhanVien.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, 15));
+
         trangChua_LuuY = new javax.swing.JPanel();
         TieuDeLuuY = new javax.swing.JLabel();
         luuY1 = new javax.swing.JLabel();
@@ -125,7 +157,7 @@ public class TrangHoaDon extends JPanel {
         // Tieu de của trang
         //lbDanhSachHoaDon.setFont(new java.awt.Font("Segoe UI", 3, 40)); // NOI18N
         lbDanhSachHoaDon.setText("    DANH SÁCH HÓA ĐƠN");
-        lbDanhSachHoaDon.setFont(phongChuMoi.layPhongRobotoMonoReg(1, 40));
+        lbDanhSachHoaDon.setFont(phongTuyChinh.layPhongRobotoMonoReg(1, 40));
         javax.swing.GroupLayout trangChua_TieuDeHoaDonLayout = new javax.swing.GroupLayout(trangChua_TieuDeHoaDon);
         trangChua_TieuDeHoaDon.setLayout(trangChua_TieuDeHoaDonLayout);
         trangChua_TieuDeHoaDonLayout.setHorizontalGroup(
@@ -144,10 +176,10 @@ public class TrangHoaDon extends JPanel {
         );
 
         // Tìm kiếm hóa đơn
-        LbTimKiem.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        //LbTimKiem.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         LbTimKiem.setText("Tìm kiếm hóa đơn:");
         lbtieuchi.setText("Mã hóa đơn - Số điện thoại khách hàng");
-        lbtieuchi.setFont(phongChuMoi.layPhongRobotoMonoReg(2, 10));
+        lbtieuchi.setFont(phongTuyChinh.layPhongRobotoMonoReg(2, 10));
 
         javax.swing.GroupLayout trangChua_LbTimKiemLayout = new javax.swing.GroupLayout(trangChua_LbTimKiem);
         trangChua_LbTimKiem.setLayout(trangChua_LbTimKiemLayout);
@@ -170,7 +202,7 @@ public class TrangHoaDon extends JPanel {
                                 .addGap(14, 14, 14))
         );
 
-        trangChua_TFTimKiem.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 112, 255)));
+        //trangChua_TFTimKiem.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 112, 255)));
 
 
         javax.swing.GroupLayout trangChua_TFTimKiemLayout = new javax.swing.GroupLayout(trangChua_TFTimKiem);
@@ -207,7 +239,7 @@ public class TrangHoaDon extends JPanel {
         );
 
         // Các lưu ý
-        lbThongTin.setFont(new java.awt.Font("Segoe UI", 3, 20)); // NOI18N
+        lbThongTin.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.ITALIC, 20)); // NOI18N
         lbThongTin.setForeground(new java.awt.Color(255, 51, 51));
         lbThongTin.setText("Thông Tin:");
 
@@ -228,13 +260,13 @@ public class TrangHoaDon extends JPanel {
                                 .addGap(15, 15, 15))
         );
 
-        thongTin1.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
+        thongTin1.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.ITALIC, 12)); // NOI18N
         thongTin1.setText("+ LÀM MỚI: Hỗ trợ làm mới lại dữ liệu sau khi tìm kiếm thành công.");
 
-        thongTin2.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
+        thongTin2.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.ITALIC, 12)); // NOI18N
         thongTin2.setText("+ CHI TIẾT: Hỗ trợ xem thêm các thông tin chi tiết của Hóa Đơn.");
 
-        thongTin3.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
+        thongTin3.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.ITALIC, 12)); // NOI18N
         thongTin3.setText("+ IN HÓA ĐƠN: Hỗ trợ In ra hóa đơn vật lí gửi khách hàng.");
 
         javax.swing.GroupLayout trangChua_chiTietThongTinLayout = new javax.swing.GroupLayout(trangChua_chiTietThongTin);
@@ -304,7 +336,7 @@ public class TrangHoaDon extends JPanel {
 
         // Thiết lập Màu cho JtableHeader gồm màu sắc và font chữ
         JTableHeader header = tableDanhSach.getTableHeader();
-        header.setDefaultRenderer(new DefaultTableCellRenderer() {
+        /*header.setDefaultRenderer(new DefaultTableCellRenderer() {
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
                 JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
@@ -315,8 +347,26 @@ public class TrangHoaDon extends JPanel {
                 label.setOpaque(true); // Đảm bảo nền được tô màu
                 return label;
             }
-        });
+        });*/
+
+        DefaultTableCellRenderer vienBang = new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                JLabel phanTu = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+
+                phanTu.setForeground(new Color(0, 112, 255));
+                phanTu.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, 12));
+                phanTu.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0)); // Tăng khoảng cách trên và dưới
+                phanTu.setHorizontalAlignment(SwingConstants.CENTER);
+
+                return phanTu;
+            }
+        };
+
+        header.setBackground(new Color(255, 255, 255));
+        header.setDefaultRenderer(vienBang);
         header.setReorderingAllowed(false);
+        tableDanhSach.setDefaultRenderer(Object.class, new CustomCellRenderer());
 
         // Ẩn cột mã nhân viên
         tableDanhSach.getColumnModel().getColumn(8).setMinWidth(0);
@@ -325,6 +375,9 @@ public class TrangHoaDon extends JPanel {
         // Hiển thị dữ liệu
         // Set không cho thay đổi kích thước cột
         jScrollPane1.setViewportView(tableDanhSach);
+        jScrollPane1.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
+        jScrollPane1.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+
         if (tableDanhSach.getColumnModel().getColumnCount() > 0) {
             tableDanhSach.getColumnModel().getColumn(0).setResizable(false);
             tableDanhSach.getColumnModel().getColumn(1).setResizable(false);
@@ -351,29 +404,29 @@ public class TrangHoaDon extends JPanel {
                                 .addGap(0, 36, Short.MAX_VALUE))
         );
 
-        trangChua_Button.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 112, 255), 2));
+        trangChua_Button.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 112, 255), 1));
 
         // Set các thông số cho các button Chi tiết
         buttonChiTiet.setBackground(new java.awt.Color(0, 112, 255));
-        buttonChiTiet.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        buttonChiTiet.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.BOLD, 14)); // NOI18N
         buttonChiTiet.setForeground(new java.awt.Color(255, 255, 255));
         buttonChiTiet.setText("Chi Tiết");
 
         // Set các thông số cho các button In Hóa Đơn
         buttonInHoaDon.setBackground(new java.awt.Color(0, 112, 255));
-        buttonInHoaDon.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        buttonInHoaDon.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.BOLD, 14)); // NOI18N
         buttonInHoaDon.setForeground(new java.awt.Color(255, 255, 255));
         buttonInHoaDon.setText("In Hóa Đơn");
 
         // Set các thông số cho các button Tìm Kiếm
         buttonTimKiem.setBackground(new java.awt.Color(0, 112, 255));
-        buttonTimKiem.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        buttonTimKiem.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.BOLD, 14)); // NOI18N
         buttonTimKiem.setForeground(new java.awt.Color(255, 255, 255));
         buttonTimKiem.setText("Tìm Kiếm");
 
         // Set các thông số cho các button Làm Mới
         buttonLamMoi.setBackground(new java.awt.Color(0, 112, 255));
-        buttonLamMoi.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        buttonLamMoi.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.BOLD, 14)); // NOI18N
         buttonLamMoi.setForeground(new java.awt.Color(255, 255, 255));
         buttonLamMoi.setText("Làm Mới");
 
@@ -419,10 +472,10 @@ public class TrangHoaDon extends JPanel {
 
 
         // Thông tin nhân viên  phụ trách
-        lbMaNhanVien.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
+        //lbMaNhanVien.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         lbMaNhanVien.setText("Mã Nhân Viên:");
 
-        lbNhanVienPhuTrach.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
+        //lbNhanVienPhuTrach.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         lbNhanVienPhuTrach.setText("Nhân viên phụ trách:");
 
 
@@ -431,7 +484,7 @@ public class TrangHoaDon extends JPanel {
         trangChua_ThongTinNhanVienLayout.setHorizontalGroup(
                 trangChua_ThongTinNhanVienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(trangChua_ThongTinNhanVienLayout.createSequentialGroup()
-                                .addComponent(lbNhanVienPhuTrach, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lbNhanVienPhuTrach, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(tfTenNhanVien, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -457,25 +510,25 @@ public class TrangHoaDon extends JPanel {
         trangChua_LuuY.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 112, 255), 2));
         trangChua_LuuY.setForeground(new java.awt.Color(255, 255, 255));
 
-        TieuDeLuuY.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
+        TieuDeLuuY.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.BOLD, 18)); // NOI18N
         TieuDeLuuY.setForeground(new java.awt.Color(255, 255, 255));
         TieuDeLuuY.setText("LƯU Ý:");
 
-        luuY1.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
+        luuY1.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.ITALIC, 10)); // NOI18N
         luuY1.setForeground(new java.awt.Color(255, 255, 255));
         luuY1.setText("1. Kiểm tra lại chi tiết hóa đơn kĩ càng trước khi in hóa đơn.");
 
-        luuY2.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
+        luuY2.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.ITALIC, 10)); // NOI18N
         luuY2.setForeground(new java.awt.Color(255, 255, 255));
         luuY2.setText("2. In hóa đơn nếu khách hàng cần.");
 
-        luuY3.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
+        luuY3.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.ITALIC, 10)); // NOI18N
         luuY3.setForeground(new java.awt.Color(255, 255, 255));
         luuY3.setText("3. Hõ trợ khách hàng in lại hóa đơn nếu lỡ mất");
 
-        luuY4.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
+        luuY4.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.ITALIC, 10)); // NOI18N
         luuY4.setForeground(new java.awt.Color(255, 255, 255));
-        luuY4.setText("4. Hỗ trợ tìm kiếm hóa đơn theo mã hóa đơn hoặc số điện thoại khách hàng.");
+        luuY4.setText("<html><i><b>4. Hỗ trợ tìm kiếm hóa đơn theo mã hóa đơn hoặc số điện thoại khách hàng.</b></i></html>");
 
         javax.swing.GroupLayout trangChua_LuuYLayout = new javax.swing.GroupLayout(trangChua_LuuY);
         trangChua_LuuY.setLayout(trangChua_LuuYLayout);
