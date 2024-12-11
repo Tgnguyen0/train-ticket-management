@@ -6,6 +6,7 @@ import app.giao_dien.TrangDoiMatKhau;
 import app.giao_dien.TrangKetCa;
 import app.giao_dien.TrangNhanVien;
 import app.giao_dien.TrangQuanLyNhanVien;
+import app.phan_tu_tuy_chinh.GanAmThanh;
 import app.thuc_the.CaTruc;
 import app.thuc_the.GIOI_TINH;
 import app.thuc_the.NhanVien;
@@ -33,6 +34,8 @@ public class HanhDong_TrangNhanVien implements ActionListener, PropertyChangeLis
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        GanAmThanh.playSound();
+
         Object o = e.getSource();
         if (e.getActionCommand().equals("Cập nhật thông tin")) {
             this.capNhatThongTin();

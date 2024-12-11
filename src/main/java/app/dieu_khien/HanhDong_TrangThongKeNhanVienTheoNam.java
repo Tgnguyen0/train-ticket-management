@@ -1,6 +1,7 @@
 package app.dieu_khien;
 
 import app.giao_dien.TrangChuaThongKeNhanVienTheoNam;
+import app.phan_tu_tuy_chinh.GanAmThanh;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -17,6 +18,8 @@ public class HanhDong_TrangThongKeNhanVienTheoNam implements ActionListener, Mou
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        GanAmThanh.playSound();
+
         if(e.getSource() == this.trangChuaThongKeNhanVienTheoNam.buttonThongKe){
             this.trangChuaThongKeNhanVienTheoNam.taoBieuDoCotThongKeDoanhThuNhanVien();
             this.trangChuaThongKeNhanVienTheoNam.tinhTongDoanhThu();

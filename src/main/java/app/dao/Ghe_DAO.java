@@ -288,7 +288,7 @@ public class Ghe_DAO {
     }
 
     public static boolean capNhatTrangThaiGhe_VeTrangThaiTrong(String maGhe) {
-        String updateQuery = "UPDATE Ghe SET TrangThai = N'Trống' WHERE MaGhe = ?";
+        String updateQuery = "UPDATE Ghe SET TrangThaiGhe = N'Trống' WHERE MaGhe = ? ";
         try {
             Connection connection = KetNoiCoSoDuLieu.ketNoiDB_HinhDB();
             PreparedStatement preparedStatement = connection.prepareStatement(updateQuery);
@@ -296,7 +296,7 @@ public class Ghe_DAO {
             // Thiết lập giá trị cho câu lệnh SQL
            // preparedStatement.setInt(1, ""); // Cập nhật trạng thái thành 1 (đã đặt)
             preparedStatement.setString(1, maGhe);
-
+            preparedStatement.executeUpdate();
             // Thực thi câu lệnh
 //            int rowsAffected = preparedStatement.executeUpdate();
 //            return rowsAffected > 0; // Trả về true nếu có ít nhất một dòng được cập nhật
@@ -308,7 +308,7 @@ public class Ghe_DAO {
     }
 
     public static boolean capNhatTrangThaiGhe_VeTrangDaDat(String maGhe) {
-        String updateQuery = "UPDATE Ghe SET TrangThai = N'Đã Đặt' WHERE MaGhe = ?";
+        String updateQuery = "UPDATE Ghe SET TrangThaiGhe = N'Đã Đặt' WHERE MaGhe = ?";
         try {
             Connection connection = KetNoiCoSoDuLieu.ketNoiDB_HinhDB();
             PreparedStatement preparedStatement = connection.prepareStatement(updateQuery);

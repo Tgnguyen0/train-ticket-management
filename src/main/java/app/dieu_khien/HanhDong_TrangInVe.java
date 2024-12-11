@@ -3,6 +3,7 @@ package app.dieu_khien;
 import app.giao_dien.TrangDatVe;
 import app.giao_dien.TrangDinhHuong;
 import app.giao_dien.TrangInVe;
+import app.phan_tu_tuy_chinh.GanAmThanh;
 import app.phan_tu_tuy_chinh.TaoVeBangFilePDF;
 import app.thuc_the.Ghe;
 import app.thuc_the.KhachHang;
@@ -26,6 +27,7 @@ public class HanhDong_TrangInVe implements ActionListener, MouseListener, Window
         TaoVeBangFilePDF taoVeBangFilePDF = new TaoVeBangFilePDF();
 
         System.out.println(this.trangInVe.dsVe.get(0).getMaVe());
+        GanAmThanh.playSound();
 
         if (e.getSource() == this.trangInVe.nutXacNhanIn) {
 

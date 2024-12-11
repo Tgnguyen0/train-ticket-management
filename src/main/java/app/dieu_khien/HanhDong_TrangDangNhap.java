@@ -15,6 +15,7 @@ import app.giao_dien.TrangDinhHuong;
 import app.giao_dien.TrangDangNhap;
 import app.giao_dien.TrangNhanVien;
 import app.giao_dien.TrangOTP;
+import app.phan_tu_tuy_chinh.GanAmThanh;
 import app.thuc_the.GIOI_TINH;
 
 import javax.swing.*;
@@ -35,6 +36,7 @@ public class HanhDong_TrangDangNhap implements ActionListener, MouseListener {
     public void actionPerformed(ActionEvent e) {
 
         Object source = e.getSource();
+        GanAmThanh.playSound();
 
         if (source == this.trangDangNhap.nutDangNhap || source == this.trangDangNhap.truongMatKhau) {
             String username = this.trangDangNhap.truongTen.getText();

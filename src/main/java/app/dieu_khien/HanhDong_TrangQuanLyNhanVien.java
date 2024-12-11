@@ -4,6 +4,7 @@ import app.dao.NhanVien_DAO;
 import app.giao_dien.TrangLichSuTruc;
 import app.giao_dien.TrangQuanLyNhanVien;
 import app.giao_dien.TrangXacNhanThuHoiTaiKhoan;
+import app.phan_tu_tuy_chinh.GanAmThanh;
 import app.thuc_the.GIOI_TINH;
 import app.thuc_the.NhanVien;
 
@@ -25,6 +26,8 @@ public class HanhDong_TrangQuanLyNhanVien implements ActionListener, MouseListen
     @Override
     public void actionPerformed(ActionEvent e) {
         Object o = e.getSource();
+        GanAmThanh.playSound();
+
         if (o == trangQuanLyNhanVien.btn_xemLichSuTruc) {
             this.xemLichSuTruc();
         } else if (o == trangQuanLyNhanVien.btn_themNV) {

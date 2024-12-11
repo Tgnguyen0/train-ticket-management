@@ -1,5 +1,6 @@
 package app.dieu_khien;
 
+import app.phan_tu_tuy_chinh.GanAmThanh;
 import app.phan_tu_tuy_chinh.NutAnh;
 import app.giao_dien.TrangCacToa;
 
@@ -18,6 +19,8 @@ public class HanhDong_TrangCacToa implements ActionListener, MouseListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        GanAmThanh.playSound();
+
         CardLayout cardLayout = (CardLayout) this.trangCacToa.trangChua.getLayout();
         String command = e.getActionCommand();
         System.out.println(command);

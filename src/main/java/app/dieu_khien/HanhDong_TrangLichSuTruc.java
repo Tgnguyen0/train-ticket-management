@@ -2,6 +2,7 @@ package app.dieu_khien;
 
 import app.dao.CaTruc_DAO;
 import app.giao_dien.TrangLichSuTruc;
+import app.phan_tu_tuy_chinh.GanAmThanh;
 import app.thuc_the.CaTruc;
 
 
@@ -26,6 +27,8 @@ public class HanhDong_TrangLichSuTruc implements MouseListener, PropertyChangeLi
 
     @Override
     public void mouseClicked(MouseEvent e) {
+        GanAmThanh.playSound();
+
         Object o = e.getSource();
         if (o == trangLichSuTruc.table) {
             this.layCaTruc();

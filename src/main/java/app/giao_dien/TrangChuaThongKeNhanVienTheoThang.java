@@ -209,9 +209,19 @@ public class TrangChuaThongKeNhanVienTheoThang extends JPanel {
         // gom tất cả các giao diện vào trong giao diện này
         this.thietLap_TrangChuaThongKeNhanVienTheoThang();
 
+        /*
+            Xứ lý tiền dữ liệu
+         */
+        // đẩy các năm lên giao diện
         dayCacNamLenGiaoDien();
+
+        // tỉnh tổng doanh thu của năm mặc định
         tinhTongDoanhThu();
+
+        // tìm nhân viên ưu tú của năm mặc định
         timNhanVienUuTu();
+
+        // tạo biểu đồ cột
         taoBieuDoCotThongKeDoanhThu();
 
         ac = new HanhDong_TrangThongKeNhanVienTheoThang(this);

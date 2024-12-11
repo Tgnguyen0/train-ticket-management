@@ -2,6 +2,7 @@ package app.dieu_khien;
 
 import app.dao.KhachHang_DAO;
 import app.giao_dien.*;
+import app.phan_tu_tuy_chinh.GanAmThanh;
 import app.phan_tu_tuy_chinh.TaoVeBangFilePDF;
 import app.thuc_the.*;
 import com.toedter.calendar.JDateChooser;
@@ -36,6 +37,7 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
     @Override
     public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
+        GanAmThanh.playSound();
 
         /*if (source == this.trangDatVe.nutLuaChonMotChieu) {
             this.trangDatVe.nutLuaChonKhuHoi.setSelected(false);
@@ -367,6 +369,7 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         Object source = evt.getSource();
+        GanAmThanh.playSound();
 
         // Kiểm tra thay đổi thực sự của ngày
         if (evt.getOldValue() != evt.getNewValue()) {

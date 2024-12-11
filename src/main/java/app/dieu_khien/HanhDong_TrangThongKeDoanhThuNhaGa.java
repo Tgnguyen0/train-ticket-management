@@ -2,6 +2,7 @@ package app.dieu_khien;
 
 import app.dao.HoaDon_DAO;
 import app.giao_dien.TrangChuaThongKeDoanhThuNhaGa;
+import app.phan_tu_tuy_chinh.GanAmThanh;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,6 +20,7 @@ public class HanhDong_TrangThongKeDoanhThuNhaGa extends MouseAdapter implements 
     }
     @Override
     public void actionPerformed(ActionEvent e) {
+        GanAmThanh.playSound();
         if(e.getSource() == this.trangChuaThongKeDoanhThuNhaGa.buttonThongKeThang){
             this.trangChuaThongKeDoanhThuNhaGa.tinhDoanhThuNhaGaTrongThang();
             this.trangChuaThongKeDoanhThuNhaGa.taoBieuDoTronCuaDoanhThang();

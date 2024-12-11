@@ -4,6 +4,7 @@ import app.dao.CaTruc_DAO;
 import app.giao_dien.TrangDangNhap;
 import app.giao_dien.TrangDinhHuong;
 import app.giao_dien.TrangKetCa;
+import app.phan_tu_tuy_chinh.GanAmThanh;
 import app.thuc_the.CaTruc;
 
 
@@ -46,6 +47,8 @@ public class HanhDong_TrangKetCa implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        GanAmThanh.playSound();
+
         if (e.getSource() == this.trangKetCa.btn_minus_1000) {
             if (this.trangKetCa.soTo1000 == 0) {
                 return;

@@ -3,6 +3,7 @@ package app.dieu_khien;
 import app.dao.NhanVien_DAO;
 import app.giao_dien.TrangDangNhap;
 import app.giao_dien.TrangQuenMatKhau;
+import app.phan_tu_tuy_chinh.GanAmThanh;
 
 import javax.swing.*;
 import java.awt.*;
@@ -22,6 +23,8 @@ public class HanhDong_TrangQuenMatKhau implements ActionListener, MouseListener 
     public void actionPerformed(ActionEvent e) {
         // Code here
         Object source = e.getSource();
+        GanAmThanh.playSound();
+
         if(source == trangQuenMatKhau.btn_xacNhan) {
             String mkMoi = new String(trangQuenMatKhau.passwordField_mkMoi.getPassword());
             String xacNhanMK = new String(trangQuenMatKhau.passwordField_xacNhanMK.getPassword());

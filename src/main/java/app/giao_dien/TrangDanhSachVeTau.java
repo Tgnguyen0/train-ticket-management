@@ -1119,7 +1119,7 @@ public class TrangDanhSachVeTau extends JPanel {
                 Duration duration = Duration.between(dateCurrent, ngayKhoiHanh_Ve);
                 logger.info(duration.toHours()+"");
 
-                if (duration.toHours() >= 24) {
+                if (duration.toHours() > 2) {
                     new TrangChiTietHoaDon(maVe, this).setVisible(true);
                     //logger.info(this.xacNhan+"");
                 } else {
