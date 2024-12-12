@@ -72,7 +72,7 @@ public class TrangHoaDon extends JPanel {
         initComponents();
         setPreferredSize(new java.awt.Dimension(1200, 600));
         HoaDon_DAO hoaDon_dao= new HoaDon_DAO();
-        hienThiDanhSachHoaDon( hoaDon_dao.chonTatCa());
+        hienThiDanhSachHoaDon( hoaDon_dao.layDanhSachHoaDon());
     }
 
     public void datHoaDonDTao(HoaDon hd) {
@@ -662,6 +662,6 @@ public class TrangHoaDon extends JPanel {
         tfTenNhanVien.setText("");
         tfMaNhanVien.setEditable(false);
         tfTenNhanVien.setEditable(false);
-        hienThiDanhSachHoaDon(hoaDon_dao.chonTatCa());
+        hienThiDanhSachHoaDon(hoaDon_dao.layDanhSachHoaDon());
     }
 }
