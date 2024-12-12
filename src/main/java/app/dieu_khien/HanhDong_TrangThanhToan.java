@@ -148,7 +148,12 @@ public class HanhDong_TrangThanhToan implements ActionListener, MouseListener {
         // Xóa giờ đi
         ((TrangDatVe) this.trangThanhToan.trangDatVe).thanhNhapGioDen.setText("");
 
+
+        ((TrangDatVe) this.trangThanhToan.trangDatVe).thanhNhapHoTen.setText("");
+        ((TrangDatVe) this.trangThanhToan.trangDatVe).thanhNhapDienThoai.setText("");
+        ((TrangDatVe) this.trangThanhToan.trangDatVe).thanhNhapThuDienTu.setText("");
         ((TrangDatVe) this.trangThanhToan.trangDatVe).layDSKhDatVe().clear();
+        ((TrangDatVe) this.trangThanhToan.trangDatVe).thanhChonKhachHang.removeAllItems();
 
         // Đặt hóa đơn bên trangHoaDon
         ((TrangHoaDon) TrangDinhHuong.getTrangChua().getComponent(2)).datHoaDonDTao(hd);

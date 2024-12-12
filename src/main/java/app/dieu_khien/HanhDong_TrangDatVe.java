@@ -381,7 +381,7 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
                 for (int i = 0 ; i < this.trangDatVe.layDSKhDatVe().size() ; i++) {
                     if (this.trangDatVe.thanhChonKhachHang.getSelectedItem().equals(this.trangDatVe.layDSKhDatVe().get(i).getMaKH())) {
                         this.trangDatVe.thanhNhapHoTen.setText(this.trangDatVe.layDSKhDatVe().get(i).getTenKH());
-                        this.trangDatVe.thanhNhapDienThoai.setText(this.trangDatVe.layDSKhDatVe().get(i).getMaKH());
+                        this.trangDatVe.thanhNhapDienThoai.setText(this.trangDatVe.layDSKhDatVe().get(i).getSoDT());
 
                         GIOI_TINH gioiTinh = ((TrangDatVe) TrangDinhHuong.getTrangChua().getComponent(1)).dsKHDatVe.get(0).getGioiTinh();
 
