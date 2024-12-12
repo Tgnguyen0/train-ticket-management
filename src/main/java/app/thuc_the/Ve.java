@@ -67,13 +67,13 @@ public class Ve {
     public String setMaVe() {
         String maVe;
         String ngayTrongThang = String.format("%02d", LocalDateTime.now().getDayOfMonth());
-        String thang = String.valueOf(LocalDateTime.now().getMonthValue());
+        String thang = String.format("%02d", LocalDateTime.now().getMonthValue());
         String nam = String.valueOf(LocalDateTime.now().getYear());
-        String giay = String.format("%02d", LocalDateTime.now().getSecond());
+        String milliGiay = String.format("%03d", System.currentTimeMillis() % 1000);
 
         nam = nam.substring(nam.length() - 2);
 
-        maVe = "V" + nam + thang + ngayTrongThang + giay + (int)(Math.ceil(Math.random() * 9));;
+        maVe = "V" + nam + thang + ngayTrongThang + milliGiay + (int)(Math.ceil(Math.random() * 9));
 
         return maVe;
     }
