@@ -147,7 +147,37 @@ public class HanhDong_TrangHoaDon implements ActionListener, MouseListener, Item
                     JOptionPane.showMessageDialog(trangHoaDon, "In hóa đơn thất bại!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                 }
             }
-        }}
+        }else if (source == trangHoaDon.buttonInHoaDon) {
+            int selectedRow = trangHoaDon.tableDanhSach.getSelectedRow();
+            if (selectedRow == -1) {
+                JOptionPane.showMessageDialog(trangHoaDon, "Vui lòng chọn hóa đơn để in.", "Thông báo", JOptionPane.WARNING_MESSAGE);
+            } else {
+                int xacNhan = JOptionPane.showConfirmDialog(trangHoaDon, "Bạn có chắc chắn muốn in hóa đơn này không?", "Xác nhận in hóa đơn", JOptionPane.YES_NO_OPTION);
+                if (xacNhan == JOptionPane.YES_OPTION) {
+                    String maHoaDon = trangHoaDon.tableDanhSach.getValueAt(selectedRow, 1).toString(); // Lấy mã hóa đơn từ bảng
+                    String trangThai = trangHoaDon.tableDanhSach.getValueAt(selectedRow, 7).toString(); // Lấy trạng thái từ bảng
+
+                    printSelectedInvoice(selectedRow); // Thực hiện in hóa đơn
+
+                    if ("Chưa in".equalsIgnoreCase(trangThai)) {
+                        // Cập nhật trạng thái nếu là "Chưa in"
+                        boolean capNhatThanhCong = hoaDon_dao.capNhatTrangThaiHoaDon(maHoaDon);
+                        if (capNhatThanhCong) {
+                            JOptionPane.showMessageDialog(trangHoaDon, "In hóa đơn thành công! Trạng thái đã được cập nhật.", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                        } else {
+                            JOptionPane.showMessageDialog(trangHoaDon, "Lỗi khi cập nhật trạng thái hóa đơn.", "Thông báo", JOptionPane.ERROR_MESSAGE);
+                        }
+                    } else {
+                        // Nếu trạng thái đã là "Đã in", chỉ hiển thị thông báo
+                        JOptionPane.showMessageDialog(trangHoaDon, "In lại hóa đơn thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                    trangHoaDon.lamMoiDuLieu(); // Làm mới dữ liệu trong bảng
+                } else {
+                    JOptionPane.showMessageDialog(trangHoaDon, "In hóa đơn thất bại!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                }
+            }
+        }
+    }
 
     public void printSelectedInvoice(int selectedRow) {
         // Lấy mã hóa đơn từ hàng đã chọn
