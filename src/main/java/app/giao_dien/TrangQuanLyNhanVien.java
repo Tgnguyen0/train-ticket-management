@@ -268,6 +268,7 @@ public class TrangQuanLyNhanVien extends JFrame {
         table.addMouseListener(hanhDong_trangQuanLyNhanVien);
         btn_capNhat.addActionListener(hanhDong_trangQuanLyNhanVien);
         btn_thuHoiTK.addActionListener(hanhDong_trangQuanLyNhanVien);
+        btn_lamTrongDanhSach.addActionListener(hanhDong_trangQuanLyNhanVien);
     }
     public  boolean regex_birthDay() {
         Date date = dateChooser.getDate();

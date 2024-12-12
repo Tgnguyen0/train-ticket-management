@@ -43,6 +43,31 @@ public class HoaDon_DAO {
 
     //Logger logger = LoggerFactory.getLogger(TrangChuaThongKeDoanhThuNhaGa.class);
 
+    public boolean capNhatTrangThaiHoaDon(String maHD) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            // Kết nối tới database
+            connection = JDBCUtil.getConnection();
+
+            // Câu lệnh SQL để cập nhật trạng thái
+            String sql = "UPDATE HoaDon SET TrangThai = 'Đã In' WHERE MaHD = ?";
+            preparedStatement = connection.prepareStatement(sql);
+
+            // Truyền tham số MaHD vào câu lệnh SQL
+            preparedStatement.setString(1, maHD);
+
+            // Thực thi câu lệnh
+            int rowsUpdated = preparedStatement.executeUpdate();
+
+            // Kiểm tra số hàng được cập nhật
+            return rowsUpdated > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 
     public HoaDon_DAO() {
         dshd = new ArrayList<HoaDon>();
