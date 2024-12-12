@@ -2,11 +2,15 @@ package app.giao_dien;
 
 import app.dao.NhanVien_DAO;
 import app.dieu_khien.HanhDong_TrangThongKeTienThuong;
+import app.phan_tu_tuy_chinh.CustomCellRenderer;
+import app.phan_tu_tuy_chinh.CustomHeaderRenderer;
 import app.phan_tu_tuy_chinh.TaoFileExcelTienThuongNhanVienTrongNam;
+import app.phong_chu_moi.PhongChuMoi;
 import app.thuc_the.NhanVien;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.text.NumberFormat;
@@ -27,6 +31,8 @@ public class TrangThongKeTienThuong extends JFrame {
     private int nam ;
     private int thang;
     private Map<String, Double> danhSachDoanhThu;
+    public Color xanhBrandeis = new Color(0, 112, 255);
+    public  Color trang = new Color(255, 255, 255);
     String link = "";
     public TrangThongKeTienThuong( Map<String, Double> danhSachDoanhThu, int nam , int thang, Object object){
         panel_TieuDe = new javax.swing.JPanel();
@@ -48,32 +54,57 @@ public class TrangThongKeTienThuong extends JFrame {
                 new String [] {
                         "Mã Số", "Họ Và Tên", "Doanh Thu", "Thưởng (%)", "Thành Tiền"
                 }
-        );
+        ){
+            @Override
+            public boolean isCellEditable(int data, int columnName) {
+                return false;
+            }
+        };
 
         label_TieuDe.setText("Thống Kê Tiền Thưởng Nhân Viên");
+        label_TieuDe.setFont(new Font("Arial", Font.BOLD, 15));
 
+// Tạo bố cục GroupLayout cho panel_TieuDe
         javax.swing.GroupLayout panel_TieuDeLayout = new javax.swing.GroupLayout(panel_TieuDe);
         panel_TieuDe.setLayout(panel_TieuDeLayout);
+
+// Định nghĩa nhóm ngang
         panel_TieuDeLayout.setHorizontalGroup(
-                panel_TieuDeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(panel_TieuDeLayout.createSequentialGroup()
-                                .addGap(191, 191, 191)
-                                .addComponent(label_TieuDe, javax.swing.GroupLayout.PREFERRED_SIZE, 519, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                panel_TieuDeLayout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE) // Thêm khoảng cách linh hoạt ở bên trái
+                        .addComponent(label_TieuDe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE) // Thêm khoảng cách linh hoạt ở bên phải
         );
+
+// Định nghĩa nhóm dọc
         panel_TieuDeLayout.setVerticalGroup(
-                panel_TieuDeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_TieuDeLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(label_TieuDe, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
-                                .addContainerGap())
+                panel_TieuDeLayout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE) // Thêm khoảng cách linh hoạt ở bên trên
+                        .addComponent(label_TieuDe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE) // Thêm khoảng cách linh hoạt ở bên dưới
         );
+
+
 
         table.setModel(model);
+        table.getTableHeader().setReorderingAllowed(false);
+        table.setRowHeight(30);
+        table.setFont((new PhongChuMoi()).layPhongRobotoMonoReg(Font.PLAIN, 13));
+        // Cấu hình renderer cho phần header
+        JTableHeader header = table.getTableHeader();
+        header.setPreferredSize(new Dimension(header.getWidth(), 30));
+        header.setDefaultRenderer(new CustomHeaderRenderer()); // Sử dụng renderer tùy chỉnh
+
+// Cấu hình renderer cho các ô trong bảng
+        table.setDefaultRenderer(Object.class, new CustomCellRenderer());
         scrollPane.setViewportView(table);
 
-        button_InBanThongKe.setText("In Thông Kê");
+        scrollPane.setBorder(BorderFactory.createLineBorder(new Color(0, 112, 255)));
 
+        button_InBanThongKe.setText("In Thông Kê");
+        button_InBanThongKe.setBackground(xanhBrandeis);
+        button_InBanThongKe.setForeground(Color.WHITE);
+        button_InBanThongKe.setFont(new Font("Arial", Font.BOLD, 14));
         javax.swing.GroupLayout panel_DanhSachThongKeLayout = new javax.swing.GroupLayout(panel_DanhSachThongKe);
         panel_DanhSachThongKe.setLayout(panel_DanhSachThongKeLayout);
         panel_DanhSachThongKeLayout.setHorizontalGroup(
@@ -118,11 +149,11 @@ public class TrangThongKeTienThuong extends JFrame {
         this.setLocationRelativeTo(null);
         if(object == TrangChuaThongKeNhanVienTheoNam.class){
             dayDuLieuVaoTable();
-            this.link = "ThongKe/TienThuong_BieuDoCot_Nam"+this.nam+".xlsx";
+            this.link = "ThongKe/TienThuong_NhanVien_Theo_Nam"+this.nam+".xlsx";
         }
         else{
             dayDuLieuVaoTable_DoanhThuThang();
-            this.link = "ThongKe/TienThuong_BieuDoCot_Nam"+this.nam+"_Thang"+this.thang+".xlsx";
+            this.link = "ThongKe/TienThuong_NhanVien_Theo_Nam"+this.nam+"_Thang"+this.thang+".xlsx";
         }
         this.ac = new HanhDong_TrangThongKeTienThuong(this);
         this.button_InBanThongKe.addActionListener(ac);
@@ -207,37 +238,5 @@ public class TrangThongKeTienThuong extends JFrame {
             new TaoFileExcelTienThuongNhanVienTrongNam().TaoFileExcelTienThuongNhanVienTrongNam(this.danhSachDoanhThu, this.link, this.nam, this.thang);
         }
     }
-    public static void main(String[] args) {
-        try {
-            for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    UIManager.setLookAndFeel(info.getClassName());
 
-                    // Cấu hình thuộc tính Nimbus
-                    UIManager.put("control", new javax.swing.plaf.ColorUIResource(255, 255, 255)); // Màu nền
-                    UIManager.put("nimbusBase", new javax.swing.plaf.ColorUIResource(255, 255, 255)); // Màu cơ bản
-                    UIManager.put("nimbusBorder", new javax.swing.plaf.ColorUIResource(0, 112, 255)); // Màu viền
-                    UIManager.put("nimbusLightBackground", new javax.swing.plaf.ColorUIResource(255, 255, 255)); // Màu nền sáng
-                    UIManager.put("nimbusFocus", new javax.swing.plaf.ColorUIResource(0, 112, 255)); // Màu focus
-                    UIManager.put("textForeground", new Color(0, 112, 255)); // Màu chữ
-                    UIManager.put("ComboBox.foreground", new Color(0, 112, 255)); // Màu chữ cho JComboBox
-                    UIManager.put("ComboBox.background", new Color(255, 255, 255));
-                    UIManager.put("JCalendar.border", new Color(255, 255, 255));
-
-                    // Đặt màu nền và màu chữ khi chọn cho JTextField
-                    UIManager.put("TextField.selectionBackground", new Color(0, 112, 255)); // Màu nền khi chọn
-                    UIManager.put("TextField.selectionForeground", new Color(255, 255, 255)); // Màu chữ khi chọncho JComboBox
-
-                    break;
-                }
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-
-        // Sau đó, khởi chạy giao diện của bạn
-        java.awt.EventQueue.invokeLater(() -> {
-           //new TrangThongKeTienThuong(null).setVisible(true);
-        });
-    }
 }

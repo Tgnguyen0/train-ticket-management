@@ -4,6 +4,7 @@ import app.dao.KhachHang_DAO;
 import app.giao_dien.TrangDatVe;
 import app.giao_dien.TrangDinhHuong;
 import app.giao_dien.TrangKhachHang;
+import app.phan_tu_tuy_chinh.GanAmThanh;
 import app.thuc_the.GIOI_TINH;
 import app.thuc_the.KhachHang;
 
@@ -30,6 +31,7 @@ public class HanhDong_TrangKhachHang implements ActionListener, MouseListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        GanAmThanh.playSound();
 
         if (e.getActionCommand().equals("Tìm")) {
             this.tim();

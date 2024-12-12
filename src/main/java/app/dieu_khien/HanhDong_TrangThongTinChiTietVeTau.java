@@ -4,6 +4,7 @@ import app.dao.*;
 import app.giao_dien.TrangCacTau;
 import app.giao_dien.TrangDanhSachVeTau;
 import app.giao_dien.TrangThongTinChiTietVeTau;
+import app.phan_tu_tuy_chinh.GanAmThanh;
 import app.phan_tu_tuy_chinh.TaoVeBangFilePDF;
 import app.thuc_the.*;
 import org.slf4j.Logger;
@@ -32,6 +33,7 @@ public class HanhDong_TrangThongTinChiTietVeTau implements ActionListener, Mouse
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        GanAmThanh.playSound();
 
         if(e.getSource() == this.trangThongTinChiTietVeTau.buttonCapNhat){
                 String maVe = this.trangThongTinChiTietVeTau.textFieldMaVe.getText();
@@ -47,7 +49,7 @@ public class HanhDong_TrangThongTinChiTietVeTau implements ActionListener, Mouse
                     // tính khoảng cách 2 localdatetime
                     Duration duration = Duration.between(dateCurrent, ngayKhoiHanh_Ve);
 
-                    if (duration.toHours() >= 24) {
+                    if (duration.toHours() > 2) {
                         if(JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn cập nhật?") == JOptionPane.YES_OPTION){
                             this.trangThongTinChiTietVeTau.choPhepCapNhat();
                         }
@@ -76,7 +78,8 @@ public class HanhDong_TrangThongTinChiTietVeTau implements ActionListener, Mouse
                         cập nhật lại mã vế đã bị thay thế về lại trạng thái Trống
                     */
                      Ghe_DAO.capNhatTrangThaiGhe_VeTrangThaiTrong(this.trangThongTinChiTietVeTau.maGhe_Old);
-                    // Ghe_DAO.capNhatTrangThaiGhe_VeTrangDaDat(this.trangThongTinChiTietVeTau.tex)
+
+                     Ghe_DAO.capNhatTrangThaiGhe_VeTrangDaDat(ghe.getMaGhe());
 
                    ((TrangDanhSachVeTau) this.trangThongTinChiTietVeTau.trangCha).textFieldMaGhe.setText(ghe.getMaGhe());
 

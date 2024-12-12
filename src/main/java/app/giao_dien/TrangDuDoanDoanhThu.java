@@ -145,6 +145,10 @@ public class TrangDuDoanDoanhThu {
                 final int minYear = years[0];
                 final int maxYear = nextYear;
                 double maxRevenue = Math.max(predictedRevenue, getMax(revenues));
+                Locale vietnamLocale = new Locale("vi", "VN");
+
+                // Tạo đối tượng NumberFormat để định dạng tiền tệ
+                NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(vietnamLocale);
                 for (int i = 0; i < years.length; i++) {
                     int x = margin + (int) ((years[i] - minYear) / (double) (maxYear - minYear) * width);
                     int y = height + margin - (int) (revenues[i] / maxRevenue * height);
@@ -163,7 +167,7 @@ public class TrangDuDoanDoanhThu {
                         }
 
                         // Hiển thị ghi chú tại vị trí chuột
-                        panel.setToolTipText("Năm " + years[i] + ": " + String.format("%.2f", revenues[i]) + " triệu VND (" + note + ")");
+                        panel.setToolTipText("Năm " + years[i] + ": " + currencyFormatter.format(revenues[i]) + " triệu VND (" + note + ")");
                         return;
                     }
                 }
@@ -174,11 +178,17 @@ public class TrangDuDoanDoanhThu {
         });
 
         frame.add(panel);
+        ImageIcon icon = new ImageIcon("assets/icon.png");
+        frame.setIconImage(icon.getImage());
         frame.setVisible(true);
+        Locale vietnamLocale = new Locale("vi", "VN");
+
+        // Tạo đối tượng NumberFormat để định dạng tiền tệ
+        NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(vietnamLocale);
 
         // Hiển thị thông báo kết quả
         JOptionPane.showMessageDialog(frame,
-                "Dự đoán doanh thu năm " + nextYear + ": " + String.format("%.2f", predictedRevenue) + " triệu VND",
+                "Dự đoán doanh thu năm " + nextYear + ": " + currencyFormatter.format(predictedRevenue) + " triệu VND",
                 "Kết quả dự đoán",
                 JOptionPane.INFORMATION_MESSAGE);
     }

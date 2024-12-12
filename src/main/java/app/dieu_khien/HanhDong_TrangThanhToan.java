@@ -5,6 +5,7 @@ import app.giao_dien.TrangDatVe;
 import app.giao_dien.TrangDinhHuong;
 import app.giao_dien.TrangHoaDon;
 import app.giao_dien.TrangThanhToan;
+import app.phan_tu_tuy_chinh.GanAmThanh;
 import app.phan_tu_tuy_chinh.TaoMaQR;
 import app.thuc_the.*;
 
@@ -30,6 +31,8 @@ public class HanhDong_TrangThanhToan implements ActionListener, MouseListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        GanAmThanh.playSound();
+
         // Nếu chọn tiền mặt thì radioChuyenKhoan bỏ chọn
         if (e.getSource() == this.trangThanhToan.radioTienMat) {
             this.trangThanhToan.radioChuyenKhoan.setSelected(false);
