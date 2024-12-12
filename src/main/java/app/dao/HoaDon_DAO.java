@@ -92,6 +92,32 @@ public class HoaDon_DAO {
 
         return danhSachHoaDon;
     }
+
+    public boolean capNhatTrangThaiHoaDon(String maHD) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            // Kết nối tới database
+            connection = JDBCUtil.getConnection();
+
+            // Câu lệnh SQL để cập nhật trạng thái
+            String sql = "UPDATE HoaDon SET TrangThai = N'Đã In' WHERE MaHD = ?";
+            preparedStatement = connection.prepareStatement(sql);
+
+            // Truyền tham số MaHD vào câu lệnh SQL
+            preparedStatement.setString(1, maHD);
+
+            // Thực thi câu lệnh
+            int rowsUpdated = preparedStatement.executeUpdate();
+
+            // Kiểm tra số hàng được cập nhật
+            return rowsUpdated > 0 || rowsUpdated == -1;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     public List<HoaDon> TimKiemHoaDon (String maHD, String soDienThoai) throws SQLException {
         List<HoaDon> danhSachHoaDon = new ArrayList<>();
         String sql = "SELECT * FROM HoaDon o join KhachHang k on o.MaKH=k.MaKH WHERE o.MaHD LIKE ? OR k.SoDT LIKE ?";

@@ -61,8 +61,16 @@ public class HanhDong_TrangCacTau implements ActionListener, MouseListener, Wind
         if (e.getSource() == this.trangSoDoChung.nutXacNhan) {
             if (!this.trangSoDoChung.gheDao.layDSGheDat().isEmpty()) {
                 hienThiThongBao("Xác nhận ghế chọn thành công !", "Xác nhận thành công", JOptionPane.INFORMATION_MESSAGE);
+
                 if (this.trangSoDoChung.trangGoc instanceof TrangDatVe) {
                     //((TrangDatVe) this.trangSoDoChung.trangGoc).datSoHieuDaChon(this.trangSoDoChung.soHieuTauChon);
+
+                    Ghe gheCuoi = null;
+                    for (Ghe ghe : this.trangSoDoChung.gheDao.layDSGheDat()) {
+                        gheCuoi = ghe;
+                    }
+
+                    Toa toa = this.trangSoDoChung.toaDao.ChonTheoMa(gheCuoi.getMaToa());
 
                     LocalDateTime ngayKhoiHanh = ((TrangDatVe) this.trangSoDoChung.trangGoc).thanhNhapNgayDi.getDate()       // Lấy ngày khởi hành
                             .toInstant()
@@ -71,7 +79,7 @@ public class HanhDong_TrangCacTau implements ActionListener, MouseListener, Wind
 
                     // Lấy lịch tàu đó
                     LichCapBenGa lich = ((TrangDatVe) this.trangSoDoChung.trangGoc).lichDao.ChonTheoSoHieuNgayKHVaGa(
-                            this.trangSoDoChung.soHieuTauChon,
+                            toa.getSoHieu(),
                             ngayKhoiHanh,
                             this.trangSoDoChung.maGa
                     );
@@ -280,6 +288,14 @@ public class HanhDong_TrangCacTau implements ActionListener, MouseListener, Wind
 
         // Xử lý phản hồi
         if (xacNhan == JOptionPane.YES_OPTION) {
+            // Đặt lại danh sách ghế đã đặt
+            this.trangSoDoChung.gheDao.layDSGheDat().clear();
+            this.trangSoDoChung.gheDao.layDSGheDat().addAll(this.trangSoDoChung.gheDatBanDau);
+
+            // Đặt lại thứ tự ghế đã đặt
+            this.trangSoDoChung.gheDao.layThuTuGheDat().clear();
+            this.trangSoDoChung.gheDao.layThuTuGheDat().addAll(this.trangSoDoChung.thuTuDatBanDau);
+
             ((JFrame) e.getWindow()).dispose();
         } else {
             ((JFrame) e.getWindow()).setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);

@@ -11,14 +11,12 @@ import app.thuc_the.Tau;
 import app.thuc_the.Toa;
 
 import java.awt.event.*;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
+import java.util.List;
 
 public class TrangCacTau extends JFrame {
     public JPanel trangGoc;
@@ -37,6 +35,8 @@ public class TrangCacTau extends JFrame {
 
     private List<TrangCacToa> dsTrangCacToa = new ArrayList<>();
     private List<Boolean> coHieuTauCoQuaGa; // Store the coQuaGa flags dynamically
+    public Set<Ghe> gheDatBanDau;
+    public List<String> thuTuDatBanDau;
 
     /* Khởi tạo phông chữ màu sắc */
     public Color trang = new Color(255, 255, 255);
@@ -85,6 +85,12 @@ public class TrangCacTau extends JFrame {
 
         this.dsTau = dsTau;
         this.dsLichTau = dsLichTau;
+
+        // Sao chép danh sách ghế đã đặt ban đầu
+        this.gheDatBanDau = new HashSet<>(this.gheDao.layDSGheDat());
+
+        // Sao chép danh sách thứ tự đặt ghế ban đầu
+        this.thuTuDatBanDau = new ArrayList<>(this.gheDao.layThuTuGheDat());
 
         /*for (int i = 0 ; i < this.dsLichTau.size() ; i++) {
             System.out.println(this.dsLichTau.get(i).getMaTau());

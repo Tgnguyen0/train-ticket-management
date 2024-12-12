@@ -75,7 +75,7 @@ public class HanhDong_TrangThongTinChiTietVeTau implements ActionListener, Mouse
                    /*
                         cập nhật lại mã vế đã bị thay thế về lại trạng thái Trống
                     */
-                     Ghe_DAO.capNhatTrangThaiGhe_VeTrangThaiTrong(this.trangThongTinChiTietVeTau.maGhe_Old);
+                   Ghe_DAO.capNhatTrangThaiGhe_VeTrangThaiTrong(this.trangThongTinChiTietVeTau.maGhe_Old);
                     // Ghe_DAO.capNhatTrangThaiGhe_VeTrangDaDat(this.trangThongTinChiTietVeTau.tex)
 
                    ((TrangDanhSachVeTau) this.trangThongTinChiTietVeTau.trangCha).textFieldMaGhe.setText(ghe.getMaGhe());

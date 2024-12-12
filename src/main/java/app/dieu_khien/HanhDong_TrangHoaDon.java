@@ -64,7 +64,7 @@ public class HanhDong_TrangHoaDon implements ActionListener, MouseListener, Item
             } else {
                 JOptionPane.showMessageDialog(trangHoaDon, "Bạn chưa chọn hóa đơn!");
             }
-    }else if (source == this.trangHoaDon.buttonTimKiem) {
+        } else if (source == this.trangHoaDon.buttonTimKiem) {
             String maHD = this.trangHoaDon.tfTimKiem.getText().trim();
             String soDienThoai = this.trangHoaDon.tfTimKiem.getText().trim();
             // Kiểm tra xem có nhập mã hóa đơn hoặc mã khách hàng không
@@ -108,8 +108,9 @@ public class HanhDong_TrangHoaDon implements ActionListener, MouseListener, Item
                             o.getTrangThai(),
                             o.getMaNhanVien(),
                     });
-                // Thiết lập hàng đầu tiên là được chọn
-            }}
+                    // Thiết lập hàng đầu tiên là được chọn
+                }
+            }
         } else if (source == trangHoaDon.buttonLamMoi) {
             trangHoaDon.lamMoiDuLieu();
             UIManager.put("OptionPane.messageFont", new Font("Arial", Font.BOLD, 16)); // Đặt font chữ lớn hơn
@@ -130,22 +131,35 @@ public class HanhDong_TrangHoaDon implements ActionListener, MouseListener, Item
 
         } else if (source == trangHoaDon.buttonInHoaDon) {
             int selectedRow = trangHoaDon.tableDanhSach.getSelectedRow();
-            // Nếu không click chọn hóa đơn
             if (selectedRow == -1) {
                 JOptionPane.showMessageDialog(trangHoaDon, "Vui lòng chọn hóa đơn để in.", "Thông báo", JOptionPane.WARNING_MESSAGE);
             } else {
-                // Nếu có hàng được chọn, hiển thị thông báo xác nhận
                 int xacNhan = JOptionPane.showConfirmDialog(trangHoaDon, "Bạn có chắc chắn muốn in hóa đơn này không?", "Xác nhận in hóa đơn", JOptionPane.YES_NO_OPTION);
-                //Trường hợp có
                 if (xacNhan == JOptionPane.YES_OPTION) {
-                    printSelectedInvoice(selectedRow);
-                    JOptionPane.showMessageDialog(trangHoaDon, "In hóa đơn thành công! File hóa đơn đã được lưu.", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-                    trangHoaDon.lamMoiDuLieu();
+                    String maHoaDon = trangHoaDon.tableDanhSach.getValueAt(selectedRow, 1).toString(); // Lấy mã hóa đơn từ bảng
+                    String trangThai = trangHoaDon.tableDanhSach.getValueAt(selectedRow, 7).toString(); // Lấy trạng thái từ bảng
+
+                    printSelectedInvoice(selectedRow); // Thực hiện in hóa đơn
+
+                    if ("Chưa in".equalsIgnoreCase(trangThai)) {
+                        // Cập nhật trạng thái nếu là "Chưa in"
+                        boolean capNhatThanhCong = hoaDon_dao.capNhatTrangThaiHoaDon(maHoaDon);
+                        if (capNhatThanhCong) {
+                            JOptionPane.showMessageDialog(trangHoaDon, "In hóa đơn thành công! Trạng thái đã được cập nhật.", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                        } else {
+                            JOptionPane.showMessageDialog(trangHoaDon, "Lỗi khi cập nhật trạng thái hóa đơn.", "Thông báo", JOptionPane.ERROR_MESSAGE);
+                        }
+                    } else {
+                        // Nếu trạng thái đã là "Đã in", chỉ hiển thị thông báo
+                        JOptionPane.showMessageDialog(trangHoaDon, "In lại hóa đơn thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                    trangHoaDon.lamMoiDuLieu(); // Làm mới dữ liệu trong bảng
                 } else {
                     JOptionPane.showMessageDialog(trangHoaDon, "In hóa đơn thất bại!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                 }
             }
-        }}
+        }
+    }
 
     public void printSelectedInvoice(int selectedRow) {
         // Lấy mã hóa đơn từ hàng đã chọn
@@ -154,6 +168,7 @@ public class HanhDong_TrangHoaDon implements ActionListener, MouseListener, Item
         // Tìm hóa đơn tương ứng từ cơ sở dữ liệu
         HoaDon hoaDon = null;
         KhachHang khachHang = null;
+
         try {
             List<HoaDon> ketQua = hoaDon_dao.TimKiemHoaDon(maHoaDon, null); // Bạn có thể bỏ qua mã khách hàng nếu không cần thiết
             if (!ketQua.isEmpty()) {
