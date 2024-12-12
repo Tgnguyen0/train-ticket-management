@@ -18,7 +18,6 @@ import java.util.Set;
 public class TrangSoDoGheMem extends JPanel {
     //public JPanel trangChua;
     //public JComboBox<String> thanhCacToa;
-    public int kichThuocChu = 13;
     public int chieuDaiNut = 50;
     public int chieuRongNut = 50;
     public PhongChuMoi phongTuyChinh = new PhongChuMoi();
@@ -44,47 +43,49 @@ public class TrangSoDoGheMem extends JPanel {
         this.gheDao = gheDao;
         this.maToa = maToa;
 
-        setSize(new Dimension(800, 300));
+        setSize(new Dimension(800, 250));
         setBackground(trang);
-        setLayout(new BorderLayout());
+        setLayout(new FlowLayout(FlowLayout.CENTER));
 
         this.hanhDong = new HanhDong_TrangSoDoGheMemDieuHoa(this);
         this.thaoTacChuot = new HanhDong_TrangSoDoGheMemDieuHoa(this);
 
         taoTrangTieuDe();
-        taoTrangChuaCacSoDoGhe();
-        taoTrangHuongDan();
+        //taoTrangChuaCacSoDoGhe();
+        taoTrangSoDoGhe();
+        //taoTrangHuongDan();
     }
 
     public void taoTrangTieuDe() {
         JPanel trangTieuDe = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        trangTieuDe.setPreferredSize(new Dimension(800, 40));
+        trangTieuDe.setPreferredSize(new Dimension(800, 32));
         trangTieuDe.setBackground(trang);
 
         JLabel tieuDe = new JLabel("Sơ đồ toa ghế mềm " + this.tenToa, SwingConstants.CENTER);
-        tieuDe.setPreferredSize(new Dimension(800, 40));
+        tieuDe.setPreferredSize(new Dimension(800, 32));
         tieuDe.setForeground(xanhBrandeis);
         tieuDe.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.BOLD, 18));
         trangTieuDe.add(tieuDe);
 
-        add(trangTieuDe, BorderLayout.NORTH);
+        add(trangTieuDe);
     }
 
-    public void taoTrangChuaCacSoDoGhe() {
+    /*public void taoTrangChuaCacSoDoGhe() {
         JPanel trangChuaCacSoDoGhe = new JPanel(new FlowLayout(FlowLayout.CENTER));
         trangChuaCacSoDoGhe.setPreferredSize(new Dimension(800, 100));
-        trangChuaCacSoDoGhe.setBackground(trang);
+        trangChuaCacSoDoGhe.setBackground(Color.pink);
 
         trangChuaCacSoDoGhe.add(taoTrangSoDoGhe());
         add(trangChuaCacSoDoGhe, BorderLayout.CENTER);
-    }
+    }*/
 
-    public JPanel taoTrangSoDoGhe() {
+    public void taoTrangSoDoGhe() {
         JPanel trangSoDoGhe = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 10));
-        trangSoDoGhe.setPreferredSize(new Dimension(810, 400));
+        trangSoDoGhe.setPreferredSize(new Dimension(810, 230));
         trangSoDoGhe.setBackground(trang);
         xepNutGhe(trangSoDoGhe);
-        return trangSoDoGhe;
+
+        add(trangSoDoGhe);
     }
 
     private void xepNutGhe(JPanel trangDung) {
@@ -146,40 +147,5 @@ public class TrangSoDoGheMem extends JPanel {
         }
 
         return xanhBrandeis;
-    }
-
-    public void taoTrangHuongDan() {
-        JPanel trangHuongDan = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        trangHuongDan.setPreferredSize(new Dimension(800, 140));
-        trangHuongDan.setBackground(trang);
-
-        themBieuTuongVaTieuDe(trangHuongDan, "Ghế trống", xanhBrandeis);
-        themBieuTuongVaTieuDe(trangHuongDan, "Ghế đã mua", doDo);
-        themBieuTuongVaTieuDe(trangHuongDan, "Ghế chọn", camNhuomDen);
-
-        add(trangHuongDan, BorderLayout.SOUTH);
-    }
-
-    private void themBieuTuongVaTieuDe(JPanel trangHienTai, String cau, Color mau) {
-        JPanel trangChuaTieuDeVaBieuTuong = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 0));
-        trangChuaTieuDeVaBieuTuong.setPreferredSize(new Dimension(250, chieuRongNut));
-        trangChuaTieuDeVaBieuTuong.setBackground(trang);
-
-        JButton nutBieuTuong = new JButton("");
-        nutBieuTuong.setPreferredSize(new Dimension(chieuDaiNut, chieuRongNut));
-        nutBieuTuong.setBackground(mau);
-        nutBieuTuong.setForeground(trang);
-        nutBieuTuong.setFocusPainted(false);
-        nutBieuTuong.setBorderPainted(false);
-
-        JLabel tieuDe = new JLabel(cau, SwingConstants.LEFT);
-        tieuDe.setPreferredSize(new Dimension(140, chieuRongNut));
-        tieuDe.setForeground(xanhBrandeis);
-        tieuDe.setFont(phongTuyChinh.layPhongRobotoMonoReg(Font.PLAIN, kichThuocChu));
-
-        trangChuaTieuDeVaBieuTuong.add(nutBieuTuong);
-        trangChuaTieuDeVaBieuTuong.add(tieuDe);
-
-        trangHienTai.add(trangChuaTieuDeVaBieuTuong);
     }
 }

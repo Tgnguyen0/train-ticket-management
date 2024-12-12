@@ -87,13 +87,9 @@ public class TrangXacNhanThuHoiTaiKhoan extends JFrame {
         String matKhau = String.valueOf(passwordField.getPassword());
         if(matKhau.equals(NhanVien_DAO.layMatKhau(maNV))){
             JOptionPane.showMessageDialog(this, "Xác nhận thành công");
-            if(NhanVien_DAO.thuHoiTaiKhoan(TrangQuanLyNhanVien.label_hienThiMaNV.getText()) > 0){
-                JOptionPane.showMessageDialog(this, "Thu hồi tài khoản thành công");
-                this.setVisible(false);
-            }
-            else{
-                JOptionPane.showMessageDialog(this, "Thu hồi tài khoản thất bại");
-            }
+            NhanVien_DAO.thuHoiTaiKhoan(TrangQuanLyNhanVien.label_hienThiMaNV.getText());
+            JOptionPane.showMessageDialog(this, "Thu hồi tài khoản thành công");
+            this.setVisible(false);
         }
         else{
             JOptionPane.showMessageDialog(this, "Xác nhận thất bại");

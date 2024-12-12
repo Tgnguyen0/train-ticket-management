@@ -1032,7 +1032,7 @@ public class TrangDanhSachVeTau extends JPanel {
         this.giaVe.setText("");
     }
 
-    public void dayDuLieuVaoBang(){
+    public void dayDuLieuVaoBang() {
         // Hiển thị trạng thái "Đang tải dữ liệu..."
         model.setRowCount(0);
         model.addRow(new Object[]{"Đang tải dữ liệu, vui lòng chờ..."});

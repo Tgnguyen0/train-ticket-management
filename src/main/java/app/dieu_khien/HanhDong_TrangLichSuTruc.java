@@ -12,10 +12,12 @@ import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import java.text.NumberFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 
 public class HanhDong_TrangLichSuTruc implements MouseListener, PropertyChangeListener {
     private TrangLichSuTruc trangLichSuTruc;
@@ -42,12 +44,18 @@ public class HanhDong_TrangLichSuTruc implements MouseListener, PropertyChangeLi
         String maCaTruc = trangLichSuTruc.table.getValueAt(row, 1).toString();
         CaTruc caTruc = CaTruc_DAO.layThongTinCaTruc(maCaTruc);
         trangLichSuTruc.label_hienTongHD.setText(String.valueOf(caTruc.getTongHoaDon()));
-        trangLichSuTruc.label_hienTongTienHT.setText(String.valueOf(caTruc.getTongTienHoaDon()));
-        trangLichSuTruc.label_hienTienCaTruoc.setText(String.valueOf(caTruc.getTongTienCaTruoc()));
-        trangLichSuTruc.label_hienTongThucThu.setText(String.valueOf(caTruc.getTongTienThucThu()));
-        trangLichSuTruc.label_hienChenhLech.setText(String.valueOf(caTruc.getThatThoat()));
-        trangLichSuTruc.label_hienTongVAT.setText(String.valueOf(caTruc.getTongVAT()));
-        trangLichSuTruc.label_hienTongGiamGia.setText(String.valueOf(caTruc.getTongTienGiamGia()));
+        trangLichSuTruc.label_hienTongTienHT.setText(chuyenSangVND(caTruc.getTongTienHoaDon()));
+        trangLichSuTruc.label_hienTienCaTruoc.setText(chuyenSangVND(caTruc.getTongTienCaTruoc()));
+        trangLichSuTruc.label_hienTongThucThu.setText(chuyenSangVND(caTruc.getTongTienThucThu()));
+        if( caTruc.getThatThoat() > 0){
+            trangLichSuTruc.label_hienChenhLech.setText("Dư "+ chuyenSangVND(caTruc.getThatThoat()));
+        } else if (caTruc.getThatThoat() < 0){
+            trangLichSuTruc.label_hienChenhLech.setText("Thiếu " + chuyenSangVND(caTruc.getThatThoat() * -1));
+        } else if (caTruc.getThatThoat() == 0){
+            trangLichSuTruc.label_hienChenhLech.setText("Không chênh lệch");
+            }
+        trangLichSuTruc.label_hienTongVAT.setText(chuyenSangVND(caTruc.getTongVAT()));
+        trangLichSuTruc.label_hienTongGiamGia.setText(chuyenSangVND(caTruc.getTongTienGiamGia()));
     }
 
     @Override
@@ -96,6 +104,12 @@ public class HanhDong_TrangLichSuTruc implements MouseListener, PropertyChangeLi
                     caTruc.getNgayGioKetThuc()
             });
         }
+    }
+    private String chuyenSangVND(double tien) {
+        Locale localeVN = new Locale("vi", "VN");
+        NumberFormat formatter = NumberFormat.getCurrencyInstance(localeVN);
+        String tienVND = formatter.format(tien);
+        return tienVND;
     }
 
 }

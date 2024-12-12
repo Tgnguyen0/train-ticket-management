@@ -22,8 +22,8 @@ public class Tau_DAO {
         this.dsTau = dsTau;
     }
 
-    public Tau ChonTheoMa(String manv) {
-        List<Tau> list = this.chonSql(CHON_THEO_MA_SQL, manv);
+    public Tau ChonTheoMa(String maTau) {
+        List<Tau> list = this.chonSql(CHON_THEO_MA_SQL, maTau);
         return list.size() > 0 ? list.get(0) : null;
     }
 

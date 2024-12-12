@@ -1,9 +1,24 @@
 package app.dao;
 
+import app.giao_dien.TrangHoaDon;
+import app.ket_noi_co_so_du_lieu.JDBCUtil;
+import app.thuc_the.*;
+
+import java.sql.*;
 import app.giao_dien.TrangKetCa;
 import app.ket_noi_co_so_du_lieu.KetNoiCoSoDuLieu;
 import app.thuc_the.DaiNgo;
 import app.thuc_the.HoaDon;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import app.giao_dien.TrangChuaThongKeDoanhThuNhaGa;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 
 import javax.swing.*;
 import java.sql.*;
@@ -23,12 +38,102 @@ public class HoaDon_DAO {
     String CHON_THEO_MAHD_HAY_MAKH_SQL = "SELECT * FROM HoaDon WHERE MaHD =? OR MaKH =?";
 
     ArrayList<HoaDon> dshd;
+
+    Logger logger  = LoggerFactory.getLogger(TrangChuaThongKeDoanhThuNhaGa.class);
+
     //Logger logger = LoggerFactory.getLogger(TrangChuaThongKeDoanhThuNhaGa.class);
+
 
     public HoaDon_DAO() {
         dshd = new ArrayList<HoaDon>();
     }
 
+    public List<HoaDon> layDanhSachHoaDon() {
+        List<HoaDon> danhSachHoaDon = new ArrayList<>();
+        String sql = "SELECT TOP 15 *\n" +
+                "FROM HoaDon\n" +
+                "ORDER BY NgayLap DESC;\n";
+
+        try (Connection conn = JDBCUtil.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            while (rs.next()) {
+                HoaDon hd = new HoaDon();
+                hd.setMaHoaDon(rs.getString("MaHD"));
+                hd.setNgayLapHoaDon(rs.getDate("NgayLap").toLocalDate());
+                hd.setMaNhanVien(rs.getString("MaNV"));
+                hd.setThanhTien(rs.getFloat("ThanhTien"));
+                hd.setMaKhachHang(rs.getString("MaKH"));
+                hd.setSoLuong(rs.getInt("SoLuong"));
+                hd.setTongTien(rs.getFloat("TongTien"));
+                hd.setTrangThai(rs.getString("TrangThai"));
+                if(rs.getFloat("DaiNgo") == 0){
+                    hd.setDaiNgo(DaiNgo.KhongDaiNgo);
+                }
+                else if( rs.getFloat("DaiNgo") == 0.2  ){
+                    hd.setDaiNgo(DaiNgo.GIAMGIAHAIMUOIPHANTRAM);
+                }
+                else if( rs.getFloat("DaiNgo") == 0.1  ){
+                    hd.setDaiNgo(DaiNgo.GIAMGIAMUOIPHANTRAM);
+                }
+                else if( rs.getFloat("DaiNgo") == 0.05  ){
+                    hd.setDaiNgo(DaiNgo.GIAMGIANAMPHANTRAM);
+                }
+
+                //hd.setDaiNgo(rs.getFloat("DaiNgo"));
+                hd.setThue(rs.getFloat("Thue"));
+
+                danhSachHoaDon.add(hd);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return danhSachHoaDon;
+    }
+    public List<HoaDon> TimKiemHoaDon (String maHD, String soDienThoai) throws SQLException {
+        List<HoaDon> danhSachHoaDon = new ArrayList<>();
+        String sql = "SELECT * FROM HoaDon o join KhachHang k on o.MaKH=k.MaKH WHERE o.MaHD LIKE ? OR k.SoDT LIKE ?";
+
+        try (Connection conn = JDBCUtil.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, "%" + maHD + "%"); // Tìm kiếm theo mã hóa đơn
+            ps.setString(2, "%" + soDienThoai + "%"); // Tìm kiếm theo so dien thoại
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                HoaDon hoaDon = new HoaDon();
+                // Giả sử bạn có các phương thức set tương ứng để gán giá trị cho các thuộc tính
+                hoaDon.setMaHoaDon(rs.getString("MaHD"));
+                hoaDon.setMaKhachHang(rs.getString("MaKH"));
+                hoaDon.setNgayLapHoaDon(rs.getDate("NgayLap").toLocalDate());
+                hoaDon.setMaNhanVien(rs.getString("MaNV"));
+                hoaDon.setThanhTien(rs.getFloat("ThanhTien"));
+                hoaDon.setSoLuong(rs.getInt("SoLuong"));
+                hoaDon.setTongTien(rs.getFloat("TongTien"));
+                hoaDon.setTrangThai(rs.getString("TrangThai"));
+                if(rs.getFloat("DaiNgo") == 0){
+                    hoaDon.setDaiNgo(DaiNgo.KhongDaiNgo);
+                }
+                else if( rs.getFloat("DaiNgo") == 0.2  ){
+                    hoaDon.setDaiNgo(DaiNgo.GIAMGIAHAIMUOIPHANTRAM);
+                }
+                else if( rs.getFloat("DaiNgo") == 0.1  ){
+                    hoaDon.setDaiNgo(DaiNgo.GIAMGIAMUOIPHANTRAM);
+                }
+                else if( rs.getFloat("DaiNgo") == 0.05  ){
+                    hoaDon.setDaiNgo(DaiNgo.GIAMGIANAMPHANTRAM);
+                }
+                hoaDon.setThue(rs.getFloat("Thue"));
+                danhSachHoaDon.add(hoaDon);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return danhSachHoaDon;
+    }
     public List<HoaDon> ChonTheoMaHD(String maHD) {
         List<HoaDon> ds = this.chonSql(CHON_THEO_MAHD_SQL, maHD);
         return ds;

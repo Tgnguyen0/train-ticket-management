@@ -116,6 +116,7 @@ public class HanhDong_TrangThanhToan implements ActionListener, MouseListener {
 
         // Cập nhật trạng thái ghế
         for (int i = 0 ; i < this.trangThanhToan.dsGheDat.size() ; i++) {
+            System.out.println(this.trangThanhToan.dsGheDat.get(i).getMaGhe());
             this.trangThanhToan.gheDao.capNhatTrangThaiGhe(TRANG_THAI_GHE.Da_dat.getValue(), this.trangThanhToan.dsGheDat.get(i).getMaGhe());
         }
 

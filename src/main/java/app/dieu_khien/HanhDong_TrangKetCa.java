@@ -32,13 +32,18 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import java.text.NumberFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 import static org.apache.poi.ss.util.CellUtil.createCell;
 
 
 public class HanhDong_TrangKetCa implements ActionListener {
+    private double chenhLech;
+
     public HanhDong_TrangKetCa(TrangKetCa trangKetCa) {
         this.trangKetCa = trangKetCa;
     }
@@ -56,13 +61,15 @@ public class HanhDong_TrangKetCa implements ActionListener {
                 this.trangKetCa.soTo1000--;
                 this.trangKetCa.textField_1000.setText(String.valueOf(this.trangKetCa.soTo1000));
                 this.trangKetCa.tienMat -= 1000;
-                this.trangKetCa.label_hienTien.setText(String.valueOf(this.trangKetCa.tienMat));
+                String tienMat = chuyenSangVND(this.trangKetCa.tienMat);
+                this.trangKetCa.label_hienTien.setText(tienMat);
             }
         } else if (e.getSource() == this.trangKetCa.btn_plus_1000) {
             this.trangKetCa.soTo1000++;
             this.trangKetCa.textField_1000.setText(String.valueOf(this.trangKetCa.soTo1000));
             this.trangKetCa.tienMat += 1000;
-            this.trangKetCa.label_hienTien.setText(String.valueOf(this.trangKetCa.tienMat));
+            String tienMat = chuyenSangVND(this.trangKetCa.tienMat);
+            this.trangKetCa.label_hienTien.setText(tienMat);
 
         } else if (e.getSource() == this.trangKetCa.btn_minus_2000) {
             if (this.trangKetCa.soTo2000 == 0) {
@@ -71,13 +78,15 @@ public class HanhDong_TrangKetCa implements ActionListener {
                 this.trangKetCa.soTo2000--;
                 this.trangKetCa.textField_2000.setText(String.valueOf(this.trangKetCa.soTo2000));
                 this.trangKetCa.tienMat -= 2000;
-                this.trangKetCa.label_hienTien.setText(String.valueOf(this.trangKetCa.tienMat));
+                String tienMat = chuyenSangVND(this.trangKetCa.tienMat);
+                this.trangKetCa.label_hienTien.setText(tienMat);
             }
         } else if (e.getSource() == this.trangKetCa.btn_plus_2000) {
             this.trangKetCa.soTo2000++;
             this.trangKetCa.textField_2000.setText(String.valueOf(this.trangKetCa.soTo2000));
             this.trangKetCa.tienMat += 2000;
-            this.trangKetCa.label_hienTien.setText(String.valueOf(this.trangKetCa.tienMat));
+            String tienMat = chuyenSangVND(this.trangKetCa.tienMat);
+            this.trangKetCa.label_hienTien.setText(tienMat);
         } else if (e.getSource() == this.trangKetCa.btn_minus_5000) {
             if (this.trangKetCa.soTo5000 == 0) {
                 return;
@@ -85,13 +94,15 @@ public class HanhDong_TrangKetCa implements ActionListener {
                 this.trangKetCa.soTo5000--;
                 this.trangKetCa.textField_5000.setText(String.valueOf(this.trangKetCa.soTo5000));
                 this.trangKetCa.tienMat -= 5000;
-                this.trangKetCa.label_hienTien.setText(String.valueOf(this.trangKetCa.tienMat));
+                String tienMat = chuyenSangVND(this.trangKetCa.tienMat);
+                this.trangKetCa.label_hienTien.setText(tienMat);
             }
         } else if (e.getSource() == this.trangKetCa.btn_plus_5000) {
             this.trangKetCa.soTo5000++;
             this.trangKetCa.textField_5000.setText(String.valueOf(this.trangKetCa.soTo5000));
             this.trangKetCa.tienMat += 5000;
-            this.trangKetCa.label_hienTien.setText(String.valueOf(this.trangKetCa.tienMat));
+            String tienMat = chuyenSangVND(this.trangKetCa.tienMat);
+            this.trangKetCa.label_hienTien.setText(tienMat);
         } else if (e.getSource() == this.trangKetCa.btn_minus_10000) {
             if (this.trangKetCa.soTo10000 == 0) {
                 return;
@@ -99,13 +110,15 @@ public class HanhDong_TrangKetCa implements ActionListener {
                 this.trangKetCa.soTo10000--;
                 this.trangKetCa.textField_10000.setText(String.valueOf(this.trangKetCa.soTo10000));
                 this.trangKetCa.tienMat -= 10000;
-                this.trangKetCa.label_hienTien.setText(String.valueOf(this.trangKetCa.tienMat));
+                String tienMat = chuyenSangVND(this.trangKetCa.tienMat);
+                this.trangKetCa.label_hienTien.setText(tienMat);
             }
         } else if (e.getSource() == this.trangKetCa.btn_plus_10000) {
             this.trangKetCa.soTo10000++;
             this.trangKetCa.textField_10000.setText(String.valueOf(this.trangKetCa.soTo10000));
             this.trangKetCa.tienMat += 10000;
-            this.trangKetCa.label_hienTien.setText(String.valueOf(this.trangKetCa.tienMat));
+            String tienMat = chuyenSangVND(this.trangKetCa.tienMat);
+            this.trangKetCa.label_hienTien.setText(tienMat);
 
         } else if (e.getSource() == this.trangKetCa.btn_minus_20000) {
             if (this.trangKetCa.soTo20000 == 0) {
@@ -114,13 +127,15 @@ public class HanhDong_TrangKetCa implements ActionListener {
                 this.trangKetCa.soTo20000--;
                 this.trangKetCa.textField_20000.setText(String.valueOf(this.trangKetCa.soTo20000));
                 this.trangKetCa.tienMat -= 20000;
-                this.trangKetCa.label_hienTien.setText(String.valueOf(this.trangKetCa.tienMat));
+                String tienMat = chuyenSangVND(this.trangKetCa.tienMat);
+                this.trangKetCa.label_hienTien.setText(tienMat);
             }
         } else if (e.getSource() == this.trangKetCa.btn_plus_20000) {
             this.trangKetCa.soTo20000++;
             this.trangKetCa.textField_20000.setText(String.valueOf(this.trangKetCa.soTo20000));
             this.trangKetCa.tienMat += 20000;
-            this.trangKetCa.label_hienTien.setText(String.valueOf(this.trangKetCa.tienMat));
+            String tienMat = chuyenSangVND(this.trangKetCa.tienMat);
+            this.trangKetCa.label_hienTien.setText(tienMat);
         } else if (e.getSource() == this.trangKetCa.btn_minus_50000) {
             if (this.trangKetCa.soTo50000 == 0) {
                 return;
@@ -128,13 +143,15 @@ public class HanhDong_TrangKetCa implements ActionListener {
                 this.trangKetCa.soTo50000--;
                 this.trangKetCa.textField_50000.setText(String.valueOf(this.trangKetCa.soTo50000));
                 this.trangKetCa.tienMat -= 50000;
-                this.trangKetCa.label_hienTien.setText(String.valueOf(this.trangKetCa.tienMat));
+                String tienMat = chuyenSangVND(this.trangKetCa.tienMat);
+                this.trangKetCa.label_hienTien.setText(tienMat);
             }
         } else if (e.getSource() == this.trangKetCa.btn_plus_50000) {
             this.trangKetCa.soTo50000++;
             this.trangKetCa.textField_50000.setText(String.valueOf(this.trangKetCa.soTo50000));
             this.trangKetCa.tienMat += 50000;
-            this.trangKetCa.label_hienTien.setText(String.valueOf(this.trangKetCa.tienMat));
+            String tienMat = chuyenSangVND(this.trangKetCa.tienMat);
+            this.trangKetCa.label_hienTien.setText(tienMat);
         } else if (e.getSource() == this.trangKetCa.btn_minus_100000) {
             if (this.trangKetCa.soTo100000 == 0) {
                 return;
@@ -142,13 +159,15 @@ public class HanhDong_TrangKetCa implements ActionListener {
                 this.trangKetCa.soTo100000--;
                 this.trangKetCa.textField_100000.setText(String.valueOf(this.trangKetCa.soTo100000));
                 this.trangKetCa.tienMat -= 100000;
-                this.trangKetCa.label_hienTien.setText(String.valueOf(this.trangKetCa.tienMat));
+                String tienMat = chuyenSangVND(this.trangKetCa.tienMat);
+                this.trangKetCa.label_hienTien.setText(tienMat);
             }
         } else if (e.getSource() == this.trangKetCa.btn_plus_100000) {
             this.trangKetCa.soTo100000++;
             this.trangKetCa.textField_100000.setText(String.valueOf(this.trangKetCa.soTo100000));
             this.trangKetCa.tienMat += 100000;
-            this.trangKetCa.label_hienTien.setText(String.valueOf(this.trangKetCa.tienMat));
+            String tienMat = chuyenSangVND(this.trangKetCa.tienMat);
+            this.trangKetCa.label_hienTien.setText(tienMat);
         } else if (e.getSource() == this.trangKetCa.btn_minus_200000) {
             if (this.trangKetCa.soTo200000 == 0) {
                 return;
@@ -156,13 +175,15 @@ public class HanhDong_TrangKetCa implements ActionListener {
                 this.trangKetCa.soTo200000--;
                 this.trangKetCa.textField_200000.setText(String.valueOf(this.trangKetCa.soTo200000));
                 this.trangKetCa.tienMat -= 200000;
-                this.trangKetCa.label_hienTien.setText(String.valueOf(this.trangKetCa.tienMat));
+                String tienMat = chuyenSangVND(this.trangKetCa.tienMat);
+                this.trangKetCa.label_hienTien.setText(tienMat);
             }
         } else if (e.getSource() == this.trangKetCa.btn_plus_200000) {
             this.trangKetCa.soTo200000++;
             this.trangKetCa.textField_200000.setText(String.valueOf(this.trangKetCa.soTo200000));
             this.trangKetCa.tienMat += 200000;
-            this.trangKetCa.label_hienTien.setText(String.valueOf(this.trangKetCa.tienMat));
+            String tienMat = chuyenSangVND(this.trangKetCa.tienMat);
+            this.trangKetCa.label_hienTien.setText(tienMat);
         } else if (e.getSource() == this.trangKetCa.btn_minus_500000) {
             if (this.trangKetCa.soTo500000 == 0) {
                 return;
@@ -170,17 +191,21 @@ public class HanhDong_TrangKetCa implements ActionListener {
                 this.trangKetCa.soTo500000--;
                 this.trangKetCa.textField_500000.setText(String.valueOf(this.trangKetCa.soTo500000));
                 this.trangKetCa.tienMat -= 500000;
-                this.trangKetCa.label_hienTien.setText(String.valueOf(this.trangKetCa.tienMat));
+                String tienMat = chuyenSangVND(this.trangKetCa.tienMat);
+                this.trangKetCa.label_hienTien.setText(tienMat);
             }
         } else if (e.getSource() == this.trangKetCa.btn_plus_500000) {
             this.trangKetCa.soTo500000++;
             this.trangKetCa.textField_500000.setText(String.valueOf(this.trangKetCa.soTo500000));
             this.trangKetCa.tienMat += 500000;
-            this.trangKetCa.label_hienTien.setText(String.valueOf(this.trangKetCa.tienMat));
+            String tienMat = chuyenSangVND(this.trangKetCa.tienMat);
+            this.trangKetCa.label_hienTien.setText(tienMat);
         } else if (e.getSource() == trangKetCa.btn_xacNhan) {
             this.xacNhan();
         } else if (e.getSource() == trangKetCa.btn_hoanTat) {
             themCaTruc();
+        } else if (e.getSource() instanceof javax.swing.JTextField) {
+            tinhTienMat();
         }
 
     }
@@ -193,12 +218,12 @@ public class HanhDong_TrangKetCa implements ActionListener {
         String ngayGioKetThuc = trangKetCa.label_hienGioKetCa.getText();
         LocalDateTime ngayGioKetThuc_localDateTime = LocalDateTime.parse(ngayGioKetThuc, formatter);
         int tongHoaDon = Integer.parseInt(trangKetCa.label_hienTongHoaDon.getText());
-        Double tongTienCaTruoc = Double.parseDouble(trangKetCa.label_hienTongTienCaTruoc.getText());
-        Double tongTienHoaDon = Double.parseDouble(trangKetCa.label_hienTongTienHeThong.getText());
-        Double tongTienThucThu = Double.parseDouble(trangKetCa.textField_tienThucThu.getText());
-        Double thatThoat = Double.parseDouble(trangKetCa.label_hienChechLech.getText());
-        Double tongVAT = Double.parseDouble(trangKetCa.label_hienTongVAT.getText());
-        Double tongTienGiamGia = Double.parseDouble(trangKetCa.label_hienTongGiam.getText());
+        Double tongTienCaTruoc = trangKetCa.tienCaTruoc;
+        Double tongTienHoaDon = trangKetCa.tongTienHeThong;
+        Double tongTienThucThu = trangKetCa.tongTien;
+        Double thatThoat = chenhLech;
+        Double tongVAT = trangKetCa.tongVAT;
+        Double tongTienGiamGia = trangKetCa.tongGiamGia;
         CaTruc caTruc = new CaTruc(maNhanVien, ngayGioBatDau_localDateTime, ngayGioKetThuc_localDateTime, tongHoaDon, tongTienCaTruoc, tongTienHoaDon, tongTienThucThu, thatThoat, tongVAT, tongTienGiamGia);
         CaTruc_DAO.themCaTruc(caTruc);
 
@@ -265,32 +290,38 @@ public class HanhDong_TrangKetCa implements ActionListener {
 
             cell = new PdfPCell(new Phrase("Tổng tiền ca trực trước", fontContent));
             table.addCell(cell);
-            cell = new PdfPCell(new Phrase(String.valueOf(caTruc.getTongTienCaTruoc()), fontContent));
+            String tienCaTruoc = chuyenSangVND(caTruc.getTongTienCaTruoc());
+            cell = new PdfPCell(new Phrase(tienCaTruoc, fontContent));
             table.addCell(cell);
 
             cell = new PdfPCell(new Phrase("Tổng tiền hệ thống", fontContent));
             table.addCell(cell);
-            cell = new PdfPCell(new Phrase(String.valueOf(caTruc.getTongTienHoaDon()), fontContent));
+            String tienHoaDon = chuyenSangVND(caTruc.getTongTienHoaDon());
+            cell = new PdfPCell(new Phrase(tienHoaDon, fontContent));
             table.addCell(cell);
 
             cell = new PdfPCell(new Phrase("Tổng VAT", fontContent));
             table.addCell(cell);
-            cell = new PdfPCell(new Phrase(String.valueOf(caTruc.getTongVAT()), fontContent));
+            String tongVAT = chuyenSangVND(caTruc.getTongVAT());
+            cell = new PdfPCell(new Phrase(tongVAT, fontContent));
             table.addCell(cell);
 
             cell = new PdfPCell(new Phrase("Tổng giảm giá", fontContent));
             table.addCell(cell);
-            cell = new PdfPCell(new Phrase(String.valueOf(caTruc.getTongTienGiamGia()), fontContent));
+            String tongGiamGia = chuyenSangVND(caTruc.getTongTienGiamGia());
+            cell = new PdfPCell(new Phrase(tongGiamGia, fontContent));
             table.addCell(cell);
 
             cell = new PdfPCell(new Phrase("Tổng tiền thực thu", fontContent));
             table.addCell(cell);
-            cell = new PdfPCell(new Phrase(String.valueOf(caTruc.getTongTienThucThu()), fontContent));
+            String tienThucThu = chuyenSangVND(caTruc.getTongTienThucThu());
+            cell = new PdfPCell(new Phrase(tienThucThu, fontContent));
             table.addCell(cell);
 
             cell = new PdfPCell(new Phrase("Chênh lệch", fontContent));
             table.addCell(cell);
-            cell = new PdfPCell(new Phrase(String.valueOf(caTruc.getThatThoat()), fontContent));
+
+            cell = new PdfPCell(new Phrase(trangKetCa.label_hienThatThoat.getText(), fontContent));
             table.addCell(cell);
 
             document.add(table);
@@ -331,10 +362,59 @@ public class HanhDong_TrangKetCa implements ActionListener {
         }
 
         trangKetCa.tongTien += tienChuyenKhoan;
-        trangKetCa.textField_tienThucThu.setText(String.valueOf(trangKetCa.tongTien));
-        Double tienHeThong = Double.parseDouble(trangKetCa.label_hienTongTienHeThong.getText());
-        Double chenhLech = tienHeThong - trangKetCa.tongTien;
-        trangKetCa.label_hienChechLech.setText(String.valueOf(chenhLech));
+        String tongTien = chuyenSangVND(trangKetCa.tongTien);
+        trangKetCa.textField_tienThucThu.setText(tongTien);
+        chenhLech = trangKetCa.tongTien - trangKetCa.tongTienHeThong;
+        if(chenhLech > 0){
+            String chenhLechString = chuyenSangVND(chenhLech);
+            trangKetCa.label_hienThatThoat.setText("Dư " + chenhLechString);
+        } else if (chenhLech == 0){
+            trangKetCa.label_hienThatThoat.setText("Không chênh lệch");
+        } else {
+            String chenhLechString = chuyenSangVND(chenhLech);
+            trangKetCa.label_hienThatThoat.setText("Thiếu " + chenhLechString);
+        }
+    }
+    private String chuyenSangVND(double tien) {
+        Locale localeVN = new Locale("vi", "VN");
+        NumberFormat formatter = NumberFormat.getCurrencyInstance(localeVN);
+        String tienVND = formatter.format(tien);
+        return tienVND;
+    }
+
+    private int layGiaTriTextField(javax.swing.JTextField textField) {
+        try {
+            return Integer.parseInt(textField.getText());
+        } catch (NumberFormatException e) {
+            return 0; // Trả về 0 nếu người dùng không nhập
+        }
+    }
+    private void tinhTienMat() {
+        this.trangKetCa.soTo1000 = layGiaTriTextField(this.trangKetCa.textField_1000);
+        this.trangKetCa.soTo2000 = layGiaTriTextField(this.trangKetCa.textField_2000);
+        this.trangKetCa.soTo5000 = layGiaTriTextField(this.trangKetCa.textField_5000);
+        this.trangKetCa.soTo10000 = layGiaTriTextField(this.trangKetCa.textField_10000);
+        this.trangKetCa.soTo20000 = layGiaTriTextField(this.trangKetCa.textField_20000);
+        this.trangKetCa.soTo50000 = layGiaTriTextField(this.trangKetCa.textField_50000);
+        this.trangKetCa.soTo100000 = layGiaTriTextField(this.trangKetCa.textField_100000);
+        this.trangKetCa.soTo200000 = layGiaTriTextField(this.trangKetCa.textField_200000);
+        this.trangKetCa.soTo500000 = layGiaTriTextField(this.trangKetCa.textField_500000);
+
+        this.trangKetCa.tienMat =
+                this.trangKetCa.soTo1000 * 1000 +
+                        this.trangKetCa.soTo2000 * 2000 +
+                        this.trangKetCa.soTo5000 * 5000 +
+                        this.trangKetCa.soTo10000 * 10000 +
+                        this.trangKetCa.soTo20000 * 20000 +
+                        this.trangKetCa.soTo50000 * 50000 +
+                        this.trangKetCa.soTo100000 * 100000 +
+                        this.trangKetCa.soTo200000 * 200000 +
+                        this.trangKetCa.soTo500000 * 500000;
+
+        String tienMat = chuyenSangVND(this.trangKetCa.tienMat);
+        this.trangKetCa.label_hienTien.setText(tienMat);
+        System.out.println("Số tờ 500000: " + this.trangKetCa.soTo500000);
+        System.out.println("Tổng tiền mặt: " + this.trangKetCa.tienMat);
     }
 
 }

@@ -49,8 +49,9 @@ public class HanhDong_TrangQuanLyNhanVien implements ActionListener, MouseListen
     }
 
     private void thuHoi() {
-        String maNV = trangQuanLyNhanVien.label_hienThiMaNV.getText();
-        if (maNV.equals("<<mã nhân viên>>")){
+        String maNV = TrangQuanLyNhanVien.label_hienThiMaNV.getText();
+        String regexMaNV = "NV\\d{4}";
+        if (!maNV.matches(regexMaNV)) {
             JOptionPane.showMessageDialog(trangQuanLyNhanVien, "Vui lòng chọn nhân viên cần thu hồi");
             return;
         }
@@ -64,7 +65,7 @@ public class HanhDong_TrangQuanLyNhanVien implements ActionListener, MouseListen
     }
 
     private void capNhat() {
-        String maNV = trangQuanLyNhanVien.label_hienThiMaNV.getText();
+        String maNV = TrangQuanLyNhanVien.label_hienThiMaNV.getText();
         if (maNV.equals("<mã nhân viên>")){
             JOptionPane.showMessageDialog(trangQuanLyNhanVien, "Vui lòng chọn nhân viên cần cập nhật");
             return;
@@ -183,19 +184,17 @@ public class HanhDong_TrangQuanLyNhanVien implements ActionListener, MouseListen
             vaiTro = "manager";
         }
         NhanVien nv = new NhanVien(tenTuInHoa.toString(), ngaySinhLocalDate, diaChi, soDienThoai, gioiTinh, vaiTro);
-        if (NhanVien_DAO.themNhanVien(nv) > 0) {
-            JOptionPane.showMessageDialog(trangQuanLyNhanVien, "Thêm nhân viên thành công");
-        } else {
-            JOptionPane.showMessageDialog(trangQuanLyNhanVien, "Thêm nhân viên thất bại");
-        }
+        NhanVien_DAO.themNhanVien(nv);
+        JOptionPane.showMessageDialog(trangQuanLyNhanVien, "Thêm nhân viên thành công");
+
     }
 
     private void xemLichSuTruc() {
-        if(trangQuanLyNhanVien.label_hienThiMaNV.getText().equals("<mã nhân viên>")){
+        if(TrangQuanLyNhanVien.label_hienThiMaNV.getText().equals("<mã nhân viên>")){
             JOptionPane.showMessageDialog(trangQuanLyNhanVien, "Vui lòng chọn nhân viên cần xem lịch sử trực");
             return;
         }
-        TrangQuanLyNhanVien.maNV = trangQuanLyNhanVien.label_hienThiMaNV.getText();
+        TrangQuanLyNhanVien.maNV = TrangQuanLyNhanVien.label_hienThiMaNV.getText();
         TrangLichSuTruc trangLichSuTruc = new TrangLichSuTruc();
         trangLichSuTruc.hienDanhSachTruc(TrangQuanLyNhanVien.maNV);
         trangLichSuTruc.datMaVaTenNhanVien(TrangQuanLyNhanVien.maNV, trangQuanLyNhanVien.textField_HoTen.getText());
@@ -209,9 +208,9 @@ public class HanhDong_TrangQuanLyNhanVien implements ActionListener, MouseListen
             String maNV = (String) trangQuanLyNhanVien.table.getValueAt(row, 1);
             NhanVien nv = NhanVien_DAO.layThongTinNV(maNV);
             if(nv.getTenDangNhap().equals("Đã thu hồi")){
-                trangQuanLyNhanVien.label_hienThiMaNV.setText(nv.getMaNV() + " (Đã thu hồi)");
+                TrangQuanLyNhanVien.label_hienThiMaNV.setText(nv.getMaNV() + " (Đã thu hồi)");
             } else {
-                trangQuanLyNhanVien.label_hienThiMaNV.setText(nv.getMaNV());
+                TrangQuanLyNhanVien.label_hienThiMaNV.setText(nv.getMaNV());
             }
             trangQuanLyNhanVien.textField_HoTen.setText(nv.getTenNV());
             trangQuanLyNhanVien.textField_SDT.setText(nv.getSoDT());
