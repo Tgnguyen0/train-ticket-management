@@ -1,6 +1,7 @@
 package app.dieu_khien;
 
 import app.giao_dien.TrangChuaThongKeNhanVienTheoThang;
+import app.phan_tu_tuy_chinh.GanAmThanh;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -17,6 +18,8 @@ public class HanhDong_TrangThongKeNhanVienTheoThang implements ActionListener, M
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        GanAmThanh.playSound();
+
         if(e.getSource() == this.trangChuaThongKeNhanVienTheoThang.buttonThongKeDoanhThu){
             CardLayout cardLayout = (CardLayout) this.trangChuaThongKeNhanVienTheoThang.trangDinhHuong.getTrangChua().getLayout();
             cardLayout.show(this.trangChuaThongKeNhanVienTheoThang.trangDinhHuong.getTrangChua(), "Trang Thong Ke");

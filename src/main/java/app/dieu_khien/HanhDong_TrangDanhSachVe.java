@@ -4,6 +4,7 @@ import app.dao.*;
 import app.giao_dien.TrangDanhSachVeTau;
 import app.giao_dien.TrangDinhHuong;
 import app.giao_dien.TrangThongTinChiTietVeTau;
+import app.phan_tu_tuy_chinh.GanAmThanh;
 import app.phan_tu_tuy_chinh.TaoVeBangFilePDF;
 import app.thuc_the.Ghe;
 import app.thuc_the.KhachHang;
@@ -50,6 +51,8 @@ public class HanhDong_TrangDanhSachVe implements ActionListener, MouseListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        GanAmThanh.playSound();
+
         if (e.getSource() == this.trangDanhSachVeTau.buttonLamMoi) {
             this.trangDanhSachVeTau.lamMoiCacThanh();
             //this.trangDanhSachVeTau.dayDuLieuVaoBang();
@@ -164,6 +167,7 @@ public class HanhDong_TrangDanhSachVe implements ActionListener, MouseListener {
         }
         else if(e.getSource() == this.trangDanhSachVeTau.buttonToanBoDanhSachVe){
             this.trangDanhSachVeTau.dayDuLieuVaoBang();
+            this.trangDanhSachVeTau.lamMoiCacThanh();
         }
     }
 

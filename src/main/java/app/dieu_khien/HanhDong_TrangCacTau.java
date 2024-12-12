@@ -3,6 +3,7 @@ package app.dieu_khien;
 import app.dao.Tau_DAO;
 import app.dao.Toa_DAO;
 import app.giao_dien.*;
+import app.phan_tu_tuy_chinh.GanAmThanh;
 import app.phan_tu_tuy_chinh.NutAnh;
 import app.thuc_the.Ghe;
 import app.thuc_the.LichCapBenGa;
@@ -24,6 +25,8 @@ public class HanhDong_TrangCacTau implements ActionListener, MouseListener, Wind
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        GanAmThanh.playSound();
+
         CardLayout cardLayout = (CardLayout) this.trangSoDoChung.trangChua.getLayout();
         String command = e.getActionCommand();
 

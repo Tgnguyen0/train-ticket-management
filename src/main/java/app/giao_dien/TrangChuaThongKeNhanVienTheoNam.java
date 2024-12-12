@@ -129,8 +129,18 @@ public class TrangChuaThongKeNhanVienTheoNam extends JPanel{
         buttonThongKeTheoThangCuaNhanVien = new    JButton();
         model_DanhSachNam = new DefaultComboBoxModel<>();
         model_DanhSachNhanVienUuTu = new DefaultTableModel(new String [] {
-                "STT",  "Họ Và Tên", "Tổng Doanh Thu"}, 0);
-        model_TongDoanhThu = new DefaultTableModel(new String [] {"Năm", "Tổng Doanh Thu"}, 0);
+                "STT",  "Họ Và Tên", "Tổng Doanh Thu"}, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // Không cho phép chỉnh sửa bất kỳ ô nào
+            }
+        };
+        model_TongDoanhThu = new DefaultTableModel(new String [] {"Năm", "Tổng Doanh Thu"}, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // Không cho phép chỉnh sửa bất kỳ ô nào
+            }
+        };
         //this.setDefaultCloseOperation(   WindowConstants.EXIT_ON_CLOSE);
 
 
@@ -164,9 +174,16 @@ public class TrangChuaThongKeNhanVienTheoNam extends JPanel{
         /*
             xử lý dữ liệu
          */
+        // lấy danh sách các năm
         this.dayDanhSachNam();
+
+        // tỉnh tổng doanh thu với năm mặc định
         this.tinhTongDoanhThu();
+
+        // lấy các nhân viên ưu tú
         this.layCacNhanVienUuTu();
+
+        // tạo biểu đồ cột thống kê doanh thu nhân viên
         this.taoBieuDoCotThongKeDoanhThuNhanVien();
 
         this.ac = new HanhDong_TrangThongKeNhanVienTheoNam(this);
@@ -567,7 +584,7 @@ public class TrangChuaThongKeNhanVienTheoNam extends JPanel{
     }
 
     public void thietLap_TrangChuaBieuDo(){
-        labelGioiThieuThongKe.setText("Thống Kê Doanh Thu Theo Năm Của Nhân Viên");
+        labelGioiThieuThongKe.setText("Thống Kê Doanh Thu Của Nhân Viên Theo Năm");
         labelGioiThieuThongKe.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.BOLD, 15));
 
 

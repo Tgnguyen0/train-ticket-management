@@ -2,6 +2,7 @@ package app.dieu_khien;
 
 import app.dao.HoaDon_DAO;
 import app.giao_dien.*;
+import app.phan_tu_tuy_chinh.GanAmThanh;
 import app.phan_tu_tuy_chinh.TaoHoaDonFilePDF;
 import app.thuc_the.HoaDon;
 import app.thuc_the.KhachHang;
@@ -28,6 +29,7 @@ public class HanhDong_TrangHoaDon implements ActionListener, MouseListener, Item
     @Override
     public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
+        GanAmThanh.playSound();
 
         if (source == this.trangHoaDon.buttonChiTiet) {
             int selectedRow = trangHoaDon.tableDanhSach.getSelectedRow();

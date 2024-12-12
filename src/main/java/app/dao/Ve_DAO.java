@@ -283,7 +283,7 @@ public class Ve_DAO {
 
     public static List<Ve> layToanBoVe() {
         List<Ve> danhSachVe = new ArrayList<>();
-        String sql = "SELECT * FROM Ve";
+        String sql = "select * from Ve order by NgayDatVe DESC";
         try {
             Connection connection = KetNoiCoSoDuLieu.ketNoiDB_HinhDB();
             PreparedStatement statement = null;

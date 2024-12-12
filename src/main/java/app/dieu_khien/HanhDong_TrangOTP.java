@@ -3,6 +3,7 @@ package app.dieu_khien;
 import app.dao.NhanVien_DAO;
 import app.giao_dien.TrangOTP;
 import app.giao_dien.TrangQuenMatKhau;
+import app.phan_tu_tuy_chinh.GanAmThanh;
 import app.thuc_the.NhanVien;
 
 import javax.swing.*;
@@ -23,6 +24,8 @@ public class HanhDong_TrangOTP implements ActionListener, MouseListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        GanAmThanh.playSound();
+
         if (e.getSource() == trangOTP.btn_guiOTP) {
             // Code here
             maNV = trangOTP.textField_nhapMaNV.getText();

@@ -2,6 +2,7 @@ package app.dieu_khien;
 
 import app.giao_dien.TrangDinhHuong;
 import app.giao_dien.TrangNhanVien;
+import app.phan_tu_tuy_chinh.GanAmThanh;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,6 +19,8 @@ public class HanhDong_TrangDinhHuong implements ActionListener, MouseListener {
     }
 
     public void actionPerformed(ActionEvent e) {
+        GanAmThanh.playSound();
+
         CardLayout cardLayout = (CardLayout) this.trangDinhHuong.trangChua.getLayout();
         String command = e.getActionCommand();
 

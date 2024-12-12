@@ -1,6 +1,7 @@
 package app.dieu_khien;
 
 import app.giao_dien.TrangSoDoGiuong2;
+import app.phan_tu_tuy_chinh.GanAmThanh;
 import app.thuc_the.Ghe;
 import app.thuc_the.TRANG_THAI_GHE;
 
@@ -18,6 +19,8 @@ public class HanhDong_TrangSoDoGiuong2 implements ActionListener, MouseListener 
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        GanAmThanh.playSound();
+
         JButton nutGhe = (JButton) e.getSource();
         int soGhe = Integer.parseInt(nutGhe.getText()) - 1; // -1 để chuyển từ ghế số sang chỉ số mảng
         Ghe ghe = this.trangSoDoGiuong2.dsGiuong.get(soGhe);

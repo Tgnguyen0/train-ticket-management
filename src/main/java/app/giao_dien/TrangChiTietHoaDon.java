@@ -1,6 +1,7 @@
 package app.giao_dien;
 
 import app.dao.ChiTietHoaDon_DAO;
+import app.dao.Ghe_DAO;
 import app.dao.HoaDon_DAO;
 import app.dao.Ve_DAO;
 import app.dieu_khien.HanhDong_TrangChiTietHoaDon;
@@ -8,6 +9,7 @@ import app.phan_tu_tuy_chinh.CustomCellRenderer;
 import app.phan_tu_tuy_chinh.CustomHeaderRenderer;
 import app.phong_chu_moi.PhongChuMoi;
 import app.thuc_the.DaiNgo;
+import app.thuc_the.Ghe;
 import app.thuc_the.HoaDon;
 import app.thuc_the.Ve;
 import org.slf4j.Logger;
@@ -33,11 +35,15 @@ public class TrangChiTietHoaDon extends JFrame {
     public javax.swing.JLabel label_TienKhachTra;
     public javax.swing.JLabel label_TieuDe;
     public javax.swing.JLabel label_TongTien;
+    private javax.swing.JLabel label_KhuyenMai;
+    private javax.swing.JLabel label_TienPhat;
     public javax.swing.JScrollPane scrollPane;
+    private javax.swing.JTextField textField_TienPhat;
+    private javax.swing.JTextField textField_KhuyenMai;
     public javax.swing.JTable table_DanhSachVe;
     public javax.swing.JTextField textField_SoLuong;
     public javax.swing.JTextField textField_TienKhachTra;
-    public javax.swing.JTextField textField_TongTiien;
+    public javax.swing.JTextField textField_TongTien;
     public javax.swing.JPanel trangChua_ChiTietThongTin;
     public javax.swing.JPanel trangChua_DanhSachVe;
     public javax.swing.JPanel trangChua_NutXacNhan;
@@ -45,7 +51,8 @@ public class TrangChiTietHoaDon extends JFrame {
     public javax.swing.JPanel trangChua_TienKhachTra;
     public javax.swing.JPanel trangChua_TieuDe;
     public javax.swing.JPanel trangChua_TongTien;
-
+    private javax.swing.JPanel trangChua_KhuyenMai;
+    private javax.swing.JPanel trangChua_TienPhat;
     public DefaultTableModel model;
     public Color xanhBrandeis = new Color(0, 112, 255);
     private TrangDanhSachVeTau trangDanhSachVeTau;
@@ -55,6 +62,7 @@ public class TrangChiTietHoaDon extends JFrame {
     Logger logger = LoggerFactory.getLogger(TrangChiTietHoaDon.class);
 
     public TrangChiTietHoaDon(String maVe, TrangDanhSachVeTau trangDanhSachVeTau){
+
         trangChua_TieuDe = new javax.swing.JPanel();
         label_TieuDe = new javax.swing.JLabel();
         trangChua_DanhSachVe = new javax.swing.JPanel();
@@ -64,15 +72,22 @@ public class TrangChiTietHoaDon extends JFrame {
         trangChua_ChiTietThongTin = new javax.swing.JPanel();
         trangChua_TongTien = new javax.swing.JPanel();
         label_TongTien = new javax.swing.JLabel();
-        textField_TongTiien = new javax.swing.JTextField();
+        textField_TongTien = new javax.swing.JTextField();
         trangChua_SoLuong = new javax.swing.JPanel();
         label_SoLuong = new javax.swing.JLabel();
         textField_SoLuong = new javax.swing.JTextField();
         trangChua_TienKhachTra = new javax.swing.JPanel();
         label_TienKhachTra = new javax.swing.JLabel();
         textField_TienKhachTra = new javax.swing.JTextField();
+        trangChua_KhuyenMai = new javax.swing.JPanel();
+        label_KhuyenMai = new javax.swing.JLabel();
+        textField_KhuyenMai = new javax.swing.JTextField();
+        trangChua_TienPhat = new javax.swing.JPanel();
+        label_TienPhat = new javax.swing.JLabel();
+        textField_TienPhat = new javax.swing.JTextField();
         trangChua_NutXacNhan = new javax.swing.JPanel();
         button_XacNhan = new javax.swing.JButton();
+        
         model = new javax.swing.table.DefaultTableModel(null, new String [] {"STT", "Mã Vé", "Giá Vé" });
         this.maVe = maVe;
         this.trangDanhSachVeTau =trangDanhSachVeTau;
@@ -174,23 +189,23 @@ public class TrangChiTietHoaDon extends JFrame {
     }
 
     private void thietLap_TrangChuaThongTinChiTiet(){
-        label_TongTien.setText("Tổng Tiền:");
+        label_TongTien.setText("Tổng Tiền Còn Lại:");
         label_TongTien.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.BOLD, 13));
 
-        textField_TongTiien.setText("");
-        textField_TongTiien.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.BOLD, 14));
-        textField_TongTiien.setForeground(Color.BLUE);
-        textField_TongTiien.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, xanhBrandeis));
+        textField_TongTien.setText("");
+        textField_TongTien.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.BOLD, 14));
+        textField_TongTien.setForeground(Color.BLUE);
+        textField_TongTien.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, xanhBrandeis));
 
         javax.swing.GroupLayout trangChua_TongTienLayout = new javax.swing.GroupLayout(trangChua_TongTien);
         trangChua_TongTien.setLayout(trangChua_TongTienLayout);
         trangChua_TongTienLayout.setHorizontalGroup(
                 trangChua_TongTienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(trangChua_TongTienLayout.createSequentialGroup()
-                                .addGap(90, 90, 90)
-                                .addComponent(label_TongTien, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(47, 47, 47)
+                                .addComponent(label_TongTien, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(textField_TongTiien, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(textField_TongTien, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(46, 46, 46))
         );
         trangChua_TongTienLayout.setVerticalGroup(
@@ -199,7 +214,7 @@ public class TrangChiTietHoaDon extends JFrame {
                                 .addContainerGap()
                                 .addGroup(trangChua_TongTienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(label_TongTien)
-                                        .addComponent(textField_TongTiien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(textField_TongTien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addContainerGap(10, Short.MAX_VALUE))
         );
 
@@ -247,7 +262,7 @@ public class TrangChiTietHoaDon extends JFrame {
                         .addGroup(trangChua_TienKhachTraLayout.createSequentialGroup()
                                 .addGap(43, 43, 43)
                                 .addComponent(label_TienKhachTra, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
                                 .addComponent(textField_TienKhachTra, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(47, 47, 47))
         );
@@ -258,7 +273,65 @@ public class TrangChiTietHoaDon extends JFrame {
                                 .addGroup(trangChua_TienKhachTraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(label_TienKhachTra)
                                         .addComponent(textField_TienKhachTra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addContainerGap(13, Short.MAX_VALUE))
+                                .addContainerGap(7, Short.MAX_VALUE))
+        );
+
+        label_KhuyenMai.setText("Khuyến Mãi:");
+        label_KhuyenMai.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.BOLD, 13));
+
+        textField_KhuyenMai.setText("");
+        textField_KhuyenMai.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.BOLD, 14));
+        textField_KhuyenMai.setForeground(Color.BLUE);
+        textField_KhuyenMai.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, xanhBrandeis));
+
+        javax.swing.GroupLayout trangChua_KhuyenMaiLayout = new javax.swing.GroupLayout(trangChua_KhuyenMai);
+        trangChua_KhuyenMai.setLayout(trangChua_KhuyenMaiLayout);
+        trangChua_KhuyenMaiLayout.setHorizontalGroup(
+                trangChua_KhuyenMaiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(trangChua_KhuyenMaiLayout.createSequentialGroup()
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(label_KhuyenMai, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(62, 62, 62)
+                                .addComponent(textField_KhuyenMai, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(47, 47, 47))
+        );
+        trangChua_KhuyenMaiLayout.setVerticalGroup(
+                trangChua_KhuyenMaiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(trangChua_KhuyenMaiLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(trangChua_KhuyenMaiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(label_KhuyenMai)
+                                        .addComponent(textField_KhuyenMai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        label_TienPhat.setText("Tiền Phạt:");
+        label_TienPhat.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.BOLD, 13));
+
+        textField_TienPhat.setText("");
+        textField_TienPhat.setFont(new PhongChuMoi().layPhongRobotoMonoReg(Font.BOLD, 14));
+        textField_TienPhat.setForeground(Color.BLUE);
+        textField_TienPhat.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, xanhBrandeis));
+
+        javax.swing.GroupLayout trangChua_TienPhatLayout = new javax.swing.GroupLayout(trangChua_TienPhat);
+        trangChua_TienPhat.setLayout(trangChua_TienPhatLayout);
+        trangChua_TienPhatLayout.setHorizontalGroup(
+                trangChua_TienPhatLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(trangChua_TienPhatLayout.createSequentialGroup()
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(label_TienPhat, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(53, 53, 53)
+                                .addComponent(textField_TienPhat, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(47, 47, 47))
+        );
+        trangChua_TienPhatLayout.setVerticalGroup(
+                trangChua_TienPhatLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(trangChua_TienPhatLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(trangChua_TienPhatLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(label_TienPhat)
+                                        .addComponent(textField_TienPhat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout trangChua_ChiTietThongTinLayout = new javax.swing.GroupLayout(trangChua_ChiTietThongTin);
@@ -269,7 +342,9 @@ public class TrangChiTietHoaDon extends JFrame {
                                 .addGroup(trangChua_ChiTietThongTinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(trangChua_TongTien, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(trangChua_SoLuong, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(trangChua_TienKhachTra, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addComponent(trangChua_TienKhachTra, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(trangChua_KhuyenMai, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(trangChua_TienPhat, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addContainerGap())
         );
         trangChua_ChiTietThongTinLayout.setVerticalGroup(
@@ -280,9 +355,12 @@ public class TrangChiTietHoaDon extends JFrame {
                                 .addComponent(trangChua_SoLuong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(trangChua_TienKhachTra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(trangChua_KhuyenMai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(trangChua_TienPhat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap())
         );
-
     }
 
     public void thietLap_TrangChuaButtonXacNhan(){
@@ -379,8 +457,10 @@ public class TrangChiTietHoaDon extends JFrame {
         this.hoaDon.setTrangThai("Chưa In");
         this.hoaDon.setNgayLapHoaDon(LocalDate.from(LocalDateTime.now()));
 
-        this.textField_TongTiien.setText(currencyFormatter.format(thanhTien));
+        this.textField_TongTien.setText(currencyFormatter.format(thanhTien));
         this.textField_TienKhachTra.setText(currencyFormatter.format(this.ve.getGiaVe() - tienPhat));
+        this.textField_TienPhat.setText(currencyFormatter.format(tienPhat));
+        this.textField_KhuyenMai.setText(hoaDon.getDaiNgo().getValue()+"%");
     }
 
     public double tongTienSauKhuyenMai(double tongTien){
@@ -407,7 +487,9 @@ public class TrangChiTietHoaDon extends JFrame {
     public void caiDatEnableCacThanhTextField(){
         this.textField_SoLuong.setEditable(false);
         this.textField_TienKhachTra.setEditable(false);
-        this.textField_TongTiien.setEditable(false);
+        this.textField_TongTien.setEditable(false);
+        this.textField_KhuyenMai.setEditable(false);
+        this.textField_TienPhat.setEditable(false);
     }
 
     public HoaDon getHoaDon() {
@@ -425,6 +507,7 @@ public class TrangChiTietHoaDon extends JFrame {
         if(this.trangDanhSachVeTau.xacNhan){
             // JOptionPane.showMessageDialog(null, "Hủy Vé Thành Công!");
             Ve_DAO.xoaVe(maVe);
+            Ghe_DAO.capNhatTrangThaiGhe_VeTrangThaiTrong(this.ve.getMaGhe());
             int location = this.trangDanhSachVeTau.table.getSelectedRow();
             logger.info(location+"");
             this.trangDanhSachVeTau.model.removeRow(location);
