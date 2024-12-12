@@ -61,7 +61,7 @@ public class HoaDon_DAO {
             int rowsUpdated = preparedStatement.executeUpdate();
 
             // Kiểm tra số hàng được cập nhật
-            return rowsUpdated > 0;
+            return rowsUpdated > 0 || rowsUpdated == -1;
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
@@ -75,7 +75,7 @@ public class HoaDon_DAO {
 
     public List<HoaDon> layDanhSachHoaDon() {
         List<HoaDon> danhSachHoaDon = new ArrayList<>();
-        String sql = "SELECT TOP 15 *\n" +
+        String sql = "SELECT TOP 30 *\n" +
                 "FROM HoaDon\n" +
                 "ORDER BY NgayLap DESC;\n";
 
@@ -117,6 +117,7 @@ public class HoaDon_DAO {
 
         return danhSachHoaDon;
     }
+
     public List<HoaDon> TimKiemHoaDon (String maHD, String soDienThoai) throws SQLException {
         List<HoaDon> danhSachHoaDon = new ArrayList<>();
         String sql = "SELECT * FROM HoaDon o join KhachHang k on o.MaKH=k.MaKH WHERE o.MaHD LIKE ? OR k.SoDT LIKE ?";

@@ -166,7 +166,7 @@ public class TrangLichSuTruc extends JFrame {
         label_chenhLech.setFont(new Font("Tahoma", Font.PLAIN, 30));
 
         label_hienChenhLech = new JLabel("<<Chênh lệch>>");
-        label_hienChenhLech.setBounds(235, 227, 238, 37);
+        label_hienChenhLech.setBounds(235, 227, 350, 37);
         panel_chiTietCaTruc.add(label_hienChenhLech);
         label_hienChenhLech.setFont(new Font("Tahoma", Font.PLAIN, 30));
 

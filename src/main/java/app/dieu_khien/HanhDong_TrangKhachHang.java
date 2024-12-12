@@ -100,7 +100,13 @@ public class HanhDong_TrangKhachHang implements ActionListener, MouseListener {
                 ((TrangDatVe) TrangDinhHuong.getTrangChua().getComponent(1)).nutLuaChonNu.setSelected(true);
             }
 
-           return true;
+            for (int i = 0 ; i < dsHangCho.size(); i++) {
+                ((TrangDatVe) TrangDinhHuong.getTrangChua().getComponent(1)).thanhChonKhachHang.addItem(dsHangCho.get(i).getMaKH());
+            }
+
+            ((TrangDatVe) TrangDinhHuong.getTrangChua().getComponent(1)).thanhChonKhachHang.setSelectedItem(dsHangCho.get(0).getMaKH());
+
+            return true;
         }
         return false;
     }

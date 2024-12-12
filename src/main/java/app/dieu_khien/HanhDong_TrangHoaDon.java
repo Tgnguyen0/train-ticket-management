@@ -66,7 +66,7 @@ public class HanhDong_TrangHoaDon implements ActionListener, MouseListener, Item
             } else {
                 JOptionPane.showMessageDialog(trangHoaDon, "Bạn chưa chọn hóa đơn!");
             }
-    }else if (source == this.trangHoaDon.buttonTimKiem) {
+        } else if (source == this.trangHoaDon.buttonTimKiem) {
             String maHD = this.trangHoaDon.tfTimKiem.getText().trim();
             String soDienThoai = this.trangHoaDon.tfTimKiem.getText().trim();
             // Kiểm tra xem có nhập mã hóa đơn hoặc mã khách hàng không
@@ -110,8 +110,9 @@ public class HanhDong_TrangHoaDon implements ActionListener, MouseListener, Item
                             o.getTrangThai(),
                             o.getMaNhanVien(),
                     });
-                // Thiết lập hàng đầu tiên là được chọn
-            }}
+                    // Thiết lập hàng đầu tiên là được chọn
+                }
+            }
         } else if (source == trangHoaDon.buttonLamMoi) {
             trangHoaDon.lamMoiDuLieu();
             UIManager.put("OptionPane.messageFont", new Font("Arial", Font.BOLD, 16)); // Đặt font chữ lớn hơn
@@ -131,23 +132,6 @@ public class HanhDong_TrangHoaDon implements ActionListener, MouseListener, Item
             this.trangHoaDon.model.addRow(duLieu);
 
         } else if (source == trangHoaDon.buttonInHoaDon) {
-            int selectedRow = trangHoaDon.tableDanhSach.getSelectedRow();
-            // Nếu không click chọn hóa đơn
-            if (selectedRow == -1) {
-                JOptionPane.showMessageDialog(trangHoaDon, "Vui lòng chọn hóa đơn để in.", "Thông báo", JOptionPane.WARNING_MESSAGE);
-            } else {
-                // Nếu có hàng được chọn, hiển thị thông báo xác nhận
-                int xacNhan = JOptionPane.showConfirmDialog(trangHoaDon, "Bạn có chắc chắn muốn in hóa đơn này không?", "Xác nhận in hóa đơn", JOptionPane.YES_NO_OPTION);
-                //Trường hợp có
-                if (xacNhan == JOptionPane.YES_OPTION) {
-                    printSelectedInvoice(selectedRow);
-                    JOptionPane.showMessageDialog(trangHoaDon, "In hóa đơn thành công! File hóa đơn đã được lưu.", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-                    trangHoaDon.lamMoiDuLieu();
-                } else {
-                    JOptionPane.showMessageDialog(trangHoaDon, "In hóa đơn thất bại!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-                }
-            }
-        }else if (source == trangHoaDon.buttonInHoaDon) {
             int selectedRow = trangHoaDon.tableDanhSach.getSelectedRow();
             if (selectedRow == -1) {
                 JOptionPane.showMessageDialog(trangHoaDon, "Vui lòng chọn hóa đơn để in.", "Thông báo", JOptionPane.WARNING_MESSAGE);
@@ -186,6 +170,7 @@ public class HanhDong_TrangHoaDon implements ActionListener, MouseListener, Item
         // Tìm hóa đơn tương ứng từ cơ sở dữ liệu
         HoaDon hoaDon = null;
         KhachHang khachHang = null;
+
         try {
             List<HoaDon> ketQua = hoaDon_dao.TimKiemHoaDon(maHoaDon, null); // Bạn có thể bỏ qua mã khách hàng nếu không cần thiết
             if (!ketQua.isEmpty()) {

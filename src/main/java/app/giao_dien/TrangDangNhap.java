@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
 import javax.swing.*;
@@ -152,6 +153,19 @@ public class TrangDangNhap extends JFrame {
         nutDangNhap.setBorderPainted(false); // Bỏ viền của nút
         nutDangNhap.addActionListener(hanhDong);
         nutDangNhap.addMouseListener(thaoTacChuot);
+
+        KeyStroke toHopPhim = KeyStroke.getKeyStroke("enter");
+        InputMap inputMap = nutDangNhap.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+        ActionMap actionMap = nutDangNhap.getActionMap();
+
+        inputMap.put(toHopPhim, "clickButton");
+        actionMap.put("clickButton", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                
+            }
+        });
+
         giua.add(nutDangNhap);
 
         // Tạo nút nutDangXuat
