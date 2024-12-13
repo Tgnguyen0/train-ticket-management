@@ -14,19 +14,41 @@ import javax.imageio.ImageIO;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.URL;
 import java.time.LocalDateTime;
 
 public class TaoVeBangFilePDF {
     private PhongChuMoi phongTuyChinh = new PhongChuMoi();
 
     public void generateTicketPDF(String fileName, String maVe, String soHieu, String tenToa, String tenKhachHang, String gaKhoiHanh,
-                                  String gaKetThuc,String ngayDatVe , String ngayKhoiHanh, String gioKhoiHanh, String loaiVe , String soGhe
-                                    ,String loaiDoiTuong, String giaVe) {
+                                  String gaKetThuc, String ngayDatVe, String ngayKhoiHanh, String gioKhoiHanh, String loaiVe, String soGhe,
+                                  String loaiDoiTuong, String giaVe) {
+        // Get the path to the "ve" directory relative to the project's root directory
+        /*String relativePath = ".." + File.separator + "src" + File.separator + "main"
+                + File.separator + "resources" + File.separator + "ve";
+
+        // Get the current working directory (the directory where the JAR is run from)
+        String currentDir = System.getProperty("user.dir");
+
+        // Combine the current directory with the relative path
+        File veDirectory = new File(currentDir, relativePath);
+
+        // Check if the directory exists, create it if it doesn't
+        if (!veDirectory.exists()) {
+            veDirectory.mkdirs(); // Create the directory if it doesn't exist
+        }
+
+        // Prepare the output file in the "ve" directory
+        File outputFile = new File(veDirectory, fileName);*/
+
+        String relativePath = "C:/Users/DELL/Desktop/Visual Studio Code/Java Project/train_ticket_management_app/src/main/resources/ve/" + fileName;
+
         Document document = new Document();
         try {
-            PdfWriter.getInstance(document, new FileOutputStream(fileName));
+            PdfWriter.getInstance(document, new FileOutputStream(relativePath));
             document.open();
 
             Paragraph tieuDeTongCongTy = new Paragraph("TỔNG CÔNG TY ĐƯỜNG SẮT VIỆT NAM", phongTuyChinh.layPhongHelvetica(12, Font.NORMAL, new Color(0, 102, 204)));

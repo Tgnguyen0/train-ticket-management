@@ -8,7 +8,7 @@ import app.phan_tu_tuy_chinh.CustomCellRenderer;
 import app.phan_tu_tuy_chinh.CustomHeaderRenderer;
 import app.phong_chu_moi.PhongChuMoi;
 import app.thuc_the.Ve;
-import lombok.extern.slf4j.Slf4j;
+//import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,7 +31,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-@Slf4j
+//@Slf4j
 public class TrangDanhSachVeTau extends JPanel {
 
     public javax.swing.JButton buttonHuyVe;

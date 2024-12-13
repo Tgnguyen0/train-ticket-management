@@ -117,7 +117,7 @@ public class TrangGioiThieu extends JPanel {
 
         // Tải ảnh từ file
         try {
-            BufferedImage image = ImageIO.read(new File("assets/ga.png"));
+            BufferedImage image = ImageIO.read(getClass().getResourceAsStream("/assets/ga.png"));
 
             // Thay đổi kích thước ảnh trước khi bo góc (200x100)
             Image resizedImage = image.getScaledInstance(400, 200, Image.SCALE_SMOOTH);
@@ -178,7 +178,7 @@ public class TrangGioiThieu extends JPanel {
         // xu ly anh lý do
         jLabel_hinhAnhNhanVien = new JLabel();
         try {
-            BufferedImage image = ImageIO.read(new File("assets/nhanVien (2).png"));
+            BufferedImage image = ImageIO.read(getClass().getResourceAsStream("/assets/nhanVien (2).png"));
 
             // Thay đổi kích thước ảnh trước khi bo góc (200x100)
             Image resizedImage = image.getScaledInstance(200, 200, Image.SCALE_SMOOTH);
@@ -229,7 +229,7 @@ public class TrangGioiThieu extends JPanel {
         // xu ly anh contact
         jLabel_hinhAnhHotline = new JLabel();
         try {
-            BufferedImage image = ImageIO.read(new File("assets/hotline (1).png"));
+            BufferedImage image = ImageIO.read(getClass().getResourceAsStream("/assets/hotline (1).png"));
 
             // Thay đổi kích thước ảnh trước khi bo góc (200x100)
             Image resizedImage = image.getScaledInstance(300, 200, Image.SCALE_SMOOTH);

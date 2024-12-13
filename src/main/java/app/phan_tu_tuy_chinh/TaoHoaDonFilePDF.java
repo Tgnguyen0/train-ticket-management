@@ -11,6 +11,8 @@ import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.draw.VerticalPositionMark;
 
+import javax.swing.*;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.NumberFormat;
@@ -27,7 +29,9 @@ public class TaoHoaDonFilePDF {
         try {
 //            // Đường dẫn lưu file vào ổ D:\
             Document document = new Document();
-            String qrCodePath = "hoá đơn được tạo/" + hoaDon.getMaHoaDon() + ".png";
+            /*String qrCodePath = ".." + File.separator + "src" + File.separator + "main"
+                    + File.separator + "resources" + File.separator + "hoa_don" + File.separator + hoaDon.getMaHoaDon() + ".png";*/
+            String qrCodePath = "C:/Users/DELL/Desktop/Visual Studio Code/Java Project/train_ticket_management_app/src/main/resources/hoa_don/" + hoaDon.getMaHoaDon() + ".png";
 
             // Tạo mã QR chứa thông tin hóa đơn
             String qrContent = "Ngày Lập : " + hoaDon.getNgayLapHoaDon() +
@@ -44,9 +48,23 @@ public class TaoHoaDonFilePDF {
 
             QRHoaDon.generateQRCode(qrContent, qrCodePath);
 
-            String filePath = "hoá đơn được tạo/" + hoaDon.getMaHoaDon() + ".pdf";
+            /*String filePath = ".." + File.separator + "src" + File.separator + "main"
+                    + File.separator + "resources" + File.separator + "hoa_don" + File.separator + hoaDon.getMaHoaDon() + ".pdf";*/
+            String filePath = "C:/Users/DELL/Desktop/Visual Studio Code/Java Project/train_ticket_management_app/src/main/resources/hoa_don/"+hoaDon.getMaHoaDon()+".pdf";
 //            // Khởi tạo tài liệu PDF
 //            String filePath = "hoá đơn được tạo/" + hoaDon.getMaHoaDon() + ".pdf";
+
+            /*String currentDir = System.getProperty("user.dir");
+
+            // Combine the current directory with the relative path
+            File hoaDonDirectory = new File(currentDir, filePath);
+
+            // Check if the directory exists, create it if it doesn't
+            if (!hoaDonDirectory.exists()) {
+                hoaDonDirectory.mkdirs(); // Create the directory if it doesn't exist
+            }
+            // Prepare the output file in the "ve" directory
+            File outputFile = new File(hoaDonDirectory, filePath);*/
 
         try {
             // Khởi tạo tài liệu PDF
@@ -60,10 +78,22 @@ public class TaoHoaDonFilePDF {
             Font fontItalic = new Font(bf, 12, Font.ITALIC);
 
             // Phần 1: Logo và tiêu đề "Hóa Đơn"
-            Image logo = Image.getInstance("assets/logo.png"); // Đường dẫn đến file logo
-            logo.scaleToFit(100, 100);
-            logo.setAlignment(Element.ALIGN_CENTER);
-            document.add(logo);
+            try {
+                // Load the image from the resource path
+                Image logo = Image.getInstance(TaoHoaDonFilePDF.class.getResource("/assets/logo.png"));
+
+                // Scale the image to fit within 100x100
+                logo.scaleToFit(100, 100);
+
+                // Center align the image
+                logo.setAlignment(Element.ALIGN_CENTER);
+
+                // Add the image to the document
+                document.add(logo);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
             // Thêm tiêu đề hóa đơn
             Paragraph title = new Paragraph("HÓA ĐƠN", fontTitle);

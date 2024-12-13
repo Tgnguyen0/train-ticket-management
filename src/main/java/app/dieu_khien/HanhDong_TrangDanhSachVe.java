@@ -10,7 +10,7 @@ import app.thuc_the.Ghe;
 import app.thuc_the.KhachHang;
 import app.thuc_the.Toa;
 import app.thuc_the.Ve;
-import lombok.extern.slf4j.Slf4j;
+//import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,7 +28,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-@Slf4j
+//@Slf4j
 public class HanhDong_TrangDanhSachVe implements ActionListener, MouseListener {
     public Ve veChiTiet;
     public TrangThongTinChiTietVeTau trang;
@@ -104,7 +104,7 @@ public class HanhDong_TrangDanhSachVe implements ActionListener, MouseListener {
                 TaoVeBangFilePDF taoVeBangFilePDF = new TaoVeBangFilePDF();
 
                 taoVeBangFilePDF.generateTicketPDF(
-                        "vé được tạo/" + maVe + ".pdf",
+                        maVe + ".pdf",
                         maVe,
                         soHieu,
                         tenToa,

@@ -56,7 +56,8 @@ public class HanhDong_TrangThanhToan implements ActionListener, MouseListener {
 
     public void xuLyThanhToan(boolean thanhToanTienMat) {
         double thanhTien = Double.parseDouble(this.trangThanhToan.tfThanhTien.getText());
-        double tienNhan = Double.parseDouble(this.trangThanhToan.thanhTienNhan.getText());
+        double tienNhan = thanhTien;
+        if (thanhToanTienMat) tienNhan = Double.parseDouble(this.trangThanhToan.thanhTienNhan.getText());
 
         if (thanhTien > tienNhan) {
             hienThiThongBao("Tiền nhận phải lớn hơn tiền trả", "Lỗi nhận tiền", JOptionPane.ERROR_MESSAGE);
@@ -121,7 +122,7 @@ public class HanhDong_TrangThanhToan implements ActionListener, MouseListener {
         }
 
         // Thông báo thanh toán thành công và tiển trả lại
-        hienThiThongBao("<html>Thanh toán thành công<br><b>Tiền thối: " + tienTra + " VND</b></html>", "Thông báo thành công", JOptionPane.INFORMATION_MESSAGE);
+        if (thanhToanTienMat) hienThiThongBao("<html>Thanh toán thành công<br><b>Tiền thối: " + tienTra + " VND</b></html>", "Thông báo thành công", JOptionPane.INFORMATION_MESSAGE);
 
         this.trangThanhToan.dispose();
 
@@ -152,7 +153,6 @@ public class HanhDong_TrangThanhToan implements ActionListener, MouseListener {
         ((TrangDatVe) this.trangThanhToan.trangDatVe).thanhNhapHoTen.setText("");
         ((TrangDatVe) this.trangThanhToan.trangDatVe).thanhNhapDienThoai.setText("");
         ((TrangDatVe) this.trangThanhToan.trangDatVe).thanhNhapThuDienTu.setText("");
-        ((TrangDatVe) this.trangThanhToan.trangDatVe).layDSKhDatVe().clear();
         ((TrangDatVe) this.trangThanhToan.trangDatVe).thanhChonKhachHang.removeAllItems();
 
         // Đặt hóa đơn bên trangHoaDon

@@ -9,6 +9,7 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
+import java.net.URL;
 import javax.swing.*;
 import javax.swing.border.Border;
 
@@ -40,7 +41,7 @@ public class TrangDangNhap extends JFrame {
     private MouseListener thaoTacChuot;
 
     public TrangDangNhap() {
-        ImageIcon icon = new ImageIcon("assets/icon.png");
+        ImageIcon icon = new ImageIcon(getClass().getResource("/assets/icon.png"));
         setTitle("Đăng Nhập");
         setSize(new Dimension(750, 535));
         setIconImage(icon.getImage());
@@ -66,10 +67,7 @@ public class TrangDangNhap extends JFrame {
         bieuNgu.setPreferredSize(new Dimension(238, 500));
         bieuNgu.setLayout(new BoxLayout(bieuNgu, BoxLayout.Y_AXIS));
 
-        String imagePath = "assets/rua.png";
-        /* cho elipse, intelj */
-        // String imagePath = "assets/rua.png";
-        ImageIcon imageIcon = new ImageIcon(imagePath);
+        ImageIcon imageIcon = new ImageIcon(getClass().getResource("/assets/rua.png"));
         Image originalImage = imageIcon.getImage();
         Image scaledImage = originalImage.getScaledInstance(238, 500, Image.SCALE_SMOOTH);
         ImageIcon scaledIcon = new ImageIcon(scaledImage);

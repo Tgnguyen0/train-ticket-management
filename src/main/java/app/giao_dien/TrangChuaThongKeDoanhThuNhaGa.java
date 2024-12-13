@@ -7,7 +7,7 @@ import app.phan_tu_tuy_chinh.BieuDoTron;
 import app.phan_tu_tuy_chinh.CustomCellRenderer;
 import app.phan_tu_tuy_chinh.CustomHeaderRenderer;
 import app.phong_chu_moi.PhongChuMoi;
-import lombok.extern.slf4j.Slf4j;
+//import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,7 +24,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Map;
 
-@Slf4j
+//@Slf4j
 public class TrangChuaThongKeDoanhThuNhaGa extends JPanel {
     Logger logger = LoggerFactory.getLogger(TrangChuaThongKeDoanhThuNhaGa.class);
     public  JButton buttonThongKeNam;

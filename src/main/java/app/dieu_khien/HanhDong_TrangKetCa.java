@@ -239,7 +239,7 @@ public class HanhDong_TrangKetCa implements ActionListener {
     }
 
     public void inPhieuPdf(CaTruc caTruc) {
-        String outPutPdf = "src/main/java/app/resources/PhieuKetCa_" + caTruc.getMaCaTruc() + ".pdf";
+        String outPutPdf = "C:/Users/DELL/Desktop/Visual Studio Code/Java Project/train_ticket_management_app/src/main/resources/ket_ca/PhieuKetCa_" + caTruc.getMaCaTruc() + ".pdf";
         try {
             // Đường dẫn tới file font hỗ trợ tiếng Việt (đảm bảo file này tồn tại trong thư mục dự án)
             String fontPath = "font/Arial.ttf";

@@ -326,9 +326,11 @@ public class HanhDong_TrangDatVe implements ActionListener, MouseListener, ItemL
 
             // Lấy danh sách vé đặt
             List<Ve> dsVe = this.trangDatVe.veDao.layDSVeDaThanhToan();
+            List<KhachHang> dsKh = new ArrayList<>(this.trangDatVe.layDSKhDatVe());
+            this.trangDatVe.layDSKhDatVe().clear();
 
             // Khởi tạo trang in vé với các giá trị truyền vào
-            TrangInVe trangInVe = new TrangInVe(dsVe, this.trangDatVe.layDSKhDatVe(), this.dsGhe);
+            TrangInVe trangInVe = new TrangInVe(dsVe, dsKh, this.dsGhe);
             trangInVe.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             trangInVe.setVisible(true);
 
