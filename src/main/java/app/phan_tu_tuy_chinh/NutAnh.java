@@ -29,11 +29,11 @@ public class NutAnh extends JButton {
 
         try {
             // Tải trước cả hai hình ảnh
-            this.anhMacDinh = ImageIO.read(new File(duongDanMacDinh))
+            this.anhMacDinh = ImageIO.read(getClass().getResourceAsStream(duongDanMacDinh))
                     .getScaledInstance((int) doDai, (int) doRong, Image.SCALE_SMOOTH);
-            this.anhDangChon = ImageIO.read(new File(duongDanDangChon))
+            this.anhDangChon = ImageIO.read(getClass().getResourceAsStream(duongDanDangChon))
                     .getScaledInstance((int) doDai, (int) doRong, Image.SCALE_SMOOTH);
-            this.anhVoHieu = ImageIO.read(new File(duongDanVoHieu))
+            this.anhVoHieu = ImageIO.read(getClass().getResourceAsStream(duongDanVoHieu))
                     .getScaledInstance((int) doDai, (int) doRong, Image.SCALE_SMOOTH);
             this.anhHienTai = this.anhMacDinh;
         } catch (IOException e) {

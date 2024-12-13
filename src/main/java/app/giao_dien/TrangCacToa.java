@@ -204,9 +204,9 @@ public class TrangCacToa extends JPanel {
         /* Tạo nút ảnh với việc truyền đừờng dẫn ảnh chính, ảnh đang chọn,
         chiều dài ảnh, chiều rộng ảnh,chiều dài của chữ và chữ và vị trí x của chữ */
         NutAnh nutTau = new NutAnh(
-                "assets/tau-nho.png",         // Đường dẫn ảnh không được chọn
-                "assets/tau-nho.png",                        // Đường dẫn ảnh khi được chọn
-                "assets/toa-tau-het-ve.png",
+                "/assets/tau-nho.png",         // Đường dẫn ảnh không được chọn
+                "/assets/tau-nho.png",                        // Đường dẫn ảnh khi được chọn
+                "/assets/toa-tau-het-ve.png",
                 chieuDaiNut,                                 // Chiều dài của nút
                 chieuRongNut,                                // Chiều rộng của nút
                 viTriChu,                                    // Vị trí của chữ trên nút
@@ -234,9 +234,9 @@ public class TrangCacToa extends JPanel {
         /* Tạo nút ảnh với việc truyền đừờng dẫn ảnh chính, ảnh đang chọn,
         chiều dài ảnh, chiều rộng ảnh,chiều dài của chữ và chữ và vị trí x của chữ*/
         NutAnh nutToa = new NutAnh(
-                "assets/toa-tau-con-ve.png",
-                "assets/toa-dang-chon.png",
-                "assets/toa-tau-het-ve.png",
+                "/assets/toa-tau-con-ve.png",
+                "/assets/toa-dang-chon.png",
+                "/assets/toa-tau-het-ve.png",
                 chieuDaiNut,
                 chieuRongNut,
                 viTriChu,
@@ -273,11 +273,11 @@ public class TrangCacToa extends JPanel {
             Image anhToaTauConVe, anhToaTauDangChon, anhToaTauHetVe;
 
             // Tải trước cả hai hình ảnh
-            anhToaTauConVe = ImageIO.read(new File("assets/toa-tau-con-ve.png"))
+            anhToaTauConVe = ImageIO.read(getClass().getResourceAsStream("/assets/toa-tau-con-ve.png"))
                     .getScaledInstance((int) chieuDaiNut, (int) chieuRongNut, Image.SCALE_SMOOTH);
-            anhToaTauDangChon = ImageIO.read(new File("assets/toa-dang-chon.png"))
+            anhToaTauDangChon = ImageIO.read(getClass().getResourceAsStream("/assets/toa-dang-chon.png"))
                     .getScaledInstance((int) chieuDaiNut, (int) chieuRongNut, Image.SCALE_SMOOTH);
-            anhToaTauHetVe = ImageIO.read(new File("assets/toa-tau-het-ve.png"))
+            anhToaTauHetVe = ImageIO.read(getClass().getResourceAsStream("/assets/toa-tau-het-ve.png"))
                     .getScaledInstance((int) chieuDaiNut, (int) chieuRongNut, Image.SCALE_SMOOTH);
 
             ImageIcon bieuTuongTauConVe = new ImageIcon(anhToaTauConVe);

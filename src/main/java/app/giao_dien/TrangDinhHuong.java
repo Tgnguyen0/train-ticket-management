@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -60,7 +61,7 @@ public class TrangDinhHuong extends JFrame {
 
     // Function tạo GUI chính
     public TrangDinhHuong() {
-        ImageIcon icon = new ImageIcon("assets/icon.png");
+        ImageIcon icon = new ImageIcon(getClass().getResource("/assets/icon.png"));
         setTitle("Quản lý bán vé tại ga");
         //setSize(new Dimension(1200, 800));
         setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -70,7 +71,8 @@ public class TrangDinhHuong extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         try {
-            File imageFile = new File("assets/icon.png");
+            InputStream imageFile = getClass().getResourceAsStream("/assets/icon.png");
+
             anhDaiDien = ImageIO.read(imageFile);
             anhDaiDien = anhDaiDien.getScaledInstance((int) chieuDaiNut, (int) chieuRongNut, Image.SCALE_SMOOTH);
         } catch (IOException e) {

@@ -112,7 +112,7 @@ public class TrangCacTau extends JFrame {
             System.out.println("Tau 4" + this.dsToa4.get(i).getMaToa());
         }*/
 
-        ImageIcon icon = new ImageIcon("assets/icon.png");
+        ImageIcon icon = new ImageIcon(getClass().getResource("/assets/icon.png"));
         setTitle("Sơ đồ chung");
         //setSize(new Dimension(1200, 800));
         setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -175,9 +175,9 @@ public class TrangCacTau extends JFrame {
         /* Tạo nút ảnh với việc truyền đừờng dẫn ảnh chính, ảnh đang chọn,
         chiều dài ảnh, chiều rộng ảnh,chiều dài của chữ và chữ và vị trí x của chữ */
         this.nutTau1 = new NutAnh(
-                "assets/tau.png",             // Đường dẫn ảnh không được chọn
-                "assets/tau-dang-chon.png",                  // Đường dẫn ảnh khi được chọn
-                "assets/tau-vo-hieu.png",                    // Đường dẫn ảnh khi bị vô hiệu
+                "/assets/tau.png",             // Đường dẫn ảnh không được chọn
+                "/assets/tau-dang-chon.png",                  // Đường dẫn ảnh khi được chọn
+                "/assets/tau-vo-hieu.png",                    // Đường dẫn ảnh khi bị vô hiệu
                 chieuDaiNut,                                 // Chiều dài của nút
                 chieuRongNut,                                // Chiều rộng của nút
                 viTriChu,                                    // Vị trí của chữ trên nút
@@ -208,9 +208,9 @@ public class TrangCacTau extends JFrame {
         /* Tạo nút ảnh với việc truyền đừờng dẫn ảnh chính, ảnh đang chọn,
         chiều dài ảnh, chiều rộng ảnh,chiều dài của chữ và chữ và vị trí x của chữ */
         this.nutTau2 = new NutAnh(
-                "assets/tau.png",             // Đường dẫn ảnh không được chọn
-                "assets/tau-dang-chon.png",                  // Đường dẫn ảnh khi được chọn
-                "assets/tau-vo-hieu.png",                    // Đường dẫn ảnh khi bị vô hiệu
+                "/assets/tau.png",             // Đường dẫn ảnh không được chọn
+                "/assets/tau-dang-chon.png",                  // Đường dẫn ảnh khi được chọn
+                "/assets/tau-vo-hieu.png",                    // Đường dẫn ảnh khi bị vô hiệu
                 chieuDaiNut,                                 // Chiều dài của nút
                 chieuRongNut,                                // Chiều rộng của nút
                 viTriChu,                                    // Vị trí của chữ trên nút
@@ -241,9 +241,9 @@ public class TrangCacTau extends JFrame {
         /* Tạo nút ảnh với việc truyền đừờng dẫn ảnh chính, ảnh đang chọn,
         chiều dài ảnh, chiều rộng ảnh,chiều dài của chữ và chữ và vị trí x của chữ */
         this.nutTau3 = new NutAnh(
-                "assets/tau.png",             // Đường dẫn ảnh không được chọn
-                "assets/tau-dang-chon.png",                  // Đường dẫn ảnh khi được chọn
-                "assets/tau-vo-hieu.png",                    // Đường dẫn ảnh khi bị vô hiệu
+                "/assets/tau.png",             // Đường dẫn ảnh không được chọn
+                "/assets/tau-dang-chon.png",                  // Đường dẫn ảnh khi được chọn
+                "/assets/tau-vo-hieu.png",                    // Đường dẫn ảnh khi bị vô hiệu
                 chieuDaiNut,                                 // Chiều dài của nút
                 chieuRongNut,                                // Chiều rộng của nút
                 viTriChu,                                    // Vị trí của chữ trên nút
@@ -275,9 +275,9 @@ public class TrangCacTau extends JFrame {
         /* Tạo nút ảnh với việc truyền đừờng dẫn ảnh chính, ảnh đang chọn,
         chiều dài ảnh, chiều rộng ảnh,chiều dài của chữ và chữ và vị trí x của chữ */
         this.nutTau4 = new NutAnh(
-                "assets/tau.png",             // Đường dẫn ảnh không được chọn
-                "assets/tau-dang-chon.png",                  // Đường dẫn ảnh khi được chọn
-                "assets/tau-vo-hieu.png",                    // Đường dẫn ảnh khi bị vô hiệu
+                "/assets/tau.png",             // Đường dẫn ảnh không được chọn
+                "/assets/tau-dang-chon.png",                  // Đường dẫn ảnh khi được chọn
+                "/assets/tau-vo-hieu.png",                    // Đường dẫn ảnh khi bị vô hiệu
                 chieuDaiNut,                                 // Chiều dài của nút
                 chieuRongNut,                                // Chiều rộng của nút
                 viTriChu,                                    // Vị trí của chữ trên nút

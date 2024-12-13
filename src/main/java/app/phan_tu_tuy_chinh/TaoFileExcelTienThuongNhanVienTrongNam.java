@@ -8,6 +8,7 @@ import org.apache.poi.ss.util.RegionUtil;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import javax.swing.*;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.NumberFormat;
@@ -283,8 +284,14 @@ public class TaoFileExcelTienThuongNhanVienTrongNam {
         RegionUtil.setBorderLeft(BorderStyle.THIN, mergedRegion_TongTien, sheet);
         RegionUtil.setBorderRight(BorderStyle.THIN, mergedRegion_TongTien, sheet);
 
+        // Đường dẫn của file
+        /*String relativePath = ".." + File.separator + "src" + File.separator + "main"
+                + File.separator + "resources" + File.separator + "thong_ke" + File.separator + filePath;*/
+
+        String relativePath = "C:/Users/DELL/Desktop/Visual Studio Code/Java Project/train_ticket_management_app/src/main/resources/thong_ke/" + filePath;
+
 // Ghi workbook ra file
-        try (FileOutputStream fileOut = new FileOutputStream(filePath)) {
+        try (FileOutputStream fileOut = new FileOutputStream(relativePath)) {
             workbook.write(fileOut);
             JOptionPane.showMessageDialog(
                     null,

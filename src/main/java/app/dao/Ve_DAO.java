@@ -7,7 +7,7 @@ import app.thuc_the.DaiNgo;
 import app.thuc_the.HoaDon;
 import app.thuc_the.KhachHang;
 import app.thuc_the.Ve;
-import lombok.extern.slf4j.Slf4j;
+//import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-@Slf4j
+//@Slf4j
 public class Ve_DAO {
     // Các câu lệnh SQL
     String CAP_NHAT_SQL = "UPDATE Ve SET MaGhe=? WHERE MaVe=?";

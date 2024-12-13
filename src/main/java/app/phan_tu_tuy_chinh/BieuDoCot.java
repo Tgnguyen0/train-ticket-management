@@ -3,7 +3,7 @@ package app.phan_tu_tuy_chinh;
 import app.giao_dien.TrangChuaThongKeDoanhThuNhaGa;
 import app.giao_dien.TrangChuaThongKeNhanVienTheoNam;
 import app.giao_dien.TrangChuaThongKeNhanVienTheoThang;
-import lombok.extern.slf4j.Slf4j;
+//import lombok.extern.slf4j.Slf4j;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -26,7 +26,7 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.Map;
 
-@Slf4j
+//@Slf4j
 
 public class BieuDoCot extends JPanel {
     private JFreeChart chart; // Lưu biểu đồ để dùng lại
@@ -84,19 +84,19 @@ public class BieuDoCot extends JPanel {
                     try {
                         if(object == TrangChuaThongKeDoanhThuNhaGa.class){
                             TaoFileExcelDoanhThuNhaGaBieuDoCot taoFileExcelDoanhThuNhaGa = new TaoFileExcelDoanhThuNhaGaBieuDoCot();
-                            String filePath = "ThongKe/DoanhThuNhaGa_BieuDoCot.xlsx";
+                            String filePath = "DoanhThuNhaGa_BieuDoCot.xlsx";
                             taoFileExcelDoanhThuNhaGa.TaoFileExcelDoanhThuNhaGa(danhSachDoanhThu, getChartImage(), filePath);
 
                         }
                         else if(object == TrangChuaThongKeNhanVienTheoNam.class){
-                            log.info("xuất file trang chứa thống kê nhân viên theo năm");
+                            //log.info("xuất file trang chứa thống kê nhân viên theo năm");
                             TaoFileExcelDoanhThuNhanVienTheoNam taoFileExcelDoanhThuNhanVienTheoNam = new TaoFileExcelDoanhThuNhanVienTheoNam();
-                            String filePath = "ThongKe/DoanhThu_NhanVienTheoNam.xlsx";
+                            String filePath = "DoanhThu_NhanVienTheoNam.xlsx";
                             taoFileExcelDoanhThuNhanVienTheoNam.TaoFileExcelDoanhThuNhanVienTheoNam(danhSachDoanhThu, getChartImage(), filePath);
                         }
                         else if(object == TrangChuaThongKeNhanVienTheoThang.class){
-                            log.info("xuất file trang chứa thống kê nhân viên theo tháng");
-                            String filePath = "ThongKe/DoanhThu_NhanVienTheoThang.xlsx";
+                            //log.info("xuất file trang chứa thống kê nhân viên theo tháng");
+                            String filePath = "DoanhThu_NhanVienTheoThang.xlsx";
                             TaoFileExcelDoanhThuNhanVienTheoThang taoFileExcelDoanhThuNhanVienTheoThang = new TaoFileExcelDoanhThuNhanVienTheoThang();
                             taoFileExcelDoanhThuNhanVienTheoThang.TaoFileExcelDoanhThuNhanVienTheoThang(danhSachDoanhThu, getChartImage(), filePath);
 

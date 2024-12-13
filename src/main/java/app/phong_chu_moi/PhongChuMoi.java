@@ -3,6 +3,7 @@ package app.phong_chu_moi;
 import java.awt.*;
 import java.awt.Font;
 import java.io.File;
+import java.io.InputStream;
 import java.util.ArrayList;
 import com.lowagie.text.FontFactory;
 
@@ -13,11 +14,18 @@ public class PhongChuMoi {
         this.phongRobotoMonoReg = new ArrayList<>();
 
         try {
-            File[] taiLieuPhong = {
-                    new File("font/RobotoMono-Regular.ttf"),
-                    new File("font/RobotoMono-Bold.ttf"),
-                    new File("font/RobotoMono-BoldItalic.ttf"),
-                    new File("font/RobotoMono-Italic.ttf")
+            /*File[] taiLieuPhong = {
+                    new File(getClass().getResource("font/RobotoMono-Regular.ttf"),
+                    new File(getClass().getResource("font/RobotoMono-Bold.ttf"),
+                    new File("src/main/resources/font/RobotoMono-BoldItalic.ttf"),
+                    new File(getClass().getResource("font/RobotoMono-Italic.ttf"))
+            };*/
+
+            InputStream[] taiLieuPhong = {
+                    getClass().getResourceAsStream("/font/RobotoMono-Regular.ttf"),
+                    getClass().getResourceAsStream("/font/RobotoMono-Bold.ttf"),
+                    getClass().getResourceAsStream("/font/RobotoMono-BoldItalic.ttf"),
+                    getClass().getResourceAsStream("/font/RobotoMono-Italic.ttf")
             };
 
             for (int i = 0; i < taiLieuPhong.length; i++) {

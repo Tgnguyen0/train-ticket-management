@@ -79,7 +79,7 @@ public class HanhDong_TrangInVe implements ActionListener, MouseListener, Window
                 String giaVe = String.valueOf(ve.getGiaVe());*/
 
                 taoVeBangFilePDF.generateTicketPDF(
-                        "vé được tạo/" + maVe + ".pdf",
+                        maVe + ".pdf",
                         ve.getMaVe(),
                         toa.getSoHieu(),
                         toa.getTenToa(),
@@ -96,15 +96,17 @@ public class HanhDong_TrangInVe implements ActionListener, MouseListener, Window
                 );
             }
 
-            System.out.println("Den day 8");
+            
+
+            //System.out.println("Den day 8");
             for (int i = ((TrangDatVe) TrangDinhHuong.getTrangChua().getComponent(1)).moHinhBang.getRowCount() - 1; i >= 0; i--) {
                 ((TrangDatVe) TrangDinhHuong.getTrangChua().getComponent(1)).moHinhBang.removeRow(i);
             }
 
-            System.out.println("Den day 9");
+            //System.out.println("Den day 9");
             hienThiThongBao("In vé thành công", "Thông báo in vé");
 
-            System.out.println("Den day 10");
+            //System.out.println("Den day 10");
             this.trangInVe.dispose();
         }
     }

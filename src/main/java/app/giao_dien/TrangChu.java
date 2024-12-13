@@ -3,6 +3,7 @@ package app.giao_dien;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 import app.phong_chu_moi.PhongChuMoi;
 
@@ -23,12 +24,13 @@ public class TrangChu extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g); // Always call the superclass's method first
 
-        String duongDanAnh = "assets/trang-chu.png"; // Path to your image file
-        File taiLieuAnh = new File(duongDanAnh);
+        //String duongDanAnh = "assets/trang-chu.png"; // Path to your image file
+        //File taiLieuAnh = new File(duongDanAnh);
+        InputStream imageFile = getClass().getResourceAsStream("/assets/trang-chu.png");
 
         // Load and draw the image
         try {
-            Image image = ImageIO.read(taiLieuAnh); // Load the image
+            Image image = ImageIO.read(imageFile); // Load the image
 
             // Scale the image to the current panel's dimensions
             int chieuDai = getWidth(); // Get the width of the panel

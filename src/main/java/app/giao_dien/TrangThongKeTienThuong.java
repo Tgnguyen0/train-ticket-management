@@ -33,7 +33,7 @@ public class TrangThongKeTienThuong extends JFrame {
     private Map<String, Double> danhSachDoanhThu;
     public Color xanhBrandeis = new Color(0, 112, 255);
     public  Color trang = new Color(255, 255, 255);
-    String link = "";
+    String link = "Thong ke tien thuong";
     public TrangThongKeTienThuong( Map<String, Double> danhSachDoanhThu, int nam , int thang, Object object){
         panel_TieuDe = new javax.swing.JPanel();
         label_TieuDe = new javax.swing.JLabel();
@@ -235,7 +235,7 @@ public class TrangThongKeTienThuong extends JFrame {
     public void xuatFileExcel(){
         if(JOptionPane.showConfirmDialog(null, "Bạn Có Muốn Xuất File Thống Kê Không?","Question", JOptionPane.YES_NO_OPTION)
                 == JOptionPane.YES_OPTION){
-            new TaoFileExcelTienThuongNhanVienTrongNam().TaoFileExcelTienThuongNhanVienTrongNam(this.danhSachDoanhThu, this.link, this.nam, this.thang);
+            new TaoFileExcelTienThuongNhanVienTrongNam().TaoFileExcelTienThuongNhanVienTrongNam(this.danhSachDoanhThu, "TienThuong_NhanVien.xlsx", this.nam, this.thang);
         }
     }
 

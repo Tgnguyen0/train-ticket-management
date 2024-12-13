@@ -230,6 +230,8 @@ public class TaoFileExcelDoanhThuNhaGaBieuDoTron {
         RegionUtil.setBorderLeft(BorderStyle.THIN, mergedTongDoanhThu, sheet);
         RegionUtil.setBorderRight(BorderStyle.THIN, mergedTongDoanhThu, sheet);
 
+        String relativeImagePath = ".." + File.separator + "src" + File.separator + "main"
+                + File.separator + "resources" + File.separator + "thong_ke" + File.separator + "chart.png";
 
         // thêm ảnh biểu đồ tròn vào trong file excel
         File imageFile = new File("chart.png");
@@ -250,8 +252,15 @@ public class TaoFileExcelDoanhThuNhaGaBieuDoTron {
             sheet.setColumnWidth(9, 5000);
             sheet.setColumnWidth(10, 5000);
             sheet.setColumnWidth(11, 5000);
+
+            // Đường dẫn của file
+            /*String relativePath = ".." + File.separator + "src" + File.separator + "main"
+                    + File.separator + "resources" + File.separator + "thong_ke" + File.separator + "BieuDoTron.xlsx";*/
+
+            String relativePath = "C:/Users/DELL/Desktop/Visual Studio Code/Java Project/train_ticket_management_app/src/main/resources/thong_ke/BieuDoTron.xlsx";
+
             // Ghi file Excel ra đĩa
-            try (FileOutputStream fileOut = new FileOutputStream("ThongKe/BieuDoTron.xlsx")) {
+            try (FileOutputStream fileOut = new FileOutputStream(relativePath)) {
                 workbook.write(fileOut);
                 JOptionPane.showMessageDialog(null, "Xuất file Excel thành công!");
             } catch (IOException e) {
